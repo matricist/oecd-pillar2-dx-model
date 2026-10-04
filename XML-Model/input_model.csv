@@ -1,0 +1,42 @@
+relation,column,data_type,nullable,value_origin,enum_name,primary_key,description
+message_header,message_header_pk,integer (generated),FALSE,conceptual,,TRUE,Technical primary key assigned when the input row is created
+message_header,version,string (1..10 chars),TRUE,system,,FALSE,GloBE XML schema version
+message_header,sending_entity_in,string (1..200 chars),TRUE,system,,FALSE,"Domestic identifier of the Constituent Entity sending the message, when applicable"
+message_header,transmitting_country,enum,FALSE,system,country_code,FALSE,Jurisdiction of the Competent Authority transmitting the message
+message_header,receiving_country,enum,FALSE,user,country_code,FALSE,Jurisdiction of the intended receiving Competent Authority
+message_header,message_type,enum,FALSE,system,message_type,FALSE,Message type; the permitted value is GIR
+message_header,warning,string (1..4000 chars),TRUE,user,,FALSE,Cautionary instructions about use of the message content
+message_header,contact,string (1..4000 chars),TRUE,user,,FALSE,Contact information for the sender
+message_header,message_ref_id,string (1..170 chars),FALSE,system,,FALSE,Sender-created unique identifier for the message
+message_header,message_type_indic,enum,FALSE,user,message_type_indic,FALSE,"Indicates new information, corrections or deletions, or no data to report"
+message_header,reporting_period,date,FALSE,user,,FALSE,Last day of the Reporting Fiscal Year in YYYY-MM-DD format
+message_header,timestamp,dateTime,FALSE,system,,FALSE,Date and time the message was compiled; populated by the host system
+globe_body,globe_body_pk,integer (generated),FALSE,conceptual,,TRUE,Technical primary key assigned when the GLOBEBody input row is created
+globe_body,message_header_pk,integer,FALSE,conceptual,,FALSE,Foreign key to message_header.message_header_pk
+filing_info,filing_info_pk,integer (generated),FALSE,conceptual,,TRUE,Technical primary key assigned when the filing_info input row is created
+filing_info,globe_body_pk,integer,FALSE,conceptual,,FALSE,Foreign key to globe_body.globe_body_pk
+filing_info,name_mne,string (1..200 chars),FALSE,user,,FALSE,Name of the MNE Group
+filing_info,additional_info,string (1..4000 chars),TRUE,user,,FALSE,Additional information about the filing
+filing_info,filing_ce_company_entities_pk,integer,FALSE,conceptual,,FALSE,Foreign key to company_entities.company_entities_pk for the Filing Constituent Entity
+filing_info,filing_ce_role,enum,FALSE,user,filing_ce_role,FALSE,Role of the Filing Constituent Entity
+filing_info,cfs_of_upe,enum,FALSE,user,filing_ce_c_of_upe,FALSE,Consolidated Financial Statements used for the UPE
+filing_info,fas,string (1..200 chars),FALSE,user,,FALSE,Financial accounting standard used for the GIR
+filing_info,currency,enum,FALSE,user,curr_code,FALSE,Currency used for the GIR
+filing_info,period_start,date,FALSE,user,,FALSE,First day of the Reporting Fiscal Year
+filing_info,period_end,date,FALSE,user,,FALSE,Last day of the Reporting Fiscal Year
+filing_info,doc_type_indic,enum,FALSE,user,oecd_doc_type_indic,FALSE,OECD document type indicator
+filing_info,doc_ref_id,string (1..200 chars),FALSE,system,,FALSE,Sender-created unique identifier for this FilingInfo document
+filing_info,corr_doc_ref_id,string (1..200 chars),TRUE,user,,FALSE,"Document reference identifier being corrected, when applicable"
+company_entities,fiscal_year,year,FALSE,user,,FALSE,Reporting fiscal year; with entity_id forms the CompanyEntities business key
+company_entities,entity_id,positive integer,FALSE,user,,FALSE,Entity identifier; with fiscal_year forms the CompanyEntities business key
+company_entities,is_held_for_sale,boolean,FALSE,user,,FALSE,Whether the Entity is presented as held for sale in the relevant Financial Statements
+company_entities,is_equity_method,boolean,FALSE,user,,FALSE,Whether the Entity is reported under the equity method in the relevant Financial Statements
+company_entities,jurisdiction_code,enum,TRUE,user,country_code,FALSE,Entity jurisdiction from Calculation-Model Relation.CompanyEntities; supplies ResCountryCode when this Entity is emitted as an ID_Type
+company_entities,company_entities_pk,integer (generated),FALSE,conceptual,,TRUE,Technical primary key assigned when the company_entities input row is created
+company_entities,name,string (1..200 chars),FALSE,user,,FALSE,"Full legal name of the Constituent Entity, JV, or JV Subsidiary"
+company_entities,tin_value,string (1..200 chars),FALSE,user,,FALSE,Tax identification number value
+company_entities,issued_by,enum,TRUE,user,country_code,FALSE,Jurisdiction that issued the TIN
+company_entities,unknown,boolean,TRUE,user,,FALSE,Indicates that the jurisdiction issuing the TIN is unknown
+company_entities,type_of_tin,enum,TRUE,user,type_of_tin,FALSE,Type of tax identification number
+company_entities,rules,enum list,FALSE,user,id_type_rules,FALSE,One or more GloBE rules applicable in the Entity jurisdiction
+company_entities,globe_status,enum list,FALSE,user,id_type_globe_status,FALSE,One or more GloBE statuses of the Entity

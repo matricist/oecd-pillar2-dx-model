@@ -1,0 +1,942 @@
+﻿enum_name,enum_value,annotation
+message_type,GIR,
+message_type_indic,GIR101,The message contains new information
+message_type_indic,GIR102,The message contains corrections for previously sent information
+message_type_indic,GIR103,The message advises there is no data to report
+filing_ce_role,GIR401,Ultimate Parent Entity
+filing_ce_role,GIR402,Designated Filing Entity
+filing_ce_role,GIR403,Designated Local Entity
+filing_ce_role,GIR404,Constituent Entity
+filing_ce_role,GIR405,Other
+type_of_tin,GIR3001,Tax Identification Number
+type_of_tin,GIR3002,Functionally equivalent number
+type_of_tin,GIR3003,Agreed GIR designated number
+type_of_tin,GIR3004,Not required to be reported
+filing_ce_c_of_upe,GIR501,Subparagraph a
+filing_ce_c_of_upe,GIR502,Subparagraph b
+filing_ce_c_of_upe,GIR503,Subparagraph c
+filing_ce_c_of_upe,GIR504,Subparagraph d
+oecd_doc_type_indic,OECD0,Resend Data
+oecd_doc_type_indic,OECD1,New Data
+oecd_doc_type_indic,OECD2,Corrected Data
+oecd_doc_type_indic,OECD3,Deletion of Data
+oecd_doc_type_indic,OECD10,Resend Test Data
+oecd_doc_type_indic,OECD11,New Test Data
+oecd_doc_type_indic,OECD12,Corrected Test Data
+oecd_doc_type_indic,OECD13,Deletion of Test Data
+excluded_upe,GIR601,Governmental Entity
+excluded_upe,GIR602,International Organisation
+excluded_upe,GIR603,Non–profit Organisation
+excluded_upe,GIR604,Pension Fund
+excluded_upe,GIR605,Investment Fund that is an UPE
+excluded_upe,GIR606,Real Estate Investment Vehicle that is an UPE
+id_type_rules,GIR201,QIIR applicable to Low–Taxed Constituent Entities located in other jurisdictions only
+id_type_rules,GIR202,QIIR applicable to both Low–Taxed Constituent Entities located in other jurisdictions and in the jurisdiction of the Parent Entity
+id_type_rules,GIR203,QUTPR
+id_type_rules,GIR204,QDMTT
+id_type_rules,GIR205,Not applicable
+ownership_type,GIR801,UPE
+ownership_type,GIR802,Constituent Entities
+ownership_type,GIR803,JVs
+ownership_type,GIR804,JV Subsidiaries
+ownership_type,GIR805,Excluded Entities (aggregate)
+ownership_type,GIR806,Non-Group members (aggregate)
+id_type_globe_status,GIR301,Constituent Entity
+id_type_globe_status,GIR302,Flow-Through Entity – Tax Transparent
+id_type_globe_status,GIR303,Flow-Through Entity – Reverse Hybrid
+id_type_globe_status,GIR304,Hybrid Entity
+id_type_globe_status,GIR305,Permanent Establishment
+id_type_globe_status,GIR306,Main Entity
+id_type_globe_status,GIR307,Minority-Owned Parent Entity
+id_type_globe_status,GIR308,Minority-Owned Subsidiary
+id_type_globe_status,GIR309,Minority-Owned Constituent Entity
+id_type_globe_status,GIR310,Investment Entity
+id_type_globe_status,GIR311,Insurance Investment Entity
+id_type_globe_status,GIR312,Securitisation Entity
+id_type_globe_status,GIR313,JV
+id_type_globe_status,GIR314,JV Subsidiary
+id_type_globe_status,GIR315,Non-Material Constituent Entity
+id_type_globe_status,GIR316,Excluded Entity
+id_type_globe_status,GIR317,Parent Entity required to apply a QIIR under Article 10.3.5
+id_type_globe_status,GIR318,Non-group member
+id_globe_status,GIR701,Constituent Entity
+id_globe_status,GIR702,Flow-Through Entity – Tax Transparent
+id_globe_status,GIR703,Flow-Through Entity – Reverse Hybrid
+id_globe_status,GIR704,Hybrid Entity
+id_globe_status,GIR705,Permanent Establishment
+id_globe_status,GIR706,Main Entity
+id_globe_status,GIR707,Minority-Owned Parent Entity
+id_globe_status,GIR708,Minority-Owned Subsidiary
+id_globe_status,GIR709,Minority-Owned Constituent Entity
+id_globe_status,GIR710,Investment Entity
+id_globe_status,GIR711,Insurance Investment Entity
+id_globe_status,GIR712,Securitisation Entity
+id_globe_status,GIR713,JV
+id_globe_status,GIR714,JV Subsidiary
+id_globe_status,GIR715,Non-Material Constituent Entity
+id_globe_status,GIR716,POPE
+id_globe_status,GIR717,Intermediate Parent Entity
+id_globe_status,GIR718,Ultimate Parent Entity
+id_globe_status,GIR719,Excluded Entity
+id_globe_status,GIR720,Parent Entity required to apply a QIIR under Art. 10.3.5
+id_globe_status,GIR721,Non-Group member
+pope_ipe,GIR901,POPE
+pope_ipe,GIR902,Intermediate Parent Entity
+pope_ipe,GIR903,Parent Entity required to apply a QIIR under Art. 10.3.5
+excluded_entity,GIR1001,Governmental Entity
+excluded_entity,GIR1002,International Organisation
+excluded_entity,GIR1003,Non-profit Organisation
+excluded_entity,GIR1004,Pension Fund
+excluded_entity,GIR1005,Investment Fund that is an UPE
+excluded_entity,GIR1006,Real Estate Investment Vehicle that is an UPE
+excluded_entity,GIR1007,Entity owned by Excluded Entities under Article 1.5.2(a)
+excluded_entity,GIR1008,Entity owned by Excluded Entities under Article 1.5.2(b)
+type_of_sub_group,GIR1101,Constituent  Entities
+type_of_sub_group,GIR1102,Minority-Owned Subgroup
+type_of_sub_group,GIR1103,Standalone MOCEs
+type_of_sub_group,GIR1104,Investment Entities
+type_of_sub_group,GIR1105,JV Group
+type_of_sub_group,GIR1106,Stateless Constituent Entity
+safe_harbour,GIR1201,De minimis Exclusion
+safe_harbour,GIR1202,QDMTT safe harbour
+safe_harbour,GIR1203,Transitional CbCR Safe Harbour – De minimis test
+safe_harbour,GIR1204,Transitional CbCR Safe Harbour – ETR test
+safe_harbour,GIR1205,Transitional CbCR Safe Harbour – Routine profit test
+safe_harbour,GIR1206,Transitional UTPR Safe Harbour
+safe_harbour,GIR1207,Permanent Safe Harbour – De minimis test
+safe_harbour,GIR1208,Permanent Safe Harbour – ETR test
+safe_harbour,GIR1209,Permanent Safe Harbour – Routine profit test
+etr_range,GIR1301,below 2.5%
+etr_range,GIR1302,2.5% or above but below 5%
+etr_range,GIR1303,5% or above but below 7.5%
+etr_range,GIR1304,7.5% or above but below 10%
+etr_range,GIR1305,10% or above but below 12.5%
+etr_range,GIR1306,12.5% or above but below 15%
+etr_range,GIR1307,15% or above but below 17.5%
+etr_range,GIR1308,17.5% or above but below 20%
+etr_range,GIR1309,20% or above but below 22.5%
+etr_range,GIR1310,22.5% or above but below 25%
+etr_range,GIR1311,25% or above but below 27.5%
+etr_range,GIR1312,27.5% or above but below 30%
+etr_range,GIR1313,30% or above
+etr_range,GIR1314,Section 3.2 not completed
+qdmt_tut,GIR1401,No Top-up Tax payable
+qdmt_tut,GIR1402,below EUR 1 million
+qdmt_tut,GIR1403,EUR 1 million to below EUR 5 million
+qdmt_tut,GIR1404,EUR 5 million to below EUR 25 million
+qdmt_tut,GIR1405,EUR 25 million to below EUR 50 million
+qdmt_tut,GIR1406,EUR 50 million to below EUR 75 million
+qdmt_tut,GIR1407,EUR 75 million to below EUR 100 million
+qdmt_tut,GIR1408,EUR 100 million to below EUR 250 million
+qdmt_tut,GIR1409,EUR 250 million or above
+globe_tut,GIR1501,No Top-up Tax payable
+globe_tut,GIR1502,below EUR 1 million
+globe_tut,GIR1503,EUR 1 million to below EUR 5 million
+globe_tut,GIR1504,EUR 5 million to below EUR 25 million
+globe_tut,GIR1505,EUR 25 million to below EUR 50 million
+globe_tut,GIR1506,EUR 50 million to below EUR 75 million
+globe_tut,GIR1507,EUR 75 million to below EUR 100 million
+globe_tut,GIR1508,EUR 100 million to below EUR 250 million
+globe_tut,GIR1509,EUR 250 million or above
+country_code,AF,AFGHANISTAN
+country_code,AX,ALAND ISLANDS
+country_code,AL,ALBANIA
+country_code,DZ,ALGERIA
+country_code,AS,AMERICAN SAMOA
+country_code,AD,ANDORRA
+country_code,AO,ANGOLA
+country_code,AI,ANGUILLA
+country_code,AQ,ANTARCTICA
+country_code,AG,ANTIGUA AND BARBUDA
+country_code,AR,ARGENTINA
+country_code,AM,ARMENIA
+country_code,AW,ARUBA
+country_code,AU,AUSTRALIA
+country_code,AT,AUSTRIA
+country_code,AZ,AZERBAIJAN
+country_code,BS,BAHAMAS
+country_code,BH,BAHRAIN
+country_code,BD,BANGLADESH
+country_code,BB,BARBADOS
+country_code,BY,BELARUS
+country_code,BE,BELGIUM
+country_code,BZ,BELIZE
+country_code,BJ,BENIN
+country_code,BM,BERMUDA
+country_code,BT,BHUTAN
+country_code,BO,"BOLIVIA, PLURINATIONAL STATE OF"
+country_code,BQ,"BONAIRE, SINT EUSTATIUS AND SABA"
+country_code,BA,BOSNIA AND HERZEGOVINA
+country_code,BW,BOTSWANA
+country_code,BV,BOUVET ISLAND
+country_code,BR,BRAZIL
+country_code,IO,BRITISH INDIAN OCEAN TERRITORY
+country_code,BN,BRUNEI DARUSSALAM
+country_code,BG,BULGARIA
+country_code,BF,BURKINA FASO
+country_code,BI,BURUNDI
+country_code,KH,CAMBODIA
+country_code,CM,CAMEROON
+country_code,CA,CANADA
+country_code,CV,CABO VERDE
+country_code,KY,CAYMAN ISLANDS
+country_code,CF,CENTRAL AFRICAN REPUBLIC
+country_code,TD,CHAD
+country_code,CL,CHILE
+country_code,CN,CHINA
+country_code,CX,CHRISTMAS ISLAND
+country_code,CC,COCOS (KEELING) ISLANDS
+country_code,CO,COLOMBIA
+country_code,KM,COMOROS
+country_code,CG,CONGO
+country_code,CD,"CONGO, THE DEMOCRATIC REPUBLIC OF THE"
+country_code,CK,COOK ISLANDS
+country_code,CR,COSTA RICA
+country_code,CI,COTE D'IVOIRE
+country_code,HR,CROATIA
+country_code,CU,CUBA
+country_code,CW,CURACAO
+country_code,CY,CYPRUS
+country_code,CZ,CZECHIA
+country_code,DK,DENMARK
+country_code,DJ,DJIBOUTI
+country_code,DM,DOMINICA
+country_code,DO,DOMINICAN REPUBLIC
+country_code,EC,ECUADOR
+country_code,EG,EGYPT
+country_code,SV,EL SALVADOR
+country_code,GQ,EQUATORIAL GUINEA
+country_code,ER,ERITREA
+country_code,EE,ESTONIA
+country_code,ET,ETHIOPIA
+country_code,FK,FALKLAND ISLANDS (MALVINAS)
+country_code,FO,FAROE ISLANDS
+country_code,FJ,FIJI
+country_code,FI,FINLAND
+country_code,FR,FRANCE
+country_code,GF,FRENCH GUIANA
+country_code,PF,FRENCH POLYNESIA
+country_code,TF,FRENCH SOUTHERN TERRITORIES
+country_code,GA,GABON
+country_code,GM,GAMBIA
+country_code,GE,GEORGIA
+country_code,DE,GERMANY
+country_code,GH,GHANA
+country_code,GI,GIBRALTAR
+country_code,GR,GREECE
+country_code,GL,GREENLAND
+country_code,GD,GRENADA
+country_code,GP,GUADELOUPE
+country_code,GU,GUAM
+country_code,GT,GUATEMALA
+country_code,GG,GUERNSEY
+country_code,GN,GUINEA
+country_code,GW,GUINEA-BISSAU
+country_code,GY,GUYANA
+country_code,HT,HAITI
+country_code,HM,HEARD ISLAND AND MCDONALD ISLANDS
+country_code,VA,HOLY SEE (VATICAN CITY STATE)
+country_code,HN,HONDURAS
+country_code,HK,HONG KONG
+country_code,HU,HUNGARY
+country_code,IS,ICELAND
+country_code,IN,INDIA
+country_code,ID,INDONESIA
+country_code,IR,"IRAN, ISLAMIC REPUBLIC OF"
+country_code,IQ,IRAQ
+country_code,IE,IRELAND
+country_code,IM,ISLE OF MAN
+country_code,IL,ISRAEL
+country_code,IT,ITALY
+country_code,JM,JAMAICA
+country_code,JP,JAPAN
+country_code,JE,JERSEY
+country_code,JO,JORDAN
+country_code,KZ,KAZAKHSTAN
+country_code,KE,KENYA
+country_code,KI,KIRIBATI
+country_code,KP,"KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF"
+country_code,KR,"KOREA, REPUBLIC OF"
+country_code,KW,KUWAIT
+country_code,KG,KYRGYZSTAN
+country_code,LA,LAO PEOPLE'S DEMOCRATIC REPUBLIC
+country_code,LV,LATVIA
+country_code,LB,LEBANON
+country_code,LS,LESOTHO
+country_code,LR,LIBERIA
+country_code,LY,LIBYA
+country_code,LI,LIECHTENSTEIN
+country_code,LT,LITHUANIA
+country_code,LU,LUXEMBOURG
+country_code,MO,MACAO
+country_code,MK,NORTH MACEDONIA
+country_code,MG,MADAGASCAR
+country_code,MW,MALAWI
+country_code,MY,MALAYSIA
+country_code,MV,MALDIVES
+country_code,ML,MALI
+country_code,MT,MALTA
+country_code,MH,MARSHALL ISLANDS
+country_code,MQ,MARTINIQUE
+country_code,MR,MAURITANIA
+country_code,MU,MAURITIUS
+country_code,YT,MAYOTTE
+country_code,MX,MEXICO
+country_code,FM,"MICRONESIA, FEDERATED STATES OF"
+country_code,MD,"MOLDOVA, REPUBLIC OF"
+country_code,MC,MONACO
+country_code,MN,MONGOLIA
+country_code,ME,MONTENEGRO
+country_code,MS,MONTSERRAT
+country_code,MA,MOROCCO
+country_code,MZ,MOZAMBIQUE
+country_code,MM,MYANMAR
+country_code,NA,NAMIBIA
+country_code,NR,NAURU
+country_code,NP,NEPAL
+country_code,NL,NETHERLANDS
+country_code,NC,NEW CALEDONIA
+country_code,NZ,NEW ZEALAND
+country_code,NI,NICARAGUA
+country_code,NE,NIGER
+country_code,NG,NIGERIA
+country_code,NU,NIUE
+country_code,NF,NORFOLK ISLAND
+country_code,MP,NORTHERN MARIANA ISLANDS
+country_code,NO,NORWAY
+country_code,OM,OMAN
+country_code,PK,PAKISTAN
+country_code,PW,PALAU
+country_code,PS,"PALESTINE, STATE OF"
+country_code,PA,PANAMA
+country_code,PG,PAPUA NEW GUINEA
+country_code,PY,PARAGUAY
+country_code,PE,PERU
+country_code,PH,PHILIPPINES
+country_code,PN,PITCAIRN
+country_code,PL,POLAND
+country_code,PT,PORTUGAL
+country_code,PR,PUERTO RICO
+country_code,QA,QATAR
+country_code,RE,REUNION
+country_code,RO,ROMANIA
+country_code,RU,RUSSIAN FEDERATION
+country_code,RW,RWANDA
+country_code,BL,SAINT BARTHELEMY
+country_code,SH,"SAINT HELENA, ASCENSION AND TRISTAN DA CUNHA"
+country_code,KN,SAINT KITTS AND NEVIS
+country_code,LC,SAINT LUCIA
+country_code,MF,SAINT MARTIN (FRENCH PART)
+country_code,PM,SAINT PIERRE AND MIQUELON
+country_code,VC,SAINT VINCENT AND THE GRENADINES
+country_code,WS,SAMOA
+country_code,SM,SAN MARINO
+country_code,ST,SAO TOME AND PRINCIPE
+country_code,SA,SAUDI ARABIA
+country_code,SN,SENEGAL
+country_code,RS,SERBIA
+country_code,SC,SEYCHELLES
+country_code,SL,SIERRA LEONE
+country_code,SG,SINGAPORE
+country_code,SX,SINT MAARTEN (DUTCH PART)
+country_code,SK,SLOVAKIA
+country_code,SI,SLOVENIA
+country_code,SB,SOLOMON ISLANDS
+country_code,SO,SOMALIA
+country_code,ZA,SOUTH AFRICA
+country_code,GS,SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+country_code,SS,SOUTH SUDAN
+country_code,ES,SPAIN
+country_code,LK,SRI LANKA
+country_code,SD,SUDAN
+country_code,SR,SURINAME
+country_code,SJ,SVALBARD AND JAN MAYEN
+country_code,SZ,ESWATINI
+country_code,SE,SWEDEN
+country_code,CH,SWITZERLAND
+country_code,SY,SYRIAN ARAB REPUBLIC
+country_code,TW,"TAIWAN, PROVINCE OF CHINA"
+country_code,TJ,TAJIKISTAN
+country_code,TZ,"TANZANIA, UNITED REPUBLIC OF"
+country_code,TH,THAILAND
+country_code,TL,TIMOR-LESTE
+country_code,TG,TOGO
+country_code,TK,TOKELAU
+country_code,TO,TONGA
+country_code,TT,TRINIDAD AND TOBAGO
+country_code,TN,TUNISIA
+country_code,TR,TURKEY
+country_code,TM,TURKMENISTAN
+country_code,TC,TURKS AND CAICOS ISLANDS
+country_code,TV,TUVALU
+country_code,UG,UGANDA
+country_code,UA,UKRAINE
+country_code,AE,UNITED ARAB EMIRATES
+country_code,GB,UNITED KINGDOM OF GREAT BRITAIN AND NORTHERN IRELAND
+country_code,US,UNITED STATES
+country_code,UM,UNITED STATES MINOR OUTLYING ISLANDS
+country_code,UY,URUGUAY
+country_code,UZ,UZBEKISTAN
+country_code,VU,VANUATU
+country_code,VE,"VENEZUELA, BOLIVARIAN REPUBLIC OF"
+country_code,VN,VIET NAM
+country_code,VG,"VIRGIN ISLANDS, BRITISH"
+country_code,VI,"VIRGIN ISLANDS, U.S."
+country_code,WF,WALLIS AND FUTUNA
+country_code,EH,WESTERN SAHARA
+country_code,YE,YEMEN
+country_code,ZM,ZAMBIA
+country_code,ZW,ZIMBABWE
+country_code,XK,KOSOVO
+country_code,X5,STATELESS
+curr_code,AED,UAE Dirham: UNITED ARAB EMIRATES
+curr_code,AFN,Afghani: AFGHANISTAN
+curr_code,ALL,Lek: ALBANIA
+curr_code,AMD,Armenian Dram: ARMENIA
+curr_code,ANG,Netherlands Antillean Guilder: CURACAO; SINT MAARTEN (DUTCH PART)
+curr_code,AOA,Kwanza: ANGOLA
+curr_code,ARS,Argentine Peso: ARGENTINA
+curr_code,AUD,Australian Dollar: AUSTRALIA; CHRISTMAS ISLAND; COCOS (KEELING) ISLANDS; HEARD ISLAND AND McDONALD ISLANDS; KIRIBATI; NAURU; NORFOLK ISLAND; TUVALU
+curr_code,AWG,Aruban Florin: ARUBA
+curr_code,AZN,Azerbaijan Manat: AZERBAIJAN
+curr_code,BAM,Convertible Mark: BOSNIA AND HERZEGOVINA
+curr_code,BBD,Barbados Dollar: BARBADOS
+curr_code,BDT,Taka: BANGLADESH
+curr_code,BGN,Bulgarian Lev: BULGARIA
+curr_code,BHD,Bahraini Dinar: BAHRAIN
+curr_code,BIF,Burundi Franc: BURUNDI
+curr_code,BMD,Bermudian Dollar: BERMUDA
+curr_code,BND,Brunei Dollar: BRUNEI DARUSSALAM
+curr_code,BOB,"Boliviano: BOLIVIA, PLURINATIONAL STATE OF"
+curr_code,BOV,"Mvdol: BOLIVIA, PLURINATIONAL STATE OF"
+curr_code,BRL,Brazilian Real: BRAZIL
+curr_code,BSD,Bahamian Dollar: BAHAMAS
+curr_code,BTN,Ngultrum: BHUTAN
+curr_code,BWP,Pula: BOTSWANA
+curr_code,BYN,Belarusian Ruble: BELARUS
+curr_code,BYR,Historic use: Belarussian Ruble: BELARUS
+curr_code,BZD,Belize Dollar: BELIZE
+curr_code,CAD,Canadian Dollar: CANADA
+curr_code,CDF,"Congolese Franc: CONGO, THE DEMOCRATIC REPUBLIC OF"
+curr_code,CHE,WIR Euro: SWITZERLAND
+curr_code,CHF,Swiss Franc: LIECHTENSTEIN; SWITZERLAND
+curr_code,CHW,WIR Franc: SWITZERLAND
+curr_code,CLF,Unidad de Fomento: CHILE
+curr_code,CLP,Chilean Peso: CHILE
+curr_code,CNY,Yuan Renminbi: CHINA
+curr_code,COP,Colombian Peso: COLOMBIA
+curr_code,COU,Unidad de Valor Real: COLOMBIA
+curr_code,CRC,Costa Rican Colon: COSTA RICA
+curr_code,CUC,Peso Convertible: CUBA
+curr_code,CUP,Cuban Peso: CUBA
+curr_code,CVE,Cabo Verde Escudo: CABO VERDE
+curr_code,CZK,Czech Koruna: CZECHIA
+curr_code,DJF,Djibouti Franc: DJIBOUTI
+curr_code,DKK,Danish Krone: DENMARK; FAROE ISLANDS; GREENLAND
+curr_code,DOP,Dominican Peso: DOMINICAN REPUBLIC
+curr_code,DZD,Algerian Dinar: ALGERIA
+curr_code,EGP,Egyptian Pound: EGYPT
+curr_code,ERN,Nakfa: ERITREA
+curr_code,ETB,Ethiopian Birr: ETHIOPIA
+curr_code,EUR,Euro: ALAND ISLANDS; ANDORRA; AUSTRIA; BELGIUM; CYPRUS; ESTONIA; EUROPEAN UNION; FINLAND; FRANCE; FRENCH GUIANA; FRENCH SOUTHERN TERRITORIES; GERMANY; GREECE; GUADELOUPE; HOLY SEE (VATICAN CITY STATE); IRELAND; ITALY; LATVIA; LITHUANIA; LUXEMBOURG; MALTA; MARTINIQUE; MAYOTTE; MONACO; MONTENEGRO; NETHERLANDS; PORTUGAL; REUNION; SAINT BARTHELEMY; SAINT MARTIN (FRENCH PART); SAINT PIERRE AND MIQUELON; SAN MARINO; SLOVAKIA; SLOVENIA; SPAIN; Vatican City State (HOLY SEE)
+curr_code,FJD,Fiji Dollar: FIJI
+curr_code,FKP,Falkland Islands Pound: FALKLAND ISLANDS (MALVINAS)
+curr_code,GBP,Pound Sterling: GUERNSEY; ISLE OF MAN; JERSEY; UNITED KINGDOM OF GREAT BRITAIN AND NORTHERN IRELAND
+curr_code,GEL,Lari: GEORGIA
+curr_code,GHS,Ghana Cedi: GHANA
+curr_code,GIP,Gibraltar Pound: GIBRALTAR
+curr_code,GMD,Dalasi: GAMBIA
+curr_code,GNF,Guinean Franc: GUINEA
+curr_code,GTQ,Quetzal: GUATEMALA
+curr_code,GYD,Guyana Dollar: GUYANA
+curr_code,HKD,Hong Kong Dollar: HONG KONG
+curr_code,HNL,Lempira: HONDURAS
+curr_code,HRK,Kuna: CROATIA
+curr_code,HTG,Gourde: HAITI
+curr_code,HUF,Forint: HUNGARY
+curr_code,IDR,Rupiah: INDONESIA
+curr_code,ILS,New Israeli Sheqel: ISRAEL
+curr_code,INR,Indian Rupee: BHUTAN; INDIA
+curr_code,IQD,Iraqi Dinar: IRAQ
+curr_code,IRR,"Iranian Rial: IRAN, ISLAMIC REPUBLIC OF"
+curr_code,ISK,Iceland Krona: ICELAND
+curr_code,JMD,Jamaican Dollar: JAMAICA
+curr_code,JOD,Jordanian Dinar: JORDAN
+curr_code,JPY,Yen: JAPAN
+curr_code,KES,Kenyan Shilling: KENYA
+curr_code,KGS,Som: KYRGYZSTAN
+curr_code,KHR,Riel: CAMBODIA
+curr_code,KMF,Comorian Franc : COMOROS
+curr_code,KPW,"North Korean Won: KOREA, DEMOCRATIC PEOPLE’S REPUBLIC OF"
+curr_code,KRW,"Won: KOREA, REPUBLIC OF"
+curr_code,KWD,Kuwaiti Dinar: KUWAIT
+curr_code,KYD,Cayman Islands Dollar: CAYMAN ISLANDS
+curr_code,KZT,Tenge: KAZAKHSTAN
+curr_code,LAK,Lao Kip: LAO PEOPLE’S DEMOCRATIC REPUBLIC
+curr_code,LBP,Lebanese Pound: LEBANON
+curr_code,LKR,Sri Lanka Rupee: SRI LANKA
+curr_code,LRD,Liberian Dollar: LIBERIA
+curr_code,LSL,Loti: LESOTHO
+curr_code,LTL,Historic use: Lithuanian Litas: LITHUANIA
+curr_code,LVL,Historic use: Latvian Lats: LATVIA
+curr_code,LYD,Libyan Dinar: LIBYA
+curr_code,MAD,Moroccan Dirham: MOROCCO; WESTERN SAHARA
+curr_code,MDL,"Moldovan Leu: MOLDOVA, REPUBLIC OF"
+curr_code,MGA,Malagasy Ariary: MADAGASCAR
+curr_code,MKD,"Denar: MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF"
+curr_code,MMK,Kyat: MYANMAR
+curr_code,MNT,Tugrik: MONGOLIA
+curr_code,MOP,Pataca: MACAO
+curr_code,MRO,Historic use: Ouguiya: MAURITANIA
+curr_code,MRU,Ouguiya: MAURITANIA
+curr_code,MUR,Mauritius Rupee: MAURITIUS
+curr_code,MVR,Rufiyaa: MALDIVES
+curr_code,MWK,Malawi Kwacha: MALAWI
+curr_code,MXN,Mexican Peso: MEXICO
+curr_code,MXV,Mexican Unidad de Inversion (UDI): MEXICO
+curr_code,MYR,Malaysian Ringgit: MALAYSIA
+curr_code,MZN,Mozambique Metical: MOZAMBIQUE
+curr_code,NAD,Namibia Dollar: NAMIBIA
+curr_code,NGN,Naira: NIGERIA
+curr_code,NIO,Cordoba Oro: NICARAGUA
+curr_code,NOK,Norwegian Krone: BOUVET ISLAND; NORWAY; SVALBARD AND JAN MAYEN
+curr_code,NPR,Nepalese Rupee: NEPAL
+curr_code,NZD,New Zealand Dollar: COOK ISLANDS; NEW ZEALAND; NIUE; PITCAIRN; TOKELAU
+curr_code,OMR,Rial Omani: OMAN
+curr_code,PAB,Balboa: PANAMA
+curr_code,PEN,Sol: PERU
+curr_code,PGK,Kina: PAPUA NEW GUINEA
+curr_code,PHP,Philippine Peso: PHILIPPINES
+curr_code,PKR,Pakistan Rupee: PAKISTAN
+curr_code,PLN,Zloty: POLAND
+curr_code,PYG,Guarani: PARAGUAY
+curr_code,QAR,Qatari Rial: QATAR
+curr_code,RON,Romanian Leu: ROMANIA
+curr_code,RSD,Serbian Dinar: SERBIA
+curr_code,RUB,Russian Ruble: RUSSIAN FEDERATION
+curr_code,RWF,Rwanda Franc: RWANDA
+curr_code,SAR,Saudi Riyal: SAUDI ARABIA
+curr_code,SBD,Solomon Islands Dollar: SOLOMON ISLANDS
+curr_code,SCR,Seychelles Rupee: SEYCHELLES
+curr_code,SDG,Sudanese Pound: SUDAN
+curr_code,SEK,Swedish Krona: SWEDEN
+curr_code,SGD,Singapore Dollar: SINGAPORE
+curr_code,SHP,"Saint Helena Pound: SAINT HELENA, ASCENSION AND TRISTAN DA CUNHA"
+curr_code,SLL,Leone: SIERRA LEONE
+curr_code,SOS,Somali Shilling: SOMALIA
+curr_code,SRD,Surinam Dollar: SURINAME
+curr_code,SSP,South Sudanese Pound: SOUTH SUDAN
+curr_code,STD,Historic use: Dobra: SAO TOME AND PRINCIPE
+curr_code,STN,Dobra: SAO TOME AND PRINCIPE
+curr_code,SVC,El Salvador Colon: EL SALVADOR
+curr_code,SYP,Syrian Pound: SYRIAN ARAB REPUBLIC
+curr_code,SZL,Lilangeni: ESWATINI
+curr_code,THB,Baht: THAILAND
+curr_code,TJS,Somoni: TAJIKISTAN
+curr_code,TMT,Turkmenistan New Manat: TURKMENISTAN
+curr_code,TND,Tunisian Dinar: TUNISIA
+curr_code,TOP,Pa’anga: TONGA
+curr_code,TRY,Turkish Lira: TURKEY
+curr_code,TTD,Trinidad and Tobago Dollar: TRINIDAD AND TOBAGO
+curr_code,TWD,"New Taiwan Dollar: TAIWAN, PROVINCE OF CHINA"
+curr_code,TZS,"Tanzanian Shilling: TANZANIA, UNITED REPUBLIC OF"
+curr_code,UAH,Hryvnia: UKRAINE
+curr_code,UGX,Uganda Shilling: UGANDA
+curr_code,USD,"US Dollar: AMERICAN SAMOA; BONAIRE; SINT EUSTATIUS AND SABA; BRITISH INDIAN OCEAN TERRITORY; ECUADOR; EL SALVADOR; GUAM; HAITI; MARSHALL ISLANDS; MICRONESIA, FEDERATED STATES OF; NORTHERN MARIANA ISLANDS; PALAU; PANAMA; PUERTO RICO; TIMOR-LESTE; TURKS AND CAICOS ISLANDS; UNITED STATES; UNITED STATES MINOR OUTLYING ISLANDS; VIRGIN ISLANDS (BRITISH); VIRGIN ISLANDS (US)"
+curr_code,USN,US Dollar (Next day): UNITED STATES
+curr_code,USS,Historic use: US Dollar (Same day): UNITED STATES
+curr_code,UYI,Uruguay Peso en Unidades Indexadas (UI): URUGUAY
+curr_code,UYU,Peso Uruguayo: URUGUAY
+curr_code,UYW,Unidad Previsional: URUGUAY
+curr_code,UZS,Uzbekistan Sum: UZBEKISTAN
+curr_code,VEF,"Historic use: Bolivar: VENEZUELA, BOLIVARIAN REPUBLIC OF"
+curr_code,VES,"Bolívar Soberano: VENEZUELA, BOLIVARIAN REPUBLIC OF"
+curr_code,VND,Dong: VIET NAM
+curr_code,VUV,Vatu: VANUATU
+curr_code,WST,Tala: SAMOA
+curr_code,XAF,CFA Franc BEAC: CAMEROON; CENTRAL AFRICAN REPUBLIC; CHAD; CONGO; EQUATORIAL GUINEA; GABON
+curr_code,XAG,Silver: ZZ11_Silver
+curr_code,XAU,Gold: ZZ08_Gold
+curr_code,XBA,Bond Markets Unit European Composite Unit (EURCO): ZZ01_Bond Markets Unit European_EURCO
+curr_code,XBB,Bond Markets Unit European Monetary Unit (E.M.U.-6): ZZ02_Bond Markets Unit European_EMU-6
+curr_code,XBC,Bond Markets Unit European Unit of Account 9 (E.U.A.-9): ZZ03_Bond Markets Unit European_EUA-9
+curr_code,XBD,Bond Markets Unit European Unit of Account 17 (E.U.A.-17): ZZ04_Bond Markets Unit European_EUA-17
+curr_code,XCD,East Caribbean Dollar: ANGUILLA; ANTIGUA AND BARBUDA; DOMINICA; GRENADA; MONTSERRAT; SAINT KITTS AND NEVIS; SAINT LUCIA; SAINT VINCENT AND THE GRENADINES
+curr_code,XDR,SDR (Special Drawing Right): INTERNATIONAL MONETARY FUND (IMF)
+curr_code,XFU,Historic use: UIC-Franc: ZZ05_UIC-Franc
+curr_code,XOF,CFA Franc BCEAO: BENIN; BURKINA FASO; COTE D'IVOIRE; GUINEA-BISSAU; MALI; NIGER; SENEGAL; TOGO
+curr_code,XPD,Palladium: ZZ09_Palladium
+curr_code,XPF,CFP Franc: FRENCH POLYNESIA; NEW CALEDONIA; WALLIS AND FUTUNA
+curr_code,XPT,Platinum: ZZ10_Platinum
+curr_code,XSU,"Sucre: SISTEMA UNITARIO DE COMPENSACION REGIONAL DE PAGOS ""SUCRE"""
+curr_code,XUA,ADB Unit of Account: MEMBER COUNTRIES OF THE AFRICAN DEVELOPMENT BANK GROUP
+curr_code,XXX,The codes assigned for transactions where no currency is involved: ZZ07_No_Currency
+curr_code,YER,Yemeni Rial: YEMEN
+curr_code,ZAR,Rand: LESOTHO; NAMIBIA; SOUTH AFRICA
+curr_code,ZMW,Zambian Kwacha: ZAMBIA
+curr_code,ZWL,Zimbabwe Dollar: ZIMBABWE
+etr_type_of_sub_group,GIR1601,Constituent Entities
+etr_type_of_sub_group,GIR1602,Minority-Owned Subgroup
+etr_type_of_sub_group,GIR1603,Standalone MOCEs
+etr_type_of_sub_group,GIR1604,Investment Entities
+etr_type_of_sub_group,GIR1605,JV Group
+etr_type_of_sub_group,GIR1606,Stateless Constituent Entity
+etr_type_of_sub_group,GIR1607,Transitional CbCR Safe Harbour-Constituent Entities
+etr_type_of_sub_group,GIR1608,Transitional CbCR Safe Harbour- JV Group (specify which JV Group)
+etr_type_of_sub_group,GIR1609,Transitional UTPR Safe Harbour
+main_entity_p_eand_fte_basis,GIR1701,Article 3.4
+main_entity_p_eand_fte_basis,GIR1702,Article 3.5.3
+main_entity_p_eand_fte_basis,GIR1703,Article 3.5.1(a)
+main_entity_p_eand_fte_basis,GIR1704,Article 3.5.1(b)
+cross_border_adjustments,GIR1801,Article 3.2.3
+cross_border_adjustments,GIR1802,Article 3.2.7
+upe_adjustments_basis,GIR1901,Article 7.1.1 (a)(i)
+upe_adjustments_basis,GIR1902,Article 7.1.1 (a)(ii)
+upe_adjustments_basis,GIR1903,Article 7.1.1 (b)
+upe_adjustments_basis,GIR1904,Article 7.1.1 (c)
+upe_adjustments_basis,GIR1905,Article 7.2.1 (a)(i)
+upe_adjustments_basis,GIR1906,Article 7.2.1 (a)(ii)
+upe_adjustments_basis,GIR1907,Article 7.2.1 (a)(iii)
+upe_adjustments_basis,GIR1908,Article 7.2.1 (b)
+upe_adjustments_basis,GIR1909,Article 7.2.1 (c)
+upe_adjustments_basis,GIR1910,Article 7.2.2
+adjustment_item,GIR2001,Net Taxes Expense - Article 3.2.1 (a)
+adjustment_item,GIR2002,Excluded Dividends – Article 3.2.1 (b)
+adjustment_item,GIR2003,Excluded Equity Gain or Loss – Article 3.2.1 (c)
+adjustment_item,GIR2004,Included Revaluation Method Gain or Loss – Article 3.2.1 (d)
+adjustment_item,GIR2005,Gain or loss from disposition of assets and liabilities excluded under Article 6.3 – Article 3.2.1 (e)
+adjustment_item,GIR2006,Asymmetric Foreign Currency Gains or Losses – Article 3.2.1 (f)
+adjustment_item,GIR2007,Policy Disallowed Expenses – Article 3.2.1 (g)
+adjustment_item,GIR2008,Prior Period Errors – Article 3.2.1 (h)
+adjustment_item,GIR2009,Changes in Accounting Principles – Article 3.2.1 (h)
+adjustment_item,GIR2010,Accrued Pension Expense – Article 3.2.1 (i)
+adjustment_item,GIR2011,Debt releases - Article 3.2.1
+adjustment_item,GIR2012,Stock-based compensation – Article 3.2.2
+adjustment_item,GIR2013,Arm’s length adjustments – Article 3.2.3
+adjustment_item,GIR2014,Qualified Refundable Tax Credit or Marketable Transferable Tax Credit – Article 3.2.4
+adjustment_item,GIR2015,Election for Gains and losses using realisation principle – Article 3.2.5
+adjustment_item,GIR2016,Election for Adjusted Asset Gain – Article 3.2.6
+adjustment_item,GIR2017,Intragroup Financing Arrangement expense – Article 3.2.7
+adjustment_item,GIR2018,Election for intragroup transactions in same jurisdiction – Article 3.2.8
+adjustment_item,GIR2019,Insurance company taxes charged to policyholders – Article 3.2.9
+adjustment_item,GIR2020,Increase/decrease to equity attributed to Additional Tier One and Restricted Tier One Capital distributions paid/payable or received/receivable – Article 3.2.10
+adjustment_item,GIR2021,Constituent Entities joining and leaving an MNE Group – Article 3.2.11 and 6.2
+adjustment_item,GIR2022,Reduction of GloBE Income of the UPE that is a Flow-through Entity – Article 3.2.11 and 7.1
+adjustment_item,GIR2023,Reduction of GloBE Income of the UPE that is subject to a Deductible Dividend Regime – Article 3.2.11 and 7.2
+adjustment_item,GIR2024,Taxable Distribution Method election – Article 3.2.11 and 7.6
+adjustment_item,GIR2025,International Shipping Income – Article 3.3
+adjustment_item,GIR2026,Transactions between Constituent Entities – Article 9.1.3
+int_ship_category,GIR2101,Article 3.3.2.a
+int_ship_category,GIR2102,Article 3.3.2.b
+int_ship_category,GIR2103,Article 3.3.2.c
+int_ship_category,GIR2104,Article 3.3.2.d
+int_ship_category,GIR2105,Article 3.3.2.e
+int_ship_category,GIR2106,Article 3.3.2.f
+anc_ship_category,GIR2201,Article 3.3.3.a
+anc_ship_category,GIR2202,Article 3.3.3.b
+anc_ship_category,GIR2203,Article 3.3.3.c
+anc_ship_category,GIR2204,Article 3.3.3.d
+anc_ship_category,GIR2205,Article 3.3.3.e
+adjusted_basis,GIR2301,Article 4.3.2 (a)
+adjusted_basis,GIR2302,Article 4.3.2 (b)
+adjusted_basis,GIR2303,Article 4.3.2 (c)
+adjusted_basis,GIR2304,Article 4.3.2 (d)
+adjusted_basis,GIR2305,Article 4.3.2 (e)
+adjusted_basis,GIR2306,Article 4.3.3 (a)
+adjusted_basis,GIR2307,Article 4.3.3 (b)
+adjusted_basis,GIR2308,Article 4.3.4
+adjusted_basis,GIR2309,Article 4.3.2(c) – Blended CFC regime
+current_adjusted_tax,GIR2401,Covered Tax accrued as an expense in the profit before taxation in the financial accounts - Article 4.1.2 (a)
+current_adjusted_tax,GIR2402,Covered Taxes for uncertain tax position recorded as a reduction to Covered Taxes in prior year – Article 4.1.2 (c)
+current_adjusted_tax,GIR2403,Qualified Refundable Tax Credit or Marketable Transferable Tax Credits recorded as a reduction to current tax expense – Article 4.1.2 (d)
+current_adjusted_tax,GIR2404,Qualified Flow-through Tax Benefits of Qualified Ownership Interests – Article 3.2.1 (c)
+current_adjusted_tax,GIR2405,Current tax expense on income excluded from GloBE Income or Loss – Article 4.1.3 (a)
+current_adjusted_tax,GIR2406,"Non-Qualified Refundable Tax Credit, Non-Marketable Transferable Tax Credit or Other Tax Credits not recorded as a reduction to current tax expense – Article 4.1.3 (b)"
+current_adjusted_tax,GIR2407,"Covered Taxes refunded or credited (except for any Qualified Refundable Tax Credit, or Marketable Transferable Tax Credits) not treated as an adjustment to current tax expense – Article 4.1.3 (c)"
+current_adjusted_tax,GIR2408,Current tax expense related to uncertain tax position– Article 4.1.3 (d)
+current_adjusted_tax,GIR2409,Current tax expense not expected to be paid within three years – Article 4.1.3 (e)
+current_adjusted_tax,GIR2410,Post-filing adjustments – Article 4.6.1.
+current_adjusted_tax,GIR2411,Covered Taxes relating to Net Asset Gain or Net Asset Loss – Article 3.2.6
+current_adjusted_tax,GIR2412,Reduction of Covered Taxes of the UPE that is a Flow-through Entity – Article 7.1
+current_adjusted_tax,GIR2413,Covered Taxes for GloBE Income of the UPE that is reduced under a Deductible Dividend Regime – Article 7.2.2
+current_adjusted_tax,GIR2414,Deemed Distribution Tax – Article 7.3
+current_adjusted_tax,GIR2415,Taxable Distribution Method election – Article 7.6 (b)
+current_adjusted_tax,GIR2416,Total Deferred Tax Adjustment Amount – Article 4.4.1(b)
+current_adjusted_tax,GIR2417,Increase or decrease in Covered Taxes recorded in equity or Other Comprehensive Income relating to amounts included in GloBE Income or Loss that will be subject to tax under local tax rules – Article 4.1.1 (c)
+deferred_adjusted_tax,GIR2501,Deferred tax expense related to items excluded from GloBE Income or Loss – Article 4.4.1 (a)
+deferred_adjusted_tax,GIR2502,Deferred tax expense related to Disallowed Accruals– Article 4.4.1 (b)
+deferred_adjusted_tax,GIR2503,Deferred tax expense related to Unclaimed Accruals – Article 4.4.1 (b)
+deferred_adjusted_tax,GIR2504,Valuation adjustment or accounting recognition adjustment related to a deferred tax asset – Article 4.4.1 (c)
+deferred_adjusted_tax,GIR2505,Deferred tax expense arising from a re-measurement related to changes in the tax rate – Article 4.4.1 (d)
+deferred_adjusted_tax,GIR2506,Deferred tax expense related to the generation and use of tax credits – Article 4.4.1 (e)
+deferred_adjusted_tax,GIR2507,Substitute Loss Carry Forward DTA or deemed Substitute Loss Carry Forward DTA – Article 4.4.1 (e)
+deferred_adjusted_tax,GIR2508,Disallowed Accruals or Unclaimed Accruals paid during the fiscal year – Article 4.4.2 (a)
+deferred_adjusted_tax,GIR2509,Recapture Deferred Tax Liability paid during the fiscal year– Article 4.4.2 (b)
+deferred_adjusted_tax,GIR2510,Recognition of a loss Deferred Tax Asset not included in the financials – Article 4.4.2 (c)
+deferred_adjusted_tax,GIR2511,Deferred tax expense adjustment resulting from a reduction to a tax rate – Article 4.6.2
+deferred_adjusted_tax,GIR2512,Deferred tax expense adjustment resulting from an increase to a tax rate – Article 4.6.3
+deferred_adjusted_tax,GIR2513,Constituent Entities joining and leaving an MNE Group – Article 6.2
+deferred_adjusted_tax,GIR2514,Deferred tax expense of the UPE that is a Flow-through Entity – Article 7.1
+deferred_adjusted_tax,GIR2515,Deferred tax expense of the UPE that is subject to Deductible Dividend Regime – Article 7.2
+deferred_adjusted_tax,GIR2516,Deferred tax adjustment resulting from transactions between Constituent Entities – Article 9.1.3
+non_art_415,GIR2601,Article 3.2.6
+non_art_415,GIR2602,Article 4.4.4
+non_art_415,GIR2603,Article 4.6.1
+non_art_415,GIR2604,Article 4.6.4
+non_art_415,GIR2605,Article 7.3.5
+non_art_415,GIR2606,Article 7.3.7
+final_adjusted_tax,GIR2701,Covered Tax accrued as an expense in the profit before taxation in the financial accounts - Article 4.1.2 (a)
+final_adjusted_tax,GIR2702,GloBE Loss Deferred Tax Asset established under Article 4.5.1 or used – Article 4.1.2 (b) combined with Article 4.5.3
+final_adjusted_tax,GIR2703,Covered Taxes for uncertain tax position recorded as a reduction to Covered Taxes in prior year – Article 4.1.2 (c)
+final_adjusted_tax,GIR2704,Qualified Refundable Tax Credit or Marketable Transferable Tax Credits recorded as a reduction to current tax expense – Article 4.1.2 (d)
+final_adjusted_tax,GIR2705,Qualified Flow-through Tax Benefits of Qualified Ownership Interests – Article 3.2.1 (c)
+final_adjusted_tax,GIR2706,Current tax expense on income excluded from GloBE Income or Loss – Article 4.1.3 (a)
+final_adjusted_tax,GIR2707,"Non-Qualified Refundable Tax Credit, Non-Marketable Transferable Tax Credit or Other Tax Credits not recorded as a reduction to current tax expense – Article 4.1.3 (b)"
+final_adjusted_tax,GIR2708,"Covered Taxes refunded or credited (except for any Qualified Refundable Tax Credit, or Marketable Transferable Tax Credits) not treated as an adjustment to current tax expense – Article 4.1.3 (c)"
+final_adjusted_tax,GIR2709,Current tax expense related to uncertain tax position– Article 4.1.3 (d)
+final_adjusted_tax,GIR2710,Current tax expense not expected to be paid within three years – Article 4.1.3 (e)
+final_adjusted_tax,GIR2711,Post-filing adjustments – Article 4.6.1.
+final_adjusted_tax,GIR2712,Covered Taxes relating to Net Asset Gain or Net Asset Loss – Article 3.2.6
+final_adjusted_tax,GIR2713,Reduction of Covered Taxes of the UPE that is a Flow-through Entity – Article 7.1
+final_adjusted_tax,GIR2714,Covered Taxes for GloBE Income of the UPE that is reduced under a Deductible Dividend Regime – Article 7.2.2
+final_adjusted_tax,GIR2715,Deemed Distribution Tax – Article 7.3
+final_adjusted_tax,GIR2716,Taxable Distribution Method election – Article 7.6 (b)
+final_adjusted_tax,GIR2717,Total Deferred Tax Adjustment Amount – Article 4.4.1(b)
+final_adjusted_tax,GIR2718,Increase or decrease in Covered Taxes recorded in equity or Other Comprehensive Income relating to amounts included in GloBE Income or Loss that will be subject to tax under local tax rules – Article 4.1.1 (c)
+final_adjusted_tax,GIR2719,Excess Negative Tax Expense Carry Forward generated – Article 4.1.5 and 5.2.1
+final_adjusted_tax,GIR2720,Decrease in Covered Taxes (but not below zero) by the remaining balance of the Excess Negative Tax Expense Carry-forward – Article 4.1.5 and 5.2.1
+ex_type_of_entity,GIR2801,Governmental Entity
+ex_type_of_entity,GIR2802,International Organisation
+ex_type_of_entity,GIR2803,Non-profit Organisation
+ex_type_of_entity,GIR2804,Pension Fund
+ex_type_of_entity,GIR2805,Pension Fund that is not a Pension Services Entity
+deminimis_simple_basis,GIR2901,De minimis election
+deminimis_simple_basis,GIR2902,Simplified Calculation for Non-material Constituent Entities
+currency,GIR3101,Local
+currency,GIR3102,CFS
+language_code,AA,Afar
+language_code,AB,Abkhazian
+language_code,AF,Afrikaans
+language_code,AK,Akan
+language_code,SQ,Albanian
+language_code,AM,Amharic
+language_code,AR,Arabic
+language_code,AN,Aragonese
+language_code,HY,Armenian
+language_code,AS,Assamese
+language_code,AV,Avaric
+language_code,AE,Avestan
+language_code,AY,Aymara
+language_code,AZ,Azerbaijani
+language_code,BA,Bashkir
+language_code,BM,Bambara
+language_code,EU,Basque
+language_code,BE,Belarusian
+language_code,BN,Bengali
+language_code,BH,Bihari languages
+language_code,BI,Bislama
+language_code,BS,Bosnian
+language_code,BR,Breton
+language_code,BG,Bulgarian
+language_code,MY,Burmese
+language_code,CA,Catalan; Valencian
+language_code,CH,Chamorro
+language_code,CE,Chechen
+language_code,ZH,Chinese
+language_code,CU,Church Slavic; Old Slavonic; Church Slavonic; Old Bulgarian; Old Church Slavonic
+language_code,CV,Chuvash
+language_code,KW,Cornish
+language_code,CO,Corsican
+language_code,CR,Cree
+language_code,CS,Czech
+language_code,DA,Danish
+language_code,DV,Divehi; Dhivehi; Maldivian
+language_code,NL,Dutch; Flemish
+language_code,DZ,Dzongkha
+language_code,EN,English
+language_code,EO,Esperanto
+language_code,ET,Estonian
+language_code,EE,Ewe
+language_code,FO,Faroese
+language_code,FJ,Fijian
+language_code,FI,Finnish
+language_code,FR,French
+language_code,FY,Western Frisian
+language_code,FF,Fulah
+language_code,KA,Georgian
+language_code,DE,German
+language_code,GD,Gaelic; Scottish Gaelic
+language_code,GA,Irish
+language_code,GL,Galician
+language_code,GV,Manx
+language_code,EL,Greek
+language_code,GN,Guarani
+language_code,GU,Gujarati
+language_code,HT,Haitian; Haitian Creole
+language_code,HA,Hausa
+language_code,HE,Hebrew
+language_code,HZ,Herero
+language_code,HI,Hindi
+language_code,HO,Hiri Motu
+language_code,HR,Croatian
+language_code,HU,Hungarian
+language_code,IG,Igbo
+language_code,IS,Icelandic
+language_code,IO,Ido
+language_code,II,Sichuan Yi; Nuosu
+language_code,IU,Inuktitut
+language_code,IE,Interlingue; Occidental
+language_code,IA,Interlingua (International Auxiliary Language Association)
+language_code,ID,Indonesian
+language_code,IK,Inupiaq
+language_code,IT,Italian
+language_code,JV,Javanese
+language_code,JA,Japanese
+language_code,KL,Kalaallisut; Greenlandic
+language_code,KN,Kannada
+language_code,KS,Kashmiri
+language_code,KR,Kanuri
+language_code,KK,Kazakh
+language_code,KM,Central Khmer
+language_code,KI,Kikuyu; Gikuyu
+language_code,RW,Kinyarwanda
+language_code,KY,Kirghiz; Kyrgyz
+language_code,KV,Komi
+language_code,KG,Kongo
+language_code,KO,Korean
+language_code,KJ,Kuanyama; Kwanyama
+language_code,KU,Kurdish
+language_code,LO,Lao
+language_code,LA,Latin
+language_code,LV,Latvian
+language_code,LI,Limburgan; Limburger; Limburgish
+language_code,LN,Lingala
+language_code,LT,Lithuanian
+language_code,LB,Luxembourgish; Letzeburgesch
+language_code,LU,Luba-Katanga
+language_code,LG,Ganda
+language_code,MK,Macedonian
+language_code,MH,Marshallese
+language_code,ML,Malayalam
+language_code,MI,Maori
+language_code,MR,Marathi
+language_code,MS,Malay
+language_code,MG,Malagasy
+language_code,MT,Maltese
+language_code,MN,Mongolian
+language_code,NA,Nauru
+language_code,NV,Navajo; Navaho
+language_code,NR,"Ndebele, South; South Ndebele"
+language_code,ND,"Ndebele, North; North Ndebele"
+language_code,NG,Ndonga
+language_code,NE,Nepali
+language_code,NN,"Norwegian Nynorsk; Nynorsk, Norwegian"
+language_code,NB,"Bokmål, Norwegian; Norwegian Bokmål"
+language_code,NO,Norwegian
+language_code,NY,Chichewa; Chewa; Nyanja
+language_code,OC,Occitan; Provençal
+language_code,OJ,Ojibwa
+language_code,OR,Oriya
+language_code,OM,Oromo
+language_code,OS,Ossetian; Ossetic
+language_code,PA,Panjabi; Punjabi
+language_code,FA,Persian
+language_code,PI,Pali
+language_code,PL,Polish
+language_code,PT,Portuguese
+language_code,PS,Pushto; Pashto
+language_code,QU,Quechua
+language_code,RM,Romansh
+language_code,RO,Romanian; Moldavian; Moldovan
+language_code,RN,Rundi
+language_code,RU,Russian
+language_code,SG,Sango
+language_code,SA,Sanskrit
+language_code,SI,Sinhala; Sinhalese
+language_code,SK,Slovak
+language_code,SL,Slovenian
+language_code,SE,Northern Sami
+language_code,SM,Samoan
+language_code,SN,Shona
+language_code,SD,Sindhi
+language_code,SO,Somali
+language_code,ST,"Sotho, Southern"
+language_code,ES,Spanish; Castilian
+language_code,SC,Sardinian
+language_code,SR,Serbian
+language_code,SS,Swati
+language_code,SU,Sundanese
+language_code,SW,Swahili
+language_code,SV,Swedish
+language_code,TY,Tahitian
+language_code,TA,Tamil
+language_code,TT,Tatar
+language_code,TE,Telugu
+language_code,TG,Tajik
+language_code,TL,Tagalog
+language_code,TH,Thai
+language_code,BO,Tibetan
+language_code,TI,Tigrinya
+language_code,TO,Tonga (Tonga Islands)
+language_code,TN,Tswana
+language_code,TS,Tsonga
+language_code,TK,Turkmen
+language_code,TR,Turkish
+language_code,TW,Twi
+language_code,UG,Uighur; Uyghur
+language_code,UK,Ukrainian
+language_code,UR,Urdu
+language_code,UZ,Uzbek
+language_code,VE,Venda
+language_code,VI,Vietnamese
+language_code,VO,Volapük
+language_code,CY,Welsh
+language_code,WA,Walloon
+language_code,WO,Wolof
+language_code,XH,Xhosa
+language_code,YI,Yiddish
+language_code,YO,Yoruba
+language_code,ZA,Zhuang; Chuang
+language_code,ZU,Zulu
+ms_country_code,AT,
+ms_country_code,BE,
+ms_country_code,BG,
+ms_country_code,CY,
+ms_country_code,CZ,
+ms_country_code,DK,
+ms_country_code,EE,
+ms_country_code,FI,
+ms_country_code,FR,
+ms_country_code,DE,
+ms_country_code,GR,
+ms_country_code,HU,
+ms_country_code,HR,
+ms_country_code,IE,
+ms_country_code,IT,
+ms_country_code,LV,
+ms_country_code,LT,
+ms_country_code,LU,
+ms_country_code,MT,
+ms_country_code,NL,
+ms_country_code,PL,
+ms_country_code,PT,
+ms_country_code,RO,
+ms_country_code,SK,
+ms_country_code,SI,
+ms_country_code,ES,
+ms_country_code,SE,
+y_n,yes,
+y_n,no,
+oecd_name_type,OECD201,SMFAliasOrOther
+oecd_name_type,OECD202,indiv (individual)
+oecd_name_type,OECD203,alias (alias)
+oecd_name_type,OECD204,nick (nickname)
+oecd_name_type,OECD205,aka (also known as)
+oecd_name_type,OECD206,dba (doing business as)
+oecd_name_type,OECD207,legal (legal name)
+oecd_name_type,OECD208,atbirth (name at birth)
+oecd_legal_address_type,OECD301,residentialOrBusiness
+oecd_legal_address_type,OECD302,residential
+oecd_legal_address_type,OECD303,business
+oecd_legal_address_type,OECD304,registeredOffice
+oecd_legal_address_type,OECD305,unspecified
