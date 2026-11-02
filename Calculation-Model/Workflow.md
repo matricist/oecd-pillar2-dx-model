@@ -12,13 +12,13 @@ A document index arranged in the workflow order.
 
 1. [Ownership Interest](<Ownership Interest.md>)
 2. [Controlling Interest](<Controlling Interest.md>)
-3. [Identifying Joint Venture Groups](<Identifying Joint Venture Groups.md>)
+3. [JV](<JV.md>)
 4. [Transitional CbCR Safe Harbours Test](<01.Transitional CbCR Safe Harbours Test.md>)
 
 ## 3. Simplified ETR Safe Harbour Test
 
 1. [Taxing Rights](<Taxing Rights.md>)
-2. [Identifying Minority-Owned SubGroups](<Identifying Minority-Owned-SubGroups.md>)
+2. [Identifying Minority-Owned SubGroups](<MOSG.md>)
 3. [Simplified ETR Safe Harbour Test](<02.Simplified ETR Safe Harbour Test.md>)
 
 ## 4. Top-up Tax Calculation
