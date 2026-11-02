@@ -6,6 +6,8 @@ $$
 \boxed{\mathbf{C}_0\odot\mathbf{C}_0^{\mathsf T}=\mathbf{0}}
 $$
 
+Each column of $\mathbf{C}_0$ contains at most one `True`.
+
 ## Domain Validation
 
 - No circular control.
