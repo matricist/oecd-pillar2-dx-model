@@ -5,7 +5,6 @@ A document index arranged in the workflow order.
 ## 1. Foundations
 
 - [Abstract](Abstract.md)
-- [Definition](Definition.md)
 - [Relations](Relations.md)
 
 ## 2. Transitional CbCR Safe Harbours Test

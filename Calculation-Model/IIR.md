@@ -10,7 +10,6 @@
 - Relations.JvEntities
 - Relations.DirectOwnershipInterests
 - Relations.TopupTaxes
-- Common Entity indicator vectors from [Definition.md](Definition.md#common-entity-indicator-vectors).
 - The direct and indirect Ownership Interest function $f(\mathbf{A})$ from [Ownership Interest.md](<Ownership Interest.md#exports>).
 - The current-year IIR payability matrix $\mathbf{Iir\text{-}payable}$ from [Taxing Rights.md](<Taxing Rights.md#iir-payability>).
 
@@ -67,7 +66,15 @@ Bold uppercase symbols denote matrices, bold lowercase names denote column vecto
 | $\mathcal{S}_j$ | Indices of Parent Entities that are IIR-payable for Entity $j$. |
 | $i,j,k,q,g$ | Entity indices, derivation step, or JV Group identifier. |
 
-The operator $\operatorname{diag}$ follows [Definition.md](Definition.md#mathematical-notation): for a square matrix it retains only the diagonal entries, and for a vector it constructs a diagonal matrix.
+The operator $\operatorname{diag}$ retains only the diagonal entries of a square matrix, or constructs a diagonal matrix from a vector. $\odot$ denotes element-wise multiplication; comparisons and logical operations are element-wise.
+
+Construct Entity indicator vectors in `Relations.CompanyEntities` order, matching `fiscal_year` and `entity_id`; a missing row gives `False`:
+
+- $\mathbf{ce}$, $\mathbf{ee}$, and $\mathbf{ie}$ identify rows in `Relations.ConstituentEntities`, `Relations.ExcludedEntities`, and `Relations.InvestmentEntities`, respectively.
+- $\mathbf{group\text{-}upe}$ identifies `ConstituentEntities.is_upe == true`, independently of later calculation exclusions.
+- $\mathbf{jv}$ and $\mathbf{jvsub}$ identify `JvEntities.is_jv == true` and `JvEntities.is_jv_sub == true`, respectively.
+
+These indicators describe Entity characteristics before calculation-specific exclusions; CE and EE indicators must not overlap. $\mathbf{X}_0^{\mathrm{profit}}$ uses `Relations.DirectOwnershipInterests.direct_ownership_profit_ratio`, with owning Entities on rows and Entities owned on columns.
 
 ## Local Matrix Functions
 
