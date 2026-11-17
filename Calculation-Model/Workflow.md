@@ -4,7 +4,6 @@ A document index arranged in the workflow order.
 
 ## 1. Foundations
 
-- [Abstract](Abstract.md)
 - [Example](Example.md)
 
 ## 2. Transitional CbCR Safe Harbours Test
@@ -13,26 +12,22 @@ A document index arranged in the workflow order.
 2. [Controlling Interest](<Controlling Interest.md>)
 3. [JV](<JV.md>)
 4. [TCSH Group](<Group.md#tcsh-group>)
-5. [Transitional CbCR Safe Harbours Test](<01.Transitional CbCR Safe Harbours Test.md>)
+5. [Transitional CbCR Safe Harbours Test](<Transitional CbCR Safe Harbours Test.md>)
 
-## 3. Simplified ETR Safe Harbour Test
+## 3. Top-up Tax Calculation
 
-1. [Taxing Rights](<Taxing Rights.md>)
-2. [Identifying Minority-Owned SubGroups](<MOSG.md>)
-3. [Simplified ETR Safe Harbour Test](<02.Simplified ETR Safe Harbour Test.md>)
-
-## 4. Top-up Tax Calculation
-
-1. [GloBE De Minimis](<GloBE De Minimis.md>)
+1. [Identifying Minority-Owned SubGroups](<MOSG.md>)
 2. [ETR Calculation Group](<Group.md#etr-calculation-group>)
-3. [Top-up Tax Calculation](<03.Top-up Tax Calculation.md>)
+3. GloBE De Minimis — document pending
+4. [Top-up Tax Calculation](<03.Top-up Tax Calculation.md>)
 
-## 5. Applying IIR
+## 4. Applying IIR
 
-1. Side by Side Safe harbour - document pending
-2. [IIR](IIR.md)
+1. Side by Side Safe harbour — document pending
+2. [Taxing Rights](<Taxing Rights.md>)
+3. [IIR](IIR.md)
 
-## 6. Applying UTPR
+## 5. Applying UTPR
 
 1. UTPR Safe Harbour and UPE Safe Harbour — document pending
 2. [UTPR](05.UTPR.md)

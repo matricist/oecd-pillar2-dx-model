@@ -1,76 +1,74 @@
-# TCSH Data Matrix
+# Inputs
 
-## Entity Inputs
+All vectors are indexed by the $N_{\mathrm{TCSH}}$ Entities or the $M_{\mathrm{TCSH}}$ Tested Jurisdictions of the [TCSH Group](<Group.md#tcsh-group>).
 
-Receive the following adjusted values as inputs for each of the $N_{\mathrm{TCSH}}$ Entities in scope of the [TCSH Group](<Group.md#tcsh-group>):
-
-$$
-\mathbf{Data}_{\mathrm{TCSH}}^{\text{Entity}}
-\in\mathbb{R}^{N_{\mathrm{TCSH}}\times4}.
-$$
-
-Columns, in order:
-
-1. Adjusted CbCR Revenue
-2. Adjusted CbCR PBT
-3. Adjusted Tax Expense
-4. SBIE
-
-Each adjusted value is the reported amount plus signed adjustments; a positive adjustment increases the value and a negative adjustment decreases it:
-
-| Value | Reported amount | Adjustments |
+| Symbol | Type | Meaning |
 | --- | --- | --- |
-| Adjusted CbCR Revenue | CbCR Revenue | Investment Entity |
-| Adjusted CbCR PBT | CbCR PBT | Net Unrealised Fair Value Loss, hybrid arbitrage, Investment Entity, other required adjustments |
-| Adjusted Tax Expense | Income tax expense | Non-Covered Taxes, uncertain tax positions, hybrid arbitrage, Investment Entity, disallowed deferred tax expense, other required adjustments |
-| SBIE | — | Derived from Eligible Payroll Costs and the carrying value of Eligible Tangible Assets, both non-negative |
+| $\mathbf{G}_{\mathrm{TCSH}}$ | $\{0,1\}^{M_{\mathrm{TCSH}}\times N_{\mathrm{TCSH}}}$ | Tested Jurisdictions on rows, Entities on columns, from [TCSH Group](<Group.md#tcsh-group>) |
+| $\mathbf{rev},\mathbf{pbt},\mathbf{tax}$ | $\mathbb{R}^{N_{\mathrm{TCSH}}}$ | CbCR Revenue, CbCR PBT, and income tax expense |
+| $\mathbf{Adj}_{R},\mathbf{Adj}_{P},\mathbf{Adj}_{T}$ | $\mathbb{R}^{N_{\mathrm{TCSH}}\times K}$ | Signed adjustments to the three amounts, one column per adjustment |
+| $\mathbf{payroll},\mathbf{tangible}$ | $\mathbb{R}_{\ge0}^{N_{\mathrm{TCSH}}}$ | Eligible Payroll Costs and carrying value of Eligible Tangible Assets |
+| $\rho_{P},\rho_{A}$ | $[0,1]$ | Substance-based Income Exclusion rates of the Fiscal Year |
+| $d_{R},d_{P}$ | $\mathbb{R}$ | De minimis thresholds for revenue and PBT |
+| $\tau$ | $[0,1]$ | Simplified ETR threshold of the Fiscal Year |
+| $\mathbf{elected},\mathbf{qualified\text{-}cbcr},\mathbf{existed}$ | $\{0,1\}^{M_{\mathrm{TCSH}}}$ | Election made, Qualified CbC Report available, Tested Jurisdiction exists |
 
-The Net Unrealised Fair Value Loss is given as a non-negative amount: the net loss from fair-value changes in Ownership Interests other than Portfolio Shareholdings, including impairment losses and reversals.
+The adjustment columns are:
 
-## Tested Jurisdiction Aggregation
+| Matrix | Columns |
+| --- | --- |
+| $\mathbf{Adj}_{R}$ | Investment Entity |
+| $\mathbf{Adj}_{P}$ | Net Unrealised Fair Value Loss, hybrid arbitrage, Investment Entity, other |
+| $\mathbf{Adj}_{T}$ | Non-Covered Taxes, uncertain tax positions, hybrid arbitrage, Investment Entity, disallowed deferred tax expense, other |
 
-$\mathbf{G}_{\mathrm{TCSH}}\in\{0,1\}^{M_{\mathrm{TCSH}}\times N_{\mathrm{TCSH}}}$ is the membership matrix for $M_{\mathrm{TCSH}}$ Tested Jurisdictions: rows represent Tested Jurisdictions, columns represent Entities, and an entry is 1 when the Entity belongs to that Tested Jurisdiction, and 0 otherwise.
+A positive entry increases the amount. The Net Unrealised Fair Value Loss is entered as a non-negative amount.
 
-$\mathbf{G}_{\mathrm{TCSH}}$ is constructed in [TCSH Group](<Group.md#tcsh-group>).
+# Calculation
 
-$$
-\boxed{
-\displaystyle
-\mathbf{Data}_{\mathrm{TCSH}}^{\text{TJ}}
-=
-\mathbf{G}_{\mathrm{TCSH}}\times\mathbf{Data}_{\mathrm{TCSH}}^{\text{Entity}}
-}
-$$
-
-The result is an $M_{\mathrm{TCSH}}\times4$ matrix containing the four aggregate values for each Tested Jurisdiction, in the same column order.
-
-## Tests
-
-For each row of $\mathbf{Data}_{\mathrm{TCSH}}^{\text{TJ}}$, let $r,p,t,s$ denote the four values, respectively, with SBIE $s\ge0$. The DM thresholds $d_R,d_P$ and SETR threshold $\tau$ are given.
-
-1. **PBT check:** If $p\le0$, pass under RP; otherwise continue to step 2.
-2. **DM:** If $(r<d_R)\land(p<d_P)$, pass; otherwise continue to step 3.
-3. **SETR or RP:** If $(t\ge\tau p)\lor(p-s\le0)$, pass; otherwise fail.
+**Entity data**
 
 $$
-\boxed{\text{pass}=\text{DM}\lor\text{SETR}\lor\text{RP}}
+\mathbf{Data}_{\mathrm{TCSH}}^{\text{Entity}}:=
+\begin{pmatrix}
+\mathbf{rev}+\mathbf{Adj}_{R}\times\mathbf{1}&
+\mathbf{pbt}+\mathbf{Adj}_{P}\times\mathbf{1}&
+\mathbf{tax}+\mathbf{Adj}_{T}\times\mathbf{1}&
+\rho_{P}\,\mathbf{payroll}+\rho_{A}\,\mathbf{tangible}
+\end{pmatrix}
 $$
 
-## Application
+The four columns are Adjusted CbCR Revenue, Adjusted CbCR PBT, Adjusted Tax Expense, and SBIE.
 
-Passing a test is not sufficient for the safe harbour to apply. For each Tested Jurisdiction and Fiscal Year $y$:
-
-$$
-\boxed{\text{applied}_y=\text{elected}_y\land\text{preconditions-met}_y\land\text{pass}_y}
-$$
-
-- $\text{elected}$: the MNE Group elects the safe harbour for the Tested Jurisdiction.
-- $\text{preconditions-met}$ is `False` when the Tested Jurisdiction's CbC Report is not a Qualified CbC Report or $\text{once-out}_{y-1}$ is `True`.
-
-**Once out, always out:**
+**Tested Jurisdiction aggregation**
 
 $$
-\text{once-out}_y=\text{once-out}_{y-1}\lor(\text{existed}_y\land\neg\text{applied}_y)
+\begin{pmatrix}\mathbf{r}&\mathbf{p}&\mathbf{t}&\mathbf{s}\end{pmatrix}
+:=\mathbf{G}_{\mathrm{TCSH}}\times\mathbf{Data}_{\mathrm{TCSH}}^{\text{Entity}}
 $$
 
-where $\text{existed}_y$ is `True` when the Tested Jurisdiction existed in Fiscal Year $y$.
+**Tests**
+
+$$
+\begin{aligned}
+\mathbf{dm}&:=(\mathbf{r}<d_{R})\land(\mathbf{p}<d_{P})\\
+\mathbf{setr}&:=(\mathbf{p}>0)\land(\mathbf{t}\ge\tau\,\mathbf{p})\\
+\mathbf{rp}&:=\mathbf{p}\le\mathbf{s}\\
+\mathbf{pass}&:=\mathbf{dm}\lor\mathbf{setr}\lor\mathbf{rp}
+\end{aligned}
+$$
+
+$\mathbf{dm}$ is the de minimis test, $\mathbf{setr}$ the Simplified ETR test, and $\mathbf{rp}$ the routine profits test. A Tested Jurisdiction with $\mathbf{p}\le0$ passes under $\mathbf{rp}$, since $\mathbf{s}\ge0$.
+
+**Application**
+
+For Fiscal Year $y$:
+
+$$
+\begin{aligned}
+\mathbf{preconditions\text{-}met}_{y}&:=\mathbf{qualified\text{-}cbcr}_{y}\land\neg\mathbf{once\text{-}out}_{y-1}\\
+\mathbf{applied}_{y}&:=\mathbf{elected}_{y}\land\mathbf{preconditions\text{-}met}_{y}\land\mathbf{pass}_{y}\\
+\mathbf{once\text{-}out}_{y}&:=\mathbf{once\text{-}out}_{y-1}\lor(\mathbf{existed}_{y}\land\neg\mathbf{applied}_{y})
+\end{aligned}
+$$
+
+$\mathbf{applied}$ identifies the Tested Jurisdictions to which the safe harbour applies. A Tested Jurisdiction that existed but did not apply it can never apply it again.
