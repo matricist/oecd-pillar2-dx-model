@@ -96,6 +96,12 @@ $$
 \mathbf{member}:=\mathbf{ce}\lor\mathbf{jv}\lor\mathbf{jvsub}.
 $$
 
+A Parent Entity can be payable only for an Entity in which it holds a direct or indirect Ownership Interest. With $\mathbf{Y}:=f(\mathbf{X}_0)$ calculated on the full ownership graph:
+
+$$
+\mathbf{Own}:=(\mathbf{Y}>0)\land\neg\mathbf{I}_N.
+$$
+
 The basic current-year payability conditions are:
 
 $$
@@ -104,11 +110,12 @@ $$
 \left[\begin{aligned}
 &\bigl(\operatorname{diag}(\mathbf{iir})\times\mathbf{diff\text{-}jur}\bigr)\\
 &\lor\bigl((\mathbf{dom\text{-}iir}\land\mathbf{iir})\times\mathbf{1}_N^T\bigr)
-\end{aligned}\right]\times\operatorname{diag}(\mathbf{member})
+\end{aligned}\right]\times\operatorname{diag}(\mathbf{member})\\
+\land\;\mathbf{Own}
 \end{gathered}
 $$
 
-This requires the Parent Entity's jurisdiction to have an IIR and, for a domestic low-taxed Entity, to apply that IIR domestically.
+This requires the Parent Entity to hold an Ownership Interest in the Entity, its jurisdiction to have an IIR and, for a domestic low-taxed Entity, to apply that IIR domestically.
 
 Restrict the rows to UPEs and IPEs, and separately to POPEs:
 

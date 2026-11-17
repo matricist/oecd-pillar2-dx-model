@@ -41,11 +41,13 @@ flowchart TD
     UPE -->|20%| IE3
     EE -->|25%| S
     A -->|100%| B
-    B -->|100%| C
+    B -->|90%| C
+    C -->|10%| C
     B -->|100%| ST
     B -.->|50%| JV
     C -->|100%| PE
-    C -->|100%| IE1
+    C -->|60%| IE1
+    B -.->|40%| IE1
     JV -->|30%| JS2
     JV -->|100%| JS1
     P1 -->|80%| P2
@@ -53,7 +55,102 @@ flowchart TD
     P3 -->|100%| IE2
 ```
 
-A solid arrow is a direct Ownership Interest held together with direct control; the dashed arrow is an Ownership Interest without control. Interests not shown are held outside the group. JV is reported under the equity method and has no controller.
+A solid arrow is a direct Ownership Interest held together with direct control; a dashed arrow is an Ownership Interest without control. The arrow from C to itself is treasury shares. Interests not shown are held outside the group. JV is reported under the equity method and has no controller.
+
+# Matrices
+
+Rows and columns follow the Entity index $i$ in [Entities](#entities). Rows are owning or controlling Entities; blank cells are 0.
+
+**Direct Ownership Interest matrix** $\mathbf{X}_0$
+
+| | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| **1 UPE** |  | 1 | 1 |  |  |  |  |  |  |  |  | 0.3 |  |  |  |  | 0.2 |
+| **2 EE** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0.25 |  |
+| **3 A** |  |  |  | 1 |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **4 B** |  |  |  |  | 0.9 |  | 0.4 | 1 | 0.5 |  |  |  |  |  |  |  |  |
+| **5 C** |  |  |  |  | 0.1 | 1 | 0.6 |  |  |  |  |  |  |  |  |  |  |
+| **6 PE** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **7 IE1** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **8 ST** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **9 JV** |  |  |  |  |  |  |  |  |  | 1 | 0.3 |  |  |  |  |  |  |
+| **10 JS1** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **11 JS2** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **12 P1** |  |  |  |  |  |  |  |  |  |  |  |  | 0.8 |  |  |  |  |
+| **13 P2** |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 |  |  |  |
+| **14 P3** |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 |  |  |
+| **15 IE2** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **16 S** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **17 IE3** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+
+**Direct and indirect Ownership Interest matrix** $\mathbf{Y}=f(\mathbf{X}_0)$
+
+| | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| **1 UPE** |  | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 0.5 | 0.5 | 0.15 | 0.3 | 0.24 | 0.24 | 0.24 | 0.25 | 0.2 |
+| **2 EE** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0.25 |  |
+| **3 A** |  |  |  | 1 | 1 | 1 | 1 | 1 | 0.5 | 0.5 | 0.15 |  |  |  |  |  |  |
+| **4 B** |  |  |  |  | 1 | 1 | 1 | 1 | 0.5 | 0.5 | 0.15 |  |  |  |  |  |  |
+| **5 C** |  |  |  |  | 0.1 | 1 | 0.6 |  |  |  |  |  |  |  |  |  |  |
+| **6 PE** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **7 IE1** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **8 ST** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **9 JV** |  |  |  |  |  |  |  |  |  | 1 | 0.3 |  |  |  |  |  |  |
+| **10 JS1** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **11 JS2** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **12 P1** |  |  |  |  |  |  |  |  |  |  |  |  | 0.8 | 0.8 | 0.8 |  |  |
+| **13 P2** |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 | 1 |  |  |
+| **14 P3** |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 |  |  |
+| **15 IE2** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **16 S** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **17 IE3** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+
+- C holds 10% of itself, so B's 90% is the whole of the outstanding interest: $(\mathbf{Y})_{4,5}=1$, and the treasury shares remain on the diagonal as $(\mathbf{Y})_{5,5}=0.1$.
+- IE1 has two shareholders: $(\mathbf{Y})_{4,7}=0.4+1\times0.6=1$ for B, and $(\mathbf{Y})_{5,7}=0.6$ for C.
+
+**Direct Controlling Interest matrix** $\mathbf{C}_0$
+
+| | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| **1 UPE** |  | 1 | 1 |  |  |  |  |  |  |  |  | 1 |  |  |  |  | 1 |
+| **2 EE** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 |  |
+| **3 A** |  |  |  | 1 |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **4 B** |  |  |  |  | 1 |  |  | 1 |  |  |  |  |  |  |  |  |  |
+| **5 C** |  |  |  |  |  | 1 | 1 |  |  |  |  |  |  |  |  |  |  |
+| **6 PE** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **7 IE1** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **8 ST** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **9 JV** |  |  |  |  |  |  |  |  |  | 1 | 1 |  |  |  |  |  |  |
+| **10 JS1** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **11 JS2** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **12 P1** |  |  |  |  |  |  |  |  |  |  |  |  | 1 |  |  |  |  |
+| **13 P2** |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 |  |  |  |
+| **14 P3** |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 |  |  |
+| **15 IE2** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **16 S** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **17 IE3** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+
+**Direct and indirect Controlling Interest matrix** $\mathbf{C}=w(\mathbf{C}_0)$
+
+| | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| **1 UPE** |  | 1 | 1 | 1 | 1 | 1 | 1 | 1 |  |  |  | 1 | 1 | 1 | 1 | 1 | 1 |
+| **2 EE** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 |  |
+| **3 A** |  |  |  | 1 | 1 | 1 | 1 | 1 |  |  |  |  |  |  |  |  |  |
+| **4 B** |  |  |  |  | 1 | 1 | 1 | 1 |  |  |  |  |  |  |  |  |  |
+| **5 C** |  |  |  |  |  | 1 | 1 |  |  |  |  |  |  |  |  |  |  |
+| **6 PE** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **7 IE1** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **8 ST** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **9 JV** |  |  |  |  |  |  |  |  |  | 1 | 1 |  |  |  |  |  |  |
+| **10 JS1** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **11 JS2** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **12 P1** |  |  |  |  |  |  |  |  |  |  |  |  | 1 | 1 | 1 |  |  |
+| **13 P2** |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 | 1 |  |  |
+| **14 P3** |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 |  |  |
+| **15 IE2** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **16 S** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **17 IE3** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 
 # Entities
 
@@ -86,8 +183,6 @@ A solid arrow is a direct Ownership Interest held together with direct control; 
 
 # IIR Payability
 
-Restricted to low-taxed Entities in which the Parent Entity holds a direct or indirect Ownership Interest.
-
 | Parent | Type | Payable for | Not payable for |
 | --- | --- | --- | --- |
 | UPE | UPE | – | All: US has no IIR. |
@@ -102,6 +197,14 @@ Restricted to low-taxed Entities in which the Parent Entity holds a direct or in
 - B is payable for PE in its own jurisdiction, because XQ applies its IIR domestically.
 - P1 does not displace P2, because it holds only 80% of P2.
 - B is payable for the JV Group and for the Stateless Entity ST.
+
+Aggregated to jurisdictions, $\mathbf{Iir\text{-}taxing\text{-}rights}$ is:
+
+| Collecting jurisdiction | Over Entities in |
+| --- | --- |
+| XN | XQ, XR, XL |
+| XQ | XQ, XR, XL |
+| XR | XL |
 
 # Entities without an IIR-payable Parent
 
@@ -126,6 +229,8 @@ XQ is the only UTPR jurisdiction and has CEs other than Investment Entities (B a
 | POPE under a non-wholly-owning upper POPE, payable | P2 |
 | POPE displaced by a wholly-owning upper POPE | P3 |
 | Domestic IIR applied / not applied | B → PE / P2 → P3 |
+| Two shareholders within the group | IE1 (B 40%, C 60%) |
+| Treasury shares | C (10%) |
 | Excluded Entity on an ownership path | EE → S |
 | Permanent Establishment | PE |
 | Investment Entity | IE1 |
@@ -138,4 +243,4 @@ XQ is the only UTPR jurisdiction and has CEs other than Investment Entities (B a
 | Single MOCE that is an Investment Entity | IE3 |
 | QDMTT, UTPR | S; UPE, A, P1, IE3 |
 
-Not covered: circular ownership and treasury shares, an equity-method Entity below 50%, $\mathbf{jv\text{-}excluded}$, a Minority-Owned Subgroup below a JV, Article 7.4, and changes within the Fiscal Year.
+Not covered: circular ownership, an equity-method Entity below 50%, $\mathbf{jv\text{-}excluded}$, a Minority-Owned Subgroup below a JV, Article 7.4, and changes within the Fiscal Year.
