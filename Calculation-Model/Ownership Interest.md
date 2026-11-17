@@ -5,6 +5,7 @@
 - Each entry is a real number in $[0,1]$.
 - Each column sum is at most 1.
 - Each diagonal entry is less than 1.
+- $\mathbf{X}_0$ and $\mathbf{X}_0^{\mathrm{profit}}$ are validated independently. Passing the validation for one does not cure a failure in the other.
 
 ## Domain Validation
 
@@ -21,6 +22,17 @@
 ## Direct Ownership Matrix
 
 $\mathbf{X}_0$ is an $N\times N$ square matrix for $N$ Entities, with owning Entities on rows, Entities owned on columns, and Ownership Interest Ratios as entries. Diagonal entries represent treasury shares.
+
+$\mathbf{X}_0^{\mathrm{profit}}$ is the corresponding direct Profit Ownership Interest matrix. Where no separate Profit Ownership Interest Ratio is given for an entry, it equals the entry of $\mathbf{X}_0$.
+
+## Effective Periods
+
+$\mathbf{X}_0$, $\mathbf{X}_0^{\mathrm{profit}}$, and the direct Controlling Interest matrix $\mathbf{C}_0$ describe a period within the Fiscal Year during which no direct interest changes. When a direct Ownership or Controlling Interest changes during the Fiscal Year, split the year at each change date and construct the matrices separately for each period.
+
+- Periods for the same pair of Entities must not overlap.
+- An ownership relationship not given for a period does not exist in that period.
+- Every validation applies to each period separately.
+- Results derived from these matrices, such as JV Groups, are recalculated for each period.
 
 **Note:** Masking the direct ownership matrix before calculating indirect ownership generally differs from masking the result afterwards. Apply the mask at the stage required by the calculation.
 

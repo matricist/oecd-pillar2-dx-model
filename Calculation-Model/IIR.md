@@ -2,14 +2,11 @@
 
 ## Imports
 
-- Relations.CompanyEntities
-- Relations.ConstituentEntities
-- Relations.PermanentEstablishments
-- Relations.ExcludedEntities
-- Relations.InvestmentEntities
-- Relations.JvEntities
-- Relations.DirectOwnershipInterests
-- Relations.TopupTaxes
+- The Entity indicator vectors $\mathbf{ce}$, $\mathbf{ee}$, $\mathbf{ie}$, and $\mathbf{group\text{-}upe}$.
+- The top-level JV and JV Subsidiary vectors $\mathbf{jv}$ and $\mathbf{jvsub}$ from [JV.md](<JV.md#identifying-top-level-jvs-and-jv-subsidiaries>).
+- The direct Profit Ownership Interest matrix $\mathbf{X}_0^{\mathrm{profit}}$ from [Ownership Interest.md](<Ownership Interest.md#direct-ownership-matrix>).
+- The Article 7.4 applicability fraction matrix $\mathbf{R}^{7.4}$.
+- The Entity-level Top-up Tax vector $\mathbf{topup\text{-}tax}$ from [Top-up Tax Calculation](<03.Top-up Tax Calculation.md>).
 - The direct and indirect Ownership Interest function $f(\mathbf{A})$ from [Ownership Interest.md](<Ownership Interest.md#exports>).
 - The current-year IIR payability matrix $\mathbf{Iir\text{-}payable}$ from [Taxing Rights.md](<Taxing Rights.md#iir-payability>).
 
@@ -19,9 +16,9 @@
 
 This document calculates the Gross Income Inclusion Ratio, IIR Offset, Net Income Inclusion Ratio, Article 7.4-adjusted Net Income Inclusion Ratio, and IIR Top-up Tax allocated to each Parent Entity.
 
-The resulting sparse relation is:
+Each non-zero Parent-Entity-by-low-taxed-Entity cell of the result is reported as:
 
-**Relation.IncomeInclusions**
+**IncomeInclusions**
 
 ~~~text
 {
@@ -41,7 +38,7 @@ For a JV or JV Subsidiary subject to the analogous Article 6.4 calculation, low_
 
 ## Structural Validation
 
-- All imported relations and matrices must use the same fiscal year and Entity ordering.
+- All imported vectors and matrices must use the same fiscal year and Entity ordering.
 
 ## Domain Validation
 
@@ -68,13 +65,13 @@ Bold uppercase symbols denote matrices, bold lowercase names denote column vecto
 
 The operator $\operatorname{diag}$ retains only the diagonal entries of a square matrix, or constructs a diagonal matrix from a vector. $\odot$ denotes element-wise multiplication; comparisons and logical operations are element-wise.
 
-Construct Entity indicator vectors in `Relations.CompanyEntities` order, matching `fiscal_year` and `entity_id`; a missing row gives `False`:
+The Entity indicator vectors use the same Entity ordering as the matrices:
 
-- $\mathbf{ce}$, $\mathbf{ee}$, and $\mathbf{ie}$ identify rows in `Relations.ConstituentEntities`, `Relations.ExcludedEntities`, and `Relations.InvestmentEntities`, respectively.
-- $\mathbf{group\text{-}upe}$ identifies `ConstituentEntities.is_upe == true`, independently of later calculation exclusions.
-- $\mathbf{jv}$ and $\mathbf{jvsub}$ identify `JvEntities.is_jv == true` and `JvEntities.is_jv_sub == true`, respectively.
+- $\mathbf{ce}$, $\mathbf{ee}$, and $\mathbf{ie}$ identify CEs, Excluded Entities, and Investment Entities, respectively.
+- $\mathbf{group\text{-}upe}$ identifies the group's UPEs, independently of later calculation exclusions.
+- $\mathbf{jv}$ and $\mathbf{jvsub}$ identify top-level JVs and JV Subsidiaries, respectively.
 
-These indicators describe Entity characteristics before calculation-specific exclusions; CE and EE indicators must not overlap. $\mathbf{X}_0^{\mathrm{profit}}$ uses `Relations.DirectOwnershipInterests.direct_ownership_profit_ratio`, with owning Entities on rows and Entities owned on columns.
+These indicators describe Entity characteristics before calculation-specific exclusions; CE and EE indicators must not overlap. $\mathbf{X}_0^{\mathrm{profit}}$ has owning Entities on rows and Entities owned on columns.
 
 ## Local Matrix Functions
 
@@ -467,7 +464,7 @@ $$
 \mathbf{R}^{7.4}\in[0,1]^{N\times N}
 $$
 
-be derived from Relations.DirectOwnershipInterests.article_7_4_applicable_fraction. The scalar $(\mathbf{R}^{7.4})_{ij}$ is the proportion of Entity $i$'s direct Profit Ownership Interest in Entity $j$ that remains subject to Article 7.4.
+be given as an input. The scalar $(\mathbf{R}^{7.4})_{ij}$ is the proportion of Entity $i$'s direct Profit Ownership Interest in Entity $j$ that remains subject to Article 7.4: 1 means the entire interest is subject to Article 7.4 and 0 means none of it is. The entry is 0 unless Entity $j$ is an Investment Entity.
 
 The fraction is applied to the direct Profit Ownership Interest matrix before the direct and indirect Ownership Interest function $f$ is evaluated. The resulting Article 7.4 ownership graphs are used only to determine the MNE Group's Allocable Share.
 
@@ -670,7 +667,7 @@ $$
 \mathbf{topup\text{-}tax}\in\mathbb{R}_{\ge0}^{N\times1}
 $$
 
-be derived from Relations.TopupTaxes. For this section, the Top-up Tax of an Article 7.4 IE is the amount already determined after applying the MNE Group's Allocable Share.
+be the Entity-level Top-up Tax determined in [Top-up Tax Calculation](<03.Top-up Tax Calculation.md>); every entry is finite and non-negative. For this section, the Top-up Tax of an Article 7.4 IE is the amount already determined after applying the MNE Group's Allocable Share.
 
 The final Parent-Entity-by-low-taxed-Entity allocation matrix is:
 
@@ -692,7 +689,7 @@ $$
 }
 $$
 
-Each Entity column therefore uses the ordinary Net Income Inclusion Ratio unless Article 7.4 applies, in which case it uses the adjusted ratio, before multiplying by that Entity's Top-up Tax. Each non-zero cell supplies top_up_tax_payable for the corresponding Relation.IncomeInclusions row.
+Each Entity column therefore uses the ordinary Net Income Inclusion Ratio unless Article 7.4 applies, in which case it uses the adjusted ratio, before multiplying by that Entity's Top-up Tax. Each non-zero cell supplies top_up_tax_payable for the corresponding IncomeInclusions row.
 
 # Implementation Notes
 

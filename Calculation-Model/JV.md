@@ -21,7 +21,7 @@ $$
 \mathbf{Y}^{T}\times\mathbf{group\text{-}upe}.
 $$
 
-With $\mathbf{eqt}$ identifying equity-method Entities, the $N\times1$ Boolean vector $\mathbf{jvc}$ identifies Entities that use the equity method, have aggregate UPE ownership of at least 50%, and are not excluded:
+With $\mathbf{eqt}$ identifying equity-method Entities, which are never CEs, the $N\times1$ Boolean vector $\mathbf{jvc}$ identifies Entities that use the equity method, have aggregate UPE ownership of at least 50%, and are not excluded:
 
 $$
 \mathbf{jvc}
@@ -68,3 +68,5 @@ $\mathbf{J}$ is an $N\times N$ Boolean matrix with top-level JVs on rows and mem
 $$
 \mathbf{J}:=\operatorname{diag}(\mathbf{jv})\times(\mathbf{I}_N\lor\mathbf{C}).
 $$
+
+$\mathbf{J}$ is recalculated for each [effective period](<Ownership Interest.md#effective-periods>): an Entity belongs to a JV Group only in the periods in which the corresponding entry is `True`.

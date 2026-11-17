@@ -12,9 +12,21 @@ Each column of $\mathbf{C}_0$ contains at most one `True`.
 
 - No circular control.
 
+## Cross-Classification Validation
+
+Let $\mathbf{ce}$, $\mathbf{pe}$, and $\mathbf{group\text{-}upe}$ be $N\times1$ Boolean column vectors identifying CEs, PEs, and the group's UPEs, and let $\mathbf{controllers}:=\mathbf{C}_0^{T}\times\mathbf{1}_N$ count the direct controllers of each Entity.
+
+- **A UPE has no controller:** $\mathbf{controllers}\odot\mathbf{group\text{-}upe}=\mathbf{0}_N$.
+- **Every CE other than a UPE has a controller:** $(\mathbf{controllers})_j=1$ wherever $(\mathbf{ce}\land\neg\mathbf{group\text{-}upe})_j$ is `True`.
+- **A PE that is not a CE is not controlled by a CE:** $\operatorname{diag}(\mathbf{ce})\times\mathbf{C}_0\times\operatorname{diag}(\mathbf{pe}\land\neg\mathbf{ce})=\mathbf{0}$.
+
+These checks apply in addition to the structural and domain validations above.
+
 # Direct Controlling Matrix
 
 $\mathbf{C}_0$ is an $N\times N$ square matrix for $N$ Entities, with controlling Entities on rows, Entities controlled on columns, and Boolean values as entries. All diagonal entries are `False`.
+
+$\mathbf{C}_0$ is constructed for each [effective period](<Ownership Interest.md#effective-periods>). The periods must cover the entire Fiscal Year without gaps: an Entity with no controller in a period is recorded as such, not left unspecified.
 
 # Warshall's algorithm
 

@@ -70,6 +70,8 @@ The following are $M\times1$ Boolean column vectors for the fiscal year being te
 - $\mathbf{qiir\text{-}impl}$: the jurisdiction's IIR has qualified status.
 - $\mathbf{dom\text{-}iir\text{-}impl}$: the jurisdiction applies its IIR to domestic low-taxed Entities.
 
+$\mathbf{qiir\text{-}impl}$ and $\mathbf{dom\text{-}iir\text{-}impl}$ may be `True` only where $\mathbf{iir\text{-}impl}$ is `True`; likewise, a UTPR can have qualified status only where a UTPR is implemented. An implementation or qualification status that the source does not establish is undetermined, which is not equivalent to `False`. A safe harbour status for a UTPR or QDMTT is undetermined exactly when the implementation status of that UTPR or QDMTT is undetermined.
+
 Map each jurisdiction's status to its Entities, producing $N\times1$ Boolean column vectors:
 
 $$
@@ -192,7 +194,7 @@ $$
 }
 $$
 
-Each non-zero element $(\mathbf{Iir\text{-}payable})_{ij}$ produces a row in `Relation.IirPayables` for Parent Entity $i$ and potential low-taxed Entity $j$. Whether Entity $j$ is actually low-taxed and the Parent Entity's Income Inclusion Ratio are determined later in [IIR.md](IIR.md).
+Each non-zero element $(\mathbf{Iir\text{-}payable})_{ij}$ identifies Parent Entity $i$ as IIR-payable for potential low-taxed Entity $j$. Whether Entity $j$ is actually low-taxed and the Parent Entity's Income Inclusion Ratio are determined later in [IIR.md](IIR.md).
 
 **Note — Domestic IIR variation:** A domestic IIR variation may allow an Entity to apply the IIR to 100% of its own Top-up Tax where either:
 

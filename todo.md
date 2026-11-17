@@ -23,6 +23,6 @@ GloBE-Model은 다음 3개의 챕터/모듈로 구성한다.
 
 ## IIR / Ownership Interest TODO
 
-- `Relation.InvestmentEntities`에 `mne_allocable_ratio` 추가. Calculated 열로 처리.
+- Investment Entity별 `mne_allocable_ratio` 추가. Calculated 열로 처리.
 - `CalculateMneAllocableRatio` 함수를 `Doc.OwnershipInterest`에 추가하고 IIR dependency에도 추가.
 - 자기주식 제거 로직도 `Doc.OwnershipInterest`에 추가하고 IIR dependency에도 추가.
