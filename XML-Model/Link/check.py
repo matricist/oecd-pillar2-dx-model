@@ -1,5 +1,6 @@
 """Apply the Link Model to the structure of Calculation-Model/Example.md and
-evaluate the Output equations of GeneralSection/CorporateStructure.
+evaluate the Output equations of GeneralSection/CorporateStructure and of the
+linked part of JurisdictionSection.
 
 Usage: python check.py     (run from XML-Model/Link; needs numpy)
 """
@@ -100,6 +101,18 @@ parent = ce & owns_ce & ~upe & ~pe & ~ie & ~ee & ~jvt & ~jvsub
 pope = parent & ((1 - one @ np.diag(upe) @ Yp @ np.diag(parent)) > .2)
 ipe = parent & ~pope
 qiir = (EJ @ jv("qiir")).astype(bool)
+
+# Taxing Rights: IIR payability
+iir, dom = (EJ @ jv("iir")).astype(bool), (EJ @ jv("dom")).astype(bool)
+samejur = (EJ @ EJ.T) > 0
+member = ce | jvt | jvsub
+Own = (Y > 1e-12) & ~Ib
+cond = ((np.diag(iir) @ ~samejur) | np.outer(dom & iir, np.ones(N, bool))) & member[None, :] & Own
+UI = (np.diag(upe ^ ipe) @ cond).astype(bool)
+PC = (np.diag(pope) @ cond).astype(bool)
+UI &= ~((C.T.astype(int) @ (np.diag(qiir) @ UI).astype(int)) > 0)
+PC &= ~(((np.abs(Y - 1) < 1e-9).T.astype(int) @ (np.diag(qiir) @ PC).astype(int)) > 0)
+Iir_payable = UI ^ PC
 
 # ================================================================ Link
 B = "GLOBE_OECD/GLOBEBody/GeneralSection/"
@@ -216,10 +229,10 @@ for v in g.vectors:
     if v["path"].startswith(CS + "CE/OwnershipChange"):
         (x if v["kind"] == "value" else pi)[v["vector_id"]] = [] if v["kind"] == "value" else np.zeros(0, int)
 
-member = (group_upe | ce | jvmember) & ~ee                       # owners reported individually
+owner = (group_upe | ce | jvmember) & ~ee                        # owners reported individually
 Xt = np.diag(~ee) @ X0 @ np.linalg.inv(I - np.diag(ee) @ X0)     # looking through Excluded Entities
-W = np.vstack([np.diag(member) @ (Xt - np.diag(np.diag(Xt))),
-               ee @ X0 - one @ np.diag(member) @ (Xt - X0),
+W = np.vstack([np.diag(owner) @ (Xt - np.diag(np.diag(Xt))),
+               ee @ X0 - one @ np.diag(owner) @ (Xt - X0),
                1 - one @ X0])
 owner_type = [("GIR801" if group_upe[i] else "GIR803" if jvt[i] else "GIR804" if jvsub[i] else "GIR802")
               for i in range(N)] + ["GIR805", "GIR806"]
@@ -276,6 +289,40 @@ value(CS + "ExcludedEntity/Change", [False] * S_E.shape[0])
 presence(CS + "UnreportChangeCorpStr", [0])
 value(CS + "UnreportChangeCorpStr", [None])
 
+# ---- JurisdictionSection: rows, Jurisdiction, recipients, jurisdictions with taxing rights
+JS = "GLOBE_OECD/GLOBEBody/JurisdictionSection"
+in_scope = ce | jvmember
+sec = (EJx.T @ in_scope) > 0                                     # jurisdictions (and X5) with Entities
+S_J = np.eye(M + 1, dtype=int)[np.flatnonzero(sec)]
+nJ = S_J.shape[0]
+relation(JS, np.ones((1, nJ), int))
+value(JS + "/Jurisdiction", pick(S_J, codes))
+rec_jur = np.zeros((M + 1, M), int)                              # Input: recipients of each section
+rec_jur[:, jurs.index("US")] = 1
+R, Q = cells(S_J @ rec_jur)
+relation(JS + "/RecJurCode", R)
+value(JS + "/RecJurCode", pick(Q, codes))
+iir_rights = (EJ.T @ ((Iir_payable.astype(int) @ EJx) > 0)) > 0  # collecting jurisdiction x section
+qdmtt_rights = np.hstack([np.diag(jv("qdmtt")), np.zeros((M, 1), int)]) > 0
+R, Q = cells(S_J @ (iir_rights | qdmtt_rights).T)
+relation(JS + "/JurWithTaxingRights", R)
+value(JS + "/JurWithTaxingRights/JurisdictionName", pick(Q, codes))
+value(JS + "/DocSpec/DocTypeIndic", ["OECD1"] * nJ)              # Input: filing metadata
+value(JS + "/DocSpec/DocRefId", ["DOC-%s" % c for c in pick(S_J, codes)])
+
+# Everything else in JurisdictionSection is absent until its amounts are modelled.
+for r in g.relations:
+    if r["path"].startswith(JS) and r["relation_id"] not in P:
+        P[r["relation_id"]] = np.zeros((n[r["parent_relation_id"]], 0), int)
+        n[r["relation_id"]] = 0
+for v in g.vectors:
+    if v["path"].startswith(JS):
+        rows_ = n[v["relation_id"]]
+        if v["kind"] == "presence":
+            pi.setdefault(v["vector_id"], np.zeros(rows_, int))
+        else:
+            x.setdefault(v["vector_id"], [None] * rows_)
+
 # ================================================================ Output equations
 enum = {}
 for e in g.enum_rows:
@@ -312,7 +359,7 @@ def python(formula):
 
 passed, failed, skipped = 0, [], 0
 for c in g.constraints:
-    if c["kind"] == "root" or not c["path"].startswith(CS):
+    if c["kind"] == "root" or not c["path"].startswith((CS, JS)):
         continue
     try:
         result = eval(python(c["formula"]))
@@ -326,6 +373,10 @@ for c in g.constraints:
 
 if __name__ == "__main__":
     print("rows:", {r["path"].replace(CS, ""): n[r["relation_id"]] for r in g.relations if r["relation_id"] in n and r["path"].startswith(CS)})
+    names_of = dict(zip(codes, jurs + ["stateless"]))
+    Pm, jn = P[rel_id[JS + "/JurWithTaxingRights"]], x[vec_id[(JS + "/JurWithTaxingRights/JurisdictionName", "value")]]
+    sections = [names_of[c] for c in x[vec_id[(JS + "/Jurisdiction", "value")]]]
+    print("taxing rights:", {s: [names_of[jn[k]] for k in np.flatnonzero(Pm[i])] for i, s in enumerate(sections)})
     print("equations passed: %d, failed: %d, not evaluated: %d" % (passed, len(failed), skipped))
     for c in failed:
         print("FAILED", c["kind"], c["formula"], "|", c["path"].replace(CS, ""))

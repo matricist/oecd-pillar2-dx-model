@@ -1,6 +1,6 @@
 # Link Model
 
-Each atom of the [Output Model](../Output/Model.md) defined in terms of the [Input Model](../Input/Model.md) and the results of the [Calculation Model](../../Calculation-Model/Workflow.md). The Link Model only selects, expands, and aggregates; it calculates nothing itself. This version covers `GeneralSection/CorporateStructure`, following the user guide (`../xml schema.txt`, pages 14 to 36).
+Each atom of the [Output Model](../Output/Model.md) defined in terms of the [Input Model](../Input/Model.md) and the results of the [Calculation Model](../../Calculation-Model/Workflow.md). The Link Model only selects, expands, and aggregates; it calculates nothing itself. This version covers `GeneralSection/CorporateStructure` and the frame of `JurisdictionSection`, following the user guide (`../xml schema.txt`).
 
 # Operators
 
@@ -106,9 +106,34 @@ $\mathbf{S}_{E}:=\operatorname{rows}(\mathbf{ee}\land\neg\mathbf{group\text{-}up
 | $\mathbf{P}_{\text{ExcludedEntity}}$ | $\mathbf{1}^{T}$ |
 | `Name`, `Type`, `Change` | $\mathbf{S}_{E}\times\mathbf{name}$, $\mathbf{S}_{E}\times\mathbf{ee\text{-}type}$, $\mathbf{S}_{E}\times\mathbf{ee\text{-}change}$ |
 
+# Jurisdiction Section
+
+One row per jurisdiction in which the group has CEs or JV Group members, with X5 standing for Stateless Entities. Let $\mathbf{Entt\text{-}jur}^{+}:=(\mathbf{Entt\text{-}jur}\;\;\mathbf{stateless})$ and $\mathbf{code}^{+}:=(\mathbf{code},\text{X5})$.
+
+$$
+\begin{aligned}
+\mathbf{S}_{J}&:=\operatorname{rows}\bigl((\mathbf{Entt\text{-}jur}^{+T}\times(\mathbf{ce}\lor\mathbf{jvmember}))>0\bigr)\\
+\mathbf{Iir\text{-}rights}&:=\bigl(\mathbf{Entt\text{-}jur}^{T}\times((\mathbf{Iir\text{-}payable}\times\mathbf{Entt\text{-}jur}^{+})>0)\bigr)>0\\
+\mathbf{Qdmtt\text{-}rights}&:=(\operatorname{diag}(\mathbf{qdmtt\text{-}impl})\;\;\mathbf{0})
+\end{aligned}
+$$
+
+$\mathbf{Iir\text{-}rights}$ and $\mathbf{Qdmtt\text{-}rights}$ have collecting jurisdictions on rows and sections on columns. $\mathbf{Iir\text{-}rights}$ is $\mathbf{Iir\text{-}taxing\text{-}rights}$ of [Taxing Rights](<../../Calculation-Model/Taxing Rights.md#iir-taxing-rights>) with the X5 column added.
+
+| Output | Link |
+| --- | --- |
+| $\mathbf{P}_{\text{JurisdictionSection}}$ | $\mathbf{1}^{T}$ |
+| `Jurisdiction` | $\mathbf{S}_{J}\times\mathbf{code}^{+}$ |
+| `RecJurCode` | $(\mathbf{R},\mathbf{Q}):=\operatorname{cells}(\mathbf{S}_{J}\times\mathbf{rec\text{-}jur})$; $\mathbf{P}=\mathbf{R}$, value $\mathbf{Q}\times\mathbf{code}$ |
+| `JurWithTaxingRights` | $(\mathbf{R},\mathbf{Q}):=\operatorname{cells}\bigl(\mathbf{S}_{J}\times(\mathbf{Iir\text{-}rights}\lor\mathbf{Qdmtt\text{-}rights})^{T}\bigr)$; $\mathbf{P}=\mathbf{R}$ |
+| `JurWithTaxingRights/JurisdictionName` | $\mathbf{Q}\times\mathbf{code}$ |
+| `DocSpec` | $\mathbf{S}_{J}\times\mathbf{doc\text{-}type}$, $\mathbf{S}_{J}\times\mathbf{doc\text{-}ref}$ |
+
+The rest of the section is left absent, which the schema allows: `Subgroup`, `ReportDifference`, `GLoBETax`, and `LowTaxJurisdiction` report amounts that the Top-up Tax and UTPR documents have yet to define. UTPR taxing rights are not included for the same reason.
+
 # Output Equations
 
-Substituting the links, the Output equations of this section follow from the Input constraints:
+Substituting the links, the Output equations of `CorporateStructure` follow from the Input constraints:
 
 | Output equation | Follows from |
 | --- | --- |
@@ -121,7 +146,7 @@ Substituting the links, the Output equations of this section follow from the Inp
 | `OwnershipPercentage` is a percentage | $\mathbf{W}$ is rounded to four decimal places. |
 | At least one `ResCountryCode` | $\mathbf{Entt\text{-}jur}\times\mathbf{1}_M=\neg\mathbf{stateless}$, and a Stateless Entity reports X5. |
 
-`check.py` applies the links to the structure of [Example](../../Calculation-Model/Example.md) and evaluates the 111 Output equations of this section; all hold.
+`check.py` applies the links to the structure of [Example](../../Calculation-Model/Example.md) and evaluates the 111 Output equations of `CorporateStructure` and the 570 of `JurisdictionSection`; all hold.
 
 # Open
 

@@ -1,6 +1,6 @@
 # Input Model
 
-The normalized atoms from which the [Calculation Model](../../Calculation-Model/Workflow.md) and the [Link Model](../Link/Model.md) derive the [Output Model](../Output/Model.md). Nothing here repeats, and nothing here can be computed from another atom. This version covers what `GeneralSection/CorporateStructure` needs.
+The normalized atoms from which the [Calculation Model](../../Calculation-Model/Workflow.md) and the [Link Model](../Link/Model.md) derive the [Output Model](../Output/Model.md). Nothing here repeats, and nothing here can be computed from another atom. This version covers what `GeneralSection/CorporateStructure` and the frame of `JurisdictionSection` need.
 
 # Entities
 
@@ -38,6 +38,15 @@ $M$ jurisdictions.
 | $\mathbf{iir\text{-}impl},\mathbf{qiir\text{-}impl},\mathbf{dom\text{-}iir\text{-}impl}$ | $\{0,1\}^{M}$ | As in [Taxing Rights](<../../Calculation-Model/Taxing Rights.md#iir-payability>) |
 | $\mathbf{qutpr\text{-}impl},\mathbf{qdmtt\text{-}impl}$ | $\{0,1\}^{M}$ | Qualified UTPR, QDMTT |
 
+# Filing
+
+One row per section of the return: $M+1$ jurisdiction sections, the last for Stateless Entities.
+
+| Atom | Type | Meaning |
+| --- | --- | --- |
+| $\mathbf{rec\text{-}jur}$ | $\{0,1\}^{(M+1)\times M}$ | Recipient jurisdictions of each section |
+| $\mathbf{doc\text{-}type},\mathbf{doc\text{-}ref}$ | $\text{Enum}^{M+1}$, $\text{String}^{M+1}$ | Document type and reference of each section |
+
 # Constraints
 
 With $\mathbf{listed}:=\mathbf{group\text{-}upe}\lor\mathbf{ce}\lor\mathbf{jvmember}$, the Entities reported individually:
@@ -47,5 +56,6 @@ With $\mathbf{listed}:=\mathbf{group\text{-}upe}\lor\mathbf{ce}\lor\mathbf{jvmem
 | $\mathbf{Entt\text{-}tin}^{T}\times\mathbf{1}_N=\mathbf{1}_K$ | A TIN belongs to one Entity. |
 | $\mathbf{Entt\text{-}tin}\times\mathbf{1}_K\ge\mathbf{listed}$ | The return requires a TIN for every reported Entity. |
 | $\mathbf{Entt\text{-}jur}\times\mathbf{1}_M=\neg\mathbf{stateless}$ | An Entity has one jurisdiction unless it is stateless. |
+| $\mathbf{rec\text{-}jur}\times\mathbf{1}_M\ge\mathbf{1}_{M+1}$ | The return requires a recipient for every section. |
 
 The validations of the Calculation Model documents apply in addition.
