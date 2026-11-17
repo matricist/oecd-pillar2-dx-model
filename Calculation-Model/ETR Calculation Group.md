@@ -18,7 +18,7 @@ null
 GroupId는 다음과 같다. (1에서 4순으로 검토하며 해당 사항이 있는 경우 해당 번호에서 검토를 중지한다.)
 1. Stateless Entity에 해당하는 경우
 {EntityId}
-2. 단독 MOCE 또는 MOSG member인 경우
+2. 단독 MOCE 또는 MOSG member인 경우 (투자기업인 단독 MOCE는 제외하며, 투자기업 분류만 따른다)
 {Top-level MOPE ID}
 3. member of JV Group인 경우
 {Top-level JV ID}
