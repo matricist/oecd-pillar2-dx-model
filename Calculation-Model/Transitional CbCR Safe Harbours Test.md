@@ -5,45 +5,23 @@ All vectors are indexed by the $N_{\mathrm{TCSH}}$ Entities or the $M_{\mathrm{T
 | Symbol | Type | Meaning |
 | --- | --- | --- |
 | $\mathbf{G}_{\mathrm{TCSH}}$ | $\{0,1\}^{M_{\mathrm{TCSH}}\times N_{\mathrm{TCSH}}}$ | Tested Jurisdictions on rows, Entities on columns, from [TCSH Group](<Group.md#tcsh-group>) |
-| $\mathbf{rev},\mathbf{pbt},\mathbf{tax}$ | $\mathbb{R}^{N_{\mathrm{TCSH}}}$ | CbCR Revenue, CbCR PBT, and income tax expense |
-| $\mathbf{Adj}_{R},\mathbf{Adj}_{P},\mathbf{Adj}_{T}$ | $\mathbb{R}^{N_{\mathrm{TCSH}}\times K}$ | Signed adjustments to the three amounts, one column per adjustment |
-| $\mathbf{payroll},\mathbf{tangible}$ | $\mathbb{R}_{\ge0}^{N_{\mathrm{TCSH}}}$ | Eligible Payroll Costs and carrying value of Eligible Tangible Assets |
-| $\rho_{P},\rho_{A}$ | $[0,1]$ | Substance-based Income Exclusion rates of the Fiscal Year |
+| $\mathbf{rev},\mathbf{pbt},\mathbf{tax}$ | $\mathbb{R}^{N_{\mathrm{TCSH}}}$ | Adjusted CbCR Revenue, Adjusted CbCR PBT, and Adjusted Tax Expense |
+| $\mathbf{sbie}$ | $\mathbb{R}_{\ge0}^{N_{\mathrm{TCSH}}}$ | Substance-based Income Exclusion |
 | $d_{R},d_{P}$ | $\mathbb{R}$ | De minimis thresholds for revenue and PBT |
 | $\tau$ | $[0,1]$ | Simplified ETR threshold of the Fiscal Year |
 | $\mathbf{elected},\mathbf{qualified\text{-}cbcr},\mathbf{existed}$ | $\{0,1\}^{M_{\mathrm{TCSH}}}$ | Election made, Qualified CbC Report available, Tested Jurisdiction exists |
 
-The adjustment columns are:
-
-| Matrix | Columns |
-| --- | --- |
-| $\mathbf{Adj}_{R}$ | Investment Entity |
-| $\mathbf{Adj}_{P}$ | Net Unrealised Fair Value Loss, hybrid arbitrage, Investment Entity, other |
-| $\mathbf{Adj}_{T}$ | Non-Covered Taxes, uncertain tax positions, hybrid arbitrage, Investment Entity, disallowed deferred tax expense, other |
-
-A positive entry increases the amount. The Net Unrealised Fair Value Loss is entered as a non-negative amount.
-
 # Calculation
-
-**Entity data**
-
-$$
-\mathbf{Data}_{\mathrm{TCSH}}^{\text{Entity}}:=
-\begin{pmatrix}
-\mathbf{rev}+\mathbf{Adj}_{R}\times\mathbf{1}&
-\mathbf{pbt}+\mathbf{Adj}_{P}\times\mathbf{1}&
-\mathbf{tax}+\mathbf{Adj}_{T}\times\mathbf{1}&
-\rho_{P}\,\mathbf{payroll}+\rho_{A}\,\mathbf{tangible}
-\end{pmatrix}
-$$
-
-The four columns are Adjusted CbCR Revenue, Adjusted CbCR PBT, Adjusted Tax Expense, and SBIE.
 
 **Tested Jurisdiction aggregation**
 
 $$
-\begin{pmatrix}\mathbf{r}&\mathbf{p}&\mathbf{t}&\mathbf{s}\end{pmatrix}
-:=\mathbf{G}_{\mathrm{TCSH}}\times\mathbf{Data}_{\mathrm{TCSH}}^{\text{Entity}}
+\begin{aligned}
+\mathbf{r}&:=\mathbf{G}_{\mathrm{TCSH}}\times\mathbf{rev}\\
+\mathbf{p}&:=\mathbf{G}_{\mathrm{TCSH}}\times\mathbf{pbt}\\
+\mathbf{t}&:=\mathbf{G}_{\mathrm{TCSH}}\times\mathbf{tax}\\
+\mathbf{s}&:=\mathbf{G}_{\mathrm{TCSH}}\times\mathbf{sbie}
+\end{aligned}
 $$
 
 **Tests**
