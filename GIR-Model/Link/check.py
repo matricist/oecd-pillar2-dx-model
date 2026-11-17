@@ -55,7 +55,7 @@ EJ = np.zeros((N, M), int)
 for i, j in enumerate(jur):
     if j:
         EJ[i, jurs.index(j)] = 1
-impl = {"XN": "iir", "XQ": "iir qiir dom qutpr qdmtt", "XR": "iir qiir", "XD": "qdmtt"}
+impl = {"XN": "iir dom self", "XQ": "iir qiir dom qutpr qdmtt", "XR": "iir qiir", "XD": "qdmtt"}
 jv = lambda key: np.array([key in impl.get(j, "").split() for j in jurs], int)
 tin = ["TIN-" + n for n in names]                      # one TIN per Entity
 ET = np.eye(N, dtype=int)                               # Entity-to-TIN matrix
@@ -114,6 +114,11 @@ PC = (np.diag(pope) @ cond).astype(bool)
 UI &= ~((C.T.astype(int) @ (np.diag(qiir) @ UI).astype(int)) > 0)
 PC &= ~(((np.abs(Y - 1) < 1e-9).T.astype(int) @ (np.diag(qiir) @ PC).astype(int)) > 0)
 Iir_payable = UI ^ PC
+self_iir = (EJ @ jv("self")).astype(bool)
+covered_same = ((Iir_payable & samejur).T.astype(int) @ one) > 0
+covered_upe = (Iir_payable.T.astype(int) @ upe) > 0
+upper_ipe = ((C & ~samejur).T.astype(int) @ ipe) > 0
+self_payable = self_iir & ~covered_same & (pope | (ipe & ~covered_upe & ~upper_ipe))
 
 # ================================================================ Link
 B = "GLOBE_OECD/GLOBEBody/GeneralSection/"
@@ -305,7 +310,7 @@ rec_jur[:, jurs.index("US")] = 1
 R, Q = cells(S_J @ rec_jur)
 relation(JS + "/RecJurCode", R)
 value(JS + "/RecJurCode", pick(Q, codes))
-iir_rights = (EJ.T @ ((Iir_payable.astype(int) @ EJx) > 0)) > 0  # collecting jurisdiction x section
+iir_rights = (EJ.T @ (((Iir_payable | np.diag(self_payable)).astype(int) @ EJx) > 0)) > 0  # collecting jurisdiction x section
 qdmtt_rights = np.hstack([np.diag(jv("qdmtt")), np.zeros((M, 1), int)]) > 0
 R, Q = cells(S_J @ (iir_rights | qdmtt_rights).T)
 relation(JS + "/JurWithTaxingRights", R)

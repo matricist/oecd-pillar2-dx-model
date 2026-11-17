@@ -1,248 +1,144 @@
-# Taxing Rights
+# Inputs
 
-## Matrix Masking
+All inputs are for the same $N$ Entities, the same $M$ jurisdictions, and the same [effective period](<Ownership Interest.md#effective-periods>).
 
-For a Boolean indicator vector $\mathbf{v}$, $\operatorname{diag}(\mathbf{v})\times\mathbf{A}$ masks rows of $\mathbf{A}$, while $\mathbf{A}\times\operatorname{diag}(\mathbf{v})$ masks columns: entries corresponding to `True` are retained, and those corresponding to `False` are set to zero. Comparisons such as $\mathbf{A}>0$ are element-wise and return Boolean values; Boolean entries are treated as 1 or 0 in matrix multiplication.
+| Symbol | Type | Meaning |
+| --- | --- | --- |
+| $\mathbf{Y}$ | $[0,1]^{N\times N}$ | Direct and indirect Ownership Interest matrix, from [JV](<JV.md#calculation>) |
+| $\mathbf{C}$ | $\{0,1\}^{N\times N}$ | Direct and indirect Controlling Interest matrix, from [JV](<JV.md#calculation>) |
+| $\mathbf{jv},\mathbf{jvsub}$ | $\{0,1\}^{N\times1}$ | Top-level JVs and JV Subsidiaries, from [JV](<JV.md#calculation>) |
+| $\mathbf{X}_0^{\mathrm{profit}}$ | $[0,1]^{N\times N}$ | [Direct Profit Ownership Interest matrix](<Ownership Interest.md#direct-ownership-matrix>) |
+| $\mathbf{group\text{-}upe},\mathbf{ce},\mathbf{ee},\mathbf{pe},\mathbf{ie}$ | $\{0,1\}^{N\times1}$ | The group's UPEs, CEs, Excluded Entities, PEs, and Investment Entities |
+| $\mathbf{Entt\text{-}jur}$ | $\{0,1\}^{N\times M}$ | Entity-to-jurisdiction matrix; the row of a Stateless Entity is all `False` |
+| $\mathbf{iir\text{-}impl}$ | $\{0,1\}^{M\times1}$ | The jurisdiction has implemented an IIR |
+| $\mathbf{qiir\text{-}impl}$ | $\{0,1\}^{M\times1}$ | Its IIR has qualified status |
+| $\mathbf{dom\text{-}iir\text{-}impl}$ | $\{0,1\}^{M\times1}$ | Its IIR also applies to low-taxed Entities in the jurisdiction itself |
+| $\mathbf{self\text{-}iir\text{-}impl}$ | $\{0,1\}^{M\times1}$ | Its domestic IIR lets a Parent Entity pay its own Top-up Tax |
 
-## Identification of Parent Entities
+$f$ is the [Ownership Interest method](<Ownership Interest.md#direct-method>). $\operatorname{diag}(\mathbf{v})$ is the diagonal matrix of a vector, so that $\operatorname{diag}(\mathbf{v})\times\mathbf{A}$ keeps the rows of $\mathbf{A}$ at which $\mathbf{v}$ is `True` and $\mathbf{A}\times\operatorname{diag}(\mathbf{v})$ keeps the columns. Comparisons and logical operations are element-wise, and Boolean entries are treated as 1 or 0 in matrix multiplication.
 
-### UPE
-
-$\mathbf{upe}$ is an $N\times1$ Boolean column vector for $N$ Entities. An entry is `True` if the Entity is a UPE and is not an Excluded Entity, and `False` otherwise.
-
-### POPE and IPE
-
-$\mathbf{parent}$ is an $N\times1$ Boolean column vector identifying POPE and IPE candidates. An entry is `True` if the Entity is a CE that directly or indirectly owns an Ownership Interest in another CE and is not a UPE, PE, IE, EE, JV, or JV Subsidiary, and `False` otherwise. Indirect ownership is calculated on the full ownership graph, including paths through EEs.
-
-$f$ converts direct ownership ratios into direct and indirect ownership ratios, accounting for circular ownership and treasury shares. Thus, $f(\mathbf{A})$ takes a direct ownership matrix $\mathbf{A}$ as input and returns the corresponding direct and indirect ownership matrix; see [Ownership Interest](<Ownership Interest.md#direct-method>).
-
-For the more-than-20% POPE test, retain only direct Profit Ownership Interests between CEs:
-
-$$
-\mathbf{X}_0^{\mathrm{profit,ce}}
-:=
-\operatorname{diag}(\mathbf{ce})\times\mathbf{X}_0^{\mathrm{profit}}\times\operatorname{diag}(\mathbf{ce}),
-$$
+# Validation
 
 $$
-\mathbf{Y}^{\mathrm{profit,ce}}
-:=
-f(\mathbf{X}_0^{\mathrm{profit,ce}}).
+\mathbf{self\text{-}iir\text{-}impl}\le\mathbf{dom\text{-}iir\text{-}impl}\le\mathbf{iir\text{-}impl},\qquad
+\mathbf{qiir\text{-}impl}\le\mathbf{iir\text{-}impl}
 $$
 
-Define the MNE-held and externally held Profit Ownership Interests in each candidate:
-
-Sum the UPE rows of $\mathbf{Y}^{\mathrm{profit,ce}}$ to obtain the group's direct and indirect Profit Ownership Interest in each Entity, retaining only POPE and IPE candidates. The result is written as the row vector $\mathbf{mne}^{T}$; $\mathbf{mne}$ is the corresponding $N\times1$ column vector.
-
-$$
-\begin{gathered}
-\mathbf{mne}^{T}:=\\
-\mathbf{1}_N^{T}\times\operatorname{diag}(\mathbf{upe})
-\times\mathbf{Y}^{\mathrm{profit,ce}}\times\operatorname{diag}(\mathbf{parent})
-\end{gathered}
-$$
-
-$$
-\mathbf{external}:=\mathbf{1}_N-\mathbf{mne}.
-$$
-
-The POPE and IPE indicators are then:
-
-$$
-\mathbf{pope}
-:=
-\mathbf{parent}\land(\mathbf{external}>0.2),
-$$
-
-$$
-\mathbf{ipe}
-:=
-\mathbf{parent}\land\neg\mathbf{pope}.
-$$
-
-## IIR Payability
-
-Let $M$ be the number of jurisdictions. $\mathbf{Entt\text{-}jur}$ is an $N\times M$ Boolean matrix: rows represent Entities, columns represent jurisdictions, and an entry is `True` when the Entity is located in that jurisdiction. Each Entity belongs to exactly one jurisdiction.
-
-The following are $M\times1$ Boolean column vectors for the fiscal year being tested, with entries set to `True` when:
-
-- $\mathbf{iir\text{-}impl}$: the jurisdiction has implemented an IIR.
-- $\mathbf{qiir\text{-}impl}$: the jurisdiction's IIR has qualified status.
-- $\mathbf{dom\text{-}iir\text{-}impl}$: the jurisdiction applies its IIR to domestic low-taxed Entities.
-
-$\mathbf{qiir\text{-}impl}$ and $\mathbf{dom\text{-}iir\text{-}impl}$ may be `True` only where $\mathbf{iir\text{-}impl}$ is `True`; likewise, a UTPR can have qualified status only where a UTPR is implemented. An implementation or qualification status that the source does not establish is undetermined, which is not equivalent to `False`. A safe harbour status for a UTPR or QDMTT is undetermined exactly when the implementation status of that UTPR or QDMTT is undetermined.
-
-Map each jurisdiction's status to its Entities, producing $N\times1$ Boolean column vectors:
+# Identification of Parent Entities
 
 $$
 \begin{aligned}
-\mathbf{iir}&:=\mathbf{Entt\text{-}jur}\times\mathbf{iir\text{-}impl},\\
-\mathbf{qiir}&:=\mathbf{Entt\text{-}jur}\times\mathbf{qiir\text{-}impl},\\
-\mathbf{dom\text{-}iir}&:=\mathbf{Entt\text{-}jur}\times\mathbf{dom\text{-}iir\text{-}impl}.
+\mathbf{upe}&:=\mathbf{group\text{-}upe}\land\neg\mathbf{ee}\\
+\mathbf{Own}&:=(\mathbf{Y}>0)\land\neg\mathbf{I}_N\\
+\mathbf{parent}&:=\mathbf{ce}\land\left((\mathbf{Own}\times\mathbf{ce})>0\right)\\
+&\quad\land\neg(\mathbf{upe}\lor\mathbf{pe}\lor\mathbf{ie}\lor\mathbf{ee}\lor\mathbf{jv}\lor\mathbf{jvsub})\\
+\mathbf{Y}^{\mathrm{profit,ce}}&:=f\left(\operatorname{diag}(\mathbf{ce})\times\mathbf{X}_0^{\mathrm{profit}}\times\operatorname{diag}(\mathbf{ce})\right)\\
+\mathbf{external}&:=\mathbf{1}_N-(\mathbf{Y}^{\mathrm{profit,ce}})^{T}\times\mathbf{upe}\\
+\mathbf{pope}&:=\mathbf{parent}\land(\mathbf{external}>0.2)\\
+\mathbf{ipe}&:=\mathbf{parent}\land\neg\mathbf{pope}
 \end{aligned}
 $$
 
-Define the different-jurisdiction matrix:
+- $\mathbf{Own}$ marks the Entities in which each Entity holds a direct or indirect Ownership Interest, on the full ownership graph, including paths through Excluded Entities.
+- $\mathbf{parent}$ identifies the CEs that own another CE and can therefore be a POPE or an IPE.
+- $\mathbf{external}$ is the share of each Entity's profits not held by the UPEs through CEs. A parent with more than 20% is a POPE; every other parent is an IPE.
+
+# IIR Payability
+
+**Jurisdiction status of each Entity**
 
 $$
-(\mathbf{diff\text{-}jur})_{ij}=1
-\quad\Longleftrightarrow\quad
-\text{Entities }i\text{ and }j\text{ are located in different jurisdictions}.
+\begin{aligned}
+\mathbf{iir}&:=\mathbf{Entt\text{-}jur}\times\mathbf{iir\text{-}impl}\\
+\mathbf{qiir}&:=\mathbf{Entt\text{-}jur}\times\mathbf{qiir\text{-}impl}\\
+\mathbf{dom\text{-}iir}&:=\mathbf{Entt\text{-}jur}\times\mathbf{dom\text{-}iir\text{-}impl}\\
+\mathbf{self\text{-}iir}&:=\mathbf{Entt\text{-}jur}\times\mathbf{self\text{-}iir\text{-}impl}\\
+\mathbf{Diff\text{-}jur}&:=\neg(\mathbf{Entt\text{-}jur}\times\mathbf{Entt\text{-}jur}^{T})
+\end{aligned}
 $$
 
-The potential low-taxed Entity population consists of CEs, JVs, and JV Subsidiaries:
+$(\mathbf{Diff\text{-}jur})_{ij}$ is `True` when Entities $i$ and $j$ are not located in the same jurisdiction.
+
+**Candidates**
+
+A Parent Entity is a candidate for an Entity in which it holds an Ownership Interest if its jurisdiction has an IIR and the Entity is located elsewhere, or the IIR also applies domestically. The Entities that can be low-taxed are CEs, JVs, and JV Subsidiaries.
 
 $$
-\mathbf{member}:=\mathbf{ce}\lor\mathbf{jv}\lor\mathbf{jvsub}.
+\begin{aligned}
+\mathbf{member}&:=\mathbf{ce}\lor\mathbf{jv}\lor\mathbf{jvsub}\\
+\mathbf{Candidate}&:=\operatorname{diag}(\mathbf{iir})\times\left(\mathbf{Diff\text{-}jur}\lor(\mathbf{dom\text{-}iir}\times\mathbf{1}_N^{T})\right)\times\operatorname{diag}(\mathbf{member})\\
+&\quad\land\mathbf{Own}
+\end{aligned}
 $$
 
-A Parent Entity can be payable only for an Entity in which it holds a direct or indirect Ownership Interest. With $\mathbf{Y}:=f(\mathbf{X}_0)$ calculated on the full ownership graph:
+**Top-down rule**
+
+A UPE or IPE is displaced by a UPE or IPE that controls it and is a candidate under a Qualified IIR.
 
 $$
-\mathbf{Own}:=(\mathbf{Y}>0)\land\neg\mathbf{I}_N.
+\begin{aligned}
+\mathbf{Top}&:=\operatorname{diag}(\mathbf{upe}\lor\mathbf{ipe})\times\mathbf{Candidate}\\
+\mathbf{Upe\text{-}ipe\text{-}payable}&:=\mathbf{Top}\land\neg\left[\left(\mathbf{C}^{T}\times\operatorname{diag}(\mathbf{qiir})\times\mathbf{Top}\right)>0\right]
+\end{aligned}
 $$
 
-The basic current-year payability conditions are:
+**Split-ownership rule**
+
+A POPE is displaced only by a POPE that wholly owns it and is a candidate under a Qualified IIR.
 
 $$
-\begin{gathered}
-\mathbf{Payable\text{-}condition}:=\\
-\left[\begin{aligned}
-&\bigl(\operatorname{diag}(\mathbf{iir})\times\mathbf{diff\text{-}jur}\bigr)\\
-&\lor\bigl((\mathbf{dom\text{-}iir}\land\mathbf{iir})\times\mathbf{1}_N^T\bigr)
-\end{aligned}\right]\times\operatorname{diag}(\mathbf{member})\\
-\land\;\mathbf{Own}
-\end{gathered}
+\begin{aligned}
+\mathbf{Split}&:=\operatorname{diag}(\mathbf{pope})\times\mathbf{Candidate}\\
+\mathbf{Wholly\text{-}own}&:=(\mathbf{Y}=1)\\
+\mathbf{Pope\text{-}payable}&:=\mathbf{Split}\land\neg\left[\left(\mathbf{Wholly\text{-}own}^{T}\times\operatorname{diag}(\mathbf{qiir})\times\mathbf{Split}\right)>0\right]
+\end{aligned}
 $$
 
-This requires the Parent Entity to hold an Ownership Interest in the Entity, its jurisdiction to have an IIR and, for a domestic low-taxed Entity, to apply that IIR domestically.
-
-Restrict the rows to UPEs and IPEs, and separately to POPEs:
+**Result**
 
 $$
-\begin{gathered}
-\mathbf{Upe\text{-}ipe\text{-}candidate}:=\\
-\operatorname{diag}(\mathbf{upe}\oplus\mathbf{ipe})\times\mathbf{Payable\text{-}condition}
-\end{gathered}
+\boxed{\mathbf{Iir\text{-}payable}:=\mathbf{Upe\text{-}ipe\text{-}payable}\lor\mathbf{Pope\text{-}payable}}
 $$
 
-$$
-\mathbf{Pope\text{-}candidate}
-:=
-\operatorname{diag}(\mathbf{pope})\times\mathbf{Payable\text{-}condition}.
-$$
+$(\mathbf{Iir\text{-}payable})_{ij}$ identifies Parent Entity $i$ as IIR-payable for Entity $j$. Whether Entity $j$ is low-taxed, and the Parent Entity's Income Inclusion Ratio, are determined in [IIR](IIR.md).
 
-Apply the top-down rule to UPEs and IPEs. An upper UPE or IPE displaces a lower IPE only when the upper Entity is located in a jurisdiction whose IIR has qualified status for the fiscal year:
+## Domestic IIR on the Parent Entity Itself
 
-$$
-\begin{gathered}
-\mathbf{Qualified\text{-}upe\text{-}ipe\text{-}candidate}:=\\
-\operatorname{diag}(\mathbf{qiir})\times\mathbf{Upe\text{-}ipe\text{-}candidate}
-\end{gathered}
-$$
+Where the domestic IIR of its jurisdiction allows it, a Parent Entity pays 100% of its own Top-up Tax if no other Parent Entity is positioned to do so:
+
+- a POPE, if no Parent Entity in its own jurisdiction is payable for it;
+- an IPE, if in addition no UPE is payable for it and no IPE in another jurisdiction controls it.
 
 $$
-\begin{gathered}
-\mathbf{Upper\text{-}upe\text{-}ipe}:=\\
-\left(\mathbf{C}^{T}\times\mathbf{Qualified\text{-}upe\text{-}ipe\text{-}candidate}\right)>0
-\end{gathered}
+\begin{aligned}
+\mathbf{covered\text{-}same}&:=\left[\left(\mathbf{Iir\text{-}payable}\land\neg\mathbf{Diff\text{-}jur}\right)^{T}\times\mathbf{1}_N\right]>0\\
+\mathbf{covered\text{-}upe}&:=\left[\mathbf{Iir\text{-}payable}^{T}\times\mathbf{upe}\right]>0\\
+\mathbf{upper\text{-}ipe}&:=\left[\left(\mathbf{C}\land\mathbf{Diff\text{-}jur}\right)^{T}\times\mathbf{ipe}\right]>0\\
+\mathbf{self\text{-}payable}&:=\mathbf{self\text{-}iir}\land\neg\mathbf{covered\text{-}same}\\
+&\quad\land\left(\mathbf{pope}\lor(\mathbf{ipe}\land\neg\mathbf{covered\text{-}upe}\land\neg\mathbf{upper\text{-}ipe})\right)
+\end{aligned}
 $$
 
-The comparison is element-wise: an entry is `True` when at least one upper UPE or IPE qualifies for the corresponding Entity.
+$\mathbf{self\text{-}payable}$ is kept apart from $\mathbf{Iir\text{-}payable}$, whose diagonal stays `False`. The allocation in [IIR](IIR.md) does not use it yet.
+
+# Jurisdiction-Level Taxing Rights
+
+## IIR Taxing Rights
 
 $$
-\begin{gathered}
-\mathbf{Upe\text{-}ipe\text{-}payable}:=\\
-\mathbf{Upe\text{-}ipe\text{-}candidate}
-\land\neg\mathbf{Upper\text{-}upe\text{-}ipe}
-\end{gathered}
+\begin{aligned}
+\mathbf{Parent\text{-}jur}&:=\left[\left(\mathbf{Iir\text{-}payable}\lor\operatorname{diag}(\mathbf{self\text{-}payable})\right)\times\mathbf{Entt\text{-}jur}\right]>0\\
+\mathbf{Iir\text{-}taxing\text{-}rights}&:=\left(\mathbf{Entt\text{-}jur}^{T}\times\mathbf{Parent\text{-}jur}\right)>0\\
+\mathbf{iir\text{-}right\text{-}jur}&:=\left(\mathbf{Iir\text{-}taxing\text{-}rights}\times\mathbf{1}_M\right)>0
+\end{aligned}
 $$
 
-For split ownership, define:
+$(\mathbf{Iir\text{-}taxing\text{-}rights})_{kl}$ is `True` iff a Parent Entity in jurisdiction $k$ is IIR-payable for an Entity in jurisdiction $l$, and $\mathbf{iir\text{-}right\text{-}jur}$ identifies the jurisdictions that collect under an IIR.
 
-$$
-(\mathbf{Wholly\text{-}own})_{ij}=1
-\quad\Longleftrightarrow\quad
-(\mathbf{Y})_{ij}=1,
-$$
+## UTPR Taxing Rights
 
-$$
-\begin{gathered}
-\mathbf{Qualified\text{-}pope\text{-}candidate}:=\\
-\operatorname{diag}(\mathbf{qiir})\times\mathbf{Pope\text{-}candidate}
-\end{gathered}
-$$
+Decided by legislation alone: a jurisdiction that has implemented a UTPR has UTPR taxing rights. The safe harbours and the allocation among UTPR jurisdictions are applied in [UTPR](05.UTPR.md). Investment Entities are excluded from UTPR collection and from the allocation key ([Model Rules, Articles 2.4.3 and 2.6.2(a)](https://www.oecd.org/content/dam/oecd/en/publications/reports/2021/12/tax-challenges-arising-from-digitalisation-of-the-economy-global-anti-base-erosion-model-rules-pillar-two_eed81a23/782bac33-en.pdf)).
 
-Only a wholly-owning upper POPE in a QIIR jurisdiction displaces a lower POPE:
+## QDMTT Taxing Rights
 
-$$
-\begin{gathered}
-\mathbf{Upper\text{-}pope}:=\\
-\left(\mathbf{Wholly\text{-}own}^{T}\times\mathbf{Qualified\text{-}pope\text{-}candidate}\right)>0
-\end{gathered}
-$$
-
-$$
-\mathbf{Pope\text{-}payable}
-:=
-\mathbf{Pope\text{-}candidate}\land\neg\mathbf{Upper\text{-}pope}.
-$$
-
-The final IIR payability matrix is:
-
-$$
-\boxed{
-\begin{gathered}
-\mathbf{Iir\text{-}payable}:=\\
-\mathbf{Upe\text{-}ipe\text{-}payable}
-\oplus
-\mathbf{Pope\text{-}payable}
-\end{gathered}
-}
-$$
-
-Each non-zero element $(\mathbf{Iir\text{-}payable})_{ij}$ identifies Parent Entity $i$ as IIR-payable for potential low-taxed Entity $j$. Whether Entity $j$ is actually low-taxed and the Parent Entity's Income Inclusion Ratio are determined later in [IIR.md](IIR.md).
-
-**Note — Domestic IIR variation:** A domestic IIR variation may allow an Entity to apply the IIR to 100% of its own Top-up Tax where either:
-
-- It is a POPE and no Parent Entity in the same jurisdiction can apply the IIR to it; or
-- It is an IPE, its UPE cannot apply the IIR to it, no Parent Entity in the same jurisdiction can apply the IIR to it, and there is no upper IPE in another jurisdiction.
-
-This variation may change $\mathbf{Iir\text{-}payable}$ by allowing self-payability on the diagonal.
-
-## Jurisdiction-Level Taxing Rights
-
-### IIR Taxing Rights
-
-Aggregate Entity-level IIR payability to jurisdictions:
-
-$$
-\mathbf{Parent\text{-}jur}
-:=
-\left(\mathbf{Iir\text{-}payable}\times\mathbf{Entt\text{-}jur}\right)>0,
-$$
-
-$$
-\begin{gathered}
-\mathbf{Iir\text{-}taxing\text{-}rights}:=\\
-\left(\mathbf{Entt\text{-}jur}^{T}\times\mathbf{Parent\text{-}jur}\right)>0
-\end{gathered}
-$$
-
-Thus, $(\mathbf{Iir\text{-}taxing\text{-}rights})_{kl}=1$ iff at least one Parent Entity in jurisdiction $k$ is IIR-payable for an Entity in jurisdiction $l$.
-
-Define the IIR collecting-jurisdiction indicator:
-
-$$
-\mathbf{iir\text{-}right\text{-}jur}
-:=
-\left(\mathbf{Iir\text{-}taxing\text{-}rights}\times\mathbf{1}_M\right)>0.
-$$
-
-### UTPR Taxing Rights
-
-A jurisdiction with a UTPR and at least one CE other than an Investment Entity may collect under the UTPR, subject to UTPR Safe Harbours, the UPE Safe Harbour, and initial international activity relief. Investment Entities are excluded from UTPR collection, and their employees and tangible assets are excluded from the allocation key ([Model Rules, Articles 2.4.3 and 2.6.2(a)](https://www.oecd.org/content/dam/oecd/en/publications/reports/2021/12/tax-challenges-arising-from-digitalisation-of-the-economy-global-anti-base-erosion-model-rules-pillar-two_eed81a23/782bac33-en.pdf)).
-
-### QDMTT Taxing Rights
-
-A jurisdiction with a QDMTT may tax domestic Entities within its QDMTT scope.
+Decided by legislation alone: a jurisdiction that has implemented a QDMTT has taxing rights over the Entities located in it.

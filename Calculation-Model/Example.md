@@ -27,16 +27,16 @@ Each section applies one document and links to it; the symbols are defined there
 
 # Jurisdictions
 
-| Code | IIR | Qualified IIR | Domestic IIR | UTPR | QDMTT |
-| --- | --- | --- | --- | --- | --- |
-| US | – | – | – | – | – |
-| XN | ✓ | – | – | – | – |
-| XQ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| XR | ✓ | ✓ | – | – | – |
-| XD | – | – | – | – | ✓ |
-| XL | – | – | – | – | – |
+| Code | IIR | Qualified IIR | Domestic IIR | Self IIR | UTPR | QDMTT |
+| --- | --- | --- | --- | --- | --- | --- |
+| US | – | – | – | – | – | – |
+| XN | ✓ | – | ✓ | ✓ | – | – |
+| XQ | ✓ | ✓ | ✓ | – | ✓ | ✓ |
+| XR | ✓ | ✓ | – | – | – | – |
+| XD | – | – | – | – | – | ✓ |
+| XL | – | – | – | – | – | – |
 
-What a jurisdiction has implemented decides which Parent Entities can be charged. A Qualified IIR is one recognised as equivalent to the model rules, and a Domestic IIR also applies to low-taxed Entities in the Parent Entity's own jurisdiction.
+What a jurisdiction has implemented decides which Parent Entities can be charged. A Qualified IIR is one recognised as equivalent to the model rules, and a Domestic IIR also applies to low-taxed Entities in the Parent Entity's own jurisdiction. A Self IIR is a domestic IIR under which a Parent Entity can pay its own Top-up Tax.
 
 # Ownership Structure
 
@@ -244,10 +244,10 @@ Which Parent Entity may be charged the Top-up Tax of which Entity, from [Taxing 
 | Parent | Type | Payable for | Not payable for |
 | --- | --- | --- | --- |
 | UPE | UPE | – | All: US has no IIR. |
-| A | IPE | B, C, PE, IE1, ST, JV, JS1, JS2 | – |
+| A | IPE | A itself, B, C, PE, IE1, ST, JV, JS1, JS2 | – |
 | B | IPE | C, PE, IE1, ST, JV, JS1, JS2 | – |
 | C | IPE | – | PE, IE1: displaced by B, an upper IPE with a Qualified IIR. |
-| P1 | POPE | P2, P3, IE2 | – |
+| P1 | POPE | P1 itself, P2, P3, IE2 | – |
 | P2 | POPE | IE2 | P3: same jurisdiction, and XR has no domestic IIR. |
 | P3 | POPE | – | IE2: displaced by P2, a wholly-owning upper POPE with a Qualified IIR. |
 
@@ -255,12 +255,13 @@ Which Parent Entity may be charged the Top-up Tax of which Entity, from [Taxing 
 - B is payable for PE in its own jurisdiction, because XQ applies its IIR domestically.
 - P1 does not displace P2, because it holds only 80% of P2.
 - B is payable for the JV Group and for the Stateless Entity ST.
+- A and P1 pay their own Top-up Tax ($\mathbf{self\text{-}payable}$): XN allows it and no Parent Entity in XN is payable for them. For A, an IPE, it also matters that no UPE is payable for it and no IPE in another jurisdiction controls it.
 
 Aggregated to jurisdictions, $\mathbf{Iir\text{-}taxing\text{-}rights}$ is:
 
 | Collecting jurisdiction | Over Entities in |
 | --- | --- |
-| XN | XQ, XR, XL |
+| XN | XN, XQ, XR, XL |
 | XQ | XQ, XR, XL |
 | XR | XL |
 
@@ -272,7 +273,6 @@ No IIR collects the Top-up Tax of these Entities. It falls to the QDMTT of the E
 | --- | --- | --- |
 | S | XD | QDMTT of XD |
 | UPE | US | UTPR |
-| A, P1 | XN | UTPR |
 | IE3 | XL | UTPR |
 
 XQ is the only UTPR jurisdiction and has CEs other than Investment Entities (B and PE). XQ also applies its QDMTT to B and PE.
@@ -291,6 +291,7 @@ Each case the documents distinguish, and the Entity that shows it.
 | POPE under a non-wholly-owning upper POPE, payable | P2 |
 | POPE displaced by a wholly-owning upper POPE | P3 |
 | Domestic IIR applied / not applied | B → PE / P2 → P3 |
+| Parent Entity paying its own Top-up Tax | A (IPE), P1 (POPE) |
 | Two shareholders within the group | IE1 (B 40%, C 60%) |
 | Treasury shares | C (10%) |
 | Excluded Entity on an ownership path | EE → S |
@@ -303,6 +304,6 @@ Each case the documents distinguish, and the Entity that shows it.
 | Investment Entity inside a Minority-Owned Subgroup | IE2 |
 | Single MOCE | S |
 | Single MOCE that is an Investment Entity | IE3 |
-| QDMTT, UTPR | S; UPE, A, P1, IE3 |
+| QDMTT, UTPR | S; UPE, IE3 |
 
 Not covered: circular ownership, an equity-method Entity below 50%, $\mathbf{jv\text{-}excluded}$, a Minority-Owned Subgroup below a JV, Article 7.4, and changes within the Fiscal Year.

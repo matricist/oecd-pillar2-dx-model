@@ -113,7 +113,7 @@ One row per jurisdiction in which the group has CEs or JV Group members, with X5
 $$
 \begin{aligned}
 \mathbf{S}_{J}&:=\operatorname{rows}\bigl((\mathbf{Entt\text{-}jur}^{+T}\times(\mathbf{ce}\lor\mathbf{jvmember}))>0\bigr)\\
-\mathbf{Iir\text{-}rights}&:=\bigl(\mathbf{Entt\text{-}jur}^{T}\times((\mathbf{Iir\text{-}payable}\times\mathbf{Entt\text{-}jur}^{+})>0)\bigr)>0\\
+\mathbf{Iir\text{-}rights}&:=\bigl(\mathbf{Entt\text{-}jur}^{T}\times(((\mathbf{Iir\text{-}payable}\lor\operatorname{diag}(\mathbf{self\text{-}payable}))\times\mathbf{Entt\text{-}jur}^{+})>0)\bigr)>0\\
 \mathbf{Qdmtt\text{-}rights}&:=(\operatorname{diag}(\mathbf{qdmtt\text{-}impl})\;\;\mathbf{0})
 \end{aligned}
 $$

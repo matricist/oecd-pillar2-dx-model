@@ -35,7 +35,7 @@ $M$ jurisdictions.
 | Atom | Type | Meaning |
 | --- | --- | --- |
 | $\mathbf{code}$ | $\text{CountryCode}^{M}$ | ISO code |
-| $\mathbf{iir\text{-}impl},\mathbf{qiir\text{-}impl},\mathbf{dom\text{-}iir\text{-}impl}$ | $\{0,1\}^{M}$ | As in [Taxing Rights](<../../Calculation-Model/Taxing Rights.md#iir-payability>) |
+| $\mathbf{iir\text{-}impl},\mathbf{qiir\text{-}impl},\mathbf{dom\text{-}iir\text{-}impl},\mathbf{self\text{-}iir\text{-}impl}$ | $\{0,1\}^{M}$ | As in [Taxing Rights](<../../Calculation-Model/Taxing Rights.md#iir-payability>) |
 | $\mathbf{qutpr\text{-}impl},\mathbf{qdmtt\text{-}impl}$ | $\{0,1\}^{M}$ | Qualified UTPR, QDMTT |
 
 # Filing
