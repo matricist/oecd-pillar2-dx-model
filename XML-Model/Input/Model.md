@@ -47,6 +47,5 @@ With $\mathbf{listed}:=\mathbf{group\text{-}upe}\lor\mathbf{ce}\lor\mathbf{jvmem
 | $\mathbf{Entt\text{-}tin}^{T}\times\mathbf{1}_N=\mathbf{1}_K$ | A TIN belongs to one Entity. |
 | $\mathbf{Entt\text{-}tin}\times\mathbf{1}_K\ge\mathbf{listed}$ | The return requires a TIN for every reported Entity. |
 | $\mathbf{Entt\text{-}jur}\times\mathbf{1}_M=\neg\mathbf{stateless}$ | An Entity has one jurisdiction unless it is stateless. |
-| $10^{4}\,\mathbf{X}_0\in\mathbb{Z}^{N\times N}$ | The return reports percentages to four decimal places. |
 
 The validations of the Calculation Model documents apply in addition.

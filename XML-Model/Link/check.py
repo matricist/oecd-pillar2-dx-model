@@ -158,7 +158,8 @@ def tin_block(path, Q, text, issued, typ, unknown=None):
 
 
 # Entity-level matrices shared by every ID block
-codes = [iso[j] for j in jurs]
+codes = [iso[j] for j in jurs] + ["X5"]                 # X5: Stateless Constituent Entities
+EJx = np.hstack([EJ, stateless.astype(int)[:, None]])
 r201, r202 = EJ @ (jv("qiir") & ~jv("dom")), EJ @ (jv("qiir") & jv("dom"))
 r203, r204 = EJ @ jv("qutpr"), EJ @ jv("qdmtt")
 Rule = np.stack([r201, r202, r203, r204, 1 - np.clip(r201 + r202 + r203 + r204, 0, 1)], axis=1)
@@ -170,12 +171,15 @@ Status = np.stack(status_cols, axis=1).astype(int)
 status_codes = ["GIR3%02d" % k for k in range(1, 19)]
 
 
-def id_block(path, S, mask=None):
-    """Name and the four repeated children of an ID element, for the Entities selected by S."""
+def id_block(path, S, mask=None, excluded=False):
+    """Name and the four repeated children of an ID element, for the Entities selected by S.
+
+    An Excluded UPE reports neither ResCountryCode nor Rules.
+    """
     D = np.diag(mask) if mask is not None else np.eye(S.shape[0], dtype=int)
     value(path + "/Name", pick(S, names), mask)
-    for child, A, vals in (("ResCountryCode", EJ, codes), ("Rules", Rule, rule_codes), ("GlobeStatus", Status, status_codes)):
-        R, Q = cells(D @ S @ A)
+    for child, A, vals in (("ResCountryCode", EJx, codes), ("Rules", Rule, rule_codes), ("GlobeStatus", Status, status_codes)):
+        R, Q = cells(D @ S @ (0 * A if excluded and child != "GlobeStatus" else A))
         relation(path + "/" + child, R)
         value(path + "/" + child, pick(Q, vals))
     R, Q = cells(D @ S @ ET)
@@ -196,7 +200,7 @@ for branch, mask in (("ExcludedUPE", ex), ("OtherUPE", 1 - ex)):
     presence(bp, mask)
     presence(bp + "/Art10.3.5", 0 * mask)
     value(bp + "/Art10.3.5", [None] * len(mask))
-    id_block(bp + "/ID", S_U, mask)
+    id_block(bp + "/ID", S_U, mask, excluded=(branch == "ExcludedUPE"))
 value(CS + "UPE/(choice1)/ExcludedUPE/ExcludedUPEStatus", [None] * len(ex))
 
 # ---- CE
@@ -212,11 +216,14 @@ for v in g.vectors:
     if v["path"].startswith(CS + "CE/OwnershipChange"):
         (x if v["kind"] == "value" else pi)[v["vector_id"]] = [] if v["kind"] == "value" else np.zeros(0, int)
 
-member = group_upe | ce | jvmember                               # owners reported individually
-W = np.vstack([np.diag(member & ~ee) @ (X0 - np.diag(np.diag(X0))), ee @ X0, 1 - one @ X0])
+member = (group_upe | ce | jvmember) & ~ee                       # owners reported individually
+Xt = np.diag(~ee) @ X0 @ np.linalg.inv(I - np.diag(ee) @ X0)     # looking through Excluded Entities
+W = np.vstack([np.diag(member) @ (Xt - np.diag(np.diag(Xt))),
+               ee @ X0 - one @ np.diag(member) @ (Xt - X0),
+               1 - one @ X0])
 owner_type = [("GIR801" if group_upe[i] else "GIR803" if jvt[i] else "GIR804" if jvsub[i] else "GIR802")
               for i in range(N)] + ["GIR805", "GIR806"]
-A = np.round((W @ S_C.T).T, 10)
+A = np.round((W @ S_C.T).T, 4)
 R, Q = cells(A > 0)
 relation(CS + "CE/Ownership", R)
 value(CS + "CE/Ownership/OwnershipType", pick(Q, owner_type))
@@ -226,9 +233,9 @@ tin_block(CS + "CE/Ownership/TIN", Q, pick(Q, tin + ["NOTIN", "NOTIN"]), pick(Q,
           pick(Q, tin_type + ["GIR3004", "GIR3004"]), agg)
 
 q_upe_ipe = qiir & (upe ^ ipe)
-exc213 = ipe & ((C.T.astype(int) @ q_upe_ipe) > 0)
+exc213 = ipe & qiir & ((C.T.astype(int) @ q_upe_ipe) > 0)
 wholly = (np.abs(Y - 1) < 1e-9) & ~Ib
-exc215 = pope & ((wholly.T.astype(int) @ (qiir & pope)) > 0)
+exc215 = pope & qiir & ((wholly.T.astype(int) @ (qiir & pope)) > 0)
 
 
 def top(i, above, cand):
@@ -239,8 +246,8 @@ def top(i, above, cand):
 
 displacer = [top(i, C, q_upe_ipe) if exc213[i] else top(i, wholly, qiir & pope) if exc215[i] else None for i in range(N)]
 exc = S_C @ (exc213 | exc215)
-presence(CS + "CE/QIIR", S_C @ (pope | ipe))
-value(CS + "CE/QIIR/POPE-IPE", pick(S_C, ["GIR901" if p else "GIR902" for p in pope]), S_C @ (pope | ipe))
+presence(CS + "CE/QIIR", S_C @ ((pope | ipe) & qiir))
+value(CS + "CE/QIIR/POPE-IPE", pick(S_C, ["GIR901" if p else "GIR902" for p in pope]), S_C @ ((pope | ipe) & qiir))
 presence(CS + "CE/QIIR/Exception", exc)
 for art, v in (("Art2.1.3", exc213), ("Art2.1.5", exc215)):
     presence(CS + "CE/QIIR/Exception/ExceptionRule/(choice1)/" + art, S_C @ v)
