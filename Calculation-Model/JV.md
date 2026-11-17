@@ -21,23 +21,37 @@ $$
 
 # Calculation
 
+**Direct and indirect interests**
+
 $$
 \begin{aligned}
-\mathbf{Y}&:=f(\mathbf{X}_0)
-&&\text{direct and indirect Ownership Interests}\\
+\mathbf{Y}&:=f(\mathbf{X}_0)\\
 \mathbf{C}&:=w(\mathbf{C}_0)
-&&\text{direct and indirect Controlling Interests}\\[6pt]
-\mathbf{upe\text{-}ownership}&:=\mathbf{Y}^{T}\times\mathbf{group\text{-}upe}
-&&\text{aggregate UPE ownership}\\
-\mathbf{jvc}&:=\mathbf{eqt}\land(\mathbf{upe\text{-}ownership}\ge0.5)\land\neg\mathbf{jv\text{-}excluded}
-&&\text{JV candidates}\\
-\mathbf{jvsub}&:=\left(\mathbf{C}^{T}\times\mathbf{jvc}\right)>0
-&&\text{JV Subsidiaries}\\
-\mathbf{jv}&:=\mathbf{jvc}\land\neg\mathbf{jvsub}
-&&\text{top-level JVs}\\
-\mathbf{J}&:=\operatorname{diag}(\mathbf{jv})\times(\mathbf{I}_N\lor\mathbf{C})
-&&\text{JV Groups}
 \end{aligned}
+$$
+
+**JV candidates**
+
+$$
+\begin{aligned}
+\mathbf{upe\text{-}ownership}&:=\mathbf{Y}^{T}\times\mathbf{group\text{-}upe}\\
+\mathbf{jvc}&:=\mathbf{eqt}\land(\mathbf{upe\text{-}ownership}\ge0.5)\land\neg\mathbf{jv\text{-}excluded}
+\end{aligned}
+$$
+
+**JV Subsidiaries and top-level JVs**
+
+$$
+\begin{aligned}
+\mathbf{jvsub}&:=\left(\mathbf{C}^{T}\times\mathbf{jvc}\right)>0\\
+\mathbf{jv}&:=\mathbf{jvc}\land\neg\mathbf{jvsub}
+\end{aligned}
+$$
+
+**JV Groups**
+
+$$
+\mathbf{J}:=\operatorname{diag}(\mathbf{jv})\times(\mathbf{I}_N\lor\mathbf{C})
 $$
 
 $\mathbf{J}$ has top-level JVs on rows and member Entities on columns. Each Entity belongs to at most one JV Group:
