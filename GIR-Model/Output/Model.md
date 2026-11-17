@@ -79,7 +79,3 @@ Every UPE row is exactly one of the two; an Excluded UPE has at least one TIN an
 | [Types.md](Types.md) | The 44 types, their predicates, and the enumeration values |
 | `generate.py` | Derives both files from the XSD: `python generate.py` |
 | `serialize.py` | Writes a set of atoms as GIR XML |
-
-# Relation to `../Relations.md`
-
-`../Relations.md` also converts the XSD into relations, with one relation per complex element (156). This model creates a relation only where an element can repeat (84) and inlines the rest. The two agree on the content: the 493 value vectors here are exactly the 493 value-bearing nodes of `../output_model.csv`, path by path.

@@ -1,4 +1,5 @@
-"""Write Map.md: every value vector of the Output Model and where the Link Model takes it from.
+"""Write Map.md, every value vector of the Output Model and where the Link Model takes it
+from, and Unlinked.md, the vectors that are not linked yet, by topic.
 
 Usage: python map.py     (run from GIR-Model/Link; needs numpy)
 """
@@ -70,5 +71,63 @@ for s in SECTIONS:
 with open(os.path.join(HERE, "Map.md"), "w", newline="\n", encoding="utf-8") as fh:
     fh.write("\n".join(L))
 
+# ---------------------------------------------------------------- Unlinked.md
+# (pattern, topic, what it reports, what linking it needs, pages of ../xml schema.txt); the first match wins.
+NOW, INPUT, CALC = "Can be linked now", "Needs new input", "Needs Calculation Model work"
+TOPICS = [
+    (r"/JurWithTaxingRights/Subgroup/", "Subgroups with taxing rights", "The subgroup to which a jurisdiction's taxing right relates", NOW, "The calculation units of the Link Model", "45-46"),
+    (r"/CE/QUTPR/", "QUTPR of each Entity", "Whether Article 9.3 applies, the aggregate share charged under Qualified IIRs, and whether all UPE interests are so held", NOW, "`Charged` and `r` of UTPR; Article 9.3 as input", "34-35"),
+    (r"/Summary/SBIE/", "SBIE flags of the summary", "Whether no SBIE was calculated, and whether the SBIE removed all Top-up Tax", NOW, "`sbie` and `excess-profit` of Top-up Tax Calculation", "41"),
+    (r"/SubstanceExclusion/", "Breakdown of the SBIE", "Payroll costs, tangible assets, mark-up rates, and their allocation to PEs and Flow-through Entities", INPUT, "Payroll and tangible assets by Entity and the rates of the year; Top-up Tax Calculation takes the SBIE as one amount", "106-111"),
+    (r"/AdjustedFANIL/Adjustment/", "Adjustments to accounting income", "Allocations between Main Entity, PE and Flow-through Entity, cross-border adjustments, and UPE adjustments with the owners concerned", INPUT, "Adjustment rows by Entity with their counterpart Entity", "64-69"),
+    (r"/NetGlobeIncome/Adjustments/", "GloBE Income adjustments by item", "The amount of each adjustment item, by Entity and by group", INPUT, "An Entity-by-item matrix whose row sums reconcile accounting income to GloBE Income", "70-71, 90"),
+    (r"/IntShippingIncome/", "International shipping income", "Shipping income, ancillary income, the 50% cap, and the related substance and taxes", INPUT, "Shipping amounts by Entity", "72-73, 89-90"),
+    (r"/AdjustedIncomeTax/CrossAllocation/", "Cross-allocation of taxes", "Covered Taxes moved to or from another Entity", INPUT, "Allocation rows by Entity with their counterpart Entity", "74-75"),
+    (r"/AdjustedCoveredTax/Adjustments/", "Covered Tax adjustments by item", "The amount of each adjustment item to current tax, by Entity and by group", INPUT, "An Entity-by-item matrix whose row sums reconcile income tax expense to Adjusted Covered Taxes", "76-77, 93-94"),
+    (r"/DeferTaxAdjustAmt/", "Deferred tax", "Deferred tax adjustment items, recast to the Minimum Rate, recapture of deferred tax liabilities, and transition-year balances", CALC, "A deferred tax model across Fiscal Years", "78-79, 92-105"),
+    (r"/PostFilingAdjust/", "Post-filing adjustments", "Deferred tax assets and tax refunds attributed to earlier years", CALC, "Results of earlier Fiscal Years", "92-105"),
+    (r"/DeemedDistTax/", "Deemed distribution tax", "The Article 4.4.7 election: recapture account by year and the resulting Top-up Tax", CALC, "A recapture account across Fiscal Years", "92-105"),
+    (r"/TransBlendCFC/", "Blended CFC taxes", "CFC tax allocated to the jurisdiction during the transition", INPUT, "Allocated amounts by CFC jurisdiction and subgroup", "92-105"),
+    (r"/AdditionalTopUpTax/NONArt4\.1\.5/", "Additional Top-up Tax from recalculation", "The earlier and the recalculated ETR and Top-up Tax of each prior year, and the article that caused it", CALC, "Recalculation of prior Fiscal Years; Top-up Tax Calculation takes the result as `actt-prior`", "112-115"),
+    (r"/OverallComputation/QDMTT/", "QDMTT details", "Minimum rate, basis for blending, and currency election of the QDMTT", INPUT, "QDMTT terms by jurisdiction", "116-118"),
+    (r"/Non-MaterialCE/", "Non-material Constituent Entities", "Revenue of three years and the simplified amounts of non-material CEs", INPUT, "The non-material CE election and its amounts", "119-120"),
+    (r"/Deminimis-SimplifiedNMCECalc/", "De minimis exclusion", "Revenue, GloBE revenue, income and their three-year averages", CALC, "The De Minimis document of the Calculation Model", "60-62"),
+    (r"UTPRSafeHarbour/", "Transitional UTPR Safe Harbour", "The corporate income tax rate of the UPE jurisdiction", CALC, "UTPR Safe Harbour, not modelled in UTPR", "62-63, 123"),
+    (r"/GLoBETax/InitialIntActivity/", "Initial phase of international activity", "Start date, reference jurisdiction, and tangible assets by jurisdiction", CALC, "Article 9.3, not modelled in UTPR", "49-51"),
+    (r"/CEComputation/Elections/", "Elections of an Entity", "Status, election year and revocation year of each Entity-level election, with the Entities concerned", INPUT, "Elections by Entity; Articles 7.5 and 7.6 also need the Investment Entity rules", "80-87"),
+    (r"/ETR/Election/", "Elections of a jurisdiction", "Status, election year and revocation year of each jurisdictional election", INPUT, "Elections by group", "53-58"),
+    (r"/CEComputation/OtherFAS$", "Accounting standard of an Entity", "A standard other than that of the consolidated statements", INPUT, "Accounting standard by Entity", "63-87"),
+    (r"/ReportDifference/|/DiffDomesticTut$", "Differences under domestic law", "The amounts as they would be under the legislation of a jurisdiction with taxing rights", INPUT, "A second calculation under each domestic law", "39, 46-48"),
+    (r"/LocalCurrency$", "Local currency", "The currency of a local filing, where it differs", INPUT, "Currency by jurisdiction", "48"),
+    (r"/OwnershipChange/|/UnreportChangeCorpStr$", "Changes of ownership during the year", "Date of each change, and status and owners before it", CALC, "Effective periods in the Calculation Model", "29-31, 36"),
+    (r"/Art10\.3\.5$", "Article 10.3.5", "The jurisdiction that requires a Parent Entity located elsewhere to apply its IIR", INPUT, "The `art-10.3.5` classification and its jurisdiction", "27"),
+    (r"/AdditionalDataPoint/", "Additional data points", "Free-form data required by government guidance", INPUT, "None defined", "19"),
+    (r"/CorrDocRefId$", "Corrections", "The reference of the document being corrected", INPUT, "A correction workflow", "128-130"),
+    (r"@version$|/MessageSpec/|/FilingInfo/AdditionalInfo$", "Optional header fields", "Schema version, sending Entity, contact, warning, additional information", INPUT, "Filing data", "12-13, 24"),
+]
+found = {t[1]: 0 for t in TOPICS}
+for v in g.vectors:
+    if v["kind"] == "value" and v["vector_id"] not in c.linked:
+        path = c.plain(v["path"])
+        topic = next((t[1] for t in TOPICS if re.search(t[0], path)), None)
+        assert topic, "no topic for " + path
+        found[topic] += 1
+U = ["# Unlinked", "",
+     "The %d value vectors of the [Output Model](../Output/Model.md) that the [Link Model](Model.md) does not define yet, by topic. All are optional in the schema, so the return is valid without them. The vectors themselves are listed in [Map](Map.md). Generated by `map.py`; do not edit." % sum(found.values()), ""]
+for status in (NOW, INPUT, CALC):
+    part = [t for t in TOPICS if t[3] == status]
+    U += ["# %s" % status, "",
+          {NOW: "The Calculation Model already produces what these need.",
+           INPUT: "These report detail that the Calculation Model takes as a single amount, or does not use at all. Each needs its own atoms in the Input Model.",
+           CALC: "These depend on rules the Calculation Model does not cover yet."}[status], "",
+          "| Topic | Vectors | Reports | Needs | Guide pages |", "| --- | --- | --- | --- | --- |"]
+    for _, topic, reports, _, needs, pages in part:
+        U.append("| %s | %d | %s | %s | %s |" % (topic, found[topic], reports, needs, pages))
+    U += ["| **Total** | %d | | | |" % sum(found[t[1]] for t in part), ""]
+U += ["Guide pages are those of `../xml schema.txt`.", ""]
+with open(os.path.join(HERE, "Unlinked.md"), "w", newline="\n", encoding="utf-8") as fh:
+    fh.write("\n".join(U))
+
 if __name__ == "__main__":
     print("\n".join(L[9:19]))
+    print({st: sum(found[t[1]] for t in TOPICS if t[3] == st) for st in (NOW, INPUT, CALC)})
