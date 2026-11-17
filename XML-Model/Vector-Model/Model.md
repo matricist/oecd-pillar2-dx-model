@@ -41,7 +41,7 @@ The 44 types in use reduce to four kinds of $\tau_t$:
 
 | Kind | Types | $\tau_t(x)$ |
 | --- | --- | --- |
-| Enumeration | 35 | $1\le x\le m_t$, with values encoded by their position in `enum_values.csv` |
+| Enumeration | 35 | $1\le x\le m_t$, with values encoded by their position in [Types.md](Types.md) |
 | Bounded string | 4 | $\mathit{lo}_t\le\operatorname{len}(x)\le\mathit{hi}_t$ |
 | Percentage | 1 | $0\le x\le1$ and $10^{4}x\in\mathbb{Z}$ |
 | Built-in | 4 | $x$ is a boolean, integer, date, or dateTime |
@@ -66,21 +66,16 @@ Every UPE row is exactly one of the two; an Excluded UPE has at least one TIN an
 
 # Not Expressed
 
-- **Order.** Elements are serialized in schema order, which is the order of `vector_id`; rows are serialized in index order.
+- **Order.** Elements are serialized in schema order, which is the order of the vectors in [Equations.md](Equations.md); rows are serialized in index order.
 - **Namespaces and annotations.**
 
 # Files
 
 | File | Content |
 | --- | --- |
-| `relations.csv` | Relations with their parent and occurrence bounds |
-| `vectors.csv` | Value and presence vectors with their relation, path, type, and context |
-| `types.csv` | Types with their primitive and facets |
-| `enum_values.csv` | Enumeration values |
-| `constraints.csv` | The 782 equations |
-| [Equations.md](Equations.md) | The same equations rendered by relation |
-
-In `constraints.csv`, `P_r 1` is $\mathbf{P}_r\times\mathbf{1}$, `.` is $\odot$, and `tau[t]` is $\tau_t$. Regenerate with `python generate.py`.
+| [Equations.md](Equations.md) | The 782 equations, by relation, with the vectors of each relation |
+| [Types.md](Types.md) | The 44 types, their predicates, and the enumeration values |
+| `generate.py` | Derives both files from the XSD: `python generate.py` |
 
 # Relation to `../Relations.md`
 
