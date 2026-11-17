@@ -54,7 +54,3 @@ $$
 ## Bitset Implementation
 
 For better performance, store each matrix row as a bitset. At step $t$, if Entity $i$ controls Entity $t$, merge row $t$ into row $i$ using bitwise OR. This updates multiple Boolean entries at once and reduces memory usage without changing the Warshall result.
-
-## Controller Recommendation Algorithm
-
-Recommend the eligible direct shareholder with the largest ordinary Ownership Interest Ratio. If tied, search upstream shareholders of the tied candidates and compare their direct and indirect Ownership Interest Ratios in the original target until a unique candidate is found; the recommendation requires confirmation.

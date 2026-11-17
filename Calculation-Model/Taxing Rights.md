@@ -137,7 +137,7 @@ $(\mathbf{Iir\text{-}taxing\text{-}rights})_{kl}$ is `True` iff a Parent Entity 
 
 ## UTPR Taxing Rights
 
-Decided by legislation alone: a jurisdiction that has implemented a UTPR has UTPR taxing rights. The safe harbours and the allocation among UTPR jurisdictions are applied in [UTPR](05.UTPR.md). Investment Entities are excluded from UTPR collection and from the allocation key ([Model Rules, Articles 2.4.3 and 2.6.2(a)](https://www.oecd.org/content/dam/oecd/en/publications/reports/2021/12/tax-challenges-arising-from-digitalisation-of-the-economy-global-anti-base-erosion-model-rules-pillar-two_eed81a23/782bac33-en.pdf)).
+Decided by legislation alone: a jurisdiction that has implemented a UTPR has UTPR taxing rights. The safe harbours and the allocation among UTPR jurisdictions are applied in [UTPR](UTPR.md). Investment Entities are excluded from UTPR collection and from the allocation key ([Model Rules, Articles 2.4.3 and 2.6.2(a)](https://www.oecd.org/content/dam/oecd/en/publications/reports/2021/12/tax-challenges-arising-from-digitalisation-of-the-economy-global-anti-base-erosion-model-rules-pillar-two_eed81a23/782bac33-en.pdf)).
 
 ## QDMTT Taxing Rights
 

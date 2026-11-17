@@ -19,7 +19,7 @@ A document index arranged in the workflow order.
 1. [Identifying Minority-Owned SubGroups](<MOSG.md>)
 2. [ETR Calculation Group](<Group.md#etr-calculation-group>)
 3. GloBE De Minimis — document pending
-4. [Top-up Tax Calculation](<03.Top-up Tax Calculation.md>)
+4. [Top-up Tax Calculation](<Top-up Tax Calculation.md>)
 
 ## 4. Applying IIR
 
@@ -30,4 +30,4 @@ A document index arranged in the workflow order.
 ## 5. Applying UTPR
 
 1. UTPR Safe Harbour and UPE Safe Harbour — document pending
-2. [UTPR](05.UTPR.md)
+2. [UTPR](UTPR.md)

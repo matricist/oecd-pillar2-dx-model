@@ -291,7 +291,7 @@ value(tp + "/@unknown", [None] * nC)
 presence(tp + "/@TypeOfTIN", exc)
 value(tp + "/@TypeOfTIN", [tin_type[k] if k is not None else None for k in d])
 
-for name in ("QUTPR", "QUTPR/AggOwnership", "QUTPR/UPEOwnership"):   # pending 05.UTPR
+for name in ("QUTPR", "QUTPR/AggOwnership", "QUTPR/UPEOwnership"):   # pending UTPR
     presence(CS + "CE/" + name, [0] * nC)
 for name in ("QUTPR/Art9.3", "QUTPR/AggOwnership", "QUTPR/UPEOwnership"):
     value(CS + "CE/" + name, [None] * nC)

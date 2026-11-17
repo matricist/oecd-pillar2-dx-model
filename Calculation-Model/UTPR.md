@@ -8,7 +8,7 @@ All inputs are for the same $N$ Entities and $M$ jurisdictions.
 | $g$ | | Unit-diagonal function, $g(\mathbf{A}):=\mathbf{A}-\operatorname{diag}(\mathbf{A})+\mathbf{I}_N$, from [IIR](<IIR.md#unit-diagonal-function>) |
 | $\mathbf{Iir\text{-}payable}$ | $\{0,1\}^{N\times N}$ | IIR payability, from [Taxing Rights](<Taxing Rights.md#iir-payability>) |
 | $\mathbf{self\text{-}payable},\mathbf{upe},\mathbf{qiir}$ | $\{0,1\}^{N\times1}$ | Parent Entities paying their own Top-up Tax, UPEs, and Entities in a Qualified IIR jurisdiction, from [Taxing Rights](<Taxing Rights.md>) |
-| $\mathbf{tt\text{-}entt}$ | $\mathbb{R}_{\ge0}^{N}$ | Top-up Tax of each Entity, from [Top-up Tax Calculation](<03.Top-up Tax Calculation.md>) |
+| $\mathbf{tt\text{-}entt}$ | $\mathbb{R}_{\ge0}^{N}$ | Top-up Tax of each Entity, from [Top-up Tax Calculation](<Top-up Tax Calculation.md>) |
 | $\mathbf{ce},\mathbf{ie}$ | $\{0,1\}^{N\times1}$ | CEs and Investment Entities |
 | $\mathbf{Entt\text{-}jur}$ | $\{0,1\}^{N\times M}$ | Entity-to-jurisdiction matrix |
 | $\mathbf{emp},\mathbf{tan}$ | $\mathbb{R}_{\ge0}^{N}$ | Number of Employees and Net Book Value of Tangible Assets of each Entity |

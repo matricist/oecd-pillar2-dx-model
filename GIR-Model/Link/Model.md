@@ -176,7 +176,7 @@ One row per unit. Apart from the name of the jurisdiction, a row is completed on
 
 # Jurisdiction Section: ETR
 
-One `ETR` row per unit, $\mathbf{P}=\mathbf{Unit\text{-}section}$. Amounts are those of [Top-up Tax Calculation](<../../Calculation-Model/03.Top-up Tax Calculation.md>), selected for the unit's group.
+One `ETR` row per unit, $\mathbf{P}=\mathbf{Unit\text{-}section}$. Amounts are those of [Top-up Tax Calculation](<../../Calculation-Model/Top-up Tax Calculation.md>), selected for the unit's group.
 
 | Output | Link |
 | --- | --- |
@@ -199,7 +199,7 @@ One `ETR` row per unit, $\mathbf{P}=\mathbf{Unit\text{-}section}$. Amounts are t
 
 # Jurisdiction Section: Low-Tax Jurisdiction
 
-Present for a section whose units have Top-up Tax. Parent Entities are those payable under a Qualified IIR, with $\mathbf{Q}$, $\mathbf{Net\text{-}iir}^{Q}$ and $\mathbf{utpr\text{-}ratio}$ of [UTPR](<../../Calculation-Model/05.UTPR.md>) and $\mathbf{Y}$ of [IIR](<../../Calculation-Model/IIR.md#ownership-graph>).
+Present for a section whose units have Top-up Tax. Parent Entities are those payable under a Qualified IIR, with $\mathbf{Q}$, $\mathbf{Net\text{-}iir}^{Q}$ and $\mathbf{utpr\text{-}ratio}$ of [UTPR](<../../Calculation-Model/UTPR.md>) and $\mathbf{Y}$ of [IIR](<../../Calculation-Model/IIR.md#ownership-graph>).
 
 | Output | Link |
 | --- | --- |
@@ -260,7 +260,7 @@ Substituting the links, the Output equations of `CorporateStructure` follow from
 - **`QIIR/Exception`.** Decided per Entity here, whereas [Taxing Rights](<../../Calculation-Model/Taxing Rights.md#iir-payability>) decides displacement per low-taxed Entity.
 - **`QUTPR`, `Art10.3.5`.** Not linked; `QUTPR` waits for the UTPR document.
 - **`OwnershipChange`.** Not linked; it needs the [effective periods](<../../Calculation-Model/Ownership Interest.md#effective-periods>).
-- **Optional detail.** 335 of the 493 value vectors are not linked: adjustments by item, elections, international shipping, deferred tax, transition, de minimis, and the like. They are optional in the schema and need their own inputs; see [Map](Map.md).
+- **Optional detail.** 335 of the 493 value vectors are not linked: adjustments by item, elections, international shipping, deferred tax, transition, de minimis, and the like. They are optional in the schema; [Unlinked](Unlinked.md) lists them by topic with what each needs.
 - **Units.** One `Summary` row and one `ETR` row per unit is an assumption, as is treating a group under an applied TCSH as having no Top-up Tax.
 - **Subgroup TIN.** `NOTIN` is reported for a group of Investment Entities and for a TCSH unit of CEs, which have no single top Entity.
 - **`SafeHarbour`.** Every TCSH test that is passed is reported.

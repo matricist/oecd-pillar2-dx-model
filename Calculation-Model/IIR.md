@@ -6,7 +6,7 @@
 - The top-level JV and JV Subsidiary vectors $\mathbf{jv}$ and $\mathbf{jvsub}$ from [JV.md](<JV.md#calculation>).
 - The direct Profit Ownership Interest matrix $\mathbf{X}_0^{\mathrm{profit}}$ from [Ownership Interest.md](<Ownership Interest.md#direct-ownership-matrix>).
 - The Article 7.4 applicability fraction matrix $\mathbf{R}^{7.4}$.
-- The Entity-level Top-up Tax vector $\mathbf{topup\text{-}tax}$ from [Top-up Tax Calculation](<03.Top-up Tax Calculation.md>).
+- The Entity-level Top-up Tax vector $\mathbf{topup\text{-}tax}$ from [Top-up Tax Calculation](<Top-up Tax Calculation.md>).
 - The direct and indirect Ownership Interest function $f(\mathbf{A})$ from [Ownership Interest.md](<Ownership Interest.md#direct-method>).
 - The current-year IIR payability matrix $\mathbf{Iir\text{-}payable}$ from [Taxing Rights.md](<Taxing Rights.md#iir-payability>).
 
@@ -667,7 +667,7 @@ $$
 \mathbf{topup\text{-}tax}\in\mathbb{R}_{\ge0}^{N\times1}
 $$
 
-be the Entity-level Top-up Tax determined in [Top-up Tax Calculation](<03.Top-up Tax Calculation.md>); every entry is finite and non-negative. For this section, the Top-up Tax of an Article 7.4 IE is the amount already determined after applying the MNE Group's Allocable Share.
+be the Entity-level Top-up Tax determined in [Top-up Tax Calculation](<Top-up Tax Calculation.md>); every entry is finite and non-negative. For this section, the Top-up Tax of an Article 7.4 IE is the amount already determined after applying the MNE Group's Allocable Share.
 
 The final Parent-Entity-by-low-taxed-Entity allocation matrix is:
 
