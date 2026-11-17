@@ -78,6 +78,7 @@ Every UPE row is exactly one of the two; an Excluded UPE has at least one TIN an
 | `types.csv` | Types with their primitive and facets |
 | `enum_values.csv` | Enumeration values |
 | `constraints.csv` | The 782 equations |
+| [Equations.md](Equations.md) | The same equations rendered by relation |
 
 In `constraints.csv`, `P_r 1` is $\mathbf{P}_r\times\mathbf{1}$, `.` is $\odot$, and `tau[t]` is $\tau_t$. Regenerate with `python generate.py`.
 
