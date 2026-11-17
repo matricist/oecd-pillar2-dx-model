@@ -29,8 +29,6 @@ The Net Unrealised Fair Value Loss is given as a non-negative amount: the net lo
 
 An Investment Entity is tested with its jurisdiction only when it and its CE-owners are located in the same jurisdiction, no Article 7.5 or 7.6 election applies, and their amounts are reported in that jurisdiction for CbCR purposes.
 
-Where an Entity's Tested Jurisdiction changes during the Fiscal Year, its values are given separately for each [effective period](<Ownership Interest.md#effective-periods>), so that the periods exactly partition the year without gaps or overlaps.
-
 ## Tested Jurisdiction Aggregation
 
 $\mathbf{G}_{\mathrm{TCSH}}\in\{0,1\}^{M_{\mathrm{TCSH}}\times N_{\mathrm{TCSH}}}$ is the membership matrix for $M_{\mathrm{TCSH}}$ Tested Jurisdictions: rows represent Tested Jurisdictions, columns represent Entities, and an entry is 1 when the Entity belongs to that Tested Jurisdiction, and 0 otherwise.

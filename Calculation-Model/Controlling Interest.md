@@ -26,8 +26,6 @@ These checks apply in addition to the structural and domain validations above.
 
 $\mathbf{C}_0$ is an $N\times N$ square matrix for $N$ Entities, with controlling Entities on rows, Entities controlled on columns, and Boolean values as entries. All diagonal entries are `False`.
 
-$\mathbf{C}_0$ is constructed for each [effective period](<Ownership Interest.md#effective-periods>). The periods must cover the entire Fiscal Year without gaps: an Entity with no controller in a period is recorded as such, not left unspecified.
-
 # Warshall's algorithm
 
 Starting from $\mathbf{C}_0$, compute the direct and indirect controlling interest matrix:
