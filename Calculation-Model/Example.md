@@ -1,6 +1,29 @@
 # Example
 
-A single ownership structure of 17 Entities, headed by a US UPE, that exercises every classification in [JV](JV.md), [MOSG](MOSG.md), [Group](Group.md), and [Taxing Rights](<Taxing Rights.md>). Jurisdiction codes other than US are placeholders, and their implementation statuses are assumptions.
+This example follows one group of 17 Entities, headed by a US parent, through the Calculation Model: from its ownership structure to the classification of each Entity, the groups in which amounts are aggregated, and the jurisdictions that may collect Top-up Tax. The group is built to contain every case the documents distinguish.
+
+Each section applies one document and links to it; the symbols are defined there. Jurisdiction codes other than US are placeholders, and what each jurisdiction has implemented is an assumption.
+
+# Terms
+
+| Term | Meaning | Defined in |
+| --- | --- | --- |
+| UPE | Ultimate Parent Entity: the Entity at the top of the group | Input |
+| CE | Constituent Entity: an Entity of the group that is subject to the rules | Input |
+| Excluded Entity | An Entity outside the rules, such as a pension fund | Input |
+| PE | Permanent Establishment: a branch treated as a separate Entity | Input |
+| Investment Entity | A fund or similar Entity, calculated separately | Input |
+| Stateless Entity | An Entity located in no jurisdiction | Input |
+| JV, JV Subsidiary | An equity-method Entity held at least 50% by the UPE, and the Entities it controls | [JV](JV.md) |
+| MOCE | Minority-Owned Constituent Entity: held 30% or less by the UPE | [MOSG](MOSG.md) |
+| MOPE, MOS | The top MOCE of a Minority-Owned Subgroup, and the MOCEs it controls | [MOSG](MOSG.md) |
+| Single MOCE | A MOCE outside every Minority-Owned Subgroup | [MOSG](MOSG.md) |
+| IPE | Intermediate Parent Entity: a CE that owns another CE | [Taxing Rights](<Taxing Rights.md#identification-of-parent-entities>) |
+| POPE | Partially-Owned Parent Entity: a parent more than 20% owned outside the group | [Taxing Rights](<Taxing Rights.md#identification-of-parent-entities>) |
+| IIR | Income Inclusion Rule: a Parent Entity pays the Top-up Tax of the Entities it owns | [Taxing Rights](<Taxing Rights.md#iir-payability>) |
+| UTPR | Undertaxed Profits Rule: collects Top-up Tax that no IIR collects | [Taxing Rights](<Taxing Rights.md#utpr-taxing-rights>) |
+| QDMTT | Qualified Domestic Minimum Top-up Tax: a jurisdiction collects the Top-up Tax of its own Entities | [Taxing Rights](<Taxing Rights.md#qdmtt-taxing-rights>) |
+| TCSH | Transitional CbCR Safe Harbour: a simplified test that can set Top-up Tax to zero | [TCSH](<Transitional CbCR Safe Harbours Test.md>) |
 
 # Jurisdictions
 
@@ -12,6 +35,8 @@ A single ownership structure of 17 Entities, headed by a US UPE, that exercises 
 | XR | ✓ | ✓ | – | – | – |
 | XD | – | – | – | – | ✓ |
 | XL | – | – | – | – | – |
+
+What a jurisdiction has implemented decides which Parent Entities can be charged. A Qualified IIR is one recognised as equivalent to the model rules, and a Domestic IIR also applies to low-taxed Entities in the Parent Entity's own jurisdiction.
 
 # Ownership Structure
 
@@ -59,9 +84,11 @@ A solid arrow is a direct Ownership Interest held together with direct control; 
 
 # Matrices
 
-Rows and columns follow the Entity index $i$ in [Entities](#entities). Rows are owning or controlling Entities; a dot is 0.
+The structure above as the two input matrices of the model, and the two matrices the model derives from them. Entry $(i,j)$ of an ownership matrix is the share of Entity $j$ held by Entity $i$; entry $(i,j)$ of a control matrix is 1 when Entity $i$ controls Entity $j$. Rows and columns follow the Entity index $i$ in [Entities](#entities), and a dot is 0.
 
 **Direct Ownership Interest matrix** $\mathbf{X}_0$
+
+The arrows of the diagram, with their percentages. Input; see [Ownership Interest](<Ownership Interest.md#direct-ownership-matrix>).
 
 $$
 \scriptsize
@@ -88,6 +115,8 @@ $$
 $$
 
 **Direct and indirect Ownership Interest matrix** $\mathbf{Y}=f(\mathbf{X}_0)$
+
+$f$ is the [direct method of Ownership Interest](<Ownership Interest.md#direct-method>). It adds up every ownership path, so that $(\mathbf{Y})_{ij}$ is the total share of Entity $j$ that Entity $i$ holds, directly and through other Entities.
 
 $$
 \scriptsize
@@ -118,6 +147,8 @@ $$
 
 **Direct Controlling Interest matrix** $\mathbf{C}_0$
 
+The solid arrows of the diagram. Input; see [Controlling Interest](<Controlling Interest.md#direct-controlling-matrix>).
+
 $$
 \scriptsize
 \begin{array}{r|ccccccccccccccccc}
@@ -143,6 +174,8 @@ $$
 $$
 
 **Direct and indirect Controlling Interest matrix** $\mathbf{C}=w(\mathbf{C}_0)$
+
+$w$ is [Warshall's algorithm](<Controlling Interest.md#warshalls-algorithm>). $(\mathbf{C})_{ij}$ is 1 when Entity $i$ controls Entity $j$ directly or through a chain of controlled Entities.
 
 $$
 \scriptsize
@@ -170,6 +203,13 @@ $$
 
 # Entities
 
+One row per Entity. *Given* is input; every other column is derived from the matrices above.
+
+- **$\mathbf{upe\text{-}ownership}$** is the share held by the UPE, directly and indirectly: row 1 of $\mathbf{Y}$. See [JV](JV.md#calculation).
+- **JV / MOCE** is the result of [JV](JV.md#calculation) and [MOSG](MOSG.md#calculation).
+- **Parent** is the kind of Parent Entity, from [Taxing Rights](<Taxing Rights.md#identification-of-parent-entities>).
+- **$\mathbf{group\text{-}id}$**, **TCSH Group**, and **ETR Calculation Group** come from [Group](Group.md). Entities with the same group number are aggregated together: once for the safe harbour test and once for the effective tax rate.
+
 | $i$ | Entity | Jurisdiction | Given | $\mathbf{upe\text{-}ownership}$ | JV / MOCE | Parent | $\mathbf{group\text{-}id}$ | TCSH Group | ETR Calculation Group |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | UPE | US | CE, UPE | – | – | UPE | 0 | 1 | 1 |
@@ -190,14 +230,16 @@ $$
 | 16 | S | XD | CE | 0.25 | Single MOCE | – | 16 | 6 | 12 |
 | 17 | IE3 | XL | CE, Investment Entity | 0.2 | Single MOCE | – | 0 | – | 5 |
 
-- JS2 is a MOCE through $\mathbf{jv\text{-}ownership}=0.3$, not through $\mathbf{upe\text{-}ownership}$.
-- $\mathbf{external}$ is 0 for A, B, and C, 0.7 for P1, and 0.76 for P2 and P3.
+- JS2 is a MOCE through $\mathbf{jv\text{-}ownership}=0.3$, the share held by its JV, not through $\mathbf{upe\text{-}ownership}$.
+- $\mathbf{external}$, the share of a parent's profits held outside the group, is 0 for A, B, and C, 0.7 for P1, and 0.76 for P2 and P3. Above 0.2 a parent is a POPE.
 - JV, JS1, and JS2 form one TCSH Group but two ETR Calculation Groups, because only the latter distinguishes MOCEs.
 - P1 is tested with A, and P2 and P3 with C, for TCSH; for the ETR they are separated by $\mathbf{group\text{-}id}=12$.
 - IE2 shares $\mathbf{group\text{-}id}=12$ with its Minority-Owned Subgroup but forms its own ETR Calculation Group through $\operatorname{eq}(\mathbf{ie})$.
 - IE3 is a Single MOCE, yet joins IE1 in the Investment Entity group of XL.
 
 # IIR Payability
+
+Which Parent Entity may be charged the Top-up Tax of which Entity, from [Taxing Rights](<Taxing Rights.md#iir-payability>). A Parent Entity is payable for an Entity in which it holds an interest if its jurisdiction has an IIR and no Parent Entity above it takes priority.
 
 | Parent | Type | Payable for | Not payable for |
 | --- | --- | --- | --- |
@@ -209,7 +251,7 @@ $$
 | P2 | POPE | IE2 | P3: same jurisdiction, and XR has no domestic IIR. |
 | P3 | POPE | – | IE2: displaced by P2, a wholly-owning upper POPE with a Qualified IIR. |
 
-- A does not displace B, because the IIR of XN is not qualified. Both are payable, and the overlap is resolved by the IIR offset.
+- A does not displace B, because the IIR of XN is not qualified. Both are payable, and the overlap is resolved by the offset in [IIR](IIR.md).
 - B is payable for PE in its own jurisdiction, because XQ applies its IIR domestically.
 - P1 does not displace P2, because it holds only 80% of P2.
 - B is payable for the JV Group and for the Stateless Entity ST.
@@ -224,6 +266,8 @@ Aggregated to jurisdictions, $\mathbf{Iir\text{-}taxing\text{-}rights}$ is:
 
 # Entities without an IIR-payable Parent
 
+No IIR collects the Top-up Tax of these Entities. It falls to the QDMTT of the Entity's own jurisdiction where there is one, and otherwise to the UTPR.
+
 | Entity | Jurisdiction | Taxing right |
 | --- | --- | --- |
 | S | XD | QDMTT of XD |
@@ -234,6 +278,8 @@ Aggregated to jurisdictions, $\mathbf{Iir\text{-}taxing\text{-}rights}$ is:
 XQ is the only UTPR jurisdiction and has CEs other than Investment Entities (B and PE). XQ also applies its QDMTT to B and PE.
 
 # Coverage
+
+Each case the documents distinguish, and the Entity that shows it.
 
 | Case | Where |
 | --- | --- |
