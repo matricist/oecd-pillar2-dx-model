@@ -2,7 +2,7 @@
 evaluate the Output equations of GeneralSection/CorporateStructure and of the
 linked part of JurisdictionSection.
 
-Usage: python check.py     (run from XML-Model/Link; needs numpy)
+Usage: python check.py     (run from GIR-Model/Link; needs numpy)
 """
 import contextlib
 import io

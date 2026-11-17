@@ -1,6 +1,6 @@
 # globe-xsd XSD 문법 교습서
 
-이 문서는 `XML-Model/globe-xsd`의 XSD 3개를 읽기 위한 최소 문법만 다룬다.
+이 문서는 `GIR-Model/globe-xsd`의 XSD 3개를 읽기 위한 최소 문법만 다룬다.
 
 - `GLOBEXML_v1.0.xsd`: 본문 스키마
 - `isoglobetypes_v1.1.xsd`: ISO 국가/통화 코드 타입

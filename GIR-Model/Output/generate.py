@@ -1,6 +1,6 @@
 """Convert the GloBE XSD into relations, atomic vectors and constraint equations.
 
-Usage: python generate.py            (run from XML-Model/Vector-Model)
+Usage: python generate.py            (run from GIR-Model/Vector-Model)
 Reads ../globe-xsd/*.xsd and writes Equations.md and Types.md next to this
 script. See Model.md.
 """
