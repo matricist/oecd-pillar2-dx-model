@@ -1,72 +1,47 @@
-# Operation
+# Inputs
 
-Use the direct Ownership Interest matrix $\mathbf{X}_0$ defined in [Ownership Interest](<Ownership Interest.md#direct-ownership-matrix>) and the direct Controlling Interest matrix $\mathbf{C}_0$ defined in [Controlling Interest](<Controlling Interest.md#direct-controlling-matrix>), both for the same $N$ Entities.
+All inputs are for the same $N$ Entities and the same [effective period](<Ownership Interest.md#effective-periods>).
 
-## JV Exclusion Mask
+| Symbol | Type | Meaning |
+| --- | --- | --- |
+| $\mathbf{X}_0$ | $[0,1]^{N\times N}$ | [Direct Ownership Interest matrix](<Ownership Interest.md#direct-ownership-matrix>) |
+| $\mathbf{C}_0$ | $\{0,1\}^{N\times N}$ | [Direct Controlling Interest matrix](<Controlling Interest.md#direct-controlling-matrix>) |
+| $\mathbf{group\text{-}upe}$ | $\{0,1\}^{N\times1}$ | The group's UPEs |
+| $\mathbf{ce}$ | $\{0,1\}^{N\times1}$ | CEs |
+| $\mathbf{eqt}$ | $\{0,1\}^{N\times1}$ | Entities reported under the equity method |
+| $\mathbf{jv\text{-}excluded}$ | $\{0,1\}^{N\times1}$ | Entities excluded from the Joint Venture definition by Article 10.1.1(a)–(d) |
 
-$\mathbf{jv\text{-}excluded}$ is an $N\times1$ Boolean column vector. An entry is `True` if the Entity is any of the following, and `False` otherwise:
+$f$ is the [Ownership Interest method](<Ownership Interest.md#direct-method>) and $w$ is [Warshall's algorithm](<Controlling Interest.md#warshalls-algorithm>). Comparisons and logical operations are element-wise.
 
-- A UPE of another MNE Group subject to the GloBE Rules.
-- An Excluded Entity under Article 1.5.1.
-- An Entity whose interests held by the MNE Group are held directly through an Article 1.5.1 Excluded Entity, satisfying the applicable asset-holding, ancillary-activity, or excluded-income condition.
-- An Entity held by an MNE Group composed exclusively of Excluded Entities.
-
-## Identifying JV Candidates
-
-Let $\mathbf{Y}=f(\mathbf{X}_0)$ be the $N\times N$ direct and indirect Ownership Interest matrix calculated using the [Ownership Interest method](<Ownership Interest.md#direct-method>). Sum the interests held by the group's UPEs, identified by $\mathbf{group\text{-}upe}$:
-
-$$
-\mathbf{upe\text{-}ownership}
-:=
-\mathbf{Y}^{T}\times\mathbf{group\text{-}upe}.
-$$
-
-With $\mathbf{eqt}$ identifying equity-method Entities, which are never CEs, the $N\times1$ Boolean vector $\mathbf{jvc}$ identifies Entities that use the equity method, have aggregate UPE ownership of at least 50%, and are not excluded:
+# Validation
 
 $$
-\mathbf{jvc}
-:=
-\mathbf{eqt}
-\land
-(\mathbf{upe\text{-}ownership}\ge0.5)
-\land
-\neg\mathbf{jv\text{-}excluded},
+\boxed{\mathbf{eqt}\land\mathbf{ce}=\mathbf{0}_N}
 $$
 
-where the inequality is evaluated element-wise.
-
-## Identifying Top-Level JVs and JV Subsidiaries
-
-Let $w$ denote [Warshall's algorithm](<Controlling Interest.md#warshalls-algorithm>), which maps the direct Controlling Interest matrix $\mathbf{C}_0$ to the direct and indirect Controlling Interest matrix:
+# Calculation
 
 $$
-\mathbf{C}
-:=
-w(\mathbf{C}_0).
+\begin{aligned}
+\mathbf{Y}&:=f(\mathbf{X}_0)
+&&\text{direct and indirect Ownership Interests}\\
+\mathbf{C}&:=w(\mathbf{C}_0)
+&&\text{direct and indirect Controlling Interests}\\[6pt]
+\mathbf{upe\text{-}ownership}&:=\mathbf{Y}^{T}\times\mathbf{group\text{-}upe}
+&&\text{aggregate UPE ownership}\\
+\mathbf{jvc}&:=\mathbf{eqt}\land(\mathbf{upe\text{-}ownership}\ge0.5)\land\neg\mathbf{jv\text{-}excluded}
+&&\text{JV candidates}\\
+\mathbf{jvsub}&:=\left(\mathbf{C}^{T}\times\mathbf{jvc}\right)>0
+&&\text{JV Subsidiaries}\\
+\mathbf{jv}&:=\mathbf{jvc}\land\neg\mathbf{jvsub}
+&&\text{top-level JVs}\\
+\mathbf{J}&:=\operatorname{diag}(\mathbf{jv})\times(\mathbf{I}_N\lor\mathbf{C})
+&&\text{JV Groups}
+\end{aligned}
 $$
 
-An Entity is a JV Subsidiary candidate if it is directly or indirectly controlled by at least one JV candidate:
+$\mathbf{J}$ has top-level JVs on rows and member Entities on columns. Each Entity belongs to at most one JV Group:
 
 $$
-\mathbf{jvsub}
-:=
-\left(\mathbf{C}^{T}\times\mathbf{jvc}\right)>0.
+\mathbf{J}^{T}\times\mathbf{1}_N\le\mathbf{1}_N.
 $$
-
-A top-level JV is a JV candidate that is not itself controlled by another JV candidate:
-
-$$
-\mathbf{jv}
-:=
-\mathbf{jvc}\land\neg\mathbf{jvsub}.
-$$
-
-## Constructing JV Groups
-
-$\mathbf{J}$ is an $N\times N$ Boolean matrix with top-level JVs on rows and member Entities on columns. Each group includes the JV itself and all Entities it directly or indirectly controls.
-
-$$
-\mathbf{J}:=\operatorname{diag}(\mathbf{jv})\times(\mathbf{I}_N\lor\mathbf{C}).
-$$
-
-$\mathbf{J}$ is recalculated for each [effective period](<Ownership Interest.md#effective-periods>): an Entity belongs to a JV Group only in the periods in which the corresponding entry is `True`.

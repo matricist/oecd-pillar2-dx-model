@@ -35,7 +35,7 @@ Where an Entity's Tested Jurisdiction changes during the Fiscal Year, its values
 
 $\mathbf{G}_{\mathrm{TCSH}}\in\{0,1\}^{M_{\mathrm{TCSH}}\times N_{\mathrm{TCSH}}}$ is the membership matrix for $M_{\mathrm{TCSH}}$ Tested Jurisdictions: rows represent Tested Jurisdictions, columns represent Entities, and an entry is 1 when the Entity belongs to that Tested Jurisdiction, and 0 otherwise.
 
-A Tested Jurisdiction is identified by a jurisdiction and, for members of a JV Group, that [JV Group](<JV.md#constructing-jv-groups>). Ordinary CEs outside a JV Group form one Tested Jurisdiction per jurisdiction.
+A Tested Jurisdiction is identified by a jurisdiction and, for members of a JV Group, that [JV Group](<JV.md#calculation>). Ordinary CEs outside a JV Group form one Tested Jurisdiction per jurisdiction.
 
 $$
 \boxed{

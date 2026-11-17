@@ -1,6 +1,6 @@
 ## 사전 정의(?)
 
-Use the direct Ownership Interest matrix $\mathbf{X}_0$ from [Ownership Interest](<Ownership Interest.md#direct-ownership-matrix>), the direct Controlling Interest matrix $\mathbf{C}_0$ from [Controlling Interest](<Controlling Interest.md#direct-controlling-matrix>), and the JV Group membership matrix $\mathbf{J}$ from [JV Groups](<JV.md#constructing-jv-groups>), all for the same $N$ Entities.
+Use the direct Ownership Interest matrix $\mathbf{X}_0$ from [Ownership Interest](<Ownership Interest.md#direct-ownership-matrix>), the direct Controlling Interest matrix $\mathbf{C}_0$ from [Controlling Interest](<Controlling Interest.md#direct-controlling-matrix>), and the JV Group membership matrix $\mathbf{J}$ from [JV Groups](<JV.md#calculation>), all for the same $N$ Entities.
 
 Let $\mathbf{Y}=f(\mathbf{X}_0)$ be the direct and indirect Ownership Interest matrix and $\mathbf{C}=w(\mathbf{C}_0)$ the direct and indirect Controlling Interest matrix, where $f$ is the [Ownership Interest method](<Ownership Interest.md#direct-method>) and $w$ is [Warshall's algorithm](<Controlling Interest.md#warshalls-algorithm>).
 

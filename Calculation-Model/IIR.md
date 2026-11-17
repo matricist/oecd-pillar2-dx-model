@@ -3,7 +3,7 @@
 ## Imports
 
 - The Entity indicator vectors $\mathbf{ce}$, $\mathbf{ee}$, $\mathbf{ie}$, and $\mathbf{group\text{-}upe}$.
-- The top-level JV and JV Subsidiary vectors $\mathbf{jv}$ and $\mathbf{jvsub}$ from [JV.md](<JV.md#identifying-top-level-jvs-and-jv-subsidiaries>).
+- The top-level JV and JV Subsidiary vectors $\mathbf{jv}$ and $\mathbf{jvsub}$ from [JV.md](<JV.md#calculation>).
 - The direct Profit Ownership Interest matrix $\mathbf{X}_0^{\mathrm{profit}}$ from [Ownership Interest.md](<Ownership Interest.md#direct-ownership-matrix>).
 - The Article 7.4 applicability fraction matrix $\mathbf{R}^{7.4}$.
 - The Entity-level Top-up Tax vector $\mathbf{topup\text{-}tax}$ from [Top-up Tax Calculation](<03.Top-up Tax Calculation.md>).
