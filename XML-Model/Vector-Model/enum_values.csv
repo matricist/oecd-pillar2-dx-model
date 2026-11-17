@@ -1,0 +1,716 @@
+type_id,value,annotation
+iso:CountryCode_Type,AF,AFGHANISTAN
+iso:CountryCode_Type,AX,ALAND ISLANDS
+iso:CountryCode_Type,AL,ALBANIA
+iso:CountryCode_Type,DZ,ALGERIA
+iso:CountryCode_Type,AS,AMERICAN SAMOA
+iso:CountryCode_Type,AD,ANDORRA
+iso:CountryCode_Type,AO,ANGOLA
+iso:CountryCode_Type,AI,ANGUILLA
+iso:CountryCode_Type,AQ,ANTARCTICA
+iso:CountryCode_Type,AG,ANTIGUA AND BARBUDA
+iso:CountryCode_Type,AR,ARGENTINA
+iso:CountryCode_Type,AM,ARMENIA
+iso:CountryCode_Type,AW,ARUBA
+iso:CountryCode_Type,AU,AUSTRALIA
+iso:CountryCode_Type,AT,AUSTRIA
+iso:CountryCode_Type,AZ,AZERBAIJAN
+iso:CountryCode_Type,BS,BAHAMAS
+iso:CountryCode_Type,BH,BAHRAIN
+iso:CountryCode_Type,BD,BANGLADESH
+iso:CountryCode_Type,BB,BARBADOS
+iso:CountryCode_Type,BY,BELARUS
+iso:CountryCode_Type,BE,BELGIUM
+iso:CountryCode_Type,BZ,BELIZE
+iso:CountryCode_Type,BJ,BENIN
+iso:CountryCode_Type,BM,BERMUDA
+iso:CountryCode_Type,BT,BHUTAN
+iso:CountryCode_Type,BO,"BOLIVIA, PLURINATIONAL STATE OF"
+iso:CountryCode_Type,BQ,"BONAIRE, SINT EUSTATIUS AND SABA"
+iso:CountryCode_Type,BA,BOSNIA AND HERZEGOVINA
+iso:CountryCode_Type,BW,BOTSWANA
+iso:CountryCode_Type,BV,BOUVET ISLAND
+iso:CountryCode_Type,BR,BRAZIL
+iso:CountryCode_Type,IO,BRITISH INDIAN OCEAN TERRITORY
+iso:CountryCode_Type,BN,BRUNEI DARUSSALAM
+iso:CountryCode_Type,BG,BULGARIA
+iso:CountryCode_Type,BF,BURKINA FASO
+iso:CountryCode_Type,BI,BURUNDI
+iso:CountryCode_Type,KH,CAMBODIA
+iso:CountryCode_Type,CM,CAMEROON
+iso:CountryCode_Type,CA,CANADA
+iso:CountryCode_Type,CV,CABO VERDE
+iso:CountryCode_Type,KY,CAYMAN ISLANDS
+iso:CountryCode_Type,CF,CENTRAL AFRICAN REPUBLIC
+iso:CountryCode_Type,TD,CHAD
+iso:CountryCode_Type,CL,CHILE
+iso:CountryCode_Type,CN,CHINA
+iso:CountryCode_Type,CX,CHRISTMAS ISLAND
+iso:CountryCode_Type,CC,COCOS (KEELING) ISLANDS
+iso:CountryCode_Type,CO,COLOMBIA
+iso:CountryCode_Type,KM,COMOROS
+iso:CountryCode_Type,CG,CONGO
+iso:CountryCode_Type,CD,"CONGO, THE DEMOCRATIC REPUBLIC OF THE"
+iso:CountryCode_Type,CK,COOK ISLANDS
+iso:CountryCode_Type,CR,COSTA RICA
+iso:CountryCode_Type,CI,COTE D'IVOIRE
+iso:CountryCode_Type,HR,CROATIA
+iso:CountryCode_Type,CU,CUBA
+iso:CountryCode_Type,CW,CURACAO
+iso:CountryCode_Type,CY,CYPRUS
+iso:CountryCode_Type,CZ,CZECHIA
+iso:CountryCode_Type,DK,DENMARK
+iso:CountryCode_Type,DJ,DJIBOUTI
+iso:CountryCode_Type,DM,DOMINICA
+iso:CountryCode_Type,DO,DOMINICAN REPUBLIC
+iso:CountryCode_Type,EC,ECUADOR
+iso:CountryCode_Type,EG,EGYPT
+iso:CountryCode_Type,SV,EL SALVADOR
+iso:CountryCode_Type,GQ,EQUATORIAL GUINEA
+iso:CountryCode_Type,ER,ERITREA
+iso:CountryCode_Type,EE,ESTONIA
+iso:CountryCode_Type,ET,ETHIOPIA
+iso:CountryCode_Type,FK,FALKLAND ISLANDS (MALVINAS)
+iso:CountryCode_Type,FO,FAROE ISLANDS
+iso:CountryCode_Type,FJ,FIJI
+iso:CountryCode_Type,FI,FINLAND
+iso:CountryCode_Type,FR,FRANCE
+iso:CountryCode_Type,GF,FRENCH GUIANA
+iso:CountryCode_Type,PF,FRENCH POLYNESIA
+iso:CountryCode_Type,TF,FRENCH SOUTHERN TERRITORIES
+iso:CountryCode_Type,GA,GABON
+iso:CountryCode_Type,GM,GAMBIA
+iso:CountryCode_Type,GE,GEORGIA
+iso:CountryCode_Type,DE,GERMANY
+iso:CountryCode_Type,GH,GHANA
+iso:CountryCode_Type,GI,GIBRALTAR
+iso:CountryCode_Type,GR,GREECE
+iso:CountryCode_Type,GL,GREENLAND
+iso:CountryCode_Type,GD,GRENADA
+iso:CountryCode_Type,GP,GUADELOUPE
+iso:CountryCode_Type,GU,GUAM
+iso:CountryCode_Type,GT,GUATEMALA
+iso:CountryCode_Type,GG,GUERNSEY
+iso:CountryCode_Type,GN,GUINEA
+iso:CountryCode_Type,GW,GUINEA-BISSAU
+iso:CountryCode_Type,GY,GUYANA
+iso:CountryCode_Type,HT,HAITI
+iso:CountryCode_Type,HM,HEARD ISLAND AND MCDONALD ISLANDS
+iso:CountryCode_Type,VA,HOLY SEE (VATICAN CITY STATE)
+iso:CountryCode_Type,HN,HONDURAS
+iso:CountryCode_Type,HK,HONG KONG
+iso:CountryCode_Type,HU,HUNGARY
+iso:CountryCode_Type,IS,ICELAND
+iso:CountryCode_Type,IN,INDIA
+iso:CountryCode_Type,ID,INDONESIA
+iso:CountryCode_Type,IR,"IRAN, ISLAMIC REPUBLIC OF"
+iso:CountryCode_Type,IQ,IRAQ
+iso:CountryCode_Type,IE,IRELAND
+iso:CountryCode_Type,IM,ISLE OF MAN
+iso:CountryCode_Type,IL,ISRAEL
+iso:CountryCode_Type,IT,ITALY
+iso:CountryCode_Type,JM,JAMAICA
+iso:CountryCode_Type,JP,JAPAN
+iso:CountryCode_Type,JE,JERSEY
+iso:CountryCode_Type,JO,JORDAN
+iso:CountryCode_Type,KZ,KAZAKHSTAN
+iso:CountryCode_Type,KE,KENYA
+iso:CountryCode_Type,KI,KIRIBATI
+iso:CountryCode_Type,KP,"KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF"
+iso:CountryCode_Type,KR,"KOREA, REPUBLIC OF"
+iso:CountryCode_Type,KW,KUWAIT
+iso:CountryCode_Type,KG,KYRGYZSTAN
+iso:CountryCode_Type,LA,LAO PEOPLE'S DEMOCRATIC REPUBLIC
+iso:CountryCode_Type,LV,LATVIA
+iso:CountryCode_Type,LB,LEBANON
+iso:CountryCode_Type,LS,LESOTHO
+iso:CountryCode_Type,LR,LIBERIA
+iso:CountryCode_Type,LY,LIBYA
+iso:CountryCode_Type,LI,LIECHTENSTEIN
+iso:CountryCode_Type,LT,LITHUANIA
+iso:CountryCode_Type,LU,LUXEMBOURG
+iso:CountryCode_Type,MO,MACAO
+iso:CountryCode_Type,MK,NORTH MACEDONIA
+iso:CountryCode_Type,MG,MADAGASCAR
+iso:CountryCode_Type,MW,MALAWI
+iso:CountryCode_Type,MY,MALAYSIA
+iso:CountryCode_Type,MV,MALDIVES
+iso:CountryCode_Type,ML,MALI
+iso:CountryCode_Type,MT,MALTA
+iso:CountryCode_Type,MH,MARSHALL ISLANDS
+iso:CountryCode_Type,MQ,MARTINIQUE
+iso:CountryCode_Type,MR,MAURITANIA
+iso:CountryCode_Type,MU,MAURITIUS
+iso:CountryCode_Type,YT,MAYOTTE
+iso:CountryCode_Type,MX,MEXICO
+iso:CountryCode_Type,FM,"MICRONESIA, FEDERATED STATES OF"
+iso:CountryCode_Type,MD,"MOLDOVA, REPUBLIC OF"
+iso:CountryCode_Type,MC,MONACO
+iso:CountryCode_Type,MN,MONGOLIA
+iso:CountryCode_Type,ME,MONTENEGRO
+iso:CountryCode_Type,MS,MONTSERRAT
+iso:CountryCode_Type,MA,MOROCCO
+iso:CountryCode_Type,MZ,MOZAMBIQUE
+iso:CountryCode_Type,MM,MYANMAR
+iso:CountryCode_Type,NA,NAMIBIA
+iso:CountryCode_Type,NR,NAURU
+iso:CountryCode_Type,NP,NEPAL
+iso:CountryCode_Type,NL,NETHERLANDS
+iso:CountryCode_Type,NC,NEW CALEDONIA
+iso:CountryCode_Type,NZ,NEW ZEALAND
+iso:CountryCode_Type,NI,NICARAGUA
+iso:CountryCode_Type,NE,NIGER
+iso:CountryCode_Type,NG,NIGERIA
+iso:CountryCode_Type,NU,NIUE
+iso:CountryCode_Type,NF,NORFOLK ISLAND
+iso:CountryCode_Type,MP,NORTHERN MARIANA ISLANDS
+iso:CountryCode_Type,NO,NORWAY
+iso:CountryCode_Type,OM,OMAN
+iso:CountryCode_Type,PK,PAKISTAN
+iso:CountryCode_Type,PW,PALAU
+iso:CountryCode_Type,PS,"PALESTINE, STATE OF"
+iso:CountryCode_Type,PA,PANAMA
+iso:CountryCode_Type,PG,PAPUA NEW GUINEA
+iso:CountryCode_Type,PY,PARAGUAY
+iso:CountryCode_Type,PE,PERU
+iso:CountryCode_Type,PH,PHILIPPINES
+iso:CountryCode_Type,PN,PITCAIRN
+iso:CountryCode_Type,PL,POLAND
+iso:CountryCode_Type,PT,PORTUGAL
+iso:CountryCode_Type,PR,PUERTO RICO
+iso:CountryCode_Type,QA,QATAR
+iso:CountryCode_Type,RE,REUNION
+iso:CountryCode_Type,RO,ROMANIA
+iso:CountryCode_Type,RU,RUSSIAN FEDERATION
+iso:CountryCode_Type,RW,RWANDA
+iso:CountryCode_Type,BL,SAINT BARTHELEMY
+iso:CountryCode_Type,SH,"SAINT HELENA, ASCENSION AND TRISTAN DA CUNHA"
+iso:CountryCode_Type,KN,SAINT KITTS AND NEVIS
+iso:CountryCode_Type,LC,SAINT LUCIA
+iso:CountryCode_Type,MF,SAINT MARTIN (FRENCH PART)
+iso:CountryCode_Type,PM,SAINT PIERRE AND MIQUELON
+iso:CountryCode_Type,VC,SAINT VINCENT AND THE GRENADINES
+iso:CountryCode_Type,WS,SAMOA
+iso:CountryCode_Type,SM,SAN MARINO
+iso:CountryCode_Type,ST,SAO TOME AND PRINCIPE
+iso:CountryCode_Type,SA,SAUDI ARABIA
+iso:CountryCode_Type,SN,SENEGAL
+iso:CountryCode_Type,RS,SERBIA
+iso:CountryCode_Type,SC,SEYCHELLES
+iso:CountryCode_Type,SL,SIERRA LEONE
+iso:CountryCode_Type,SG,SINGAPORE
+iso:CountryCode_Type,SX,SINT MAARTEN (DUTCH PART)
+iso:CountryCode_Type,SK,SLOVAKIA
+iso:CountryCode_Type,SI,SLOVENIA
+iso:CountryCode_Type,SB,SOLOMON ISLANDS
+iso:CountryCode_Type,SO,SOMALIA
+iso:CountryCode_Type,ZA,SOUTH AFRICA
+iso:CountryCode_Type,GS,SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+iso:CountryCode_Type,SS,SOUTH SUDAN
+iso:CountryCode_Type,ES,SPAIN
+iso:CountryCode_Type,LK,SRI LANKA
+iso:CountryCode_Type,SD,SUDAN
+iso:CountryCode_Type,SR,SURINAME
+iso:CountryCode_Type,SJ,SVALBARD AND JAN MAYEN
+iso:CountryCode_Type,SZ,ESWATINI
+iso:CountryCode_Type,SE,SWEDEN
+iso:CountryCode_Type,CH,SWITZERLAND
+iso:CountryCode_Type,SY,SYRIAN ARAB REPUBLIC
+iso:CountryCode_Type,TW,"TAIWAN, PROVINCE OF CHINA"
+iso:CountryCode_Type,TJ,TAJIKISTAN
+iso:CountryCode_Type,TZ,"TANZANIA, UNITED REPUBLIC OF"
+iso:CountryCode_Type,TH,THAILAND
+iso:CountryCode_Type,TL,TIMOR-LESTE
+iso:CountryCode_Type,TG,TOGO
+iso:CountryCode_Type,TK,TOKELAU
+iso:CountryCode_Type,TO,TONGA
+iso:CountryCode_Type,TT,TRINIDAD AND TOBAGO
+iso:CountryCode_Type,TN,TUNISIA
+iso:CountryCode_Type,TR,TURKEY
+iso:CountryCode_Type,TM,TURKMENISTAN
+iso:CountryCode_Type,TC,TURKS AND CAICOS ISLANDS
+iso:CountryCode_Type,TV,TUVALU
+iso:CountryCode_Type,UG,UGANDA
+iso:CountryCode_Type,UA,UKRAINE
+iso:CountryCode_Type,AE,UNITED ARAB EMIRATES
+iso:CountryCode_Type,GB,UNITED KINGDOM OF GREAT BRITAIN AND NORTHERN IRELAND
+iso:CountryCode_Type,US,UNITED STATES
+iso:CountryCode_Type,UM,UNITED STATES MINOR OUTLYING ISLANDS
+iso:CountryCode_Type,UY,URUGUAY
+iso:CountryCode_Type,UZ,UZBEKISTAN
+iso:CountryCode_Type,VU,VANUATU
+iso:CountryCode_Type,VE,"VENEZUELA, BOLIVARIAN REPUBLIC OF"
+iso:CountryCode_Type,VN,VIET NAM
+iso:CountryCode_Type,VG,"VIRGIN ISLANDS, BRITISH"
+iso:CountryCode_Type,VI,"VIRGIN ISLANDS, U.S."
+iso:CountryCode_Type,WF,WALLIS AND FUTUNA
+iso:CountryCode_Type,EH,WESTERN SAHARA
+iso:CountryCode_Type,YE,YEMEN
+iso:CountryCode_Type,ZM,ZAMBIA
+iso:CountryCode_Type,ZW,ZIMBABWE
+iso:CountryCode_Type,XK,KOSOVO
+iso:CountryCode_Type,X5,STATELESS
+globe:MessageType_EnumType,GIR,
+globe:MessageTypeIndic_EnumType,GIR101,The message contains new information
+globe:MessageTypeIndic_EnumType,GIR102,The message contains corrections for previously sent information
+globe:MessageTypeIndic_EnumType,GIR103,The message advises there is no data to report
+globe:TIN_EnumType,GIR3001,Tax Identification Number
+globe:TIN_EnumType,GIR3002,Functionally equivalent number
+globe:TIN_EnumType,GIR3003,Agreed GIR designated number
+globe:TIN_EnumType,GIR3004,Not required to be reported
+globe:FilingCERole_EnumType,GIR401,Ultimate Parent Entity
+globe:FilingCERole_EnumType,GIR402,Designated Filing Entity
+globe:FilingCERole_EnumType,GIR403,Designated Local Entity
+globe:FilingCERole_EnumType,GIR404,Constituent Entity
+globe:FilingCERole_EnumType,GIR405,Other
+globe:FilingCECofUPE_EnumType,GIR501,Subparagraph a
+globe:FilingCECofUPE_EnumType,GIR502,Subparagraph b
+globe:FilingCECofUPE_EnumType,GIR503,Subparagraph c
+globe:FilingCECofUPE_EnumType,GIR504,Subparagraph d
+iso:currCode_Type,AED,UAE Dirham: UNITED ARAB EMIRATES
+iso:currCode_Type,AFN,Afghani: AFGHANISTAN
+iso:currCode_Type,ALL,Lek: ALBANIA
+iso:currCode_Type,AMD,Armenian Dram: ARMENIA
+iso:currCode_Type,ANG,Netherlands Antillean Guilder: CURACAO; SINT MAARTEN (DUTCH PART)
+iso:currCode_Type,AOA,Kwanza: ANGOLA
+iso:currCode_Type,ARS,Argentine Peso: ARGENTINA
+iso:currCode_Type,AUD,Australian Dollar: AUSTRALIA; CHRISTMAS ISLAND; COCOS (KEELING) ISLANDS; HEARD ISLAND AND McDONALD ISLANDS; KIRIBATI; NAURU; NORFOLK ISLAND; TUVALU
+iso:currCode_Type,AWG,Aruban Florin: ARUBA
+iso:currCode_Type,AZN,Azerbaijan Manat: AZERBAIJAN
+iso:currCode_Type,BAM,Convertible Mark: BOSNIA AND HERZEGOVINA
+iso:currCode_Type,BBD,Barbados Dollar: BARBADOS
+iso:currCode_Type,BDT,Taka: BANGLADESH
+iso:currCode_Type,BGN,Bulgarian Lev: BULGARIA
+iso:currCode_Type,BHD,Bahraini Dinar: BAHRAIN
+iso:currCode_Type,BIF,Burundi Franc: BURUNDI
+iso:currCode_Type,BMD,Bermudian Dollar: BERMUDA
+iso:currCode_Type,BND,Brunei Dollar: BRUNEI DARUSSALAM
+iso:currCode_Type,BOB,"Boliviano: BOLIVIA, PLURINATIONAL STATE OF"
+iso:currCode_Type,BOV,"Mvdol: BOLIVIA, PLURINATIONAL STATE OF"
+iso:currCode_Type,BRL,Brazilian Real: BRAZIL
+iso:currCode_Type,BSD,Bahamian Dollar: BAHAMAS
+iso:currCode_Type,BTN,Ngultrum: BHUTAN
+iso:currCode_Type,BWP,Pula: BOTSWANA
+iso:currCode_Type,BYN,Belarusian Ruble: BELARUS
+iso:currCode_Type,BYR,Historic use: Belarussian Ruble: BELARUS
+iso:currCode_Type,BZD,Belize Dollar: BELIZE
+iso:currCode_Type,CAD,Canadian Dollar: CANADA
+iso:currCode_Type,CDF,"Congolese Franc: CONGO, THE DEMOCRATIC REPUBLIC OF"
+iso:currCode_Type,CHE,WIR Euro: SWITZERLAND
+iso:currCode_Type,CHF,Swiss Franc: LIECHTENSTEIN; SWITZERLAND
+iso:currCode_Type,CHW,WIR Franc: SWITZERLAND
+iso:currCode_Type,CLF,Unidad de Fomento: CHILE
+iso:currCode_Type,CLP,Chilean Peso: CHILE
+iso:currCode_Type,CNY,Yuan Renminbi: CHINA
+iso:currCode_Type,COP,Colombian Peso: COLOMBIA
+iso:currCode_Type,COU,Unidad de Valor Real: COLOMBIA
+iso:currCode_Type,CRC,Costa Rican Colon: COSTA RICA
+iso:currCode_Type,CUC,Peso Convertible: CUBA
+iso:currCode_Type,CUP,Cuban Peso: CUBA
+iso:currCode_Type,CVE,Cabo Verde Escudo: CABO VERDE
+iso:currCode_Type,CZK,Czech Koruna: CZECHIA
+iso:currCode_Type,DJF,Djibouti Franc: DJIBOUTI
+iso:currCode_Type,DKK,Danish Krone: DENMARK; FAROE ISLANDS; GREENLAND
+iso:currCode_Type,DOP,Dominican Peso: DOMINICAN REPUBLIC
+iso:currCode_Type,DZD,Algerian Dinar: ALGERIA
+iso:currCode_Type,EGP,Egyptian Pound: EGYPT
+iso:currCode_Type,ERN,Nakfa: ERITREA
+iso:currCode_Type,ETB,Ethiopian Birr: ETHIOPIA
+iso:currCode_Type,EUR,Euro: ALAND ISLANDS; ANDORRA; AUSTRIA; BELGIUM; CYPRUS; ESTONIA; EUROPEAN UNION; FINLAND; FRANCE; FRENCH GUIANA; FRENCH SOUTHERN TERRITORIES; GERMANY; GREECE; GUADELOUPE; HOLY SEE (VATICAN CITY STATE); IRELAND; ITALY; LATVIA; LITHUANIA; LUXEMBOURG; MALTA; MARTINIQUE; MAYOTTE; MONACO; MONTENEGRO; NETHERLANDS; PORTUGAL; REUNION; SAINT BARTHELEMY; SAINT MARTIN (FRENCH PART); SAINT PIERRE AND MIQUELON; SAN MARINO; SLOVAKIA; SLOVENIA; SPAIN; Vatican City State (HOLY SEE)
+iso:currCode_Type,FJD,Fiji Dollar: FIJI
+iso:currCode_Type,FKP,Falkland Islands Pound: FALKLAND ISLANDS (MALVINAS)
+iso:currCode_Type,GBP,Pound Sterling: GUERNSEY; ISLE OF MAN; JERSEY; UNITED KINGDOM OF GREAT BRITAIN AND NORTHERN IRELAND
+iso:currCode_Type,GEL,Lari: GEORGIA
+iso:currCode_Type,GHS,Ghana Cedi: GHANA
+iso:currCode_Type,GIP,Gibraltar Pound: GIBRALTAR
+iso:currCode_Type,GMD,Dalasi: GAMBIA
+iso:currCode_Type,GNF,Guinean Franc: GUINEA
+iso:currCode_Type,GTQ,Quetzal: GUATEMALA
+iso:currCode_Type,GYD,Guyana Dollar: GUYANA
+iso:currCode_Type,HKD,Hong Kong Dollar: HONG KONG
+iso:currCode_Type,HNL,Lempira: HONDURAS
+iso:currCode_Type,HRK,Kuna: CROATIA
+iso:currCode_Type,HTG,Gourde: HAITI
+iso:currCode_Type,HUF,Forint: HUNGARY
+iso:currCode_Type,IDR,Rupiah: INDONESIA
+iso:currCode_Type,ILS,New Israeli Sheqel: ISRAEL
+iso:currCode_Type,INR,Indian Rupee: BHUTAN; INDIA
+iso:currCode_Type,IQD,Iraqi Dinar: IRAQ
+iso:currCode_Type,IRR,"Iranian Rial: IRAN, ISLAMIC REPUBLIC OF"
+iso:currCode_Type,ISK,Iceland Krona: ICELAND
+iso:currCode_Type,JMD,Jamaican Dollar: JAMAICA
+iso:currCode_Type,JOD,Jordanian Dinar: JORDAN
+iso:currCode_Type,JPY,Yen: JAPAN
+iso:currCode_Type,KES,Kenyan Shilling: KENYA
+iso:currCode_Type,KGS,Som: KYRGYZSTAN
+iso:currCode_Type,KHR,Riel: CAMBODIA
+iso:currCode_Type,KMF,Comorian Franc : COMOROS
+iso:currCode_Type,KPW,"North Korean Won: KOREA, DEMOCRATIC PEOPLE’S REPUBLIC OF"
+iso:currCode_Type,KRW,"Won: KOREA, REPUBLIC OF"
+iso:currCode_Type,KWD,Kuwaiti Dinar: KUWAIT
+iso:currCode_Type,KYD,Cayman Islands Dollar: CAYMAN ISLANDS
+iso:currCode_Type,KZT,Tenge: KAZAKHSTAN
+iso:currCode_Type,LAK,Lao Kip: LAO PEOPLE’S DEMOCRATIC REPUBLIC
+iso:currCode_Type,LBP,Lebanese Pound: LEBANON
+iso:currCode_Type,LKR,Sri Lanka Rupee: SRI LANKA
+iso:currCode_Type,LRD,Liberian Dollar: LIBERIA
+iso:currCode_Type,LSL,Loti: LESOTHO
+iso:currCode_Type,LTL,Historic use: Lithuanian Litas: LITHUANIA
+iso:currCode_Type,LVL,Historic use: Latvian Lats: LATVIA
+iso:currCode_Type,LYD,Libyan Dinar: LIBYA
+iso:currCode_Type,MAD,Moroccan Dirham: MOROCCO; WESTERN SAHARA
+iso:currCode_Type,MDL,"Moldovan Leu: MOLDOVA, REPUBLIC OF"
+iso:currCode_Type,MGA,Malagasy Ariary: MADAGASCAR
+iso:currCode_Type,MKD,"Denar: MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF"
+iso:currCode_Type,MMK,Kyat: MYANMAR
+iso:currCode_Type,MNT,Tugrik: MONGOLIA
+iso:currCode_Type,MOP,Pataca: MACAO
+iso:currCode_Type,MRO,Historic use: Ouguiya: MAURITANIA
+iso:currCode_Type,MRU,Ouguiya: MAURITANIA
+iso:currCode_Type,MUR,Mauritius Rupee: MAURITIUS
+iso:currCode_Type,MVR,Rufiyaa: MALDIVES
+iso:currCode_Type,MWK,Malawi Kwacha: MALAWI
+iso:currCode_Type,MXN,Mexican Peso: MEXICO
+iso:currCode_Type,MXV,Mexican Unidad de Inversion (UDI): MEXICO
+iso:currCode_Type,MYR,Malaysian Ringgit: MALAYSIA
+iso:currCode_Type,MZN,Mozambique Metical: MOZAMBIQUE
+iso:currCode_Type,NAD,Namibia Dollar: NAMIBIA
+iso:currCode_Type,NGN,Naira: NIGERIA
+iso:currCode_Type,NIO,Cordoba Oro: NICARAGUA
+iso:currCode_Type,NOK,Norwegian Krone: BOUVET ISLAND; NORWAY; SVALBARD AND JAN MAYEN
+iso:currCode_Type,NPR,Nepalese Rupee: NEPAL
+iso:currCode_Type,NZD,New Zealand Dollar: COOK ISLANDS; NEW ZEALAND; NIUE; PITCAIRN; TOKELAU
+iso:currCode_Type,OMR,Rial Omani: OMAN
+iso:currCode_Type,PAB,Balboa: PANAMA
+iso:currCode_Type,PEN,Sol: PERU
+iso:currCode_Type,PGK,Kina: PAPUA NEW GUINEA
+iso:currCode_Type,PHP,Philippine Peso: PHILIPPINES
+iso:currCode_Type,PKR,Pakistan Rupee: PAKISTAN
+iso:currCode_Type,PLN,Zloty: POLAND
+iso:currCode_Type,PYG,Guarani: PARAGUAY
+iso:currCode_Type,QAR,Qatari Rial: QATAR
+iso:currCode_Type,RON,Romanian Leu: ROMANIA
+iso:currCode_Type,RSD,Serbian Dinar: SERBIA
+iso:currCode_Type,RUB,Russian Ruble: RUSSIAN FEDERATION
+iso:currCode_Type,RWF,Rwanda Franc: RWANDA
+iso:currCode_Type,SAR,Saudi Riyal: SAUDI ARABIA
+iso:currCode_Type,SBD,Solomon Islands Dollar: SOLOMON ISLANDS
+iso:currCode_Type,SCR,Seychelles Rupee: SEYCHELLES
+iso:currCode_Type,SDG,Sudanese Pound: SUDAN
+iso:currCode_Type,SEK,Swedish Krona: SWEDEN
+iso:currCode_Type,SGD,Singapore Dollar: SINGAPORE
+iso:currCode_Type,SHP,"Saint Helena Pound: SAINT HELENA, ASCENSION AND TRISTAN DA CUNHA"
+iso:currCode_Type,SLL,Leone: SIERRA LEONE
+iso:currCode_Type,SOS,Somali Shilling: SOMALIA
+iso:currCode_Type,SRD,Surinam Dollar: SURINAME
+iso:currCode_Type,SSP,South Sudanese Pound: SOUTH SUDAN
+iso:currCode_Type,STD,Historic use: Dobra: SAO TOME AND PRINCIPE
+iso:currCode_Type,STN,Dobra: SAO TOME AND PRINCIPE
+iso:currCode_Type,SVC,El Salvador Colon: EL SALVADOR
+iso:currCode_Type,SYP,Syrian Pound: SYRIAN ARAB REPUBLIC
+iso:currCode_Type,SZL,Lilangeni: ESWATINI
+iso:currCode_Type,THB,Baht: THAILAND
+iso:currCode_Type,TJS,Somoni: TAJIKISTAN
+iso:currCode_Type,TMT,Turkmenistan New Manat: TURKMENISTAN
+iso:currCode_Type,TND,Tunisian Dinar: TUNISIA
+iso:currCode_Type,TOP,Pa’anga: TONGA
+iso:currCode_Type,TRY,Turkish Lira: TURKEY
+iso:currCode_Type,TTD,Trinidad and Tobago Dollar: TRINIDAD AND TOBAGO
+iso:currCode_Type,TWD,"New Taiwan Dollar: TAIWAN, PROVINCE OF CHINA"
+iso:currCode_Type,TZS,"Tanzanian Shilling: TANZANIA, UNITED REPUBLIC OF"
+iso:currCode_Type,UAH,Hryvnia: UKRAINE
+iso:currCode_Type,UGX,Uganda Shilling: UGANDA
+iso:currCode_Type,USD,"US Dollar: AMERICAN SAMOA; BONAIRE; SINT EUSTATIUS AND SABA; BRITISH INDIAN OCEAN TERRITORY; ECUADOR; EL SALVADOR; GUAM; HAITI; MARSHALL ISLANDS; MICRONESIA, FEDERATED STATES OF; NORTHERN MARIANA ISLANDS; PALAU; PANAMA; PUERTO RICO; TIMOR-LESTE; TURKS AND CAICOS ISLANDS; UNITED STATES; UNITED STATES MINOR OUTLYING ISLANDS; VIRGIN ISLANDS (BRITISH); VIRGIN ISLANDS (US)"
+iso:currCode_Type,USN,US Dollar (Next day): UNITED STATES
+iso:currCode_Type,USS,Historic use: US Dollar (Same day): UNITED STATES
+iso:currCode_Type,UYI,Uruguay Peso en Unidades Indexadas (UI): URUGUAY
+iso:currCode_Type,UYU,Peso Uruguayo: URUGUAY
+iso:currCode_Type,UYW,Unidad Previsional: URUGUAY
+iso:currCode_Type,UZS,Uzbekistan Sum: UZBEKISTAN
+iso:currCode_Type,VEF,"Historic use: Bolivar: VENEZUELA, BOLIVARIAN REPUBLIC OF"
+iso:currCode_Type,VES,"Bolívar Soberano: VENEZUELA, BOLIVARIAN REPUBLIC OF"
+iso:currCode_Type,VND,Dong: VIET NAM
+iso:currCode_Type,VUV,Vatu: VANUATU
+iso:currCode_Type,WST,Tala: SAMOA
+iso:currCode_Type,XAF,CFA Franc BEAC: CAMEROON; CENTRAL AFRICAN REPUBLIC; CHAD; CONGO; EQUATORIAL GUINEA; GABON
+iso:currCode_Type,XAG,Silver: ZZ11_Silver
+iso:currCode_Type,XAU,Gold: ZZ08_Gold
+iso:currCode_Type,XBA,Bond Markets Unit European Composite Unit (EURCO): ZZ01_Bond Markets Unit European_EURCO
+iso:currCode_Type,XBB,Bond Markets Unit European Monetary Unit (E.M.U.-6): ZZ02_Bond Markets Unit European_EMU-6
+iso:currCode_Type,XBC,Bond Markets Unit European Unit of Account 9 (E.U.A.-9): ZZ03_Bond Markets Unit European_EUA-9
+iso:currCode_Type,XBD,Bond Markets Unit European Unit of Account 17 (E.U.A.-17): ZZ04_Bond Markets Unit European_EUA-17
+iso:currCode_Type,XCD,East Caribbean Dollar: ANGUILLA; ANTIGUA AND BARBUDA; DOMINICA; GRENADA; MONTSERRAT; SAINT KITTS AND NEVIS; SAINT LUCIA; SAINT VINCENT AND THE GRENADINES
+iso:currCode_Type,XDR,SDR (Special Drawing Right): INTERNATIONAL MONETARY FUND (IMF)
+iso:currCode_Type,XFU,Historic use: UIC-Franc: ZZ05_UIC-Franc
+iso:currCode_Type,XOF,CFA Franc BCEAO: BENIN; BURKINA FASO; COTE D'IVOIRE; GUINEA-BISSAU; MALI; NIGER; SENEGAL; TOGO
+iso:currCode_Type,XPD,Palladium: ZZ09_Palladium
+iso:currCode_Type,XPF,CFP Franc: FRENCH POLYNESIA; NEW CALEDONIA; WALLIS AND FUTUNA
+iso:currCode_Type,XPT,Platinum: ZZ10_Platinum
+iso:currCode_Type,XSU,"Sucre: SISTEMA UNITARIO DE COMPENSACION REGIONAL DE PAGOS ""SUCRE"""
+iso:currCode_Type,XUA,ADB Unit of Account: MEMBER COUNTRIES OF THE AFRICAN DEVELOPMENT BANK GROUP
+iso:currCode_Type,XXX,The codes assigned for transactions where no currency is involved: ZZ07_No_Currency
+iso:currCode_Type,YER,Yemeni Rial: YEMEN
+iso:currCode_Type,ZAR,Rand: LESOTHO; NAMIBIA; SOUTH AFRICA
+iso:currCode_Type,ZMW,Zambian Kwacha: ZAMBIA
+iso:currCode_Type,ZWL,Zimbabwe Dollar: ZIMBABWE
+stf:OECDDocTypeIndic_EnumType,OECD0,Resend Data
+stf:OECDDocTypeIndic_EnumType,OECD1,New Data
+stf:OECDDocTypeIndic_EnumType,OECD2,Corrected Data
+stf:OECDDocTypeIndic_EnumType,OECD3,Deletion of Data
+stf:OECDDocTypeIndic_EnumType,OECD10,Resend Test Data
+stf:OECDDocTypeIndic_EnumType,OECD11,New Test Data
+stf:OECDDocTypeIndic_EnumType,OECD12,Corrected Test Data
+stf:OECDDocTypeIndic_EnumType,OECD13,Deletion of Test Data
+globe:ExcludedUPE_EnumType,GIR601,Governmental Entity
+globe:ExcludedUPE_EnumType,GIR602,International Organisation
+globe:ExcludedUPE_EnumType,GIR603,Non-profit Organisation
+globe:ExcludedUPE_EnumType,GIR604,Pension Fund
+globe:ExcludedUPE_EnumType,GIR605,Investment Fund that is an UPE
+globe:ExcludedUPE_EnumType,GIR606,Real Estate Investment Vehicle that is an UPE
+globe:IDTypeRules_EnumType,GIR201,QIIR applicable to Low-Taxed Constituent Entities located in other jurisdictions only
+globe:IDTypeRules_EnumType,GIR202,QIIR applicable to both Low-Taxed Constituent Entities located in other jurisdictions and in the jurisdiction of the Parent Entity
+globe:IDTypeRules_EnumType,GIR203,QUTPR
+globe:IDTypeRules_EnumType,GIR204,QDMTT
+globe:IDTypeRules_EnumType,GIR205,Not applicable
+globe:IDTypeGloBEStatus_EnumType,GIR301,Constituent Entity
+globe:IDTypeGloBEStatus_EnumType,GIR302,Flow-Through Entity – Tax Transparent
+globe:IDTypeGloBEStatus_EnumType,GIR303,Flow-Through Entity – Reverse Hybrid
+globe:IDTypeGloBEStatus_EnumType,GIR304,Hybrid Entity
+globe:IDTypeGloBEStatus_EnumType,GIR305,Permanent Establishment
+globe:IDTypeGloBEStatus_EnumType,GIR306,Main Entity
+globe:IDTypeGloBEStatus_EnumType,GIR307,Minority-Owned Parent Entity
+globe:IDTypeGloBEStatus_EnumType,GIR308,Minority-Owned Subsidiary
+globe:IDTypeGloBEStatus_EnumType,GIR309,Minority-Owned Constituent Entity
+globe:IDTypeGloBEStatus_EnumType,GIR310,Investment Entity
+globe:IDTypeGloBEStatus_EnumType,GIR311,Insurance Investment Entity
+globe:IDTypeGloBEStatus_EnumType,GIR312,Securitisation Entity
+globe:IDTypeGloBEStatus_EnumType,GIR313,JV
+globe:IDTypeGloBEStatus_EnumType,GIR314,JV Subsidiary
+globe:IDTypeGloBEStatus_EnumType,GIR315,Non-Material Constituent Entity
+globe:IDTypeGloBEStatus_EnumType,GIR316,Excluded Entity
+globe:IDTypeGloBEStatus_EnumType,GIR317,Parent Entity required to apply a QIIR under Article 10.3.5
+globe:IDTypeGloBEStatus_EnumType,GIR318,Non-group Member
+globe:IDGlobeStatus_EnumType,GIR701,Constituent Entity
+globe:IDGlobeStatus_EnumType,GIR702,Flow-Through Entity - Tax Transparent
+globe:IDGlobeStatus_EnumType,GIR703,Flow-Through Entity - Reverse Hybrid
+globe:IDGlobeStatus_EnumType,GIR704,Hybrid Entity
+globe:IDGlobeStatus_EnumType,GIR705,Permanent Establishment
+globe:IDGlobeStatus_EnumType,GIR706,Main Entity
+globe:IDGlobeStatus_EnumType,GIR707,Minority-Owned Parent Entity
+globe:IDGlobeStatus_EnumType,GIR708,Minority-Owned Subsidiary
+globe:IDGlobeStatus_EnumType,GIR709,Minority-Owned Constituent Entity
+globe:IDGlobeStatus_EnumType,GIR710,Investment Entity
+globe:IDGlobeStatus_EnumType,GIR711,Insurance Investment Entity
+globe:IDGlobeStatus_EnumType,GIR712,Securitisation Entity
+globe:IDGlobeStatus_EnumType,GIR713,JV
+globe:IDGlobeStatus_EnumType,GIR714,JV Subsidiary
+globe:IDGlobeStatus_EnumType,GIR715,Non-Material Constituent Entity
+globe:IDGlobeStatus_EnumType,GIR716,POPE
+globe:IDGlobeStatus_EnumType,GIR717,Intermediate Parent Entity
+globe:IDGlobeStatus_EnumType,GIR718,Ultimate Parent Entity
+globe:IDGlobeStatus_EnumType,GIR719,Excluded Entity
+globe:IDGlobeStatus_EnumType,GIR720,Parent Entity required to apply a QIIR under Art. 10.3.5
+globe:IDGlobeStatus_EnumType,GIR721,Non-Group member
+globe:OwnershipType_EnumType,GIR801,UPE
+globe:OwnershipType_EnumType,GIR802,Constituent Entities
+globe:OwnershipType_EnumType,GIR803,JVs
+globe:OwnershipType_EnumType,GIR804,JV Subsidiaries
+globe:OwnershipType_EnumType,GIR805,Excluded Entities (aggregate)
+globe:OwnershipType_EnumType,GIR806,Non-Group members (aggregate)
+globe:POPEIPE_EnumType,GIR901,POPE
+globe:POPEIPE_EnumType,GIR902,Intermediate Parent Entity
+globe:POPEIPE_EnumType,GIR903,Parent Entity required to apply a QIIR under Art. 10.3.5
+globe:ExcludedEntity_EnumType,GIR1001,Governmental Entity
+globe:ExcludedEntity_EnumType,GIR1002,International Organisation
+globe:ExcludedEntity_EnumType,GIR1003,Non-profit Organisation
+globe:ExcludedEntity_EnumType,GIR1004,Pension Fund
+globe:ExcludedEntity_EnumType,GIR1005,Investment Fund that is an UPE
+globe:ExcludedEntity_EnumType,GIR1006,Real Estate Investment Vehicle that is an UPE
+globe:ExcludedEntity_EnumType,GIR1007,Entity owned by Excluded Entities under Article 1.5.2(a)
+globe:ExcludedEntity_EnumType,GIR1008,Entity owned by Excluded Entities under Article 1.5.2(b)
+globe:TypeofSubGroup_EnumType,GIR1101,Constituent Entities
+globe:TypeofSubGroup_EnumType,GIR1102,Minority-Owned Subgroup
+globe:TypeofSubGroup_EnumType,GIR1103,Standalone MOCEs
+globe:TypeofSubGroup_EnumType,GIR1104,Investment Entities
+globe:TypeofSubGroup_EnumType,GIR1105,JV Group
+globe:TypeofSubGroup_EnumType,GIR1106,Stateless Constituent Entity
+globe:GlobeTuT_EnumType,GIR1501,No Top-up Tax payable
+globe:GlobeTuT_EnumType,GIR1502,below EUR 1 million
+globe:GlobeTuT_EnumType,GIR1503,EUR 1 million to below EUR 5 million
+globe:GlobeTuT_EnumType,GIR1504,EUR 5 million to below EUR 25 million
+globe:GlobeTuT_EnumType,GIR1505,EUR 25 million to below EUR 50 million
+globe:GlobeTuT_EnumType,GIR1506,EUR 50 million to below EUR 75 million
+globe:GlobeTuT_EnumType,GIR1507,EUR 75 million to below EUR 100 million
+globe:GlobeTuT_EnumType,GIR1508,EUR 100 million to below EUR 250 million
+globe:GlobeTuT_EnumType,GIR1509,EUR 250 million or above
+globe:SafeHarbour_EnumType,GIR1201,De minimis Exclusion
+globe:SafeHarbour_EnumType,GIR1202,QDMTT safe harbour
+globe:SafeHarbour_EnumType,GIR1203,Transitional CbCR Safe Harbour – De minimis test
+globe:SafeHarbour_EnumType,GIR1204,Transitional CbCR Safe Harbour – ETR test
+globe:SafeHarbour_EnumType,GIR1205,Transitional CbCR Safe Harbour - Routine profit test
+globe:SafeHarbour_EnumType,GIR1206,Transitional UTPR Safe Harbour
+globe:SafeHarbour_EnumType,GIR1207,Permanent Safe Harbour – De minimis test
+globe:SafeHarbour_EnumType,GIR1208,Permanent Safe Harbour – ETR test
+globe:SafeHarbour_EnumType,GIR1209,Permanent Safe Harbour – Routine profit test
+globe:ETRRange_EnumType,GIR1301,below 2.5%
+globe:ETRRange_EnumType,GIR1302,2.5% or above but below 5%
+globe:ETRRange_EnumType,GIR1303,5% or above but below 7.5%
+globe:ETRRange_EnumType,GIR1304,7.5% or above but below 10%
+globe:ETRRange_EnumType,GIR1305,10% or above but below 12.5%
+globe:ETRRange_EnumType,GIR1306,12.5% or above but below 15%
+globe:ETRRange_EnumType,GIR1307,15% or above but below 17.5%
+globe:ETRRange_EnumType,GIR1308,17.5% or above but below 20%
+globe:ETRRange_EnumType,GIR1309,20% or above but below 22.5%
+globe:ETRRange_EnumType,GIR1310,22.5% or above but below 25%
+globe:ETRRange_EnumType,GIR1311,25% or above but below 27.5%
+globe:ETRRange_EnumType,GIR1312,27.5% or above but below 30%
+globe:ETRRange_EnumType,GIR1313,30% or above
+globe:ETRRange_EnumType,GIR1314,Section 3.2 not completed
+globe:QDMTTuT_EnumType,GIR1401,No Top-up Tax payable
+globe:QDMTTuT_EnumType,GIR1402,below EUR 1 million
+globe:QDMTTuT_EnumType,GIR1403,EUR 1 million to below EUR 5 million
+globe:QDMTTuT_EnumType,GIR1404,EUR 5 million to below EUR 25 million
+globe:QDMTTuT_EnumType,GIR1405,EUR 25 million to below EUR 50 million
+globe:QDMTTuT_EnumType,GIR1406,EUR 50 million to below EUR 75 million
+globe:QDMTTuT_EnumType,GIR1407,EUR 75 million to below EUR 100 million
+globe:QDMTTuT_EnumType,GIR1408,EUR 100 million to below EUR 250 million
+globe:QDMTTuT_EnumType,GIR1409,EUR 250 million or above
+globe:ETRTypeofSubGroup_EnumType,GIR1601,Constituent Entities
+globe:ETRTypeofSubGroup_EnumType,GIR1602,Minority-Owned Subgroup
+globe:ETRTypeofSubGroup_EnumType,GIR1603,Standalone MOCEs
+globe:ETRTypeofSubGroup_EnumType,GIR1604,Investment Entities
+globe:ETRTypeofSubGroup_EnumType,GIR1605,JV Group
+globe:ETRTypeofSubGroup_EnumType,GIR1606,Stateless Constituent Entity
+globe:ETRTypeofSubGroup_EnumType,GIR1607,Transitional CbCR Safe Harbour-Constituent Entities
+globe:ETRTypeofSubGroup_EnumType,GIR1608,Transitional CbCR Safe Harbour- JV Group (specify which JV Group)
+globe:ETRTypeofSubGroup_EnumType,GIR1609,Transitional UTPR Safe Harbour
+globe:DeminimisSimpleBasis_EnumType,GIR2901,De minimis election
+globe:DeminimisSimpleBasis_EnumType,GIR2902,Simplified Calculation for Non-material Constituent Entities
+globe:MainEntityPEandFTEBasis_EnumType,GIR1701,Article 3.4
+globe:MainEntityPEandFTEBasis_EnumType,GIR1702,Article 3.5.3
+globe:MainEntityPEandFTEBasis_EnumType,GIR1703,Article 3.5.1(a)
+globe:MainEntityPEandFTEBasis_EnumType,GIR1704,Article 3.5.1(b)
+globe:CrossBorderAdjustments_EnumType,GIR1801,Article 3.2.3
+globe:CrossBorderAdjustments_EnumType,GIR1802,Article 3.2.7
+globe:UPEAdjustmentsBasis_EnumType,GIR1901,Article 7.1.1 (a)(i)
+globe:UPEAdjustmentsBasis_EnumType,GIR1902,Article 7.1.1 (a)(ii)
+globe:UPEAdjustmentsBasis_EnumType,GIR1903,Article 7.1.1 (b)
+globe:UPEAdjustmentsBasis_EnumType,GIR1904,Article 7.1.1 (c)
+globe:UPEAdjustmentsBasis_EnumType,GIR1905,Article 7.2.1 (a)(i)
+globe:UPEAdjustmentsBasis_EnumType,GIR1906,Article 7.2.1 (a)(ii)
+globe:UPEAdjustmentsBasis_EnumType,GIR1907,Article 7.2.1 (a)(iii)
+globe:UPEAdjustmentsBasis_EnumType,GIR1908,Article 7.2.1 (b)
+globe:UPEAdjustmentsBasis_EnumType,GIR1909,Article 7.2.1 (c)
+globe:UPEAdjustmentsBasis_EnumType,GIR1910,Article 7.2.2
+globe:ExTypeOfEntity_EnumType,GIR2801,Governmental Entity
+globe:ExTypeOfEntity_EnumType,GIR2802,International Organisation
+globe:ExTypeOfEntity_EnumType,GIR2803,Non-profit Organisation
+globe:ExTypeOfEntity_EnumType,GIR2804,Pension Fund
+globe:ExTypeOfEntity_EnumType,GIR2805,Pension Fund that is not a Pension Services Entity
+globe:AdjustmentItem_EnumType,GIR2001,Net Taxes Expense - Article 3.2.1 (a)
+globe:AdjustmentItem_EnumType,GIR2002,Excluded Dividends – Article 3.2.1 (b)
+globe:AdjustmentItem_EnumType,GIR2003,Excluded Equity Gain or Loss – Article 3.2.1 (c)
+globe:AdjustmentItem_EnumType,GIR2004,Included Revaluation Method Gain or Loss – Article 3.2.1 (d)
+globe:AdjustmentItem_EnumType,GIR2005,Gain or loss from disposition of assets and liabilities excluded under Article 6.3 – Article 3.2.1 (e)
+globe:AdjustmentItem_EnumType,GIR2006,Asymmetric Foreign Currency Gains or Losses – Article 3.2.1 (f)
+globe:AdjustmentItem_EnumType,GIR2007,Policy Disallowed Expenses – Article 3.2.1 (g)
+globe:AdjustmentItem_EnumType,GIR2008,Prior Period Errors – Article 3.2.1 (h)
+globe:AdjustmentItem_EnumType,GIR2009,Changes in Accounting Principles – Article 3.2.1 (h)
+globe:AdjustmentItem_EnumType,GIR2010,Accrued Pension Expense – Article 3.2.1 (i)
+globe:AdjustmentItem_EnumType,GIR2011,Debt releases - Article 3.2.1
+globe:AdjustmentItem_EnumType,GIR2012,Stock-based compensation – Article 3.2.2
+globe:AdjustmentItem_EnumType,GIR2013,Arm’s length adjustments – Article 3.2.3
+globe:AdjustmentItem_EnumType,GIR2014,Qualified Refundable Tax Credit or Marketable Transferable Tax Credit – Article 3.2.4
+globe:AdjustmentItem_EnumType,GIR2015,Election for Gains and losses using realisation principle – Article 3.2.5
+globe:AdjustmentItem_EnumType,GIR2016,Election for Adjusted Asset Gain – Article 3.2.6
+globe:AdjustmentItem_EnumType,GIR2017,Intragroup Financing Arrangement expense – Article 3.2.7
+globe:AdjustmentItem_EnumType,GIR2018,Election for intragroup transactions in same jurisdiction – Article 3.2.8
+globe:AdjustmentItem_EnumType,GIR2019,Insurance company taxes charged to policyholders – Article 3.2.9
+globe:AdjustmentItem_EnumType,GIR2020,Increase/decrease to equity attributed to Additional Tier One and Restricted Tier One Capital distributions paid/payable or received/receivable – Article 3.2.10
+globe:AdjustmentItem_EnumType,GIR2021,Constituent Entities joining and leaving an MNE Group – Article 3.2.11 and 6.2
+globe:AdjustmentItem_EnumType,GIR2022,Reduction of GloBE Income of the UPE that is a Flow-through Entity – Article 3.2.11 and 7.1
+globe:AdjustmentItem_EnumType,GIR2023,Reduction of GloBE Income of the UPE that is subject to a Deductible Dividend Regime – Article 3.2.11 and 7.2
+globe:AdjustmentItem_EnumType,GIR2024,Taxable Distribution Method election – Article 3.2.11 and 7.6
+globe:AdjustmentItem_EnumType,GIR2025,International Shipping Income – Article 3.3
+globe:AdjustmentItem_EnumType,GIR2026,Transactions between Constituent Entities – Article 9.1.3
+globe:IntShipCategory_EnumType,GIR2101,Article 3.3.2.a
+globe:IntShipCategory_EnumType,GIR2102,Article 3.3.2.b
+globe:IntShipCategory_EnumType,GIR2103,Article 3.3.2.c
+globe:IntShipCategory_EnumType,GIR2104,Article 3.3.2.d
+globe:IntShipCategory_EnumType,GIR2105,Article 3.3.2.e
+globe:IntShipCategory_EnumType,GIR2106,Article 3.3.2.f
+globe:ANCShipCategory_EnumType,GIR2201,Article 3.3.3.a
+globe:ANCShipCategory_EnumType,GIR2202,Article 3.3.3.b
+globe:ANCShipCategory_EnumType,GIR2203,Article 3.3.3.c
+globe:ANCShipCategory_EnumType,GIR2204,Article 3.3.3.d
+globe:ANCShipCategory_EnumType,GIR2205,Article 3.3.3.e
+globe:AdjustedBasis_EnumType,GIR2301,Article 4.3.2 (a)
+globe:AdjustedBasis_EnumType,GIR2302,Article 4.3.2 (b)
+globe:AdjustedBasis_EnumType,GIR2303,Article 4.3.2 (c)
+globe:AdjustedBasis_EnumType,GIR2304,Article 4.3.2 (d)
+globe:AdjustedBasis_EnumType,GIR2305,Article 4.3.2 (e)
+globe:AdjustedBasis_EnumType,GIR2306,Article 4.3.3 (a)
+globe:AdjustedBasis_EnumType,GIR2307,Article 4.3.3 (b)
+globe:AdjustedBasis_EnumType,GIR2308,Article 4.3.4
+globe:AdjustedBasis_EnumType,GIR2309,Article 4.3.2(c) – Blended CFC regime
+globe:CurrentAdjustedTax_EnumType,GIR2401,Covered Tax accrued as an expense in the profit before taxation in the financial accounts - Article 4.1.2 (a)
+globe:CurrentAdjustedTax_EnumType,GIR2402,Covered Taxes for uncertain tax position recorded as a reduction to Covered Taxes in prior year – Article 4.1.2 (c)
+globe:CurrentAdjustedTax_EnumType,GIR2403,Qualified Refundable Tax Credit or Marketable Transferable Tax Credits recorded as a reduction to current tax expense – Article 4.1.2 (d)
+globe:CurrentAdjustedTax_EnumType,GIR2404,Qualified Flow-through Tax Benefits of Qualified Ownership Interests – Article 3.2.1 (c)
+globe:CurrentAdjustedTax_EnumType,GIR2405,Current tax expense on income excluded from GloBE Income or Loss – Article 4.1.3 (a)
+globe:CurrentAdjustedTax_EnumType,GIR2406,"Non-Qualified Refundable Tax Credit, Non-Marketable Transferable Tax Credit or Other Tax Credits not recorded as a reduction to current tax expense – Article 4.1.3 (b)"
+globe:CurrentAdjustedTax_EnumType,GIR2407,"Covered Taxes refunded or credited (except for any Qualified Refundable Tax Credit, or Marketable Transferable Tax Credits) not treated as an adjustment to current tax expense – Article 4.1.3 (c)"
+globe:CurrentAdjustedTax_EnumType,GIR2408,Current tax expense related to uncertain tax position– Article 4.1.3 (d)
+globe:CurrentAdjustedTax_EnumType,GIR2409,Current tax expense not expected to be paid within three years – Article 4.1.3 (e)
+globe:CurrentAdjustedTax_EnumType,GIR2410,Post-filing adjustments – Article 4.6.1.
+globe:CurrentAdjustedTax_EnumType,GIR2411,Covered Taxes relating to Net Asset Gain or Net Asset Loss – Article 3.2.6
+globe:CurrentAdjustedTax_EnumType,GIR2412,Reduction of Covered Taxes of the UPE that is a Flow-through Entity – Article 7.1
+globe:CurrentAdjustedTax_EnumType,GIR2413,Covered Taxes for GloBE Income of the UPE that is reduced under a Deductible Dividend Regime – Article 7.2.2
+globe:CurrentAdjustedTax_EnumType,GIR2414,Deemed Distribution Tax – Article 7.3
+globe:CurrentAdjustedTax_EnumType,GIR2415,Taxable Distribution Method election – Article 7.6 (b)
+globe:CurrentAdjustedTax_EnumType,GIR2416,Total Deferred Tax Adjustment Amount – Article 4.4.1(b)
+globe:CurrentAdjustedTax_EnumType,GIR2417,Increase or decrease in Covered Taxes recorded in equity or Other Comprehensive Income relating to amounts included in GloBE Income or Loss that will be subject to tax under local tax rules – Article 4.1.1 (c)
+globe:DeferredAdjustedTax_EnumType,GIR2501,Deferred tax expense related to items excluded from GloBE Income or Loss – Article 4.4.1 (a)
+globe:DeferredAdjustedTax_EnumType,GIR2502,Deferred tax expense related to Disallowed Accruals– Article 4.4.1 (b)
+globe:DeferredAdjustedTax_EnumType,GIR2503,Deferred tax expense related to Unclaimed Accruals – Article 4.4.1 (b)
+globe:DeferredAdjustedTax_EnumType,GIR2504,Valuation adjustment or accounting recognition adjustment related to a deferred tax asset – Article 4.4.1 (c)
+globe:DeferredAdjustedTax_EnumType,GIR2505,Deferred tax expense arising from a re-measurement related to changes in the tax rate – Article 4.4.1 (d)
+globe:DeferredAdjustedTax_EnumType,GIR2506,Deferred tax expense related to the generation and use of tax credits – Article 4.4.1 (e)
+globe:DeferredAdjustedTax_EnumType,GIR2507,Substitute Loss Carry Forward DTA or deemed Substitute Loss Carry Forward DTA – Article 4.4.1 (e)
+globe:DeferredAdjustedTax_EnumType,GIR2508,Disallowed Accruals or Unclaimed Accruals paid during the fiscal year – Article 4.4.2 (a)
+globe:DeferredAdjustedTax_EnumType,GIR2509,Recapture Deferred Tax Liability paid during the fiscal year– Article 4.4.2 (b)
+globe:DeferredAdjustedTax_EnumType,GIR2510,Recognition of a loss Deferred Tax Asset not included in the financials – Article 4.4.2 (c)
+globe:DeferredAdjustedTax_EnumType,GIR2511,Deferred tax expense adjustment resulting from a reduction to a tax rate – Article 4.6.2
+globe:DeferredAdjustedTax_EnumType,GIR2512,Deferred tax expense adjustment resulting from an increase to a tax rate – Article 4.6.3
+globe:DeferredAdjustedTax_EnumType,GIR2513,Constituent Entities joining and leaving an MNE Group – Article 6.2
+globe:DeferredAdjustedTax_EnumType,GIR2514,Deferred tax expense of the UPE that is a Flow-through Entity – Article 7.1
+globe:DeferredAdjustedTax_EnumType,GIR2515,Deferred tax expense of the UPE that is subject to Deductible Dividend Regime – Article 7.2
+globe:DeferredAdjustedTax_EnumType,GIR2516,Deferred tax adjustment resulting from transactions between Constituent Entities – Article 9.1.3
+globe:FinalAdjustedTax_EnumType,GIR2701,Covered Tax accrued as an expense in the profit before taxation in the financial accounts - Article 4.1.2 (a)
+globe:FinalAdjustedTax_EnumType,GIR2702,GloBE Loss Deferred Tax Asset established under Article 4.5.1 or used – Article 4.1.2 (b) combined with Article 4.5.3
+globe:FinalAdjustedTax_EnumType,GIR2703,Covered Taxes for uncertain tax position recorded as a reduction to Covered Taxes in prior year – Article 4.1.2 (c)
+globe:FinalAdjustedTax_EnumType,GIR2704,Qualified Refundable Tax Credit or Marketable Transferable Tax Credits recorded as a reduction to current tax expense – Article 4.1.2 (d)
+globe:FinalAdjustedTax_EnumType,GIR2705,Qualified Flow-through Tax Benefits of Qualified Ownership Interests – Article 3.2.1 (c)
+globe:FinalAdjustedTax_EnumType,GIR2706,Current tax expense on income excluded from GloBE Income or Loss – Article 4.1.3 (a)
+globe:FinalAdjustedTax_EnumType,GIR2707,"Non-Qualified Refundable Tax Credit, Non-Marketable Transferable Tax Credit or Other Tax Credits not recorded as a reduction to current tax expense – Article 4.1.3 (b)"
+globe:FinalAdjustedTax_EnumType,GIR2708,"Covered Taxes refunded or credited (except for any Qualified Refundable Tax Credit, or Marketable Transferable Tax Credits) not treated as an adjustment to current tax expense – Article 4.1.3 (c)"
+globe:FinalAdjustedTax_EnumType,GIR2709,Current tax expense related to uncertain tax position– Article 4.1.3 (d)
+globe:FinalAdjustedTax_EnumType,GIR2710,Current tax expense not expected to be paid within three years – Article 4.1.3 (e)
+globe:FinalAdjustedTax_EnumType,GIR2711,Post-filing adjustments – Article 4.6.1.
+globe:FinalAdjustedTax_EnumType,GIR2712,Covered Taxes relating to Net Asset Gain or Net Asset Loss – Article 3.2.6
+globe:FinalAdjustedTax_EnumType,GIR2713,Reduction of Covered Taxes of the UPE that is a Flow-through Entity – Article 7.1
+globe:FinalAdjustedTax_EnumType,GIR2714,Covered Taxes for GloBE Income of the UPE that is reduced under a Deductible Dividend Regime – Article 7.2.2
+globe:FinalAdjustedTax_EnumType,GIR2715,Deemed Distribution Tax – Article 7.3
+globe:FinalAdjustedTax_EnumType,GIR2716,Taxable Distribution Method election – Article 7.6 (b)
+globe:FinalAdjustedTax_EnumType,GIR2717,Total Deferred Tax Adjustment Amount – Article 4.4.1(b)
+globe:FinalAdjustedTax_EnumType,GIR2718,Increase or decrease in Covered Taxes recorded in equity or Other Comprehensive Income relating to amounts included in GloBE Income or Loss that will be subject to tax under local tax rules – Article 4.1.1 (c)
+globe:FinalAdjustedTax_EnumType,GIR2719,Excess Negative Tax Expense Carry Forward generated – Article 4.1.5 and 5.2.1
+globe:FinalAdjustedTax_EnumType,GIR2720,Decrease in Covered Taxes (but not below zero) by the remaining balance of the Excess Negative Tax Expense Carry-forward – Article 4.1.5 and 5.2.1
+globe:NonArt415_EnumType,GIR2601,Article 3.2.6
+globe:NonArt415_EnumType,GIR2602,Article 4.4.4
+globe:NonArt415_EnumType,GIR2603,Article 4.6.1
+globe:NonArt415_EnumType,GIR2604,Article 4.6.4
+globe:NonArt415_EnumType,GIR2605,Article 7.3.5
+globe:NonArt415_EnumType,GIR2606,Article 7.3.7
+globe:Currency_EnumType,GIR3101,Local
+globe:Currency_EnumType,GIR3102,CFS
