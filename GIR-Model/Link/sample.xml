@@ -384,6 +384,9 @@
     <globe:JurisdictionSection>
       <globe:RecJurCode>US</globe:RecJurCode>
       <globe:Jurisdiction>AQ</globe:Jurisdiction>
+      <globe:JurWithTaxingRights>
+        <globe:JurisdictionName>AQ</globe:JurisdictionName>
+      </globe:JurWithTaxingRights>
       <globe:GLoBETax />
       <globe:DocSpec>
         <stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
