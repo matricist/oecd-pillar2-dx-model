@@ -1,6 +1,6 @@
 """Convert the GloBE XSD into relations, atomic vectors and constraint equations.
 
-Usage: python generate.py            (run from GIR-Model/Vector-Model)
+Usage: python generate.py            (run from GIR-Model/Output)
 Reads ../globe-xsd/*.xsd and writes Equations.md and Types.md next to this
 script. See Model.md.
 """
@@ -16,6 +16,7 @@ XS = "{http://www.w3.org/2001/XMLSchema}"
 XSD_NS = "http://www.w3.org/2001/XMLSchema"
 PREFIX = {"urn:oecd:ties:globe:v2": "globe", "urn:oecd:ties:isoglobetypes:v1": "iso",
           "urn:oecd:ties:globestf:v5": "stf", XSD_NS: "xsd"}
+TNS = "#target"   # key under which a namespace map keeps its schema's target namespace
 FACETS = ["minLength", "maxLength", "length", "pattern", "minInclusive", "maxInclusive",
           "minExclusive", "maxExclusive", "totalDigits", "fractionDigits"]
 
@@ -34,6 +35,7 @@ for fn in FILES:
         nsmap[p] = uri
     root = ET.parse(path).getroot()
     tns = root.attrib["targetNamespace"]
+    nsmap[TNS] = tns        # target namespace of the declaring schema (for `nodes`)
     for e in root:
         if tag(e) in ("simpleType", "complexType"):
             types[(tns, e.attrib["name"])] = (e, nsmap)
@@ -93,6 +95,27 @@ def is_simple(key):
 relations, vectors, constraints = [], [], []
 ONE = "1"
 
+# The node tree, for serialisation (see serialize.py). It adds no atom and no
+# equation: every element, attribute, text value and optional group of the
+# schema, in schema order, including the containers that carry no vector.
+nodes = []       # node_id is the index in this list
+_open = [None]   # stack of enclosing node_ids while the schema is walked
+
+
+def new_node(kind, name, path, rel, ctx, namespace="", child_rel="", vector_id=""):
+    """Record one node of the tree and return its node_id.
+
+    kind          element | attribute | text | sequence | choice
+    relation_id   relation whose rows the node is inlined into
+    context       presence of the node in a row of relation_id: "1" or "pi_v...."
+    child_relation_id   set for a repeated element: one row per occurrence
+    vector_id     value vector of a simple-typed element, attribute or text
+    """
+    nodes.append({"node_id": len(nodes), "parent_node_id": _open[-1], "kind": kind, "name": name,
+                  "namespace": namespace, "path": path, "relation_id": rel, "context": ctx,
+                  "child_relation_id": child_rel, "vector_id": vector_id})
+    return len(nodes) - 1
+
 
 def new_relation(path, parent, lo, hi):
     rid = "r%03d" % (len(relations) + 1)
@@ -130,6 +153,10 @@ def presence(rel, path, node, ctx):
 
 def value(rel, path, node, type_id, ctx):
     x = "x_" + new_vector(rel, path, "value", node, type_id, ctx)
+    if node == "element":
+        nodes[_open[-1]]["vector_id"] = x[2:]            # the element node is already open
+    else:
+        new_node(node, path.rsplit("/", 1)[-1].lstrip("@#"), path, rel, ctx, vector_id=x[2:])
     constrain("type", rel, "tau[%s](%s) >= %s" % (type_id, x, ctx), path)
 
 
@@ -178,21 +205,27 @@ def particle(p, nsmap, rel, path, ctx, in_choice, stack, counter):
                 constrain("occurrence", rel, "%s <= %s" % (count, scaled(hi, bound)), epath)
             elif bound != ONE and not in_choice:
                 constrain("occurrence", rel, "(1 - %s) . (%s) = 0" % (bound, count), epath)
+            _open.append(new_node("element", p.attrib["name"], epath, rel, ctx, nsmap[TNS], child_rel=child))
             element_body(p, nsmap, child, epath, ONE, stack)
+            _open.pop()
             return delta
         ectx = presence(rel, epath, "element", ctx) if (lo == 0 or in_choice) else ctx
+        _open.append(new_node("element", p.attrib["name"], epath, rel, ectx, nsmap[TNS]))
         element_body(p, nsmap, rel, epath, ectx, stack)
+        _open.pop()
         return ectx
     assert hi == "1", "repeated %s group at %s" % (kind, path)
     counter[kind] = counter.get(kind, 0) + 1
     gpath = "%s/(%s%d)" % (path, kind, counter[kind])
     gctx = presence(rel, gpath, kind, ctx) if (lo == 0 or in_choice) else ctx
     sub = {}
+    _open.append(new_node(kind, "", gpath, rel, gctx))
     if kind == "sequence":
         for child in p:
             if tag(child) in ("sequence", "choice", "element"):
                 particle(child, nsmap, rel, gpath if (lo == 0 or in_choice) else path, gctx, False, stack,
                          sub if (lo == 0 or in_choice) else counter)
+        _open.pop()
         return gctx
     alts, may_be_empty = [], False
     for child in p:
@@ -200,6 +233,7 @@ def particle(p, nsmap, rel, path, ctx, in_choice, stack, counter):
             may_be_empty |= child.attrib.get("minOccurs", "1") == "0"
             alts.append(particle(child, nsmap, rel, gpath, gctx, True, stack, sub))
     constrain("choice", rel, "%s %s %s" % (" + ".join(alts), "<=" if may_be_empty else "=", gctx), gpath)
+    _open.pop()
     return gctx
 
 
@@ -224,7 +258,9 @@ root_key = next(k for k in elements if k[1] == ROOT)
 root_el, root_ns = elements[root_key]
 root_rel = new_relation(ROOT, None, 1, "1")
 constrain("root", root_rel, "n_%s = 1" % root_rel, ROOT)
+_open.append(new_node("element", ROOT, ROOT, root_rel, ONE, root_ns[TNS]))
 element_body(root_el, root_ns, root_rel, ROOT, ONE, [])
+_open.pop()
 
 
 used = {v["type_id"] for v in vectors if v["type_id"]}
@@ -341,3 +377,4 @@ if __name__ == "__main__":
     print("value nodes", dict(Counter(v["node"] for v in vectors if v["kind"] == "value")))
     print("types", len(used), dict(Counter(type_rows[t]["primitive"] for t in used)))
     print("constraints", dict(Counter(c["kind"] for c in constraints)))
+    print("nodes", dict(Counter(nd["kind"] for nd in nodes)))

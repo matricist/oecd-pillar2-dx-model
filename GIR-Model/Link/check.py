@@ -5,6 +5,7 @@ linked part of JurisdictionSection.
 Usage: python check.py     (run from GIR-Model/Link; needs numpy)
 """
 import contextlib
+import datetime
 import io
 import os
 import re
@@ -41,7 +42,7 @@ def vec(*ns):
 group_upe, ee, pe, ie = vec("UPE"), vec("EE"), vec("PE"), vec("IE1", "IE2", "IE3")
 stateless, eqt = vec("ST"), vec("JV")
 ce = ~vec("EE", "JV", "JS1", "JS2")
-ee_type = {"EE": "GIR1004"}
+ee_type = {"EE": "GIR1004"}                              # kind of Excluded Entity (GIR1001 to GIR1008)
 X0 = np.zeros((N, N))
 C0 = np.zeros((N, N), bool)
 for a, b, r in own:
@@ -214,7 +215,9 @@ for branch, mask in (("ExcludedUPE", ex), ("OtherUPE", 1 - ex)):
     presence(bp + "/Art10.3.5", 0 * mask)
     value(bp + "/Art10.3.5", [None] * len(mask))
     id_block(bp + "/ID", S_U, mask, excluded=(branch == "ExcludedUPE"))
-value(CS + "UPE/(choice1)/ExcludedUPE/ExcludedUPEStatus", [None] * len(ex))
+# An Excluded UPE reports its kind with the GIR60x code that corresponds to GIR100x.
+upe_status = [("GIR6" + ee_type[nm][-2:]) if nm in ee_type else None for nm in names]
+value(CS + "UPE/(choice1)/ExcludedUPE/ExcludedUPEStatus", pick(S_U, upe_status), ex)
 
 # ---- CE
 S_C = rows((ce | jvmember) & ~group_upe)
@@ -333,16 +336,29 @@ def tau(type_id, values):
     t = g.type_rows[type_id]
 
     def ok(v):
+        number = isinstance(v, (int, float, np.integer, np.floating)) and not isinstance(v, (bool, np.bool_))
         if v is None:
             return False
         if t.get("enumerations"):
             return v in enum[type_id]
         if "minLength" in t or "maxLength" in t:
-            return int(t.get("minLength", 0)) <= len(v) <= int(t.get("maxLength", 10 ** 9))
+            return isinstance(v, str) and int(t.get("minLength", 0)) <= len(v) <= int(t.get("maxLength", 10 ** 9))
         if "minInclusive" in t:
+            if not number:
+                return False
             scaled = v * 10 ** int(t["fractionDigits"])
             return float(t["minInclusive"]) <= v <= float(t["maxInclusive"]) and abs(scaled - round(scaled)) < 1e-6
-        return {"boolean": isinstance(v, bool), "integer": isinstance(v, int)}.get(t["primitive"], isinstance(v, str))
+        if t["primitive"] == "boolean":
+            return isinstance(v, (bool, np.bool_))
+        if t["primitive"] == "integer":
+            return number and float(v).is_integer()
+        if t["primitive"] in ("date", "dateTime"):
+            parse = datetime.date.fromisoformat if t["primitive"] == "date" else datetime.datetime.fromisoformat
+            try:
+                return isinstance(v, str) and bool(parse(v))
+            except ValueError:
+                return False
+        return isinstance(v, str)
 
     return np.array([ok(v) for v in values], int)
 

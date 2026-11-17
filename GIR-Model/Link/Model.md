@@ -75,7 +75,7 @@ $\mathbf{S}_{U}:=\operatorname{rows}(\mathbf{group\text{-}upe})$.
 | $\mathbf{P}_{\text{UPE}}$ | $\mathbf{1}^{T}$: every row belongs to the single `GLOBEBody` row |
 | $\boldsymbol{\pi}_{\text{ExcludedUPE}}$ | $\mathbf{S}_{U}\times\mathbf{ee}$ |
 | $\boldsymbol{\pi}_{\text{OtherUPE}}$ | $\mathbf{S}_{U}\times\neg\mathbf{ee}$ |
-| `ExcludedUPE/ExcludedUPEStatus` | $\mathbf{S}_{U}\times\mathbf{ee\text{-}type}$ |
+| `ExcludedUPE/ExcludedUPEStatus` | $\mathbf{S}_{U}\times\mathbf{ee\text{-}type}$, as the GIR60x code of the same kind |
 | `ExcludedUPE/ID`, `OtherUPE/ID` | [ID block](#id-block) with $\operatorname{diag}(\boldsymbol{\pi})\times\mathbf{S}_{U}$; an Excluded UPE reports no `ResCountryCode` and no `Rules` |
 
 # CE
@@ -147,6 +147,8 @@ Substituting the links, the Output equations of `CorporateStructure` follow from
 | At least one `ResCountryCode` | $\mathbf{Entt\text{-}jur}\times\mathbf{1}_M=\neg\mathbf{stateless}$, and a Stateless Entity reports X5. |
 
 `check.py` applies the links to the structure of [Example](../../Calculation-Model/Example.md) and evaluates the 111 Output equations of `CorporateStructure` and the 570 of `JurisdictionSection`; all hold.
+
+`validate.py` adds test values for the required nodes that are not linked yet (`MessageSpec`, `FilingInfo`, `GeneralSection/RecJurCode`, `DocSpec`), writes the document with `../Output/serialize.py`, and validates it against the XSD with two validators. The document, [sample.xml](sample.xml), is valid, and in six deliberately broken variants the equations and the validators reject the same thing. `fuzz.py` repeats the comparison on random documents over the whole schema; no disagreement has been found.
 
 # Open
 

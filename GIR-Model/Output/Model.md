@@ -41,12 +41,12 @@ The 44 types in use reduce to four kinds of $\tau_t$:
 
 | Kind | Types | $\tau_t(x)$ |
 | --- | --- | --- |
-| Enumeration | 35 | $1\le x\le m_t$, with values encoded by their position in [Types.md](Types.md) |
+| Enumeration | 35 | $x$ is one of the $m_t$ values in [Types.md](Types.md); with values encoded by position, $1\le x\le m_t$ |
 | Bounded string | 4 | $\mathit{lo}_t\le\operatorname{len}(x)\le\mathit{hi}_t$ |
 | Percentage | 1 | $0\le x\le1$ and $10^{4}x\in\mathbb{Z}$ |
 | Built-in | 4 | $x$ is a boolean, integer, date, or dateTime |
 
-Only $\operatorname{len}$ and the built-in lexical forms are not arithmetic. The schema uses no pattern, list, or union.
+Only $\operatorname{len}$ and the built-in lexical forms are not arithmetic. The types in use have no pattern, list, or union.
 
 # Example
 
@@ -67,7 +67,9 @@ Every UPE row is exactly one of the two; an Excluded UPE has at least one TIN an
 # Not Expressed
 
 - **Order.** Elements are serialized in schema order, which is the order of the vectors in [Equations.md](Equations.md); rows are serialized in index order.
-- **Namespaces and annotations.**
+- **Namespaces.** An element takes the target namespace of the schema that declares it, so the children of `DocSpec` are in the `stf` namespace and every other element in `globe`. `serialize.py` applies this.
+- **Atom shapes.** That $\mathbf{P}_r$ is $n_q\times n_r$, that vectors have $n_r$ entries, and that presence entries are 0 or 1 is assumed, not stated as an equation.
+- **Annotations.**
 
 # Files
 
@@ -76,6 +78,7 @@ Every UPE row is exactly one of the two; an Excluded UPE has at least one TIN an
 | [Equations.md](Equations.md) | The 782 equations, by relation, with the vectors of each relation |
 | [Types.md](Types.md) | The 44 types, their predicates, and the enumeration values |
 | `generate.py` | Derives both files from the XSD: `python generate.py` |
+| `serialize.py` | Writes a set of atoms as GIR XML |
 
 # Relation to `../Relations.md`
 

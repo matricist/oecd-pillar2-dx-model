@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2" xmlns:stf="urn:oecd:ties:globestf:v5">
+  <globe:MessageSpec>
+    <globe:TransmittingCountry>US</globe:TransmittingCountry>
+    <globe:ReceivingCountry>US</globe:ReceivingCountry>
+    <globe:MessageType>GIR</globe:MessageType>
+    <globe:MessageRefId>DUMMY-TEST-MessageRefId</globe:MessageRefId>
+    <globe:MessageTypeIndic>GIR101</globe:MessageTypeIndic>
+    <globe:ReportingPeriod>2024-12-31</globe:ReportingPeriod>
+    <globe:Timestamp>2025-06-30T00:00:00</globe:Timestamp>
+  </globe:MessageSpec>
+  <globe:GLOBEBody>
+    <globe:FilingInfo>
+      <globe:FilingCE>
+        <globe:ResCountryCode>US</globe:ResCountryCode>
+        <globe:Name>DUMMY TEST Filing CE</globe:Name>
+        <globe:TIN>DUMMY-TEST-TIN</globe:TIN>
+        <globe:Role>GIR401</globe:Role>
+      </globe:FilingCE>
+      <globe:AccountingInfo>
+        <globe:CFSofUPE>GIR501</globe:CFSofUPE>
+        <globe:FAS>DUMMY TEST FAS</globe:FAS>
+        <globe:Currency>USD</globe:Currency>
+      </globe:AccountingInfo>
+      <globe:Period>
+        <globe:Start>2024-01-01</globe:Start>
+        <globe:End>2024-12-31</globe:End>
+      </globe:Period>
+      <globe:NameMNE>DUMMY TEST MNE Group</globe:NameMNE>
+      <globe:DocSpec>
+        <stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
+        <stf:DocRefId>DUMMY-TEST-DocRefId-FilingInfo</stf:DocRefId>
+      </globe:DocSpec>
+    </globe:FilingInfo>
+    <globe:GeneralSection>
+      <globe:RecJurCode>US</globe:RecJurCode>
+      <globe:CorporateStructure>
+        <globe:UPE>
+          <globe:OtherUPE>
+            <globe:ID>
+              <globe:Name>UPE</globe:Name>
+              <globe:ResCountryCode>US</globe:ResCountryCode>
+              <globe:TIN issuedBy="US" TypeOfTIN="GIR3001">TIN-UPE</globe:TIN>
+              <globe:Rules>GIR205</globe:Rules>
+              <globe:GlobeStatus>GIR301</globe:GlobeStatus>
+            </globe:ID>
+          </globe:OtherUPE>
+        </globe:UPE>
+        <globe:CE>
+          <globe:ID>
+            <globe:Name>A</globe:Name>
+            <globe:ResCountryCode>AQ</globe:ResCountryCode>
+            <globe:TIN issuedBy="AQ" TypeOfTIN="GIR3001">TIN-A</globe:TIN>
+            <globe:Rules>GIR205</globe:Rules>
+            <globe:GlobeStatus>GIR301</globe:GlobeStatus>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR801</globe:OwnershipType>
+            <globe:TIN issuedBy="US" TypeOfTIN="GIR3001">TIN-UPE</globe:TIN>
+            <globe:OwnershipPercentage>1.0</globe:OwnershipPercentage>
+          </globe:Ownership>
+        </globe:CE>
+        <globe:CE>
+          <globe:ID>
+            <globe:Name>B</globe:Name>
+            <globe:ResCountryCode>BV</globe:ResCountryCode>
+            <globe:TIN issuedBy="BV" TypeOfTIN="GIR3001">TIN-B</globe:TIN>
+            <globe:Rules>GIR202</globe:Rules>
+            <globe:Rules>GIR203</globe:Rules>
+            <globe:Rules>GIR204</globe:Rules>
+            <globe:GlobeStatus>GIR301</globe:GlobeStatus>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR802</globe:OwnershipType>
+            <globe:TIN issuedBy="AQ" TypeOfTIN="GIR3001">TIN-A</globe:TIN>
+            <globe:OwnershipPercentage>1.0</globe:OwnershipPercentage>
+          </globe:Ownership>
+          <globe:QIIR>
+            <globe:POPE-IPE>GIR902</globe:POPE-IPE>
+          </globe:QIIR>
+        </globe:CE>
+        <globe:CE>
+          <globe:ID>
+            <globe:Name>C</globe:Name>
+            <globe:ResCountryCode>HM</globe:ResCountryCode>
+            <globe:TIN issuedBy="HM" TypeOfTIN="GIR3001">TIN-C</globe:TIN>
+            <globe:Rules>GIR201</globe:Rules>
+            <globe:GlobeStatus>GIR301</globe:GlobeStatus>
+            <globe:GlobeStatus>GIR306</globe:GlobeStatus>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR802</globe:OwnershipType>
+            <globe:TIN issuedBy="BV" TypeOfTIN="GIR3001">TIN-B</globe:TIN>
+            <globe:OwnershipPercentage>0.9</globe:OwnershipPercentage>
+          </globe:Ownership>
+          <globe:QIIR>
+            <globe:POPE-IPE>GIR902</globe:POPE-IPE>
+            <globe:Exception>
+              <globe:ExceptionRule>
+                <globe:Art2.1.3>true</globe:Art2.1.3>
+              </globe:ExceptionRule>
+              <globe:TIN issuedBy="BV" TypeOfTIN="GIR3001">TIN-B</globe:TIN>
+            </globe:Exception>
+          </globe:QIIR>
+        </globe:CE>
+        <globe:CE>
+          <globe:ID>
+            <globe:Name>PE</globe:Name>
+            <globe:ResCountryCode>BV</globe:ResCountryCode>
+            <globe:TIN issuedBy="BV" TypeOfTIN="GIR3001">TIN-PE</globe:TIN>
+            <globe:Rules>GIR202</globe:Rules>
+            <globe:Rules>GIR203</globe:Rules>
+            <globe:Rules>GIR204</globe:Rules>
+            <globe:GlobeStatus>GIR301</globe:GlobeStatus>
+            <globe:GlobeStatus>GIR305</globe:GlobeStatus>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR802</globe:OwnershipType>
+            <globe:TIN issuedBy="HM" TypeOfTIN="GIR3001">TIN-C</globe:TIN>
+            <globe:OwnershipPercentage>1.0</globe:OwnershipPercentage>
+          </globe:Ownership>
+        </globe:CE>
+        <globe:CE>
+          <globe:ID>
+            <globe:Name>IE1</globe:Name>
+            <globe:ResCountryCode>GS</globe:ResCountryCode>
+            <globe:TIN issuedBy="GS" TypeOfTIN="GIR3001">TIN-IE1</globe:TIN>
+            <globe:Rules>GIR205</globe:Rules>
+            <globe:GlobeStatus>GIR301</globe:GlobeStatus>
+            <globe:GlobeStatus>GIR310</globe:GlobeStatus>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR802</globe:OwnershipType>
+            <globe:TIN issuedBy="BV" TypeOfTIN="GIR3001">TIN-B</globe:TIN>
+            <globe:OwnershipPercentage>0.4</globe:OwnershipPercentage>
+          </globe:Ownership>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR802</globe:OwnershipType>
+            <globe:TIN issuedBy="HM" TypeOfTIN="GIR3001">TIN-C</globe:TIN>
+            <globe:OwnershipPercentage>0.6</globe:OwnershipPercentage>
+          </globe:Ownership>
+        </globe:CE>
+        <globe:CE>
+          <globe:ID>
+            <globe:Name>ST</globe:Name>
+            <globe:ResCountryCode>X5</globe:ResCountryCode>
+            <globe:TIN TypeOfTIN="GIR3001">TIN-ST</globe:TIN>
+            <globe:Rules>GIR205</globe:Rules>
+            <globe:GlobeStatus>GIR301</globe:GlobeStatus>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR802</globe:OwnershipType>
+            <globe:TIN issuedBy="BV" TypeOfTIN="GIR3001">TIN-B</globe:TIN>
+            <globe:OwnershipPercentage>1.0</globe:OwnershipPercentage>
+          </globe:Ownership>
+        </globe:CE>
+        <globe:CE>
+          <globe:ID>
+            <globe:Name>JV</globe:Name>
+            <globe:ResCountryCode>GS</globe:ResCountryCode>
+            <globe:TIN issuedBy="GS" TypeOfTIN="GIR3001">TIN-JV</globe:TIN>
+            <globe:Rules>GIR205</globe:Rules>
+            <globe:GlobeStatus>GIR313</globe:GlobeStatus>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR802</globe:OwnershipType>
+            <globe:TIN issuedBy="BV" TypeOfTIN="GIR3001">TIN-B</globe:TIN>
+            <globe:OwnershipPercentage>0.5</globe:OwnershipPercentage>
+          </globe:Ownership>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR806</globe:OwnershipType>
+            <globe:TIN unknown="true" TypeOfTIN="GIR3004">NOTIN</globe:TIN>
+            <globe:OwnershipPercentage>0.5</globe:OwnershipPercentage>
+          </globe:Ownership>
+        </globe:CE>
+        <globe:CE>
+          <globe:ID>
+            <globe:Name>JS1</globe:Name>
+            <globe:ResCountryCode>GS</globe:ResCountryCode>
+            <globe:TIN issuedBy="GS" TypeOfTIN="GIR3001">TIN-JS1</globe:TIN>
+            <globe:Rules>GIR205</globe:Rules>
+            <globe:GlobeStatus>GIR314</globe:GlobeStatus>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR803</globe:OwnershipType>
+            <globe:TIN issuedBy="GS" TypeOfTIN="GIR3001">TIN-JV</globe:TIN>
+            <globe:OwnershipPercentage>1.0</globe:OwnershipPercentage>
+          </globe:Ownership>
+        </globe:CE>
+        <globe:CE>
+          <globe:ID>
+            <globe:Name>JS2</globe:Name>
+            <globe:ResCountryCode>GS</globe:ResCountryCode>
+            <globe:TIN issuedBy="GS" TypeOfTIN="GIR3001">TIN-JS2</globe:TIN>
+            <globe:Rules>GIR205</globe:Rules>
+            <globe:GlobeStatus>GIR309</globe:GlobeStatus>
+            <globe:GlobeStatus>GIR314</globe:GlobeStatus>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR803</globe:OwnershipType>
+            <globe:TIN issuedBy="GS" TypeOfTIN="GIR3001">TIN-JV</globe:TIN>
+            <globe:OwnershipPercentage>0.3</globe:OwnershipPercentage>
+          </globe:Ownership>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR806</globe:OwnershipType>
+            <globe:TIN unknown="true" TypeOfTIN="GIR3004">NOTIN</globe:TIN>
+            <globe:OwnershipPercentage>0.7</globe:OwnershipPercentage>
+          </globe:Ownership>
+        </globe:CE>
+        <globe:CE>
+          <globe:ID>
+            <globe:Name>P1</globe:Name>
+            <globe:ResCountryCode>AQ</globe:ResCountryCode>
+            <globe:TIN issuedBy="AQ" TypeOfTIN="GIR3001">TIN-P1</globe:TIN>
+            <globe:Rules>GIR205</globe:Rules>
+            <globe:GlobeStatus>GIR301</globe:GlobeStatus>
+            <globe:GlobeStatus>GIR307</globe:GlobeStatus>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR801</globe:OwnershipType>
+            <globe:TIN issuedBy="US" TypeOfTIN="GIR3001">TIN-UPE</globe:TIN>
+            <globe:OwnershipPercentage>0.3</globe:OwnershipPercentage>
+          </globe:Ownership>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR806</globe:OwnershipType>
+            <globe:TIN unknown="true" TypeOfTIN="GIR3004">NOTIN</globe:TIN>
+            <globe:OwnershipPercentage>0.7</globe:OwnershipPercentage>
+          </globe:Ownership>
+        </globe:CE>
+        <globe:CE>
+          <globe:ID>
+            <globe:Name>P2</globe:Name>
+            <globe:ResCountryCode>HM</globe:ResCountryCode>
+            <globe:TIN issuedBy="HM" TypeOfTIN="GIR3001">TIN-P2</globe:TIN>
+            <globe:Rules>GIR201</globe:Rules>
+            <globe:GlobeStatus>GIR301</globe:GlobeStatus>
+            <globe:GlobeStatus>GIR308</globe:GlobeStatus>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR802</globe:OwnershipType>
+            <globe:TIN issuedBy="AQ" TypeOfTIN="GIR3001">TIN-P1</globe:TIN>
+            <globe:OwnershipPercentage>0.8</globe:OwnershipPercentage>
+          </globe:Ownership>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR806</globe:OwnershipType>
+            <globe:TIN unknown="true" TypeOfTIN="GIR3004">NOTIN</globe:TIN>
+            <globe:OwnershipPercentage>0.2</globe:OwnershipPercentage>
+          </globe:Ownership>
+          <globe:QIIR>
+            <globe:POPE-IPE>GIR901</globe:POPE-IPE>
+          </globe:QIIR>
+        </globe:CE>
+        <globe:CE>
+          <globe:ID>
+            <globe:Name>P3</globe:Name>
+            <globe:ResCountryCode>HM</globe:ResCountryCode>
+            <globe:TIN issuedBy="HM" TypeOfTIN="GIR3001">TIN-P3</globe:TIN>
+            <globe:Rules>GIR201</globe:Rules>
+            <globe:GlobeStatus>GIR301</globe:GlobeStatus>
+            <globe:GlobeStatus>GIR308</globe:GlobeStatus>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR802</globe:OwnershipType>
+            <globe:TIN issuedBy="HM" TypeOfTIN="GIR3001">TIN-P2</globe:TIN>
+            <globe:OwnershipPercentage>1.0</globe:OwnershipPercentage>
+          </globe:Ownership>
+          <globe:QIIR>
+            <globe:POPE-IPE>GIR901</globe:POPE-IPE>
+            <globe:Exception>
+              <globe:ExceptionRule>
+                <globe:Art2.1.5>true</globe:Art2.1.5>
+              </globe:ExceptionRule>
+              <globe:TIN issuedBy="HM" TypeOfTIN="GIR3001">TIN-P2</globe:TIN>
+            </globe:Exception>
+          </globe:QIIR>
+        </globe:CE>
+        <globe:CE>
+          <globe:ID>
+            <globe:Name>IE2</globe:Name>
+            <globe:ResCountryCode>GS</globe:ResCountryCode>
+            <globe:TIN issuedBy="GS" TypeOfTIN="GIR3001">TIN-IE2</globe:TIN>
+            <globe:Rules>GIR205</globe:Rules>
+            <globe:GlobeStatus>GIR301</globe:GlobeStatus>
+            <globe:GlobeStatus>GIR308</globe:GlobeStatus>
+            <globe:GlobeStatus>GIR310</globe:GlobeStatus>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR802</globe:OwnershipType>
+            <globe:TIN issuedBy="HM" TypeOfTIN="GIR3001">TIN-P3</globe:TIN>
+            <globe:OwnershipPercentage>1.0</globe:OwnershipPercentage>
+          </globe:Ownership>
+        </globe:CE>
+        <globe:CE>
+          <globe:ID>
+            <globe:Name>S</globe:Name>
+            <globe:ResCountryCode>TF</globe:ResCountryCode>
+            <globe:TIN issuedBy="TF" TypeOfTIN="GIR3001">TIN-S</globe:TIN>
+            <globe:Rules>GIR204</globe:Rules>
+            <globe:GlobeStatus>GIR301</globe:GlobeStatus>
+            <globe:GlobeStatus>GIR309</globe:GlobeStatus>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR801</globe:OwnershipType>
+            <globe:TIN issuedBy="US" TypeOfTIN="GIR3001">TIN-UPE</globe:TIN>
+            <globe:OwnershipPercentage>0.25</globe:OwnershipPercentage>
+          </globe:Ownership>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR806</globe:OwnershipType>
+            <globe:TIN unknown="true" TypeOfTIN="GIR3004">NOTIN</globe:TIN>
+            <globe:OwnershipPercentage>0.75</globe:OwnershipPercentage>
+          </globe:Ownership>
+        </globe:CE>
+        <globe:CE>
+          <globe:ID>
+            <globe:Name>IE3</globe:Name>
+            <globe:ResCountryCode>GS</globe:ResCountryCode>
+            <globe:TIN issuedBy="GS" TypeOfTIN="GIR3001">TIN-IE3</globe:TIN>
+            <globe:Rules>GIR205</globe:Rules>
+            <globe:GlobeStatus>GIR301</globe:GlobeStatus>
+            <globe:GlobeStatus>GIR309</globe:GlobeStatus>
+            <globe:GlobeStatus>GIR310</globe:GlobeStatus>
+          </globe:ID>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR801</globe:OwnershipType>
+            <globe:TIN issuedBy="US" TypeOfTIN="GIR3001">TIN-UPE</globe:TIN>
+            <globe:OwnershipPercentage>0.2</globe:OwnershipPercentage>
+          </globe:Ownership>
+          <globe:Ownership>
+            <globe:OwnershipType>GIR806</globe:OwnershipType>
+            <globe:TIN unknown="true" TypeOfTIN="GIR3004">NOTIN</globe:TIN>
+            <globe:OwnershipPercentage>0.8</globe:OwnershipPercentage>
+          </globe:Ownership>
+        </globe:CE>
+        <globe:ExcludedEntity>
+          <globe:Name>EE</globe:Name>
+          <globe:Type>GIR1004</globe:Type>
+          <globe:Change>false</globe:Change>
+        </globe:ExcludedEntity>
+      </globe:CorporateStructure>
+      <globe:DocSpec>
+        <stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
+        <stf:DocRefId>DUMMY-TEST-DocRefId-GeneralSection</stf:DocRefId>
+      </globe:DocSpec>
+    </globe:GeneralSection>
+    <globe:JurisdictionSection>
+      <globe:RecJurCode>US</globe:RecJurCode>
+      <globe:Jurisdiction>US</globe:Jurisdiction>
+      <globe:GLoBETax />
+      <globe:DocSpec>
+        <stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
+        <stf:DocRefId>DOC-US</stf:DocRefId>
+      </globe:DocSpec>
+    </globe:JurisdictionSection>
+    <globe:JurisdictionSection>
+      <globe:RecJurCode>US</globe:RecJurCode>
+      <globe:Jurisdiction>TF</globe:Jurisdiction>
+      <globe:JurWithTaxingRights>
+        <globe:JurisdictionName>TF</globe:JurisdictionName>
+      </globe:JurWithTaxingRights>
+      <globe:GLoBETax />
+      <globe:DocSpec>
+        <stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
+        <stf:DocRefId>DOC-TF</stf:DocRefId>
+      </globe:DocSpec>
+    </globe:JurisdictionSection>
+    <globe:JurisdictionSection>
+      <globe:RecJurCode>US</globe:RecJurCode>
+      <globe:Jurisdiction>GS</globe:Jurisdiction>
+      <globe:JurWithTaxingRights>
+        <globe:JurisdictionName>AQ</globe:JurisdictionName>
+      </globe:JurWithTaxingRights>
+      <globe:JurWithTaxingRights>
+        <globe:JurisdictionName>BV</globe:JurisdictionName>
+      </globe:JurWithTaxingRights>
+      <globe:JurWithTaxingRights>
+        <globe:JurisdictionName>HM</globe:JurisdictionName>
+      </globe:JurWithTaxingRights>
+      <globe:GLoBETax />
+      <globe:DocSpec>
+        <stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
+        <stf:DocRefId>DOC-GS</stf:DocRefId>
+      </globe:DocSpec>
+    </globe:JurisdictionSection>
+    <globe:JurisdictionSection>
+      <globe:RecJurCode>US</globe:RecJurCode>
+      <globe:Jurisdiction>AQ</globe:Jurisdiction>
+      <globe:GLoBETax />
+      <globe:DocSpec>
+        <stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
+        <stf:DocRefId>DOC-AQ</stf:DocRefId>
+      </globe:DocSpec>
+    </globe:JurisdictionSection>
+    <globe:JurisdictionSection>
+      <globe:RecJurCode>US</globe:RecJurCode>
+      <globe:Jurisdiction>BV</globe:Jurisdiction>
+      <globe:JurWithTaxingRights>
+        <globe:JurisdictionName>AQ</globe:JurisdictionName>
+      </globe:JurWithTaxingRights>
+      <globe:JurWithTaxingRights>
+        <globe:JurisdictionName>BV</globe:JurisdictionName>
+      </globe:JurWithTaxingRights>
+      <globe:GLoBETax />
+      <globe:DocSpec>
+        <stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
+        <stf:DocRefId>DOC-BV</stf:DocRefId>
+      </globe:DocSpec>
+    </globe:JurisdictionSection>
+    <globe:JurisdictionSection>
+      <globe:RecJurCode>US</globe:RecJurCode>
+      <globe:Jurisdiction>HM</globe:Jurisdiction>
+      <globe:JurWithTaxingRights>
+        <globe:JurisdictionName>AQ</globe:JurisdictionName>
+      </globe:JurWithTaxingRights>
+      <globe:JurWithTaxingRights>
+        <globe:JurisdictionName>BV</globe:JurisdictionName>
+      </globe:JurWithTaxingRights>
+      <globe:GLoBETax />
+      <globe:DocSpec>
+        <stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
+        <stf:DocRefId>DOC-HM</stf:DocRefId>
+      </globe:DocSpec>
+    </globe:JurisdictionSection>
+    <globe:JurisdictionSection>
+      <globe:RecJurCode>US</globe:RecJurCode>
+      <globe:Jurisdiction>X5</globe:Jurisdiction>
+      <globe:JurWithTaxingRights>
+        <globe:JurisdictionName>AQ</globe:JurisdictionName>
+      </globe:JurWithTaxingRights>
+      <globe:JurWithTaxingRights>
+        <globe:JurisdictionName>BV</globe:JurisdictionName>
+      </globe:JurWithTaxingRights>
+      <globe:GLoBETax />
+      <globe:DocSpec>
+        <stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
+        <stf:DocRefId>DOC-X5</stf:DocRefId>
+      </globe:DocSpec>
+    </globe:JurisdictionSection>
+  </globe:GLOBEBody>
+</globe:GLOBE_OECD>
