@@ -59,98 +59,114 @@ A solid arrow is a direct Ownership Interest held together with direct control; 
 
 # Matrices
 
-Rows and columns follow the Entity index $i$ in [Entities](#entities). Rows are owning or controlling Entities; blank cells are 0.
+Rows and columns follow the Entity index $i$ in [Entities](#entities). Rows are owning or controlling Entities; a dot is 0.
 
 **Direct Ownership Interest matrix** $\mathbf{X}_0$
 
-| | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| **1 UPE** |  | 1 | 1 |  |  |  |  |  |  |  |  | 0.3 |  |  |  |  | 0.2 |
-| **2 EE** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0.25 |  |
-| **3 A** |  |  |  | 1 |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **4 B** |  |  |  |  | 0.9 |  | 0.4 | 1 | 0.5 |  |  |  |  |  |  |  |  |
-| **5 C** |  |  |  |  | 0.1 | 1 | 0.6 |  |  |  |  |  |  |  |  |  |  |
-| **6 PE** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **7 IE1** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **8 ST** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **9 JV** |  |  |  |  |  |  |  |  |  | 1 | 0.3 |  |  |  |  |  |  |
-| **10 JS1** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **11 JS2** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **12 P1** |  |  |  |  |  |  |  |  |  |  |  |  | 0.8 |  |  |  |  |
-| **13 P2** |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 |  |  |  |
-| **14 P3** |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 |  |  |
-| **15 IE2** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **16 S** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **17 IE3** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+$$
+\scriptsize
+\begin{array}{r|ccccccccccccccccc}
+ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 \\ \hline
+\text{1 UPE} & \cdot & 1 & 1 & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 0.3 & \cdot & \cdot & \cdot & \cdot & 0.2 \\
+\text{2 EE} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 0.25 & \cdot \\
+\text{3 A} & \cdot & \cdot & \cdot & 1 & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{4 B} & \cdot & \cdot & \cdot & \cdot & 0.9 & \cdot & 0.4 & 1 & 0.5 & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{5 C} & \cdot & \cdot & \cdot & \cdot & 0.1 & 1 & 0.6 & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{6 PE} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{7 IE1} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{8 ST} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{9 JV} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 1 & 0.3 & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{10 JS1} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{11 JS2} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{12 P1} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 0.8 & \cdot & \cdot & \cdot & \cdot \\
+\text{13 P2} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 1 & \cdot & \cdot & \cdot \\
+\text{14 P3} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 1 & \cdot & \cdot \\
+\text{15 IE2} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{16 S} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{17 IE3} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\end{array}
+$$
 
 **Direct and indirect Ownership Interest matrix** $\mathbf{Y}=f(\mathbf{X}_0)$
 
-| | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| **1 UPE** |  | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 0.5 | 0.5 | 0.15 | 0.3 | 0.24 | 0.24 | 0.24 | 0.25 | 0.2 |
-| **2 EE** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0.25 |  |
-| **3 A** |  |  |  | 1 | 1 | 1 | 1 | 1 | 0.5 | 0.5 | 0.15 |  |  |  |  |  |  |
-| **4 B** |  |  |  |  | 1 | 1 | 1 | 1 | 0.5 | 0.5 | 0.15 |  |  |  |  |  |  |
-| **5 C** |  |  |  |  | 0.1 | 1 | 0.6 |  |  |  |  |  |  |  |  |  |  |
-| **6 PE** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **7 IE1** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **8 ST** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **9 JV** |  |  |  |  |  |  |  |  |  | 1 | 0.3 |  |  |  |  |  |  |
-| **10 JS1** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **11 JS2** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **12 P1** |  |  |  |  |  |  |  |  |  |  |  |  | 0.8 | 0.8 | 0.8 |  |  |
-| **13 P2** |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 | 1 |  |  |
-| **14 P3** |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 |  |  |
-| **15 IE2** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **16 S** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **17 IE3** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+$$
+\scriptsize
+\begin{array}{r|ccccccccccccccccc}
+ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 \\ \hline
+\text{1 UPE} & \cdot & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 0.5 & 0.5 & 0.15 & 0.3 & 0.24 & 0.24 & 0.24 & 0.25 & 0.2 \\
+\text{2 EE} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 0.25 & \cdot \\
+\text{3 A} & \cdot & \cdot & \cdot & 1 & 1 & 1 & 1 & 1 & 0.5 & 0.5 & 0.15 & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{4 B} & \cdot & \cdot & \cdot & \cdot & 1 & 1 & 1 & 1 & 0.5 & 0.5 & 0.15 & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{5 C} & \cdot & \cdot & \cdot & \cdot & 0.1 & 1 & 0.6 & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{6 PE} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{7 IE1} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{8 ST} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{9 JV} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 1 & 0.3 & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{10 JS1} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{11 JS2} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{12 P1} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 0.8 & 0.8 & 0.8 & \cdot & \cdot \\
+\text{13 P2} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 1 & 1 & \cdot & \cdot \\
+\text{14 P3} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 1 & \cdot & \cdot \\
+\text{15 IE2} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{16 S} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{17 IE3} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\end{array}
+$$
 
 - C holds 10% of itself, so B's 90% is the whole of the outstanding interest: $(\mathbf{Y})_{4,5}=1$, and the treasury shares remain on the diagonal as $(\mathbf{Y})_{5,5}=0.1$.
 - IE1 has two shareholders: $(\mathbf{Y})_{4,7}=0.4+1\times0.6=1$ for B, and $(\mathbf{Y})_{5,7}=0.6$ for C.
 
 **Direct Controlling Interest matrix** $\mathbf{C}_0$
 
-| | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| **1 UPE** |  | 1 | 1 |  |  |  |  |  |  |  |  | 1 |  |  |  |  | 1 |
-| **2 EE** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 |  |
-| **3 A** |  |  |  | 1 |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **4 B** |  |  |  |  | 1 |  |  | 1 |  |  |  |  |  |  |  |  |  |
-| **5 C** |  |  |  |  |  | 1 | 1 |  |  |  |  |  |  |  |  |  |  |
-| **6 PE** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **7 IE1** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **8 ST** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **9 JV** |  |  |  |  |  |  |  |  |  | 1 | 1 |  |  |  |  |  |  |
-| **10 JS1** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **11 JS2** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **12 P1** |  |  |  |  |  |  |  |  |  |  |  |  | 1 |  |  |  |  |
-| **13 P2** |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 |  |  |  |
-| **14 P3** |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 |  |  |
-| **15 IE2** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **16 S** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **17 IE3** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+$$
+\scriptsize
+\begin{array}{r|ccccccccccccccccc}
+ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 \\ \hline
+\text{1 UPE} & \cdot & 1 & 1 & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 1 & \cdot & \cdot & \cdot & \cdot & 1 \\
+\text{2 EE} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 1 & \cdot \\
+\text{3 A} & \cdot & \cdot & \cdot & 1 & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{4 B} & \cdot & \cdot & \cdot & \cdot & 1 & \cdot & \cdot & 1 & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{5 C} & \cdot & \cdot & \cdot & \cdot & \cdot & 1 & 1 & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{6 PE} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{7 IE1} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{8 ST} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{9 JV} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 1 & 1 & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{10 JS1} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{11 JS2} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{12 P1} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 1 & \cdot & \cdot & \cdot & \cdot \\
+\text{13 P2} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 1 & \cdot & \cdot & \cdot \\
+\text{14 P3} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 1 & \cdot & \cdot \\
+\text{15 IE2} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{16 S} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{17 IE3} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\end{array}
+$$
 
 **Direct and indirect Controlling Interest matrix** $\mathbf{C}=w(\mathbf{C}_0)$
 
-| | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| **1 UPE** |  | 1 | 1 | 1 | 1 | 1 | 1 | 1 |  |  |  | 1 | 1 | 1 | 1 | 1 | 1 |
-| **2 EE** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 |  |
-| **3 A** |  |  |  | 1 | 1 | 1 | 1 | 1 |  |  |  |  |  |  |  |  |  |
-| **4 B** |  |  |  |  | 1 | 1 | 1 | 1 |  |  |  |  |  |  |  |  |  |
-| **5 C** |  |  |  |  |  | 1 | 1 |  |  |  |  |  |  |  |  |  |  |
-| **6 PE** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **7 IE1** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **8 ST** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **9 JV** |  |  |  |  |  |  |  |  |  | 1 | 1 |  |  |  |  |  |  |
-| **10 JS1** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **11 JS2** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **12 P1** |  |  |  |  |  |  |  |  |  |  |  |  | 1 | 1 | 1 |  |  |
-| **13 P2** |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 | 1 |  |  |
-| **14 P3** |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 |  |  |
-| **15 IE2** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **16 S** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **17 IE3** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+$$
+\scriptsize
+\begin{array}{r|ccccccccccccccccc}
+ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 \\ \hline
+\text{1 UPE} & \cdot & 1 & 1 & 1 & 1 & 1 & 1 & 1 & \cdot & \cdot & \cdot & 1 & 1 & 1 & 1 & 1 & 1 \\
+\text{2 EE} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 1 & \cdot \\
+\text{3 A} & \cdot & \cdot & \cdot & 1 & 1 & 1 & 1 & 1 & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{4 B} & \cdot & \cdot & \cdot & \cdot & 1 & 1 & 1 & 1 & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{5 C} & \cdot & \cdot & \cdot & \cdot & \cdot & 1 & 1 & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{6 PE} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{7 IE1} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{8 ST} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{9 JV} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 1 & 1 & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{10 JS1} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{11 JS2} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{12 P1} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 1 & 1 & 1 & \cdot & \cdot \\
+\text{13 P2} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 1 & 1 & \cdot & \cdot \\
+\text{14 P3} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & 1 & \cdot & \cdot \\
+\text{15 IE2} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{16 S} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\text{17 IE3} & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot & \cdot \\
+\end{array}
+$$
 
 # Entities
 
