@@ -1,6 +1,6 @@
-# Vector Model
+# Output Model
 
-The GloBE Information Return schema (`../globe-xsd`) expressed as atomic vectors and matrices together with the equations they must satisfy. A document is schema-valid iff every equation holds. `generate.py` derives everything below from the XSD.
+The GloBE Information Return schema (`../globe-xsd`) expressed as atomic vectors and matrices together with the equations they must satisfy. A document is schema-valid iff every equation holds. The [Input Model](../Input/Model.md) and the [Link Model](../Link/Model.md) produce these atoms. `generate.py` derives everything below from the XSD.
 
 # Atoms
 
