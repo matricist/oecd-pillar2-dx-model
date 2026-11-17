@@ -1,28 +1,50 @@
+# Inputs
 
-#### Group Hash Code
+All inputs are for the same $N$ Entities and the same [effective period](<Ownership Interest.md#effective-periods>).
 
-Stateless Entity는 해당 Entity가 마치 별도 MNE Group을 형성하는 것처럼 계산한다. 즉, Entity 단위의 계산을 요구하기 때문에 가장 harsh한 분류에 속한다. 즉, 모든 JV, MOCE, IE 분류의 부분집합에 속하게 된다.
+| Symbol | Type | Meaning |
+| --- | --- | --- |
+| $\mathbf{J}$ | $\{0,1\}^{N\times N}$ | JV Groups, from [JV](<JV.md#calculation>) |
+| $\mathbf{Mosg}$ | $\{0,1\}^{N\times N}$ | Minority-Owned Subgroups, from [MOSG](<MOSG.md#calculation>) |
+| $\mathbf{smoce}$ | $\{0,1\}^{N\times1}$ | Single MOCEs, from [MOSG](<MOSG.md#calculation>) |
+| $\mathbf{jvmember}$ | $\{0,1\}^{N\times1}$ | JV Group members, from [MOSG](<MOSG.md#calculation>) |
+| $\mathbf{Entt\text{-}jur}$ | $\{0,1\}^{N\times M}$ | Entity-to-jurisdiction matrix, from [Taxing Rights](<Taxing Rights.md#iir-payability>) |
+| $\mathbf{ce}$ | $\{0,1\}^{N\times1}$ | CEs |
+| $\mathbf{ie}$ | $\{0,1\}^{N\times1}$ | Investment Entities |
+| $\mathbf{stateless}$ | $\{0,1\}^{N\times1}$ | Stateless Entities; their rows of $\mathbf{Entt\text{-}jur}$ are all `False` |
 
-MOSG 및 단독 MOCE는 상술했듯이, UPE 산하의 MOSG일 수 있고 JV 산하의 MOSG일 수 있다. UPE 산하인 경우 MOSG와 JV의 비교는 의미가 없고, JV 산하인 경우 MOSG는 최소한 JV 그룹의 JV를 포함하지 않으므로 해당 JV그룹의 진부분집합에 해당한다. 따라서 GroupId를 정함에 있어 MOSG가 JV에 우선한다고 볼 수 있다.
+$\mathbf{idx}:=(1,\ldots,N)^{T}$. For a vector $\mathbf{v}$, $\operatorname{eq}(\mathbf{v}):=(\mathbf{v}\times\mathbf{1}_N^{T}=\mathbf{1}_N\times\mathbf{v}^{T})$ is the $N\times N$ Boolean matrix whose $(i,j)$ entry is `True` iff $v_i=v_j$. $\odot$ denotes element-wise multiplication; comparisons and logical operations are element-wise, and Boolean entries are treated as 1 or 0 in arithmetic.
 
-위 두 문단을 종합했을 때 GroupId 결정 우선순위는 다음과 같다.
-Stateless > MOSG > JV
-참고로 투자기업은 국가코드만으로 구분이 되기 때문에 별도의 GroupId를 필요로 하지 않는다.
+# Calculation
 
-따라서 어떤 Entity의 EntityId가 1~9999라고 가정하고 JurisdictionCode, IE그룹여부, GroupId를 가지고 Group Hash Code를 만든다면 다음과 같다:
-1. 구성기업인 경우
-{GroupId}(null인 경우 "0000")+{JurisdictionCode}(Null인 경우 "00")+{T/F}
-2. 구성기업 또는 member of JV Group에 해당하지 않는 경우
-null
+**Group identifier**
 
-GroupId는 다음과 같다. (1에서 4순으로 검토하며 해당 사항이 있는 경우 해당 번호에서 검토를 중지한다.)
-1. Stateless Entity에 해당하는 경우
-{EntityId}
-2. 단독 MOCE 또는 MOSG member인 경우 (투자기업인 단독 MOCE는 제외하며, 투자기업 분류만 따른다)
-{Top-level MOPE ID}
-3. member of JV Group인 경우
-{Top-level JV ID}
-4. 그 외의 경우(구성기업도 member of JV Group도 아닌 Entity 포함)
-null
+$$
+\begin{aligned}
+\mathbf{mosg\text{-}id}&:=\mathbf{Mosg}^{T}\times\mathbf{idx}+(\mathbf{smoce}\land\neg\mathbf{ie})\odot\mathbf{idx}\\
+\mathbf{jv\text{-}id}&:=\mathbf{J}^{T}\times\mathbf{idx}\\
+\mathbf{group\text{-}id}&:=\mathbf{stateless}\odot\mathbf{idx}\\
+&\quad+\neg\mathbf{stateless}\odot\left(\mathbf{mosg\text{-}id}+(\mathbf{mosg\text{-}id}=0)\odot\mathbf{jv\text{-}id}\right)
+\end{aligned}
+$$
 
-Group Hash Code를 기준으로 Full Calc 테이블을 만들자.
+$\mathbf{group\text{-}id}$ is the index of the Entity itself for a Stateless Entity, otherwise of its top-level MOPE, otherwise of its top-level JV, and 0 otherwise. A Single MOCE is its own top-level MOPE unless it is an Investment Entity.
+
+**Full Calculation Groups**
+
+$$
+\begin{aligned}
+\mathbf{in\text{-}scope}&:=\mathbf{ce}\lor\mathbf{jvmember}\\
+\mathbf{Same}&:=\operatorname{eq}(\mathbf{group\text{-}id})\land\operatorname{eq}(\mathbf{ie})\\
+&\quad\land\left((\mathbf{Entt\text{-}jur}\times\mathbf{Entt\text{-}jur}^{T})\lor\mathbf{I}_N\right)\\
+&\quad\land(\mathbf{in\text{-}scope}\times\mathbf{in\text{-}scope}^{T})
+\end{aligned}
+$$
+
+$(\mathbf{Same})_{ij}$ is `True` iff Entities $i$ and $j$ belong to the same Full Calculation Group.
+
+Let $M_{Calc}$ be the number of distinct non-zero rows of $\mathbf{Same}$. $\mathbf{Entt\text{-}group}\in\{0,1\}^{N\times M_{Calc}}$ has these rows as its columns, so that $(\mathbf{Entt\text{-}group})_{ij}$ is `True` iff Entity $i$ belongs to Full Calculation Group $j$. Each in-scope Entity belongs to exactly one group:
+
+$$
+\mathbf{Entt\text{-}group}\times\mathbf{1}_{M_{Calc}}=\mathbf{in\text{-}scope}.
+$$
