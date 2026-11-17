@@ -73,8 +73,8 @@ $$
 
 This is work in progress.
 
-- **Settled:** Ownership Interest, Controlling Interest, JV, MOSG, Group, Transitional CbCR Safe Harbour, Top-up Tax Calculation, Taxing Rights, and the Output model of the whole schema.
-- **Draft:** IIR and UTPR.
+- **Settled:** Ownership Interest, Controlling Interest, JV, MOSG, Group, Transitional CbCR Safe Harbour, Top-up Tax Calculation, Taxing Rights, UTPR, and the Output model of the whole schema.
+- **Draft:** IIR.
 - **Partial:** Input and Link cover `GeneralSection/CorporateStructure` and the frame of `JurisdictionSection`. On the example group the linked equations all hold, and the resulting XML is accepted by two XSD validators once the unlinked required fields are filled with test values.
 - **Checked:** on random documents over the whole schema, "every Output equation holds" and "the XSD validators accept" have always coincided.
 - **Not modelled:** changes of ownership or control within a Fiscal Year, and the Simplified ETR Safe Harbour.
