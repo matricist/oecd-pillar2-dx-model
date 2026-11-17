@@ -15,14 +15,39 @@ All inputs are for the same $N$ Entities and the same [effective period](<Owners
 
 $\mathbf{idx}:=(1,\ldots,N)^{T}$. For a vector $\mathbf{v}$, $\operatorname{eq}(\mathbf{v}):=(\mathbf{v}\times\mathbf{1}_N^{T}=\mathbf{1}_N\times\mathbf{v}^{T})$ is the $N\times N$ Boolean matrix whose $(i,j)$ entry is `True` iff $v_i=v_j$. $\odot$ denotes element-wise multiplication; comparisons and logical operations are element-wise, and Boolean entries are treated as 1 or 0 in arithmetic.
 
-# Calculation
+$\mathbf{jv\text{-}id}$ is the index of each Entity's top-level JV, and 0 for an Entity outside every JV Group:
+
+$$
+\mathbf{jv\text{-}id}:=\mathbf{J}^{T}\times\mathbf{idx}
+$$
+
+# TCSH Group
+
+Investment Entities and Stateless Entities are out of scope. Only JV Groups are distinguished within a jurisdiction.
+
+$$
+\begin{aligned}
+\mathbf{in\text{-}scope}_{\mathrm{TCSH}}&:=(\mathbf{ce}\lor\mathbf{jvmember})\land\neg\mathbf{ie}\land\neg\mathbf{stateless}\\
+\mathbf{Same}_{\mathrm{TCSH}}&:=\operatorname{eq}(\mathbf{jv\text{-}id})\land(\mathbf{Entt\text{-}jur}\times\mathbf{Entt\text{-}jur}^{T})\\
+&\quad\land(\mathbf{in\text{-}scope}_{\mathrm{TCSH}}\times\mathbf{in\text{-}scope}_{\mathrm{TCSH}}^{T})
+\end{aligned}
+$$
+
+$(\mathbf{Same}_{\mathrm{TCSH}})_{ij}$ is `True` iff Entities $i$ and $j$ belong to the same Tested Jurisdiction.
+
+Let $N_{\mathrm{TCSH}}$ be the number of in-scope Entities and $M_{\mathrm{TCSH}}$ the number of distinct non-zero rows of $\mathbf{Same}_{\mathrm{TCSH}}$. $\mathbf{G}_{\mathrm{TCSH}}\in\{0,1\}^{M_{\mathrm{TCSH}}\times N_{\mathrm{TCSH}}}$ has these rows as its rows, restricted to the columns of in-scope Entities. Each in-scope Entity belongs to exactly one Tested Jurisdiction:
+
+$$
+\mathbf{G}_{\mathrm{TCSH}}^{T}\times\mathbf{1}_{M_{\mathrm{TCSH}}}=\mathbf{1}_{N_{\mathrm{TCSH}}}.
+$$
+
+# ETR Calculation Group
 
 **Group identifier**
 
 $$
 \begin{aligned}
 \mathbf{mosg\text{-}id}&:=\mathbf{Mosg}^{T}\times\mathbf{idx}+(\mathbf{smoce}\land\neg\mathbf{ie})\odot\mathbf{idx}\\
-\mathbf{jv\text{-}id}&:=\mathbf{J}^{T}\times\mathbf{idx}\\
 \mathbf{group\text{-}id}&:=\mathbf{stateless}\odot\mathbf{idx}\\
 &\quad+\neg\mathbf{stateless}\odot\left(\mathbf{mosg\text{-}id}+(\mathbf{mosg\text{-}id}=0)\odot\mathbf{jv\text{-}id}\right)
 \end{aligned}

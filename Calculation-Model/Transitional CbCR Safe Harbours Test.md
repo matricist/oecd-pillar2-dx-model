@@ -2,7 +2,7 @@
 
 ## Entity Inputs
 
-Receive the following adjusted values as inputs for each of the $N_{\mathrm{TCSH}}$ tested Entities:
+Receive the following adjusted values as inputs for each of the $N_{\mathrm{TCSH}}$ Entities in scope of the [TCSH Group](<Group.md#tcsh-group>):
 
 $$
 \mathbf{Data}_{\mathrm{TCSH}}^{\text{Entity}}
@@ -27,13 +27,11 @@ Each adjusted value is the reported amount plus signed adjustments; a positive a
 
 The Net Unrealised Fair Value Loss is given as a non-negative amount: the net loss from fair-value changes in Ownership Interests other than Portfolio Shareholdings, including impairment losses and reversals.
 
-An Investment Entity is tested with its jurisdiction only when it and its CE-owners are located in the same jurisdiction, no Article 7.5 or 7.6 election applies, and their amounts are reported in that jurisdiction for CbCR purposes.
-
 ## Tested Jurisdiction Aggregation
 
 $\mathbf{G}_{\mathrm{TCSH}}\in\{0,1\}^{M_{\mathrm{TCSH}}\times N_{\mathrm{TCSH}}}$ is the membership matrix for $M_{\mathrm{TCSH}}$ Tested Jurisdictions: rows represent Tested Jurisdictions, columns represent Entities, and an entry is 1 when the Entity belongs to that Tested Jurisdiction, and 0 otherwise.
 
-A Tested Jurisdiction is identified by a jurisdiction and, for members of a JV Group, that [JV Group](<JV.md#calculation>). Ordinary CEs outside a JV Group form one Tested Jurisdiction per jurisdiction.
+$\mathbf{G}_{\mathrm{TCSH}}$ is constructed in [TCSH Group](<Group.md#tcsh-group>).
 
 $$
 \boxed{
