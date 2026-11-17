@@ -1,6 +1,6 @@
 # Input Model
 
-The normalized atoms from which the [Calculation Model](../../Calculation-Model/Workflow.md) and the [Link Model](../Link/Model.md) derive the [Output Model](../Output/Model.md). Nothing here repeats, and nothing here can be computed from another atom. This version covers what `GeneralSection/CorporateStructure` and the frame of `JurisdictionSection` need.
+The normalized atoms from which the [Calculation Model](../../Calculation-Model/Workflow.md) and the [Link Model](../Link/Model.md) derive the [Output Model](../Output/Model.md). Nothing here repeats, and nothing here can be computed from another atom. It covers every required part of the return; the optional detail that is not linked yet is listed in the [Link Map](../Link/Map.md).
 
 # Entities
 
@@ -38,6 +38,19 @@ $M$ jurisdictions.
 | $\mathbf{iir\text{-}impl},\mathbf{qiir\text{-}impl},\mathbf{dom\text{-}iir\text{-}impl},\mathbf{self\text{-}iir\text{-}impl}$ | $\{0,1\}^{M}$ | As in [Taxing Rights](<../../Calculation-Model/Taxing Rights.md#iir-payability>) |
 | $\mathbf{qutpr\text{-}impl},\mathbf{qdmtt\text{-}impl}$ | $\{0,1\}^{M}$ | Qualified UTPR, QDMTT |
 
+# Amounts
+
+| Atom | Type | Meaning |
+| --- | --- | --- |
+| $\mathbf{fanil}$ | $\mathbb{R}^{N}$ | Financial Accounting Net Income or Loss |
+| $\mathbf{income\text{-}tax}$ | $\mathbb{R}^{N}$ | Income tax expense |
+| $\mathbf{globe\text{-}income},\mathbf{act},\mathbf{sbie},\mathbf{actt\text{-}prior}$ | $\mathbb{R}^{N}$ | Entity inputs of [Top-up Tax Calculation](<../../Calculation-Model/03.Top-up Tax Calculation.md>) |
+| $\mathbf{rev},\mathbf{pbt},\mathbf{tax},\mathbf{sbie}$ | $\mathbb{R}^{N}$ | Entity inputs of [TCSH](<../../Calculation-Model/Transitional CbCR Safe Harbours Test.md>) |
+| $\mathbf{emp},\mathbf{tan}$ | $\mathbb{R}_{\ge0}^{N}$ | Employees and Tangible Assets, for [UTPR](<../../Calculation-Model/05.UTPR.md>) |
+| $\mathbf{qdmtt},\mathbf{ente\text{-}prior}$ | $\mathbb{R}_{\ge0}^{M_{Calc}}$ | Group inputs of Top-up Tax Calculation |
+| $\mathbf{elected},\mathbf{qsh},\mathbf{ente\text{-}elected}$ | Boolean | Elections of TCSH and Top-up Tax Calculation |
+| $\mathbf{utpr\text{-}carry},\mathbf{utpr\text{-}cash}$ | $\mathbb{R}_{\ge0}^{M}$ | UTPR Top-up Tax brought forward and additional cash tax expense |
+
 # Filing
 
 One row per section of the return: $M+1$ jurisdiction sections, the last for Stateless Entities.
@@ -46,6 +59,8 @@ One row per section of the return: $M+1$ jurisdiction sections, the last for Sta
 | --- | --- | --- |
 | $\mathbf{rec\text{-}jur}$ | $\{0,1\}^{(M+1)\times M}$ | Recipient jurisdictions of each section |
 | $\mathbf{doc\text{-}type},\mathbf{doc\text{-}ref}$ | $\text{Enum}^{M+1}$, $\text{String}^{M+1}$ | Document type and reference of each section |
+| Message header | | Transmitting and receiving jurisdiction, message reference, reporting period, timestamp |
+| Filing information | | Filing Constituent Entity and its role, accounting standard, currency, period, name of the group |
 
 # Constraints
 

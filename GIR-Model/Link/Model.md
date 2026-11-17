@@ -1,6 +1,6 @@
 # Link Model
 
-Each atom of the [Output Model](../Output/Model.md) defined in terms of the [Input Model](../Input/Model.md) and the results of the [Calculation Model](../../Calculation-Model/Workflow.md). The Link Model only selects, expands, and aggregates; it calculates nothing itself. This version covers `GeneralSection/CorporateStructure` and the frame of `JurisdictionSection`, following the user guide (`../xml schema.txt`).
+Each atom of the [Output Model](../Output/Model.md) defined in terms of the [Input Model](../Input/Model.md) and the results of the [Calculation Model](../../Calculation-Model/Workflow.md). The Link Model only selects, expands, and aggregates; it calculates nothing itself. It follows the user guide (`../xml schema.txt`) and produces every required part of the return; [Map](Map.md) lists each value vector of the Output Model with its source, including the optional parts that are not linked.
 
 # Operators
 
@@ -129,7 +129,109 @@ $\mathbf{Iir\text{-}rights}$ and $\mathbf{Qdmtt\text{-}rights}$ have collecting 
 | `JurWithTaxingRights/JurisdictionName` | $\mathbf{Q}\times\mathbf{code}$ |
 | `DocSpec` | $\mathbf{S}_{J}\times\mathbf{doc\text{-}type}$, $\mathbf{S}_{J}\times\mathbf{doc\text{-}ref}$ |
 
-The rest of the section is left absent, which the schema allows: `Subgroup`, `ReportDifference`, `GLoBETax`, and `LowTaxJurisdiction` report amounts that the Top-up Tax and UTPR documents have yet to define. UTPR taxing rights are not included for the same reason.
+`Subgroup` and `ReportDifference` under `JurWithTaxingRights` are not linked. UTPR taxing rights are not included in `JurWithTaxingRights`.
+
+# Calculation Units
+
+The return reports one calculation per unit. A unit is a Tested Jurisdiction to which the [Transitional CbCR Safe Harbour](<../../Calculation-Model/Transitional CbCR Safe Harbours Test.md>) applies, or a [Full Calculation Group](<../../Calculation-Model/Group.md#etr-calculation-group>) outside every such Tested Jurisdiction.
+
+$$
+\begin{aligned}
+\mathbf{covered}&:=\mathbf{G}_{\mathrm{TCSH}}^{T}\times\mathbf{applied}\\
+\mathbf{safe}&:=(\mathbf{Entt\text{-}group}^{T}\times\mathbf{covered})=(\mathbf{Entt\text{-}group}^{T}\times\mathbf{1}_N)\\
+\mathbf{Unit}&:=\left(\mathbf{G}_{\mathrm{TCSH}}^{T}\times\operatorname{rows}(\mathbf{applied})^{T}\;\;\;\mathbf{Entt\text{-}group}\times\operatorname{rows}(\neg\mathbf{safe})^{T}\right)\\
+\mathbf{Unit\text{-}section}&:=\mathbf{S}_{J}\times\left((\mathbf{Entt\text{-}jur}^{+T}\times\mathbf{Unit})>0\right)
+\end{aligned}
+$$
+
+$\mathbf{Unit}$ has Entities on rows and units on columns; $\mathbf{Unit\text{-}section}$ has sections on rows. A group that is $\mathbf{safe}$ has no Top-up Tax. $\mathbf{full}$ marks the units that are Full Calculation Groups.
+
+A unit is a subgroup, and is reported with the TIN of its top Entity, as follows:
+
+| Unit | Summary type | ETR type | Top Entity |
+| --- | --- | --- | --- |
+| TCSH, CEs | none | GIR1607 | none |
+| TCSH, JV Group | GIR1105 | GIR1608 | the JV |
+| Stateless Entity | GIR1106 | GIR1606 | the Entity |
+| Minority-Owned Subgroup | GIR1102 | GIR1602 | the MOPE |
+| Single MOCE | GIR1103 | GIR1603 | the Entity |
+| JV Group | GIR1105 | GIR1605 | the JV |
+| Investment Entities | GIR1104 | GIR1604 | none |
+| Other CEs | none | none | none |
+
+A group of Investment Entities inside a Minority-Owned Subgroup or a JV Group carries both types. Where there is no top Entity the TIN is `NOTIN`.
+
+# Summary
+
+One row per unit. Apart from the name of the jurisdiction, a row is completed only where some jurisdiction has taxing rights over the section, $\mathbf{has\text{-}rights}$.
+
+| Output | Link |
+| --- | --- |
+| `Jurisdiction/JurisdictionName` | $\mathbf{Unit\text{-}section}^{T}\times\mathbf{S}_{J}\times\mathbf{code}^{+}$ |
+| `RecJurCode`, `JurWithTaxingRights` | Those of the unit's section |
+| `Jurisdiction/Subgroup` | TIN of the top Entity and Summary type, for a subgroup |
+| `SafeHarbour` | GIR1203, GIR1204, GIR1205 for each of $\mathbf{dm}$, $\mathbf{setr}$, $\mathbf{rp}$ that the TCSH unit passes |
+| `ETRRange` | GIR1314 for a TCSH unit; otherwise the 2.5-point band of $\mathbf{etr}$, where $\mathbf{positive}$ |
+| `QDMTTut`, `GLoBETut` | Band of $\mathbf{qdmtt}$ and of $\mathbf{tt\text{-}group}$ |
+
+# Jurisdiction Section: ETR
+
+One `ETR` row per unit, $\mathbf{P}=\mathbf{Unit\text{-}section}$. Amounts are those of [Top-up Tax Calculation](<../../Calculation-Model/03.Top-up Tax Calculation.md>), selected for the unit's group.
+
+| Output | Link |
+| --- | --- |
+| `SubGroup` | TIN of the top Entity and ETR type, for a subgroup |
+| `ETRException/TransitionalCbCRSafeHarbour` | `Revenue`, `Profit`, `IncomeTax` are $\mathbf{r}$, $\mathbf{p}$, $\mathbf{t}$ of the TCSH unit |
+| $\boldsymbol{\pi}_{\text{ETRComputation}}$ | $\mathbf{full}$ |
+| `OverallComputation/FANIL`, `AdjustedFANIL` | $\mathbf{Entt\text{-}group}^{T}\times\mathbf{fanil}$ |
+| `OverallComputation/IncomeTaxExpense` | $\mathbf{Entt\text{-}group}^{T}\times\mathbf{income\text{-}tax}$ |
+| `OverallComputation/NetGlobeIncome/Total` | $\mathbf{income}$ |
+| `OverallComputation/AdjustedCoveredTax/Total` | $\mathbf{tax}$ |
+| `OverallComputation/ETRRate`, `TopUpTaxPercentage` | $\mathbf{etr}$, $\mathbf{tt\text{-}percent}$ |
+| `OverallComputation/ExcessProfits`, `TopUpTax` | $\mathbf{excess\text{-}profit}$, $\mathbf{tt\text{-}group}$ |
+| `OverallComputation/ExcessNegTaxExpense` | $\mathbf{ente\text{-}prior}$, $\mathbf{ente\text{-}generated}$, $\mathbf{ente\text{-}used}$, $\mathbf{ente\text{-}next}$ |
+| `OverallComputation/AdditionalTopUpTax/Art4.1.5` | $\mathbf{tax}$, $\mathbf{income}$, $\mathbf{expected}$, $\mathbf{actt\text{-}4.1.5}$, where $\mathbf{art\text{-}4.1.5}$ |
+| `OverallComputation/QDMTT/Amount` | $\mathbf{qdmtt}$, where positive |
+| `CEComputation` | $(\mathbf{R},\mathbf{Q}):=\operatorname{cells}\bigl((\mathbf{Unit}\times\operatorname{diag}(\mathbf{full}))^{T}\bigr)$; $\mathbf{P}=\mathbf{R}$: one row per Entity of a full unit |
+| `CEComputation/TIN` | $\mathbf{Q}\times$ first TIN |
+| `CEComputation/AdjustedFANIL`, `NetGlobeIncome/Total` | $\mathbf{Q}\times\mathbf{fanil}$, $\mathbf{Q}\times\mathbf{globe\text{-}income}$ |
+| `CEComputation/AdjustedIncomeTax`, `AdjustedCoveredTax/Total` | $\mathbf{Q}\times\mathbf{income\text{-}tax}$, $\mathbf{Q}\times\mathbf{act}$ |
+
+# Jurisdiction Section: Low-Tax Jurisdiction
+
+Present for a section whose units have Top-up Tax. Parent Entities are those payable under a Qualified IIR, with $\mathbf{Q}$, $\mathbf{Net\text{-}iir}^{Q}$ and $\mathbf{utpr\text{-}ratio}$ of [UTPR](<../../Calculation-Model/05.UTPR.md>) and $\mathbf{Y}$ of [IIR](<../../Calculation-Model/IIR.md#ownership-graph>).
+
+| Output | Link |
+| --- | --- |
+| `TopUpTaxAmount` | $\mathbf{Unit\text{-}section}\times\mathbf{tt\text{-}group}$ of the units |
+| `LTCE` | One row per Entity with $\mathbf{tt\text{-}entt}>0$, under its section |
+| `LTCE/IIR` | One row per `LTCE`: `NetGlobeIncome` is $\mathbf{globe\text{-}income}$, `TopUpTax` is $\mathbf{tt\text{-}entt}$ |
+| `LTCE/IIR/ParentEntity` | $\operatorname{cells}$ of the `LTCE` columns of $\mathbf{Q}^{T}$: one row per payable Parent Entity $k$ of Entity $j$ |
+| `InclusionRatio` | $(\mathbf{Y})_{kj}$ |
+| `OtherOwnershipAllocation` | $(1-(\mathbf{Y})_{kj})\cdot(\mathbf{globe\text{-}income})_j$ |
+| `TopUpTaxShare` | $(\mathbf{Y})_{kj}\cdot(\mathbf{tt\text{-}entt})_j$ |
+| `IIROffSet` | $\bigl((\mathbf{Y})_{kj}-(\mathbf{Net\text{-}iir}^{Q})_{kj}\bigr)\cdot(\mathbf{tt\text{-}entt})_j$ |
+| `TopUpTax` | $(\mathbf{Net\text{-}iir}^{Q})_{kj}\cdot(\mathbf{tt\text{-}entt})_j$ |
+| `UTPR/UTPRCalculation` | Both amounts are $\mathbf{utpr\text{-}ratio}\odot\mathbf{tt\text{-}entt}$ summed over the Entities of the section, where positive |
+
+# UTPR Attribution
+
+Present when $\mathit{total}>0$, with one `Attribution` row per jurisdiction in $\mathbf{utpr\text{-}jur}$.
+
+| Output | Link |
+| --- | --- |
+| `Employees`, `TangibleAssetValue` | Columns of $\mathbf{Data\text{-}jur}$ |
+| `UTPRPercentage`, `UTPRTopUpTaxAttributed` | $\mathbf{utpr\text{-}percentage}$, $\mathbf{utpr\text{-}amount}$ |
+| `UTPRTopUpTaxCarryForward`, `AddCashTaxExpense` | Input |
+| `UTPRTopUpTaxCarriedForward` | $[\text{attributed}-\text{cash}]^{+}$ |
+
+# Message Header and Filing Information
+
+`MessageSpec`, `FilingInfo`, `GeneralSection/RecJurCode`, and every `DocSpec` are filing data of the Input Model, passed through. The Filing Constituent Entity is an Entity of the Input Model, so its name, jurisdiction, and TIN are references.
+
+# Rounding
+
+Amounts are reported as integers and ratios to four decimal places; a ratio above 1 is reported as 1.
 
 # Output Equations
 
@@ -146,9 +248,9 @@ Substituting the links, the Output equations of `CorporateStructure` follow from
 | `OwnershipPercentage` is a percentage | $\mathbf{W}$ is rounded to four decimal places. |
 | At least one `ResCountryCode` | $\mathbf{Entt\text{-}jur}\times\mathbf{1}_M=\neg\mathbf{stateless}$, and a Stateless Entity reports X5. |
 
-`check.py` applies the links to the structure of [Example](../../Calculation-Model/Example.md) and evaluates the 111 Output equations of `CorporateStructure` and the 570 of `JurisdictionSection`; all hold.
+`check.py` applies the links to the structure of [Example](../../Calculation-Model/Example.md), with example amounts, and evaluates the 782 Output equations on the whole return; all hold.
 
-`validate.py` adds test values for the required nodes that are not linked yet (`MessageSpec`, `FilingInfo`, `GeneralSection/RecJurCode`, `DocSpec`), writes the document with `../Output/serialize.py`, and validates it against the XSD with two validators. The document, [sample.xml](sample.xml), is valid, and in six deliberately broken variants the equations and the validators reject the same thing. `fuzz.py` repeats the comparison on random documents over the whole schema; no disagreement has been found.
+`validate.py` writes the same atoms as XML with `../Output/serialize.py` and validates the document against the XSD with two validators. The document, [sample.xml](sample.xml), is valid without any filler value, and in six deliberately broken variants the equations and the validators reject the same thing. `fuzz.py` repeats the comparison on random documents over the whole schema; no disagreement has been found.
 
 # Open
 
@@ -158,3 +260,10 @@ Substituting the links, the Output equations of `CorporateStructure` follow from
 - **`QIIR/Exception`.** Decided per Entity here, whereas [Taxing Rights](<../../Calculation-Model/Taxing Rights.md#iir-payability>) decides displacement per low-taxed Entity.
 - **`QUTPR`, `Art10.3.5`.** Not linked; `QUTPR` waits for the UTPR document.
 - **`OwnershipChange`.** Not linked; it needs the [effective periods](<../../Calculation-Model/Ownership Interest.md#effective-periods>).
+- **Optional detail.** 335 of the 493 value vectors are not linked: adjustments by item, elections, international shipping, deferred tax, transition, de minimis, and the like. They are optional in the schema and need their own inputs; see [Map](Map.md).
+- **Units.** One `Summary` row and one `ETR` row per unit is an assumption, as is treating a group under an applied TCSH as having no Top-up Tax.
+- **Subgroup TIN.** `NOTIN` is reported for a group of Investment Entities and for a TCSH unit of CEs, which have no single top Entity.
+- **`SafeHarbour`.** Every TCSH test that is passed is reported.
+- **`UTPRCalculation`.** `TotalUTPRTopUpTax` and `Article2.5.1TopUpTax` are given the same amount.
+- **Parent Entities.** Only those under a Qualified IIR are reported, and Parent Entities that pay their own Top-up Tax are not.
+- **Bands.** The Top-up Tax bands assume amounts in EUR.

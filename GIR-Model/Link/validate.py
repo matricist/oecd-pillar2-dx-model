@@ -1,15 +1,12 @@
-"""Serialise the atoms of check.py into a full GIR document and validate it against the XSD.
+"""Serialise the atoms of check.py into a GIR document and validate it against the XSD.
 
 Usage: python validate.py     (run from GIR-Model/Link; needs numpy, xmlschema, lxml)
 
-check.py fills GeneralSection/CorporateStructure and the frame of
-JurisdictionSection. This script
+check.py builds the whole return for the example group. This script
   1. takes those atoms unchanged,
-  2. adds DUMMY TEST VALUES for every other required node (MessageSpec, FilingInfo,
-     RecJurCode, DocSpec) and leaves every optional node absent,
-  3. serialises with Output/serialize.py,
-  4. validates with two independent XSD validators (xmlschema, lxml/libxml2),
-  5. evaluates all 782 Output equations on the same atoms,
+  2. serialises them with Output/serialize.py,
+  3. validates the XML with two independent XSD validators (xmlschema, lxml/libxml2),
+  4. evaluates all 782 Output equations on the same atoms,
 and compares the two verdicts for the base case and a few negative cases.
 """
 import copy
@@ -35,45 +32,10 @@ BODY = ROOT + "/GLOBEBody"
 REL = {r["relation_id"]: r for r in g.relations}
 VEC = {v["vector_id"]: v for v in g.vectors}
 
-# ================================================================ dummy test values
-# Every required value node outside CorporateStructure. All values are test data.
-DUMMY = {
-    ROOT + "/MessageSpec/TransmittingCountry": "US",
-    ROOT + "/MessageSpec/ReceivingCountry": "US",
-    ROOT + "/MessageSpec/MessageType": "GIR",
-    ROOT + "/MessageSpec/MessageRefId": "DUMMY-TEST-MessageRefId",
-    ROOT + "/MessageSpec/MessageTypeIndic": "GIR101",
-    ROOT + "/MessageSpec/ReportingPeriod": "2024-12-31",
-    ROOT + "/MessageSpec/Timestamp": "2025-06-30T00:00:00",
-    BODY + "/FilingInfo/FilingCE/ResCountryCode": "US",
-    BODY + "/FilingInfo/FilingCE/Name": "DUMMY TEST Filing CE",
-    BODY + "/FilingInfo/FilingCE/TIN/#text": "DUMMY-TEST-TIN",
-    BODY + "/FilingInfo/FilingCE/Role": "GIR401",
-    BODY + "/FilingInfo/AccountingInfo/CFSofUPE": "GIR501",
-    BODY + "/FilingInfo/AccountingInfo/FAS": "DUMMY TEST FAS",
-    BODY + "/FilingInfo/AccountingInfo/Currency": "USD",
-    BODY + "/FilingInfo/Period/Start": "2024-01-01",
-    BODY + "/FilingInfo/Period/End": "2024-12-31",
-    BODY + "/FilingInfo/NameMNE": "DUMMY TEST MNE Group",
-    BODY + "/FilingInfo/DocSpec/DocTypeIndic": "OECD1",
-    BODY + "/FilingInfo/DocSpec/DocRefId": "DUMMY-TEST-DocRefId-FilingInfo",
-    BODY + "/GeneralSection/DocSpec/DocTypeIndic": "OECD1",
-    BODY + "/GeneralSection/DocSpec/DocRefId": "DUMMY-TEST-DocRefId-GeneralSection",
-}
-# Required repeated element outside CorporateStructure: one row.
-DUMMY_ROWS = {BODY + "/GeneralSection/RecJurCode": ["US"]}
-
 
 def base_atoms():
-    """The atoms of check.py (deep copy) plus the dummies; everything else absent."""
+    """A deep copy of the atoms of check.py."""
     a = {"n": dict(c.n), "P": copy.deepcopy(c.P), "x": copy.deepcopy(c.x), "pi": copy.deepcopy(c.pi)}
-    for path, value in DUMMY.items():
-        a["x"][c.vec_id[(path, "value")]] = [value]
-    for path, values in DUMMY_ROWS.items():
-        rid = c.rel_id[path]
-        a["n"][rid] = len(values)
-        a["P"][rid] = np.ones((1, len(values)), int)
-        a["x"][c.vec_id[(path, "value")]] = list(values)
     return fill_absent(a)
 
 
@@ -306,7 +268,7 @@ def neg_no_recjur():
     return a
 
 
-CASES = [("base: check.py atoms + dummies", base_atoms),
+CASES = [("base: check.py atoms", base_atoms),
          ("negative: UPE is both ExcludedUPE and OtherUPE", neg_both_upe),
          ("negative: CE 'A' has no TIN", neg_no_tin),
          ("negative: invalid GlobeStatus code", neg_bad_enum),
