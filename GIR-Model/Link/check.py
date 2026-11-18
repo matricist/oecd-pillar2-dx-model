@@ -42,6 +42,7 @@ group_upe, ee, pe, ie = vec("UPE"), vec("EE"), vec("PE"), vec("IE1", "IE2", "IE3
 stateless, eqt = vec("ST"), vec("JV")
 ce = ~vec("EE", "JV", "JS1", "JS2")
 ee_type = {"EE": "GIR1004"}                              # kind of Excluded Entity (GIR1001 to GIR1008)
+nmce = vec("S")                                          # Non-material Constituent Entities
 X0 = np.zeros((N, N))
 C0 = np.zeros((N, N), bool)
 for a, b, r in own:
@@ -60,6 +61,7 @@ tin = ["TIN-" + n for n in names]                      # one TIN per Entity
 ET = np.eye(N, dtype=int)                               # Entity-to-TIN matrix
 tin_issued = [iso[j] if j else None for j in jur]
 tin_type = ["GIR3001"] * N
+art1035 = np.zeros((N, M), int)                         # Entity x jurisdiction whose IIR it applies under Article 10.3.5
 
 # ================================================================ Calculation Model
 I = np.eye(N)
@@ -193,7 +195,7 @@ Rule = np.stack([r201, r202, r203, r204, 1 - np.clip(r201 + r202 + r203 + r204, 
 rule_codes = ["GIR201", "GIR202", "GIR203", "GIR204", "GIR205"]
 main = (C0.astype(int) @ pe) > 0
 zero = np.zeros(N, bool)
-status_cols = [ce, zero, zero, zero, pe, main, mope, mos, smoce, ie, zero, zero, jvt, jvsub, zero, ee, zero, zero]
+status_cols = [ce, zero, zero, zero, pe, main, mope, mos, smoce, ie, zero, zero, jvt, jvsub, nmce, ee, art1035.any(axis=1), zero]
 Status = np.stack(status_cols, axis=1).astype(int)
 status_codes = ["GIR3%02d" % k for k in range(1, 19)]
 
@@ -225,8 +227,7 @@ ex = S_U @ ee
 for branch, mask in (("ExcludedUPE", ex), ("OtherUPE", 1 - ex)):
     bp = CS + "UPE/(choice1)/" + branch
     presence(bp, mask)
-    presence(bp + "/Art10.3.5", 0 * mask)
-    value(bp + "/Art10.3.5", [None] * len(mask))
+    value(bp + "/Art10.3.5", [codes[int(r.argmax())] if r.any() else None for r in S_U @ art1035], mask)
     id_block(bp + "/ID", S_U, mask, excluded=(branch == "ExcludedUPE"))
 # An Excluded UPE reports its kind with the GIR60x code that corresponds to GIR100x.
 upe_status = [("GIR6" + ee_type[nm][-2:]) if nm in ee_type else None for nm in names]
@@ -237,13 +238,6 @@ S_C = rows((ce | jvmember) & ~group_upe)
 nC = S_C.shape[0]
 relation(CS + "CE", np.ones((1, nC), int))
 id_block(CS + "CE/ID", S_C)
-
-relation(CS + "CE/OwnershipChange", np.zeros((nC, 0)))          # in-year changes: not modelled
-relation(CS + "CE/OwnershipChange/PreGlobeStatus", np.zeros((0, 0)))
-relation(CS + "CE/OwnershipChange/PreOwnership", np.zeros((0, 0)))
-for v in g.vectors:
-    if v["path"].startswith(CS + "CE/OwnershipChange"):
-        (x if v["kind"] == "value" else pi)[v["vector_id"]] = [] if v["kind"] == "value" else np.zeros(0, int)
 
 owner = (group_upe | ce | jvmember) & ~ee                        # owners reported individually
 Xt = np.diag(~ee) @ X0 @ np.linalg.inv(I - np.diag(ee) @ X0)     # looking through Excluded Entities
@@ -291,19 +285,12 @@ value(tp + "/@unknown", [None] * nC)
 presence(tp + "/@TypeOfTIN", exc)
 value(tp + "/@TypeOfTIN", [tin_type[k] if k is not None else None for k in d])
 
-for name in ("QUTPR", "QUTPR/AggOwnership", "QUTPR/UPEOwnership"):   # pending UTPR
-    presence(CS + "CE/" + name, [0] * nC)
-for name in ("QUTPR/Art9.3", "QUTPR/AggOwnership", "QUTPR/UPEOwnership"):
-    value(CS + "CE/" + name, [None] * nC)
-
 # ---- Excluded Entities
 S_E = rows(ee & ~group_upe)
 relation(CS + "ExcludedEntity", np.ones((1, S_E.shape[0]), int))
 value(CS + "ExcludedEntity/Name", pick(S_E, names))
 value(CS + "ExcludedEntity/Type", pick(S_E, [ee_type.get(nm) for nm in names]))
 value(CS + "ExcludedEntity/Change", [False] * S_E.shape[0])
-presence(CS + "UnreportChangeCorpStr", [0])
-value(CS + "UnreportChangeCorpStr", [None])
 
 # ---- JurisdictionSection: rows, Jurisdiction, recipients, jurisdictions with taxing rights
 JS = "GLOBE_OECD/GLOBEBody/JurisdictionSection"
@@ -321,6 +308,7 @@ value(JS + "/RecJurCode", pick(Q, codes))
 iir_rights = (EJ.T @ (((Iir_payable | np.diag(self_payable)).astype(int) @ EJx) > 0)) > 0  # collecting jurisdiction x section
 qdmtt_rights = np.hstack([np.diag(jv("qdmtt")), np.zeros((M, 1), int)]) > 0
 R, Q = cells(S_J @ (iir_rights | qdmtt_rights).T)
+R_JW, Q_JW = R, Q                                                # rows of JurWithTaxingRights: section, collecting jurisdiction
 relation(JS + "/JurWithTaxingRights", R)
 value(JS + "/JurWithTaxingRights/JurisdictionName", pick(Q, codes))
 value(JS + "/DocSpec/DocTypeIndic", ["OECD1"] * nJ)              # Input: filing metadata
@@ -331,20 +319,159 @@ def amounts(**kw):
     return np.array([kw.get(nm, 0) for nm in names], float)
 
 
-fanil = amounts(UPE=1000, A=800, B=600, PE=200, C=500, IE1=300, ST=100, JV=400, JS1=200, JS2=100,
+fanil = amounts(UPE=1000, A=780, B=640, PE=150, C=615, IE1=300, ST=100, JV=400, JS1=200, JS2=100,
                 P1=200, P2=300, P3=100, IE2=100, S=200, IE3=100)       # financial accounting net income
-income_tax = amounts(UPE=250, A=40, B=60, PE=20, C=100, JV=20, JS1=10, JS2=15, P1=10, P3=20, S=10)
-globe_income, act = fanil.copy(), income_tax.copy()                    # no adjustments in the example
-sbie = amounts(A=100)
+income_tax = amounts(UPE=250, A=40, B=51, PE=15, C=105, JV=20, JS1=10, JS2=12, P1=10, P3=20, S=10)
 emp, tan = amounts(B=50, PE=10), amounts(B=1000, PE=200)
-tcsh_rev, tcsh_pbt, tcsh_tax, tcsh_sbie = 5 * fanil, fanil.copy(), income_tax.copy(), sbie.copy()
+tcsh_rev, tcsh_pbt, tcsh_tax, tcsh_sbie = 5 * fanil, fanil.copy(), income_tax.copy(), amounts(A=100)
 tcsh_elected_jur = {"US"}
 qdmtt_of = {"B": 40, "S": 20}                                          # QDMTT of the group of each named Entity
 r_min, tau, d_R, d_P = 0.15, 0.15, 10_000_000, 1_000_000
 filing = {"transmitting": "US", "receiving": "US", "message_ref": "US2025-GIR-0001", "period_start": "2025-01-01",
           "period_end": "2025-12-31", "timestamp": "2026-06-30T00:00:00", "filing_ce": "UPE", "role": "GIR401",
-          "cfs": "GIR501", "fas": "US GAAP", "currency": "EUR", "name_mne": "Example Group"}
+          "cfs": "GIR501", "fas": "US GAAP", "currency": "EUR", "name_mne": "Example Group",
+          "version": "1.0", "sending_entity": "TIN-UPE", "contact": "tax@example.com", "warning": "Example data",
+          "additional_info": "Return of the example group of the Calculation Model"}
 utpr_cash = {"XQ": 145}                                                # additional cash tax expense by jurisdiction
+
+# ================================================================ Input: detail (example)
+# Every table is a list of rows. A row names the Entity it belongs to; a row of a group-level
+# table names one Entity of the Full Calculation Group it belongs to.
+INC = ["GIR20%02d" % k for k in range(1, 27)]                          # items of the GloBE Income adjustments
+TAX = ["GIR24%02d" % k for k in range(1, 18)]                          # items of the current tax adjustments
+DEF = ["GIR25%02d" % k for k in range(1, 17)]                          # items of the deferred tax adjustments
+FIN = ["GIR27%02d" % k for k in range(1, 21)]                          # items of the group's Adjusted Covered Taxes
+
+
+def items(codes_, entries):
+    """Entity-by-item matrix from {(Entity, item): amount}."""
+    A = np.zeros((N, len(codes_)))
+    for (nm, code), a in entries.items():
+        A[ix[nm], codes_.index(code)] = a
+    return A
+
+
+def onehot(keys, index):
+    """Incidence matrix with one row per key and one column per element of index; None gives a zero row."""
+    T = np.zeros((len(keys), len(index)), int)
+    for r, k in enumerate(keys):
+        if k is not None:
+            T[r, list(index).index(k)] = 1
+    return T
+
+
+def col(table, key):
+    return [r.get(key) for r in table]
+
+
+def num(table, key):
+    return np.array([r.get(key) or 0 for r in table], float)
+
+
+# Accounting income to GloBE Income
+transfers = [dict(src="C", dst="PE", basis="GIR1701", amount=50)]       # allocations between Main Entity, PE and FTE
+cross_border = [dict(entity="A", other="B", basis="GIR1801", additions=20),
+                dict(entity="B", other="A", basis="GIR1801", reductions=20)]
+upe_adj, upe_adj_owner = [], []                                         # Articles 7.1 and 7.2: none in the example
+inc_add = items(INC, {("B", "GIR2007"): 10})                            # additions by item
+inc_red = items(INC, {("B", "GIR2002"): 30})                            # reductions by item
+SHIP = ["GIR21%02d" % k for k in range(1, 7)]
+ship_cat = items(SHIP, {("C", "GIR2101"): 1, ("C", "GIR2103"): 1}).astype(int)
+anc_cat = {"C": "GIR2201"}
+ship_rev, ship_cost, anc_rev, anc_cost = amounts(C=100), amounts(C=60), amounts(C=30), amounts(C=5)
+ship_payroll, ship_tangible, ship_tax = amounts(C=10), amounts(C=200), amounts()
+# Income tax expense to Adjusted Covered Taxes
+tax_transfers = [dict(src="C", dst="PE", bases=["GIR2301"], amount=5)]  # cross-allocation of Covered Taxes
+tax_add = items(TAX, {("JS2", "GIR2414"): 3})
+tax_red = items(TAX, {("B", "GIR2405"): 4})
+defer_expense = amounts(B=12)
+def_add, def_red = items(DEF, {("B", "GIR2504"): 5}), items(DEF, {("B", "GIR2501"): 2})
+def_higher, def_lower = items(DEF, {("B", "GIR2504"): -3}), items(DEF, {("B", "GIR2501"): 1})
+# Substance-based Income Exclusion
+payroll, tangible, rho_p, rho_t = amounts(A=250), amounts(A=1000), 0.096, 0.076
+sbie_pe = [dict(group="C", owner="XQ", payroll_total=400, payroll_alloc=100, tangible_total=800, tangible_alloc=200)]
+sbie_fte = []
+# Prior Fiscal Years
+actt_prior = amounts(C=8)
+recalc = [dict(group="C", year="2024-12-31", articles=["GIR2601"],
+               previous=(480, 72, 0.15, 480, 0.0, 0), recalculated=(480, 64, 0.1333, 480, 0.0167, 8))]
+post_dta = [dict(group="P2", year="2023-12-31", amount=6), dict(group="P2", year="2024-12-31", amount=4)]
+post_refund = [dict(group="P2", year="2024-12-31", amount=3)]
+ddt = [dict(group="JS2", year="2025-12-31", start=3, d0=0, d1=0, d2=0, d3=0, end=3)]
+ddt_terms = {"JS2": (0, 0, 0.0)}                                        # reduction, incremental Top-up Tax, ratio
+# Deferred tax of a group
+def_diff, def_globe, loss_dta = {"B": 2}, {"B": 2}, {}
+recapture = {"B": (0, 0, 9, 0, 9, 0, 0, 0, 0)}
+transition = [dict(group="B", year="2024-12-31", dtl_start=50, dtl_recast=40, dta_total=30, dta_start=30, dta_recast=0,
+                   dta_excluded=0, disposal=dict(jur="XR", net=4, carrying=100, tax_paid=6, dtadtl=3), alt="XR")]
+cfc = [dict(group="A", jur="XQ", top="B", amount=7)]
+# De minimis exclusion, non-material Constituent Entities
+dm_basis, dm_now = {"JS2": "GIR2901"}, {"JS2": (900, 900)}              # revenue and GloBE revenue of the year
+dm_prior = [dict(group="JS2", year="2024-12-31", revenue=800, globe_revenue=800, income=90, fanil=90),
+            dict(group="JS2", year="2023-12-31", revenue=700, globe_revenue=700, income=80, fanil=80)]
+nm_rev = {"S": (1000, 900, 800)}                                        # year, first and second preceding year
+nm_simplified = {"S": 5}
+# Elections
+FIVE_E = ["Art1.5.3", "Art3.2.1b", "Art3.2.1c", "Art4.4.7", "Art4.5.6"]
+FIVE_G = ["Art3.2.2", "Art3.2.5", "Art3.2.8", "NoDefTaxAllocation", "Art4.5", "Art3.2.1.c"]
+ent_elect = {("B", "Art3.2.1b"): (True, "2024-01-01", None), ("B", "Art4.4.7"): (True, "2025-01-01", None),
+             ("P1", "Art3.2.1c"): (False, "2020-01-01", "2025-01-01")}
+ent_flag = {("S", "SimplCalculations"): True, ("P2", "Art3.2.1"): True}
+art634 = [dict(entity="P3", trigger="2025-12-31", option="ii")]
+tax_groups = [dict(tin="TCG-XL-1", issued="XL", type="GIR3001", members=["JV", "JS1"])]
+art75, art76 = [], []                                                   # Investment Entity elections: none
+other_fas = {"JS1": "Local GAAP"}
+grp_elect = {("B", "Art3.2.2"): (True, "2024-01-01", None), ("A", "Art3.2.1.c"): (True, "2024-01-01", None),
+             ("P2", "Art3.2.5"): (True, "2024-01-01", None), ("JV", "Art3.2.8"): (False, "2020-01-01", "2025-01-01"),
+             ("S", "Art4.5"): (True, "2025-01-01", None), ("A", "NoDefTaxAllocation"): (True, "2025-01-01", None)}
+grp_flag = {("B", "Art4.6.1"): True, ("JV", "Art3.2.6"): True, ("ST", "Art5.3.1"): True, ("P2", "SimplifiedReporting"): True}
+art321c = {"A": (100, 20, 5)}                                           # opening balance, additions, reductions
+ente_elected_of = set()                                                 # groups that elect the Article 4.1.5 carry-forward
+# QDMTT terms by jurisdiction
+qdmtt_terms = {"XQ": dict(fas="US GAAP", sbie=True, demin=True, currency="EUR",
+                          election=(True, "2024-01-01", None, "GIR3101")),
+               "XD": dict(fas="US GAAP", sbie=True, demin=True, currency="EUR", min_rate=0.16,
+                          blending="Blended by Entity")}
+# UTPR
+art_93, utpr_sh, cit_rate = False, True, 0.21                           # Article 9.3; Transitional UTPR Safe Harbour
+initial = dict(start="2025-01-01", ref="US", tangible={"US": 5000, "XQ": 1200})   # reported only under Article 9.3
+# Corporate structure
+changes = [dict(entity="C", date="2025-07-01", status=["GIR701"], owners={"B": 1.0})]
+unreported_change = False
+# Differences under domestic law, currencies, data points, corrections
+diff = [dict(section="XR", jur="XQ", etr=0.12, agg_current_tax=20, qrtc_expense=0, other_credits=0, defer_expense=0,
+             net_globe=400, sbie=0, add_tut=0, tut=12, elections="No differences in elections", qrtc_income=0, ente=0,
+             transition=False)]
+local_currency = {"XD": "CHF"}
+dp_general = [dict(description="Employees of the group", amount=1200),
+              dict(description="Share of income from royalties", percentage=0.25, text="Estimate", boolean=True)]
+dp_summary = [dict(group="A", description="Number of sites", amount=3, text="At the end of the year", boolean=False)]
+dp_section = [dict(section="XN", description="Occupancy", amount=40, percentage=0.8)]
+dp_utpr = [dict(description="UTPR in force for the whole year", amount=12, percentage=1.0, text="Months", boolean=True)]
+corr_ref = {}                                                           # corrected document by section: a first filing
+
+# ================================================================ Input: amounts the Calculation Model takes
+tr_from, tr_to = onehot(col(transfers, "src"), names), onehot(col(transfers, "dst"), names)
+adj_fanil = fanil + (tr_to - tr_from).T @ num(transfers, "amount")
+cb_T, ua_T = onehot(col(cross_border, "entity"), names), onehot(col(upe_adj, "entity"), names)
+for basis, item in (("GIR1801", "GIR2013"), ("GIR1802", "GIR2017")):    # items that have their own table
+    pick_basis = np.array([r["basis"] == basis for r in cross_border], float)
+    inc_add[:, INC.index(item)] = cb_T.T @ (pick_basis * num(cross_border, "additions"))
+    inc_red[:, INC.index(item)] = cb_T.T @ (pick_basis * num(cross_border, "reductions"))
+for bases, item in ((("GIR1901", "GIR1902", "GIR1903", "GIR1904"), "GIR2022"),
+                    (("GIR1905", "GIR1906", "GIR1907", "GIR1908", "GIR1909", "GIR1910"), "GIR2023")):
+    inc_red[:, INC.index(item)] = ua_T.T @ (np.array([r["basis"] in bases for r in upe_adj], float) * num(upe_adj, "amount"))
+ship_income, anc_income = ship_rev - ship_cost, anc_rev - anc_cost
+inc_red[:, INC.index("GIR2025")] = np.maximum(ship_income + anc_income, 0)
+inc_add[:, INC.index("GIR2025")] = np.maximum(-(ship_income + anc_income), 0)
+globe_income = adj_fanil + (inc_add - inc_red).sum(axis=1)
+tt_from, tt_to = onehot(col(tax_transfers, "src"), names), onehot(col(tax_transfers, "dst"), names)
+adj_income_tax = income_tax + (tt_to - tt_from).T @ num(tax_transfers, "amount")
+defer_total = defer_expense + (def_add - def_red + def_higher + def_lower).sum(axis=1)
+tax_add[:, TAX.index("GIR2416")] = np.maximum(defer_total, 0)
+tax_red[:, TAX.index("GIR2416")] = np.maximum(-defer_total, 0)
+act = adj_income_tax + (tax_add - tax_red).sum(axis=1)
+sbie = rho_p * payroll + rho_t * tangible
 
 # ================================================================ Calculation Model: groups, TCSH, Top-up Tax, IIR, UTPR
 dag = lambda v: np.where(v > 0, 1 / np.where(v > 0, v, 1), 0.0)
@@ -385,24 +512,39 @@ qdmtt = np.zeros(MC)
 for nm, amount in qdmtt_of.items():
     qdmtt[EG[ix[nm]].argmax()] = amount
 ente_prior = np.zeros(MC)
-g_income, g_tax = EG.T @ globe_income, EG.T @ act
+
+
+def grp(values, default=0.0):
+    """Group vector from {Entity of the group: value}."""
+    out = [default] * MC
+    for nm, v in values.items():
+        out[int(EG[ix[nm]].argmax())] = v
+    return out
+
+
+ente_elected = np.array(grp({nm: True for nm in ente_elected_of}, False))
+g_ship, g_anc = EG.T @ ship_income, EG.T @ anc_income
+ship_cap = 0.5 * pos(g_ship)
+ship_excess = pos(g_anc - ship_cap)                                    # Qualified Ancillary income above the 50% cap
+income_adj, act_adj = ship_excess, np.array(grp(loss_dta))
+g_income, g_tax = EG.T @ globe_income + income_adj, EG.T @ act + act_adj
 g_pos, g_expected = g_income > 0, r_min * g_income
 ente_used = g_pos * np.minimum(ente_prior, pos(g_tax))
 etr = g_pos * (pos(g_tax) - ente_used) * dag(pos(g_income))
 tt_percent = g_pos * pos(r_min - etr)
 excess = pos(g_income - EG.T @ sbie)
 art415 = ~g_pos & (g_tax < 0) & (g_tax < g_expected)
-actt415 = art415 * (g_expected - g_tax)
-ente_generated = g_pos * pos(-g_tax)
+actt415 = (art415 & ~ente_elected) * (g_expected - g_tax)
+ente_generated = g_pos * pos(-g_tax) + (art415 & ente_elected) * (g_expected - g_tax)
 ente_next = ente_prior - ente_used + ente_generated
 regular = tt_percent * excess
-gross = regular + actt415
+gross = regular + actt415 + EG.T @ actt_prior
 tt_group = ~safe * pos(gross - qdmtt)
 theta = tt_group * dag(gross)
 key = pos(globe_income)
 key415 = ((act < 0) & (act < r_min * globe_income)) * (r_min * globe_income - act)
 alloc = lambda k: np.diag(k) @ EG @ np.diag(dag(EG.T @ k))
-tt_entt = alloc(key) @ (theta * regular) + alloc(key415) @ (theta * actt415)
+tt_entt = alloc(key) @ (theta * regular) + alloc(key415) @ (theta * actt415) + (EG @ theta) * actt_prior
 assert np.allclose(EG.T @ tt_entt, tt_group)
 
 # IIR under Qualified IIRs: Net Income Inclusion Ratio
@@ -538,11 +680,10 @@ Rk, Qk = cells(Q @ K)
 relation(SM + "/Jurisdiction/Subgroup/TypeofSubGroup", Rk)
 value(SM + "/Jurisdiction/Subgroup/TypeofSubGroup", pick(Qk, ["GIR11" + kc for kc in kind_codes]))
 R, Q = cells(u_section.T @ rights)
+R_SW, Q_SW = R, Q                                                        # rows: unit, collecting jurisdiction
 relation(SM + "/JurWithTaxingRights", R)
 presence(SM + "/JurWithTaxingRights/JurisdictionName", [1] * R.shape[1])
 value(SM + "/JurWithTaxingRights/JurisdictionName", pick(Q, codes))
-presence(SM + "/JurWithTaxingRights/DiffDomesticTut", [0] * R.shape[1])
-value(SM + "/JurWithTaxingRights/DiffDomesticTut", [None] * R.shape[1])
 passed = np.zeros((nU, 3), int)                                         # TCSH tests passed: de minimis, ETR, routine profits
 passed[~full] = np.stack([t_dm, t_setr, t_rp], axis=1)[ti_[~full]]
 R, Q = cells(np.diag(has_rights) @ passed)
@@ -560,24 +701,23 @@ value(SM + "/DocSpec/DocTypeIndic", ["OECD1"] * nU)
 value(SM + "/DocSpec/DocRefId", ["DOC-Summary-%d" % (k + 1) for k in range(nU)])
 
 # ---- JurisdictionSection/GLoBETax/ETR: one row per calculation unit
-ET = JS + "/GLoBETax/ETR"
-relation(ET, u_section)
-presence(ET + "/SubGroup", etr_sub)
-inline_tin(ET + "/SubGroup/TIN", tops, etr_sub)
+ETR = JS + "/GLoBETax/ETR"
+relation(ETR, u_section)
+presence(ETR + "/SubGroup", etr_sub)
+inline_tin(ETR + "/SubGroup/TIN", tops, etr_sub)
 E = np.array([[kc in u["etr_kinds"] for kc in kind_codes] for u in units], int)
 R, Q = cells(E)
-relation(ET + "/SubGroup/TypeofSubGroup", R)
-value(ET + "/SubGroup/TypeofSubGroup", pick(Q, ["GIR16" + kc for kc in kind_codes]))
-EX = ET + "/ETRStatus/ETRException"
-presence(EX, ~full)
+relation(ETR + "/SubGroup/TypeofSubGroup", R)
+value(ETR + "/SubGroup/TypeofSubGroup", pick(Q, ["GIR16" + kc for kc in kind_codes]))
+EX = ETR + "/ETRStatus/ETRException"
 presence(EX + "/TransitionalCbCRSafeHarbour", ~full)
 for name, v in (("Revenue", t_r), ("Profit", t_p), ("IncomeTax", t_t)):
     value(EX + "/TransitionalCbCRSafeHarbour/" + name, [whole(a) for a in v[ti_]], ~full)
-EC = ET + "/ETRStatus/ETRComputation"
+EC = ETR + "/ETRStatus/ETRComputation"
 OC = EC + "/OverallComputation"
 presence(EC, full)
 presence(OC, full)
-for name, v in (("FANIL", EG.T @ fanil), ("AdjustedFANIL", EG.T @ fanil), ("NetGlobeIncome/Total", g_income),
+for name, v in (("FANIL", EG.T @ fanil), ("AdjustedFANIL", EG.T @ adj_fanil), ("NetGlobeIncome/Total", g_income),
                 ("IncomeTaxExpense", EG.T @ income_tax), ("ExcessProfits", excess), ("TopUpTax", tt_group),
                 ("ExcessNegTaxExpense/PriorYearBalance", ente_prior), ("ExcessNegTaxExpense/GeneratedInRFY", ente_generated),
                 ("ExcessNegTaxExpense/UtilizedInRFY", ente_used), ("ExcessNegTaxExpense/Remaining", ente_next)):
@@ -585,17 +725,12 @@ for name, v in (("FANIL", EG.T @ fanil), ("AdjustedFANIL", EG.T @ fanil), ("NetG
 value(OC + "/ETRRate", [ratio4(a) for a in etr[gi_]], full)
 value(OC + "/TopUpTaxPercentage", [ratio4(a) for a in tt_percent[gi_]], full)
 presence(OC + "/AdjustedCoveredTax", full)
-value(OC + "/AdjustedCoveredTax/Total", [whole(a) for a in g_tax[gi_]], full)
-value(OC + "/AdjustedCoveredTax/AggregrateCurrentTax", [whole(a) for a in (EG.T @ income_tax)[gi_]], full)
+value(OC + "/AdjustedCoveredTax/Total", [whole(a) for a in (g_tax + ente_generated - ente_used)[gi_]], full)
+value(OC + "/AdjustedCoveredTax/AggregrateCurrentTax", [whole(a) for a in (EG.T @ adj_income_tax)[gi_]], full)
 has_q = full & (u_qdmtt > 0)
 presence(OC + "/QDMTT", has_q)
-value(OC + "/QDMTT/FAS", [filing["fas"]] * nU, has_q)
 value(OC + "/QDMTT/Amount", [whole(a) for a in u_qdmtt], has_q)
-value(OC + "/QDMTT/SBIEAvailable", [True] * nU, has_q)
-value(OC + "/QDMTT/DeMinAvailable", [True] * nU, has_q)
-value(OC + "/QDMTT/Currency", [filing["currency"]] * nU, has_q)
 has_415 = full & art415[gi_]
-presence(OC + "/AdditionalTopUpTax", has_415)
 presence(OC + "/AdditionalTopUpTax/Art4.1.5", has_415)
 for name, v in (("AdjustedCoveredTax", g_tax), ("GlobeLoss", g_income), ("ExpectedAdjustedCoveredTax", g_expected),
                 ("AdditionalTopUpTax", actt415)):
@@ -604,14 +739,15 @@ for name, v in (("AdjustedCoveredTax", g_tax), ("GlobeLoss", g_income), ("Expect
 # CEComputation: one row per Entity of each fully calculated unit
 CM = np.array([u["members"] * (not u["tcsh"]) for u in units], int)      # units x Entities
 R, Q = cells(CM)
+Q_CE = Q                                                                # rows of CEComputation x Entities
 CC = EC + "/CEComputation"
 relation(CC, R)
 ents = [int(e) for e in np.argmax(Q, axis=1)]
 inline_tin(CC + "/TIN", ents)
-for name, v in (("AdjustedFANIL/Total", fanil), ("AdjustedFANIL/FANIL", fanil), ("NetGlobeIncome/Total", globe_income),
-                ("AdjustedIncomeTax/Total", income_tax), ("AdjustedIncomeTax/IncomeTax", income_tax),
-                ("AdjustedCoveredTax/Total", act), ("AdjustedCoveredTax/DeferTaxAdjustAmt/Total", 0 * act),
-                ("AdjustedCoveredTax/DeferTaxAdjustAmt/DeferTaxExpense", 0 * act)):
+for name, v in (("AdjustedFANIL/Total", adj_fanil), ("AdjustedFANIL/FANIL", fanil), ("NetGlobeIncome/Total", globe_income),
+                ("AdjustedIncomeTax/Total", adj_income_tax), ("AdjustedIncomeTax/IncomeTax", income_tax),
+                ("AdjustedCoveredTax/Total", act), ("AdjustedCoveredTax/DeferTaxAdjustAmt/Total", defer_total),
+                ("AdjustedCoveredTax/DeferTaxAdjustAmt/DeferTaxExpense", defer_expense)):
     value(CC + "/" + name, [whole(v[e]) for e in ents])
 
 # ---- JurisdictionSection/LowTaxJurisdiction
@@ -642,9 +778,12 @@ value(PE_ + "/TopUpTaxShare", [whole(gross_iir[k, j] * tt_entt[j]) for k, j in z
 value(PE_ + "/IIROffSet", [whole((gross_iir[k, j] - net[k, j]) * tt_entt[j]) for k, j in zip(par, low)])
 value(PE_ + "/TopUpTax", [whole(net[k, j] * tt_entt[j]) for k, j in zip(par, low)])
 sec_utpr = np.array([utpr_tt[(EJx[:, int(c)] > 0)].sum() for c in np.flatnonzero(sec)])
-presence(LT + "/UTPR", sec_utpr > 0)
-presence(LT + "/UTPR/UTPRSafeHarbour", [0] * nJ)
-presence(LT + "/UTPR/UTPRCalculation", sec_utpr > 0)
+upe_sec = (S_J @ (EJx.T @ upe)) > 0                                     # section of the UPE jurisdiction
+sh_sec = upe_sec & utpr_sh & (sec_tt > 0)                               # Transitional UTPR Safe Harbour in place of the calculation
+presence(LT + "/UTPR", (sec_utpr > 0) | sh_sec)
+presence(LT + "/UTPR/UTPRSafeHarbour", sh_sec)
+value(LT + "/UTPR/UTPRSafeHarbour/CITRate", [cit_rate] * nJ, sh_sec)
+presence(LT + "/UTPR/UTPRCalculation", (sec_utpr > 0) & ~sh_sec)
 value(LT + "/UTPR/UTPRCalculation/TotalUTPRTopUpTax", [whole(a) for a in sec_utpr], sec_utpr > 0)
 value(LT + "/UTPR/UTPRCalculation/Article2.5.1TopUpTax", [whole(a) for a in sec_utpr], sec_utpr > 0)
 
@@ -670,23 +809,487 @@ value(AT + "UTPRTopUpTaxCarriedForward", [whole(pos(utpr_amount[k] - a)) for k, 
 value(UA + "/DocSpec/DocTypeIndic", ["OECD1"] * int(utpr_total > 0))
 value(UA + "/DocSpec/DocRefId", ["DOC-UTPRAttribution"] * int(utpr_total > 0))
 
-# ---- Everything not linked above is absent: no rows, presence 0, no value
+# ================================================================ Link: optional detail
+# A detail table is attached to the rows of an Output relation by cells(H x T^T): H relates the
+# rows of the parent relation to Entities, groups or sections, and T does the same for the table.
+sec_names = jurs + ["X5"]
+
+
+def attach(path, H, T, table):
+    """Relation with one row per (parent row, table row) that share an owner; returns R and the table rows."""
+    R, Qt = cells(np.asarray(H) @ np.asarray(T).T)
+    relation(path, R)
+    return R, Qt, pick(Qt, table)
+
+
+def by_unit(values):
+    """A group vector, one entry per unit; None for a unit that is not a Full Calculation Group."""
+    return [values[gi_[k]] if full[k] else None for k in range(nU)]
+
+
+def opt(v, f=lambda a: a):
+    return None if v is None else f(v)
+
+
+def nz(v):
+    """An amount that is reported only where it is not zero."""
+    return None if v is None or whole(v) == 0 else whole(v)
+
+
+def ext_tin(path, tins):
+    """TIN of something that is not an Entity of the Input Model: a dict(tin, issued, type) or None."""
+    k = len(tins)
+    value(path + "/#text", [t["tin"] if t else None for t in tins])
+    presence(path + "/@issuedBy", [bool(t and t.get("issued")) for t in tins])
+    value(path + "/@issuedBy", [iso[t["issued"]] if t and t.get("issued") else None for t in tins])
+    presence(path + "/@unknown", [0] * k)
+    value(path + "/@unknown", [None] * k)
+    presence(path + "/@TypeOfTIN", [bool(t and t.get("type")) for t in tins])
+    value(path + "/@TypeOfTIN", [t["type"] if t and t.get("type") else None for t in tins])
+
+
+def code_of(e):
+    """Jurisdiction code of an Entity; X5 for a Stateless Entity."""
+    return codes[int(EJx[e].argmax())]
+
+
+def five_year(path, triples):
+    """Status, election year and revocation year of a five-year election; None where not made."""
+    value(path + "/Status", [opt(t, lambda a: a[0]) for t in triples])
+    value(path + "/ElectionYear", [opt(t, lambda a: a[1]) for t in triples])
+    value(path + "/RevocationYear", [opt(t, lambda a: a[2]) for t in triples])
+
+
+def data_points(path, R, table):
+    relation(path, R)
+    for name in ("Description", "Amount", "Percentage", "Text", "Boolean"):
+        value(path + "/" + name, col(table, name.lower()))
+
+
+def signed_items(path, H, add, red, codes_):
+    """One row per item and sign: the additions and, as negative amounts, the reductions."""
+    A = np.hstack([H @ add, -(H @ red)])
+    R, Qi = cells(np.round(A) != 0)
+    relation(path, R)
+    value(path + "/Amount", [whole(a) for a in A[np.round(A) != 0]])
+    value(path + "/AdjustmentItem", pick(Qi, list(codes_) + list(codes_)))
+    return R
+
+
+def entity_items(path, add, red, codes_):
+    """One row per Entity and item, with the addition and the reduction as up to two amounts."""
+    a, r = Q_CE @ add, Q_CE @ red
+    mask = (np.round(a) != 0) | (np.round(r) != 0)
+    R, Qi = cells(mask)
+    relation(path, R)
+    value(path + "/AdjustmentItem", pick(Qi, codes_))
+    two = np.stack([np.round(a[mask]) != 0, np.round(r[mask]) != 0], axis=1).astype(int).reshape(-1, 2)
+    R2, _ = cells(two)
+    relation(path + "/Amount", R2)
+    value(path + "/Amount", [whole(v) for v in np.stack([a[mask], -r[mask]], axis=1).reshape(-1, 2)[two > 0]])
+    return mask
+
+
+def transfer_rows(path, table, T_from, T_to, optional):
+    """A transfer between two Entities, reported for each of them: an addition for one, a reduction for the other."""
+    R, Qt = cells(Q_CE @ (T_to + T_from).T)
+    relation(path, R)
+    t = [int(q.argmax()) for q in Qt]
+    e = [ents[int(j)] for j in R.argmax(axis=0)] if R.shape[1] else []
+    into = [bool(T_to[k, i]) for k, i in zip(t, e)]
+    other = [int((T_from if d else T_to)[k].argmax()) for k, d in zip(t, into)]
+    inline_tin(path + "/OtherTIN", other)
+    value(path + "/ResCountryCode", [code_of(o) for o in other])
+    amount = [whole(table[k]["amount"]) for k in t]
+    zero_ = None if optional else 0
+    value(path + "/Additions", [a if d else zero_ for a, d in zip(amount, into)])
+    value(path + "/Reductions", [zero_ if d else a for a, d in zip(amount, into)])
+    return Qt
+
+
+# ---- Header and corrections
+value("GLOBE_OECD/@version", [filing.get("version")])
+value(MS + "SendingEntityIN", [filing.get("sending_entity")])
+value(MS + "Warning", [filing.get("warning")])
+value(MS + "Contact", [filing.get("contact")])
+value(FI + "AdditionalInfo", [filing.get("additional_info")])
+value(FI + "DocSpec/CorrDocRefId", [corr_ref.get("FilingInfo")])
+value(BODY + "/GeneralSection/DocSpec/CorrDocRefId", [corr_ref.get("GeneralSection")])
+value(SM + "/DocSpec/CorrDocRefId", [corr_ref.get("Summary-%d" % (k + 1)) for k in range(nU)])
+value(JS + "/DocSpec/CorrDocRefId", pick(S_J, [corr_ref.get(j) for j in sec_names]))
+value(UA + "/DocSpec/CorrDocRefId", [corr_ref.get("UTPRAttribution")] * int(utpr_total > 0))
+
+# ---- Additional data points
+Hg = np.zeros((nU, MC), int)                                            # units x Full Calculation Groups
+Hg[np.flatnonzero(full), gi_[full]] = 1
+
+
+def group_of(table):
+    """Table rows x groups, for a table whose rows name an Entity of their group."""
+    return onehot(col(table, "group"), names) @ EG
+
+
+data_points(BODY + "/GeneralSection/AdditionalDataPoint", np.ones((1, len(dp_general)), int), dp_general)
+R, _, t = attach(SM + "/AdditionalDataPoint", Hg, group_of(dp_summary), dp_summary)
+data_points(SM + "/AdditionalDataPoint", R, t)
+R, _, t = attach(JS + "/AdditionalDataPoint", S_J, onehot([iso.get(j, j) for j in col(dp_section, "section")], codes), dp_section)
+data_points(JS + "/AdditionalDataPoint", R, t)
+data_points(UA + "/AdditionalDataPoint", np.ones((int(utpr_total > 0), len(dp_utpr) * int(utpr_total > 0)), int),
+            dp_utpr if utpr_total > 0 else [])
+
+# ---- Corporate structure: changes during the year
+PRE = ["GIR7%02d" % k for k in range(1, 22)]
+OC_ = CS + "CE/OwnershipChange"
+_, Qc, ch = attach(OC_, S_C, onehot(col(changes, "entity"), names), changes)
+value(OC_ + "/ChangeDate", col(ch, "date"))
+R, Qs = cells(np.array([[code in r["status"] for code in PRE] for r in ch], int).reshape(len(ch), len(PRE)))
+relation(OC_ + "/PreGlobeStatus", R)
+value(OC_ + "/PreGlobeStatus", pick(Qs, PRE))
+W_pre = np.array([[r["owners"].get(o, 0) for o in names + ["excluded", "non-group"]] for r in ch], float).reshape(len(ch), N + 2)
+R, Qo = cells(W_pre > 0)
+relation(OC_ + "/PreOwnership", R)
+value(OC_ + "/PreOwnership/OwnershipType", pick(Qo, owner_type))
+value(OC_ + "/PreOwnership/PreOwnershipPercentage", [ratio4(v) for v in W_pre[W_pre > 0]])
+tin_block(OC_ + "/PreOwnership/TIN", Qo, pick(Qo, tin + ["NOTIN", "NOTIN"]), pick(Qo, tin_issued + [None, None]),
+          pick(Qo, tin_type + ["GIR3004", "GIR3004"]), [j >= N for j in np.argmax(Qo, axis=1)] if Qo.shape[0] else [])
+value(CS + "UnreportChangeCorpStr", [unreported_change])
+
+# ---- Corporate structure: QUTPR
+q_any = (S_C @ (member & bool(utpr_jur.any()))) > 0                     # some jurisdiction applies a Qualified UTPR
+upe_charges = Qpay[upe].sum(axis=0) > 0                                 # a UPE applies a Qualified IIR to the Entity
+q_share = q_any & (not art_93) & ((S_C @ ~upe_charges) > 0)
+presence(CS + "CE/QUTPR", q_any)
+value(CS + "CE/QUTPR/Art9.3", [art_93] * nC, q_any)
+value(CS + "CE/QUTPR/AggOwnership", [ratio4(v) for v in S_C @ (charged.T @ one)], q_share)
+value(CS + "CE/QUTPR/UPEOwnership", [bool(v <= 1e-12) for v in S_C @ (residual.T @ one)], q_share)
+
+# ---- Jurisdictions with taxing rights: subgroups, differences under domestic law
+Unit = np.array([u["members"] for u in units], int).T                   # Entities x units
+payer = (Iir_payable | np.diag(self_payable)).astype(int)
+unit_rights = ((EJ.T @ ((payer @ Unit) > 0)) > 0) | ((np.diag(jv("qdmtt")) @ EJ.T @ Unit) > 0)   # jurisdictions x units
+R, Qu = cells((R_JW.T @ u_section) * (Q_JW @ unit_rights) * sub[None, :])
+SG = JS + "/JurWithTaxingRights/Subgroup"
+relation(SG, R)
+inline_tin(SG + "/TIN", pick(Qu, tops))
+R, Qk2 = cells(Qu @ K)
+relation(SG + "/TypeofSubGroup", R)
+value(SG + "/TypeofSubGroup", pick(Qk2, ["GIR11" + kc for kc in kind_codes]))
+
+D_sec, D_jur = onehot([iso.get(j, j) for j in col(diff, "section")], codes), onehot(col(diff, "jur"), jurs)
+Z = (R_JW.T @ S_J @ D_sec.T) * (Q_JW @ D_jur.T)                         # rows of JurWithTaxingRights x differences
+d = [diff[int(z.argmax())] if z.any() else {} for z in Z]
+RD = JS + "/JurWithTaxingRights/ReportDifference/"
+for name, key, f in (("ETRDifference", "etr", ratio4), ("AdjCoveredTaxDifference/AggCurrentTaxExpense", "agg_current_tax", whole),
+                     ("AdjCoveredTaxDifference/QRTCExpense", "qrtc_expense", whole),
+                     ("AdjCoveredTaxDifference/OtherTaxCredits", "other_credits", whole),
+                     ("AdjCoveredTaxDifference/DeferTaxExpense", "defer_expense", whole), ("NetGLoBEDifference", "net_globe", whole),
+                     ("SBIEDifference", "sbie", whole), ("AddCurrentTuTDifference", "add_tut", whole), ("TuTDifference", "tut", whole),
+                     ("ElectionsDifference", "elections", str), ("QRTCIncome", "qrtc_income", whole),
+                     ("ExcessNegTaxCarryForw", "ente", whole), ("TransitionDifference", "transition", bool)):
+    value(RD + name, [opt(r.get(key), f) for r in d])
+Z = (R_SW.T @ u_section.T @ S_J @ D_sec.T) * (Q_SW @ D_jur.T)           # the same for the rows of the Summary
+value(SM + "/JurWithTaxingRights/DiffDomesticTut",
+      [opt(diff[int(z.argmax())].get("tut") if z.any() else None, lambda a: band(a, "15")) for z in Z])
+value(JS + "/LocalCurrency", pick(S_J, [local_currency.get(j) for j in jurs] + [None]))
+
+# ---- Summary: effect of the SBIE
+g_sbie = EG.T @ sbie
+show = has_rights & full
+value(SM + "/SBIE/NotApplicable", [bool(v) for v in (g_sbie == 0)[gi_]], show)
+value(SM + "/SBIE/NoTut", [bool(v) for v in ((g_sbie > 0) & (tt_percent > 0) & (excess == 0))[gi_]], show)
+
+# ---- ETR: exceptions
+DM = EX + "/Deminimis-SimplifiedNMCECalc"
+dm_b = grp(dm_basis, None)
+value(DM + "/Basis", by_unit(dm_b))
+now = grp(dm_now, None)
+g_fanil = EG.T @ fanil
+fd = [dict(group=k, year=filing["period_end"], revenue=now[k][0], globe_revenue=now[k][1], income=g_income[k], fanil=g_fanil[k])
+      for k in range(MC) if dm_b[k] is not None]                        # the Reporting Fiscal Year comes from the return itself
+fd += [dict(r, group=int(EG[ix[r["group"]]].argmax())) for r in dm_prior]
+R, _, t = attach(DM + "/FinancialData", Hg, onehot(col(fd, "group"), range(MC)), fd)
+value(DM + "/FinancialData/Year", col(t, "year"))
+for name, key in (("Revenue", "revenue"), ("GlobeRevenue", "globe_revenue"), ("NetGlobeIncome", "income"), ("FANIL", "fanil")):
+    value(DM + "/FinancialData/" + name, [whole(v) for v in col(t, key)])
+    value(DM + "/Average/" + name, [whole(a / c_) if c_ else None for a, c_ in zip(R @ num(t, key), R.sum(axis=1))])
+sh_unit = ((u_section.T @ upe_sec) > 0) & utpr_sh
+value(EX + "/UTPRSafeHarbour/CITRate", [cit_rate] * nU, sh_unit)
+
+# ---- ETR: elections of a group
+EL = ETR + "/Election"
+flags = dict(grp_flag, **{(names[g_first[k]], "Art4.1.5"): True for k in np.flatnonzero(ente_elected)})
+for name in ("Art3.2.6", "Art4.1.5", "Art4.6.1", "Art5.3.1", "SimplifiedReporting"):
+    value(EL + "/" + name, by_unit(grp({nm: v for (nm, e), v in flags.items() if e == name}, None)))
+for name in FIVE_G:
+    five_year(EL + "/" + name, by_unit(grp({nm: v for (nm, e), v in grp_elect.items() if e == name}, None)))
+bal = by_unit(grp(art321c, None))
+for k, name in enumerate(("QualOwnerIntentBalance", "Additions", "Reductions")):
+    value(EL + "/Art3.2.1.c/" + name, [opt(b, lambda a: whole(a[k])) for b in bal])
+value(EL + "/Art3.2.1.c/OutstandingBalance", [opt(b, lambda a: whole(a[0] + a[1] - a[2])) for b in bal])
+
+# ---- CEComputation: accounting income to GloBE Income
+per_ce = lambda v: [v[e] for e in ents]
+AD = CC + "/AdjustedFANIL/Adjustment"
+Qt = transfer_rows(AD + "/MainEntityPEandFTE", transfers, tr_from, tr_to, optional=False)
+value(AD + "/MainEntityPEandFTE/Basis", pick(Qt, col(transfers, "basis")))
+_, _, t = attach(AD + "/CrossBorderAdjustments", Q_CE, cb_T, cross_border)
+value(AD + "/CrossBorderAdjustments/Basis", col(t, "basis"))
+inline_tin(AD + "/CrossBorderAdjustments/OtherTIN", [ix[r["other"]] for r in t])
+value(AD + "/CrossBorderAdjustments/ResCountryCode", [code_of(ix[r["other"]]) for r in t])
+value(AD + "/CrossBorderAdjustments/Additions", [opt(r.get("additions"), whole) for r in t])
+value(AD + "/CrossBorderAdjustments/Reductions", [opt(r.get("reductions"), whole) for r in t])
+_, Qa, t = attach(AD + "/UPEAdjustments", Q_CE, ua_T, upe_adj)
+value(AD + "/UPEAdjustments/Basis", col(t, "basis"))
+value(AD + "/UPEAdjustments/Reductions/Amount", [opt(r.get("amount"), whole) for r in t])
+value(AD + "/UPEAdjustments/Reductions/Exception", [True if r.get("exception") else None for r in t])
+OW = AD + "/UPEAdjustments/IdentificationOfOwners"
+_, _, o = attach(OW, Qa, onehot(col(upe_adj_owner, "adjustment"), range(len(upe_adj))), upe_adj_owner)
+value(OW + "/OwnershipPercentage", [ratio4(r["percentage"]) for r in o])
+value(OW + "/IndOwners/NumOfOwners", col(o, "individuals"))
+value(OW + "/IndOwners/ResCountryCode", [opt(r.get("jur"), iso.get) if r.get("individuals") else None for r in o])
+value(OW + "/IndOwners/TaxRate", [opt(r.get("rate"), ratio4) if r.get("individuals") else None for r in o])
+ext_tin(OW + "/EntityOwner/TIN", col(o, "owner"))
+value(OW + "/EntityOwner/ResCountryCode", [iso[r["jur"]] if r.get("owner") else None for r in o])
+value(OW + "/EntityOwner/TaxRate", [opt(r.get("rate"), ratio4) if r.get("owner") else None for r in o])
+value(OW + "/EntityOwner/ExTypeOfEntity", [r.get("excluded_type") if r.get("owner") else None for r in o])
+entity_items(CC + "/NetGlobeIncome/Adjustments", inc_add, inc_red, INC)
+
+# International shipping
+has_ship = ship_cat.any(axis=1)
+m_ship = per_ce(has_ship)
+SH = CC + "/NetGlobeIncome/IntShippingIncome"
+for name, v in (("InternationalShipIncome/Total", ship_income), ("InternationalShipIncome/Revenue", ship_rev),
+                ("InternationalShipIncome/Costs", ship_cost), ("QualifiedAncShipIncome/Total", anc_income),
+                ("QualifiedAncShipIncome/Revenue", anc_rev), ("QualifiedAncShipIncome/Costs", anc_cost),
+                ("SubstanceExclusion/PayrollCosts", ship_payroll), ("SubstanceExclusion/TangibleAssets", ship_tangible),
+                ("CoveredTaxes", ship_tax)):
+    value(SH + "/" + name, [whole(a) for a in per_ce(v)], m_ship)
+value(SH + "/QualifiedAncShipIncome/Category", per_ce([anc_cat.get(nm) for nm in names]), m_ship)
+R, Qs = cells(Q_CE @ ship_cat)
+relation(SH + "/InternationalShipIncome/Category", R)
+value(SH + "/InternationalShipIncome/Category", pick(Qs, SHIP))
+
+# ---- CEComputation: income tax expense to Adjusted Covered Taxes
+CA = CC + "/AdjustedIncomeTax/CrossAllocation"
+Qt = transfer_rows(CA, tax_transfers, tt_from, tt_to, optional=True)
+BAS = ["GIR23%02d" % k for k in range(1, 10)]
+R, Qb = cells(Qt @ np.array([[b in r["bases"] for b in BAS] for r in tax_transfers], int).reshape(len(tax_transfers), len(BAS)))
+relation(CA + "/Basis", R)
+value(CA + "/Basis", pick(Qb, BAS))
+entity_items(CC + "/AdjustedCoveredTax/Adjustments", tax_add, tax_red, TAX)
+DA = CC + "/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustment"
+mask = entity_items(DA, def_add, def_red, DEF)
+value(DA + "/Recast/Higher", [nz(v) for v in (Q_CE @ def_higher)[mask]])
+value(DA + "/Recast/Lower", [nz(v) for v in (Q_CE @ def_lower)[mask]])
+
+# ---- CEComputation: elections of an Entity
+CE_EL = CC + "/Elections"
+for name in FIVE_E:
+    five_year(CE_EL + "/" + name, per_ce([ent_elect.get((nm, name)) for nm in names]))
+for name in ("SimplCalculations", "Art3.2.1"):
+    value(CE_EL + "/" + name, per_ce([ent_flag.get((nm, name)) for nm in names]))
+_, _, t = attach(CE_EL + "/Art6.3.4", Q_CE, onehot(col(art634, "entity"), names), art634)
+value(CE_EL + "/Art6.3.4/FYTriggerEvent", col(t, "trigger"))
+value(CE_EL + "/Art6.3.4/Inclusion/Art6.3.4.c.i", [True if r["option"] == "i" else None for r in t])
+value(CE_EL + "/Art6.3.4/Inclusion/Art6.3.4.c.ii", [True if r["option"] == "ii" else None for r in t])
+TG = np.array([[nm in r["members"] for r in tax_groups] for nm in names], int).reshape(N, len(tax_groups))   # Entities x tax groups
+ext_tin(CE_EL + "/AggregatedReporting/TaxConsolGroupTIN", [tax_groups[int(r.argmax())] if r.any() else None for r in Q_CE @ TG])
+R, Qm = cells(Q_CE @ TG @ TG.T)
+relation(CE_EL + "/AggregatedReporting/EntityTIN", R)
+inline_tin(CE_EL + "/AggregatedReporting/EntityTIN", [int(e) for e in np.argmax(Qm, axis=1)])
+_, Q75, t = attach(CE_EL + "/Art7.5", Q_CE, onehot(col(art75, "entity"), names), art75)
+five_year(CE_EL + "/Art7.5", [(r["status"], r.get("year"), r.get("revoked")) for r in t])
+R, Qm = cells(Q75 @ np.array([[nm in r["owners"] for nm in names] for r in art75], int).reshape(len(art75), N))
+relation(CE_EL + "/Art7.5/CEOwnerTIN", R)
+inline_tin(CE_EL + "/Art7.5/CEOwnerTIN", [int(e) for e in np.argmax(Qm, axis=1)])
+_, _, t = attach(CE_EL + "/Art7.6", Q_CE, onehot(col(art76, "entity"), names), art76)
+five_year(CE_EL + "/Art7.6", [(r["status"], r["year"], r.get("revoked")) for r in t])
+value(CE_EL + "/Art7.6/ActualDeemedDist", [whole(r["distribution"]) for r in t])
+value(CE_EL + "/Art7.6/LocalCreditableTaxGross", [whole(r["credit"]) for r in t])
+value(CE_EL + "/Art7.6/ShareOfUndistNetGlobeInc", [ratio4(r["share"]) for r in t])
+inline_tin(CE_EL + "/Art7.6/InvestmentEntityTIN", [ix[r["investment_entity"]] for r in t])
+value(CC + "/OtherFAS", per_ce([other_fas.get(nm) for nm in names]))
+
+# ---- OverallComputation: GloBE Income
+signed_items(OC + "/NetGlobeIncome/Adjustments", Hg, EG.T @ inc_add, EG.T @ inc_red, INC)
+m = full & ((EG.T @ has_ship) > 0)[gi_]
+OS = OC + "/NetGlobeIncome/IntShippingIncome"
+for name, v in (("Total", g_ship + g_anc - ship_excess), ("TotalIntShipIncome", g_ship), ("FiftyPercentCap", ship_cap),
+                ("TotalQualifiedAncIncome", g_anc)):
+    value(OS + "/" + name, [whole(a) for a in v[gi_]], m)
+value(OS + "/ExcessOfCap", [nz(a) for a in ship_excess[gi_]], m)
+
+# ---- OverallComputation: Adjusted Covered Taxes
+ACT = OC + "/AdjustedCoveredTax"
+to_fin = [0] + list(range(2, 18))                                       # GIR24xx to GIR27xx: GIR2702 is for groups only
+fin_add, fin_red = np.zeros((MC, len(FIN))), np.zeros((MC, len(FIN)))
+fin_add[:, to_fin], fin_red[:, to_fin] = EG.T @ tax_add, EG.T @ tax_red
+fin_add[:, FIN.index("GIR2702")], fin_red[:, FIN.index("GIR2702")] = pos(act_adj), pos(-act_adj)
+fin_add[:, FIN.index("GIR2719")], fin_red[:, FIN.index("GIR2720")] = ente_generated, ente_used
+signed_items(ACT + "/Adjustments", Hg, fin_add, fin_red, FIN)
+
+PF = ACT + "/PostFilingAdjust"
+has_pf = np.zeros(nU, bool)
+totals = {}
+for name, table in (("DeferTaxAsset", post_dta), ("CoveredTaxRefund", post_refund)):
+    R, _, t = attach(PF + "/" + name + "/AmountAttributed", Hg, group_of(table), table)
+    value(PF + "/" + name + "/AmountAttributed/Year", col(t, "year"))
+    value(PF + "/" + name + "/AmountAttributed/Amount", [whole(a) for a in col(t, "amount")])
+    totals[name], has_pf = R @ num(t, "amount"), has_pf | (R.sum(axis=1) > 0)
+for name in totals:
+    value(PF + "/" + name + "/Total", [whole(a) for a in totals[name]], has_pf)
+
+DD = ACT + "/DeemedDistTax"
+R, _, t = attach(DD + "/Election/Recapture", Hg, group_of(ddt), ddt)
+value(DD + "/Election/Recapture/Year", col(t, "year"))
+for name, key in (("StartAmount", "start"), ("DDTYear-0", "d0"), ("DDTYear-1", "d1"), ("DDTYear-2", "d2"), ("DDTYear-3", "d3"),
+                  ("EndAmount", "end")):
+    value(DD + "/Election/Recapture/" + name, [whole(a) for a in col(t, key)])
+value(DD + "/Election/Recapture/TotalDDT", [whole(r["d0"] + r["d1"] + r["d2"] + r["d3"]) for r in t])
+has_el = R.sum(axis=1) > 0
+terms = by_unit(grp(ddt_terms, (0, 0, 0.0)))
+for k, (name, f) in enumerate((("Reduction", whole), ("IncrementalTopUpTax", whole), ("Ratio", ratio4))):
+    value(DD + "/Election/" + name, [opt(a, lambda b: f(b[k])) for a in terms], has_el)
+g_ddt = EG.T @ (tax_add - tax_red)[:, TAX.index("GIR2414")]
+value(DD + "/Total", [whole(a) for a in g_ddt[gi_]], has_el | (full & (np.round(g_ddt[gi_]) != 0)))
+
+DF = ACT + "/DeferTaxAdjustAmt"
+g_bef, g_adj = EG.T @ defer_expense, EG.T @ (def_add - def_red).sum(axis=1)
+g_hi, g_lo = EG.T @ def_higher.sum(axis=1), EG.T @ def_lower.sum(axis=1)
+g_diff, g_glo = np.array(grp(def_diff)), np.array(grp(def_globe))
+R_adj = signed_items(DF + "/Adjustments", Hg, EG.T @ def_add, EG.T @ def_red, DEF)
+rec = by_unit(grp(recapture, (0,) * 9))
+row_unit = [int(j) for j in R_adj.argmax(axis=0)] if R_adj.shape[1] else []
+for k, name in enumerate(("DTLRFYMinus5", "RecapDTLRFYMinus5", "DTLRFY", "AggregateDTL/ReportingFiscalYear/AmountPreTransition",
+                          "AggregateDTL/ReportingFiscalYear/AmountOutBalance", "AggregateDTL/ReportingFiscalYear/AmountUnjustified",
+                          "AggregateDTL/PriorFiscalYear/AmountPreTransition", "AggregateDTL/PriorFiscalYear/AmountOutBalance",
+                          "AggregateDTL/PriorFiscalYear/AmountUnjustified")):
+    value(DF + "/Adjustments/RecaptureDeferred/" + name, [whole(rec[u][k]) for u in row_unit])
+R_tr, _, t = attach(DF + "/Transition", Hg, group_of(transition), transition)
+value(DF + "/Transition/Year", col(t, "year"))
+for name, key in (("DeferredTaxLiabilityStart", "dtl_start"), ("DeferredTaxLiabilityRecast", "dtl_recast"),
+                  ("DeferredTaxAssets/Total", "dta_total"), ("DeferredTaxAssets/DeferredTaxAssetStart", "dta_start"),
+                  ("DeferredTaxAssets/DeferredTaxAssetRecast", "dta_recast"),
+                  ("DeferredTaxAssets/DeferredTaxAssetExcluded", "dta_excluded")):
+    value(DF + "/Transition/" + name, [opt(r.get(key), whole) for r in t])
+dis = [r.get("disposal") or {} for r in t]
+value(DF + "/Transition/Disposal/ResCountryCode", [opt(r.get("jur"), lambda j: iso.get(j, j)) for r in dis])
+for name, key in (("NetDTADTL", "net"), ("CarryingValue", "carrying"), ("TaxPaid", "tax_paid"), ("DTADTL", "dtadtl")):
+    value(DF + "/Transition/Disposal/" + name, [opt(r.get(key), whole) for r in dis])
+value(DF + "/Transition/AltJurisdiction", [opt(r.get("alt"), iso.get) for r in t])
+used = (EG.T @ (np.abs(defer_expense) + np.abs(def_add) .sum(axis=1) + np.abs(def_red).sum(axis=1))) + np.abs(g_diff) + np.abs(g_glo)
+has_def = full & ((used[gi_] > 0) | (R_tr.sum(axis=1) > 0))
+for name, v in (("Total", g_bef + g_adj + g_hi + g_lo), ("DefTaxAmt", g_bef + g_diff - g_glo), ("DiffCarryValue", g_diff),
+                ("GLoBEValue", g_glo), ("BefRecastAdjust", g_bef), ("TotalAdjust", g_adj), ("PreRecast", g_bef + g_adj)):
+    value(DF + "/" + name, [whole(a) for a in v[gi_]], has_def)
+value(DF + "/Recast/Higher", [nz(a) for a in g_hi[gi_]], has_def)
+value(DF + "/Recast/Lower", [nz(a) for a in g_lo[gi_]], has_def)
+
+CF = ACT + "/TransBlendCFC"
+R, _, t = attach(CF + "/CFCJur", Hg, group_of(cfc), cfc)
+value(CF + "/CFCJur/Jurisdiction", [iso[r["jur"]] for r in t])
+inline_tin(CF + "/CFCJur/Allocation/SubGroupTIN", [opt(r.get("top"), ix.get) for r in t])
+value(CF + "/CFCJur/Allocation/AggAllocTax", [whole(r["amount"]) for r in t])
+value(CF + "/Total", [whole(a) for a in R @ num(t, "amount")], R.sum(axis=1) > 0)
+
+# ---- OverallComputation: Substance-based Income Exclusion
+SE = OC + "/SubstanceExclusion"
+has_se = full & ((EG.T @ (payroll + tangible))[gi_] > 0)
+for name, table in (("PEAllocation", sbie_pe), ("FTEAllocation", sbie_fte)):
+    R, _, t = attach(SE + "/" + name, Hg, group_of(table), table)
+    own = col(t, "owner")
+    value(SE + "/" + name + "/JurOfOwners/ResCountryCode", [iso.get(o, o) if o not in (None, "UPE") else None for o in own])
+    value(SE + "/" + name + "/JurOfOwners/UPE", [True if o == "UPE" else None for o in own])
+    value(SE + "/" + name + "/JurOfOwners/NotApplicable", [True if o is None else None for o in own])
+    for leaf, key in (("PayrollCost/Total", "payroll_total"), ("PayrollCost/Allocation", "payroll_alloc"),
+                      ("TangibleAssetValue/Total", "tangible_total"), ("TangibleAssetValue/Allocation", "tangible_alloc")):
+        value(SE + "/" + name + "/" + leaf, [whole(a) for a in col(t, key)])
+    has_se = has_se | (R.sum(axis=1) > 0)
+for name, v in (("Total", g_sbie), ("PayrollCost", EG.T @ payroll), ("TangibleAssetValue", EG.T @ tangible)):
+    value(SE + "/" + name, [whole(a) for a in v[gi_]], has_se)
+value(SE + "/PayrollMarkUp", [rho_p] * nU, has_se)
+value(SE + "/TangibleAssetMarkup", [rho_t] * nU, has_se)
+
+# ---- OverallComputation: Additional Current Top-up Tax of prior Fiscal Years, QDMTT
+NA = OC + "/AdditionalTopUpTax/NONArt4.1.5"
+R, Qr, t = attach(NA, Hg, group_of(recalc), recalc)
+ART = ["GIR26%02d" % k for k in range(1, 7)]
+Ra, Qa = cells(np.array([[a in r["articles"] for a in ART] for r in t], int).reshape(len(t), len(ART)))
+relation(NA + "/Articles", Ra)
+value(NA + "/Articles", pick(Qa, ART))
+value(NA + "/Year", col(t, "year"))
+for part, key in (("Previous", "previous"), ("Recalculated", "recalculated")):
+    for k, (name, f) in enumerate((("NetGlobeIncome", whole), ("AdjustedCoveredTax", whole), ("ETRRate", ratio4),
+                                   ("ExcessProfits", whole), ("TopUpTaxPercentage", ratio4), ("TopUpTax", whole))):
+        value(NA + "/" + part + "/" + name, [f(r[key][k]) for r in t])
+value(NA + "/AdditionalTopUpTax", [whole(r["recalculated"][5] - r["previous"][5]) for r in t])
+QD = OC + "/QDMTT"
+qd = [qdmtt_terms.get(j, {}) for j in pick(u_section.T @ S_J, jurs + [None])]
+value(QD + "/FAS", col(qd, "fas"), has_q)
+value(QD + "/SBIEAvailable", col(qd, "sbie"), has_q)
+value(QD + "/DeMinAvailable", col(qd, "demin"), has_q)
+value(QD + "/Currency", col(qd, "currency"), has_q)
+value(QD + "/MinRate", [opt(r.get("min_rate"), ratio4) for r in qd], has_q)
+value(QD + "/BasisforBlending", col(qd, "blending"), has_q)
+five_year(QD + "/CurrencyElection", [r.get("election") if q_ else None for r, q_ in zip(qd, has_q)])
+value(QD + "/CurrencyElection/Currency", [r["election"][3] if q_ and r.get("election") else None for r, q_ in zip(qd, has_q)])
+
+# ---- Non-material Constituent Entities
+NM = EC + "/Non-MaterialCE"
+R, Qn = cells(CM @ np.diag(nmce.astype(int)))
+relation(NM, R)
+rev3 = [nm_rev.get(names[int(e)], (0, None, None)) for e in np.argmax(Qn, axis=1)] if Qn.shape[0] else []
+value(NM + "/RFY/TotalRevenue", [whole(r[0]) for r in rev3])
+value(NM + "/RFY/AggregateSimplified", [opt(nm_simplified.get(names[int(e)]), whole) for e in np.argmax(Qn, axis=1)] if Qn.shape[0] else [])
+value(NM + "/RFY-1/TotalRevenue", [opt(r[1], whole) for r in rev3])
+value(NM + "/RFY-2/TotalRevenue", [opt(r[2], whole) for r in rev3])
+value(NM + "/Average/TotalRevenue", [whole(sum(a for a in r if a is not None) / sum(a is not None for a in r)) for r in rev3])
+id_block(NM + "/ID", Qn)
+
+# ---- Initial phase of international activity (Article 9.3), reported in every section
+IA = JS + "/GLoBETax/InitialIntActivity"
+in_93 = np.full(nJ, bool(art_93))
+first_year = initial["start"] == filing["period_start"]
+others = [j for j in initial["tangible"] if j != initial["ref"]]
+tan_now = EJx.T @ ((ce & ~ie) * tan)                                    # tangible assets by jurisdiction; X5 last
+value(IA + "/StartDate", [initial["start"]] * nJ, in_93)
+value(IA + "/ReferenceJurisdiction/ResCountryCode", [iso[initial["ref"]]] * nJ, in_93)
+value(IA + "/ReferenceJurisdiction/TangibleAssetValue", [whole(initial["tangible"][initial["ref"]])] * nJ, in_93)
+R = np.kron(np.diag(in_93.astype(int))[:, np.flatnonzero(in_93)], np.ones((1, len(others)), int))
+relation(IA + "/OtherJurisdiction", R)
+value(IA + "/OtherJurisdiction/TangibleAssetValue", [whole(initial["tangible"][j]) for j in others] * int(in_93.sum()))
+relation(IA + "/OtherJurisdiction/ResCountryCode", np.eye(R.shape[1], dtype=int))
+value(IA + "/OtherJurisdiction/ResCountryCode", [iso[j] for j in others] * int(in_93.sum()))
+report_now = in_93 & (not first_year)
+value(IA + "/RFYNumberOfJurisdictions", [int(((EJ.T @ (ce & ~ie)) > 0).sum())] * nJ, report_now)
+value(IA + "/RFYSumTangibleAssetValue", [whole(tan_now.sum() - tan_now[jurs.index(initial["ref"])])] * nJ, report_now)
+
+# ---- Presence: an optional node is present where it has content, and absent elsewhere
 for r in g.relations:                                                   # parents come before children
     if r["relation_id"] not in P and r["parent_relation_id"]:
         P[r["relation_id"]] = np.zeros((n[r["parent_relation_id"]], 0), int)
         n[r["relation_id"]] = 0
 for v in g.vectors:
-    k = n[v["relation_id"]]
-    if v["kind"] == "presence":
-        pi.setdefault(v["vector_id"], np.zeros(k, int))
-    else:
-        x.setdefault(v["vector_id"], [None] * k)
-
-# Set to absent above without being linked.
-for path in [CS + "CE/QUTPR/Art9.3", CS + "CE/QUTPR/AggOwnership", CS + "CE/QUTPR/UPEOwnership",
-             CS + "UPE/ExcludedUPE/Art10.3.5", CS + "UPE/OtherUPE/Art10.3.5", CS + "UnreportChangeCorpStr",
-             SM + "/JurWithTaxingRights/DiffDomesticTut"]:
-    linked.discard(vec_id[(path, "value")])
+    if v["kind"] == "value":
+        x.setdefault(v["vector_id"], [None] * n[v["relation_id"]])
+unlinked = [v["path"] for v in g.vectors if v["kind"] == "value" and v["vector_id"] not in linked]
+node_of = {nd["node_id"]: nd for nd in g.nodes}
+content = {}                                                            # node -> rows of its relation in which it has content
+for nd in reversed(g.nodes):                                            # children come after their parents
+    here = content.setdefault(nd["node_id"], np.zeros(n[nd["relation_id"]], bool))
+    if nd["child_relation_id"]:                                         # a repeated element: present where it has rows
+        here |= P[nd["child_relation_id"]].sum(axis=1) > 0
+    elif nd["vector_id"]:
+        here |= np.array([a is not None for a in x[nd["vector_id"]]], bool)
+    parent = node_of.get(nd["parent_node_id"])
+    if parent is not None and not parent["child_relation_id"]:
+        content.setdefault(parent["node_id"], np.zeros(n[parent["relation_id"]], bool))
+        content[parent["node_id"]] |= here
+presence_of = {v["path"]: v["vector_id"] for v in g.vectors if v["kind"] == "presence"}
+for nd in g.nodes:
+    vid = presence_of.get(nd["path"])
+    if vid and vid not in pi:
+        pi[vid] = content[nd["node_id"]].astype(int)
 
 # ================================================================ Output equations
 enum = {}

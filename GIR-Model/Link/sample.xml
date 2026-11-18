@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2" xmlns:stf="urn:oecd:ties:globestf:v5">
+<globe:GLOBE_OECD xmlns:globe="urn:oecd:ties:globe:v2" xmlns:stf="urn:oecd:ties:globestf:v5" version="1.0">
   <globe:MessageSpec>
+    <globe:SendingEntityIN>TIN-UPE</globe:SendingEntityIN>
     <globe:TransmittingCountry>US</globe:TransmittingCountry>
     <globe:ReceivingCountry>US</globe:ReceivingCountry>
     <globe:MessageType>GIR</globe:MessageType>
+    <globe:Warning>Example data</globe:Warning>
+    <globe:Contact>tax@example.com</globe:Contact>
     <globe:MessageRefId>US2025-GIR-0001</globe:MessageRefId>
     <globe:MessageTypeIndic>GIR101</globe:MessageTypeIndic>
     <globe:ReportingPeriod>2025-12-31</globe:ReportingPeriod>
@@ -27,6 +30,7 @@
         <globe:End>2025-12-31</globe:End>
       </globe:Period>
       <globe:NameMNE>Example Group</globe:NameMNE>
+      <globe:AdditionalInfo>Return of the example group of the Calculation Model</globe:AdditionalInfo>
       <globe:DocSpec>
         <stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
         <stf:DocRefId>DOC-FilingInfo</stf:DocRefId>
@@ -59,6 +63,11 @@
             <globe:TIN issuedBy="US" TypeOfTIN="GIR3001">TIN-UPE</globe:TIN>
             <globe:OwnershipPercentage>1.0</globe:OwnershipPercentage>
           </globe:Ownership>
+          <globe:QUTPR>
+            <globe:Art9.3>false</globe:Art9.3>
+            <globe:AggOwnership>0.0</globe:AggOwnership>
+            <globe:UPEOwnership>false</globe:UPEOwnership>
+          </globe:QUTPR>
         </globe:CE>
         <globe:CE>
           <globe:ID>
@@ -78,6 +87,11 @@
           <globe:QIIR>
             <globe:POPE-IPE>GIR902</globe:POPE-IPE>
           </globe:QIIR>
+          <globe:QUTPR>
+            <globe:Art9.3>false</globe:Art9.3>
+            <globe:AggOwnership>0.0</globe:AggOwnership>
+            <globe:UPEOwnership>false</globe:UPEOwnership>
+          </globe:QUTPR>
         </globe:CE>
         <globe:CE>
           <globe:ID>
@@ -88,6 +102,15 @@
             <globe:GlobeStatus>GIR301</globe:GlobeStatus>
             <globe:GlobeStatus>GIR306</globe:GlobeStatus>
           </globe:ID>
+          <globe:OwnershipChange>
+            <globe:ChangeDate>2025-07-01</globe:ChangeDate>
+            <globe:PreGlobeStatus>GIR701</globe:PreGlobeStatus>
+            <globe:PreOwnership>
+              <globe:OwnershipType>GIR802</globe:OwnershipType>
+              <globe:TIN issuedBy="BV" TypeOfTIN="GIR3001">TIN-B</globe:TIN>
+              <globe:PreOwnershipPercentage>1.0</globe:PreOwnershipPercentage>
+            </globe:PreOwnership>
+          </globe:OwnershipChange>
           <globe:Ownership>
             <globe:OwnershipType>GIR802</globe:OwnershipType>
             <globe:TIN issuedBy="BV" TypeOfTIN="GIR3001">TIN-B</globe:TIN>
@@ -102,6 +125,11 @@
               <globe:TIN issuedBy="BV" TypeOfTIN="GIR3001">TIN-B</globe:TIN>
             </globe:Exception>
           </globe:QIIR>
+          <globe:QUTPR>
+            <globe:Art9.3>false</globe:Art9.3>
+            <globe:AggOwnership>1.0</globe:AggOwnership>
+            <globe:UPEOwnership>true</globe:UPEOwnership>
+          </globe:QUTPR>
         </globe:CE>
         <globe:CE>
           <globe:ID>
@@ -119,6 +147,11 @@
             <globe:TIN issuedBy="HM" TypeOfTIN="GIR3001">TIN-C</globe:TIN>
             <globe:OwnershipPercentage>1.0</globe:OwnershipPercentage>
           </globe:Ownership>
+          <globe:QUTPR>
+            <globe:Art9.3>false</globe:Art9.3>
+            <globe:AggOwnership>1.0</globe:AggOwnership>
+            <globe:UPEOwnership>true</globe:UPEOwnership>
+          </globe:QUTPR>
         </globe:CE>
         <globe:CE>
           <globe:ID>
@@ -139,6 +172,11 @@
             <globe:TIN issuedBy="HM" TypeOfTIN="GIR3001">TIN-C</globe:TIN>
             <globe:OwnershipPercentage>0.6</globe:OwnershipPercentage>
           </globe:Ownership>
+          <globe:QUTPR>
+            <globe:Art9.3>false</globe:Art9.3>
+            <globe:AggOwnership>1.0</globe:AggOwnership>
+            <globe:UPEOwnership>true</globe:UPEOwnership>
+          </globe:QUTPR>
         </globe:CE>
         <globe:CE>
           <globe:ID>
@@ -153,6 +191,11 @@
             <globe:TIN issuedBy="BV" TypeOfTIN="GIR3001">TIN-B</globe:TIN>
             <globe:OwnershipPercentage>1.0</globe:OwnershipPercentage>
           </globe:Ownership>
+          <globe:QUTPR>
+            <globe:Art9.3>false</globe:Art9.3>
+            <globe:AggOwnership>1.0</globe:AggOwnership>
+            <globe:UPEOwnership>true</globe:UPEOwnership>
+          </globe:QUTPR>
         </globe:CE>
         <globe:CE>
           <globe:ID>
@@ -172,6 +215,11 @@
             <globe:TIN unknown="true" TypeOfTIN="GIR3004">NOTIN</globe:TIN>
             <globe:OwnershipPercentage>0.5</globe:OwnershipPercentage>
           </globe:Ownership>
+          <globe:QUTPR>
+            <globe:Art9.3>false</globe:Art9.3>
+            <globe:AggOwnership>0.5</globe:AggOwnership>
+            <globe:UPEOwnership>true</globe:UPEOwnership>
+          </globe:QUTPR>
         </globe:CE>
         <globe:CE>
           <globe:ID>
@@ -186,6 +234,11 @@
             <globe:TIN issuedBy="GS" TypeOfTIN="GIR3001">TIN-JV</globe:TIN>
             <globe:OwnershipPercentage>1.0</globe:OwnershipPercentage>
           </globe:Ownership>
+          <globe:QUTPR>
+            <globe:Art9.3>false</globe:Art9.3>
+            <globe:AggOwnership>0.5</globe:AggOwnership>
+            <globe:UPEOwnership>true</globe:UPEOwnership>
+          </globe:QUTPR>
         </globe:CE>
         <globe:CE>
           <globe:ID>
@@ -206,6 +259,11 @@
             <globe:TIN unknown="true" TypeOfTIN="GIR3004">NOTIN</globe:TIN>
             <globe:OwnershipPercentage>0.7</globe:OwnershipPercentage>
           </globe:Ownership>
+          <globe:QUTPR>
+            <globe:Art9.3>false</globe:Art9.3>
+            <globe:AggOwnership>0.15</globe:AggOwnership>
+            <globe:UPEOwnership>true</globe:UPEOwnership>
+          </globe:QUTPR>
         </globe:CE>
         <globe:CE>
           <globe:ID>
@@ -226,6 +284,11 @@
             <globe:TIN unknown="true" TypeOfTIN="GIR3004">NOTIN</globe:TIN>
             <globe:OwnershipPercentage>0.7</globe:OwnershipPercentage>
           </globe:Ownership>
+          <globe:QUTPR>
+            <globe:Art9.3>false</globe:Art9.3>
+            <globe:AggOwnership>0.0</globe:AggOwnership>
+            <globe:UPEOwnership>false</globe:UPEOwnership>
+          </globe:QUTPR>
         </globe:CE>
         <globe:CE>
           <globe:ID>
@@ -249,6 +312,11 @@
           <globe:QIIR>
             <globe:POPE-IPE>GIR901</globe:POPE-IPE>
           </globe:QIIR>
+          <globe:QUTPR>
+            <globe:Art9.3>false</globe:Art9.3>
+            <globe:AggOwnership>0.0</globe:AggOwnership>
+            <globe:UPEOwnership>false</globe:UPEOwnership>
+          </globe:QUTPR>
         </globe:CE>
         <globe:CE>
           <globe:ID>
@@ -273,6 +341,11 @@
               <globe:TIN issuedBy="HM" TypeOfTIN="GIR3001">TIN-P2</globe:TIN>
             </globe:Exception>
           </globe:QIIR>
+          <globe:QUTPR>
+            <globe:Art9.3>false</globe:Art9.3>
+            <globe:AggOwnership>0.0</globe:AggOwnership>
+            <globe:UPEOwnership>false</globe:UPEOwnership>
+          </globe:QUTPR>
         </globe:CE>
         <globe:CE>
           <globe:ID>
@@ -289,6 +362,11 @@
             <globe:TIN issuedBy="HM" TypeOfTIN="GIR3001">TIN-P3</globe:TIN>
             <globe:OwnershipPercentage>1.0</globe:OwnershipPercentage>
           </globe:Ownership>
+          <globe:QUTPR>
+            <globe:Art9.3>false</globe:Art9.3>
+            <globe:AggOwnership>1.0</globe:AggOwnership>
+            <globe:UPEOwnership>true</globe:UPEOwnership>
+          </globe:QUTPR>
         </globe:CE>
         <globe:CE>
           <globe:ID>
@@ -298,6 +376,7 @@
             <globe:Rules>GIR204</globe:Rules>
             <globe:GlobeStatus>GIR301</globe:GlobeStatus>
             <globe:GlobeStatus>GIR309</globe:GlobeStatus>
+            <globe:GlobeStatus>GIR315</globe:GlobeStatus>
           </globe:ID>
           <globe:Ownership>
             <globe:OwnershipType>GIR801</globe:OwnershipType>
@@ -309,6 +388,11 @@
             <globe:TIN unknown="true" TypeOfTIN="GIR3004">NOTIN</globe:TIN>
             <globe:OwnershipPercentage>0.75</globe:OwnershipPercentage>
           </globe:Ownership>
+          <globe:QUTPR>
+            <globe:Art9.3>false</globe:Art9.3>
+            <globe:AggOwnership>0.0</globe:AggOwnership>
+            <globe:UPEOwnership>true</globe:UPEOwnership>
+          </globe:QUTPR>
         </globe:CE>
         <globe:CE>
           <globe:ID>
@@ -330,13 +414,29 @@
             <globe:TIN unknown="true" TypeOfTIN="GIR3004">NOTIN</globe:TIN>
             <globe:OwnershipPercentage>0.8</globe:OwnershipPercentage>
           </globe:Ownership>
+          <globe:QUTPR>
+            <globe:Art9.3>false</globe:Art9.3>
+            <globe:AggOwnership>0.0</globe:AggOwnership>
+            <globe:UPEOwnership>false</globe:UPEOwnership>
+          </globe:QUTPR>
         </globe:CE>
         <globe:ExcludedEntity>
           <globe:Name>EE</globe:Name>
           <globe:Type>GIR1004</globe:Type>
           <globe:Change>false</globe:Change>
         </globe:ExcludedEntity>
+        <globe:UnreportChangeCorpStr>false</globe:UnreportChangeCorpStr>
       </globe:CorporateStructure>
+      <globe:AdditionalDataPoint>
+        <globe:Description>Employees of the group</globe:Description>
+        <globe:Amount>1200</globe:Amount>
+      </globe:AdditionalDataPoint>
+      <globe:AdditionalDataPoint>
+        <globe:Description>Share of income from royalties</globe:Description>
+        <globe:Percentage>0.25</globe:Percentage>
+        <globe:Text>Estimate</globe:Text>
+        <globe:Boolean>true</globe:Boolean>
+      </globe:AdditionalDataPoint>
       <globe:DocSpec>
         <stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
         <stf:DocRefId>DOC-GeneralSection</stf:DocRefId>
@@ -361,8 +461,18 @@
         <globe:JurisdictionName>AQ</globe:JurisdictionName>
       </globe:JurWithTaxingRights>
       <globe:ETRRange>GIR1303</globe:ETRRange>
+      <globe:SBIE>
+        <globe:NotApplicable>false</globe:NotApplicable>
+        <globe:NoTut>false</globe:NoTut>
+      </globe:SBIE>
       <globe:QDMTTut>GIR1401</globe:QDMTTut>
       <globe:GLoBETut>GIR1502</globe:GLoBETut>
+      <globe:AdditionalDataPoint>
+        <globe:Description>Number of sites</globe:Description>
+        <globe:Amount>3</globe:Amount>
+        <globe:Text>At the end of the year</globe:Text>
+        <globe:Boolean>false</globe:Boolean>
+      </globe:AdditionalDataPoint>
       <globe:DocSpec>
         <stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
         <stf:DocRefId>DOC-Summary-2</stf:DocRefId>
@@ -380,6 +490,10 @@
         <globe:JurisdictionName>BV</globe:JurisdictionName>
       </globe:JurWithTaxingRights>
       <globe:ETRRange>GIR1305</globe:ETRRange>
+      <globe:SBIE>
+        <globe:NotApplicable>true</globe:NotApplicable>
+        <globe:NoTut>false</globe:NoTut>
+      </globe:SBIE>
       <globe:QDMTTut>GIR1402</globe:QDMTTut>
       <globe:GLoBETut>GIR1501</globe:GLoBETut>
       <globe:DocSpec>
@@ -397,10 +511,15 @@
       </globe:JurWithTaxingRights>
       <globe:JurWithTaxingRights>
         <globe:JurisdictionName>BV</globe:JurisdictionName>
+        <globe:DiffDomesticTut>GIR1502</globe:DiffDomesticTut>
       </globe:JurWithTaxingRights>
-      <globe:ETRRange>GIR1309</globe:ETRRange>
+      <globe:ETRRange>GIR1308</globe:ETRRange>
+      <globe:SBIE>
+        <globe:NotApplicable>true</globe:NotApplicable>
+        <globe:NoTut>false</globe:NoTut>
+      </globe:SBIE>
       <globe:QDMTTut>GIR1401</globe:QDMTTut>
-      <globe:GLoBETut>GIR1501</globe:GLoBETut>
+      <globe:GLoBETut>GIR1502</globe:GLoBETut>
       <globe:DocSpec>
         <stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
         <stf:DocRefId>DOC-Summary-4</stf:DocRefId>
@@ -425,6 +544,10 @@
         <globe:JurisdictionName>HM</globe:JurisdictionName>
       </globe:JurWithTaxingRights>
       <globe:ETRRange>GIR1301</globe:ETRRange>
+      <globe:SBIE>
+        <globe:NotApplicable>true</globe:NotApplicable>
+        <globe:NoTut>false</globe:NoTut>
+      </globe:SBIE>
       <globe:QDMTTut>GIR1401</globe:QDMTTut>
       <globe:GLoBETut>GIR1502</globe:GLoBETut>
       <globe:DocSpec>
@@ -448,6 +571,10 @@
         <globe:JurisdictionName>BV</globe:JurisdictionName>
       </globe:JurWithTaxingRights>
       <globe:ETRRange>GIR1301</globe:ETRRange>
+      <globe:SBIE>
+        <globe:NotApplicable>true</globe:NotApplicable>
+        <globe:NoTut>false</globe:NoTut>
+      </globe:SBIE>
       <globe:QDMTTut>GIR1401</globe:QDMTTut>
       <globe:GLoBETut>GIR1502</globe:GLoBETut>
       <globe:DocSpec>
@@ -474,6 +601,10 @@
         <globe:JurisdictionName>HM</globe:JurisdictionName>
       </globe:JurWithTaxingRights>
       <globe:ETRRange>GIR1303</globe:ETRRange>
+      <globe:SBIE>
+        <globe:NotApplicable>true</globe:NotApplicable>
+        <globe:NoTut>false</globe:NoTut>
+      </globe:SBIE>
       <globe:QDMTTut>GIR1401</globe:QDMTTut>
       <globe:GLoBETut>GIR1502</globe:GLoBETut>
       <globe:DocSpec>
@@ -500,6 +631,10 @@
         <globe:JurisdictionName>HM</globe:JurisdictionName>
       </globe:JurWithTaxingRights>
       <globe:ETRRange>GIR1306</globe:ETRRange>
+      <globe:SBIE>
+        <globe:NotApplicable>true</globe:NotApplicable>
+        <globe:NoTut>false</globe:NoTut>
+      </globe:SBIE>
       <globe:QDMTTut>GIR1401</globe:QDMTTut>
       <globe:GLoBETut>GIR1501</globe:GLoBETut>
       <globe:DocSpec>
@@ -520,6 +655,10 @@
         <globe:JurisdictionName>AQ</globe:JurisdictionName>
       </globe:JurWithTaxingRights>
       <globe:ETRRange>GIR1303</globe:ETRRange>
+      <globe:SBIE>
+        <globe:NotApplicable>true</globe:NotApplicable>
+        <globe:NoTut>false</globe:NoTut>
+      </globe:SBIE>
       <globe:QDMTTut>GIR1401</globe:QDMTTut>
       <globe:GLoBETut>GIR1502</globe:GLoBETut>
       <globe:DocSpec>
@@ -541,8 +680,13 @@
       </globe:JurWithTaxingRights>
       <globe:JurWithTaxingRights>
         <globe:JurisdictionName>BV</globe:JurisdictionName>
+        <globe:DiffDomesticTut>GIR1502</globe:DiffDomesticTut>
       </globe:JurWithTaxingRights>
       <globe:ETRRange>GIR1303</globe:ETRRange>
+      <globe:SBIE>
+        <globe:NotApplicable>true</globe:NotApplicable>
+        <globe:NoTut>false</globe:NoTut>
+      </globe:SBIE>
       <globe:QDMTTut>GIR1401</globe:QDMTTut>
       <globe:GLoBETut>GIR1502</globe:GLoBETut>
       <globe:DocSpec>
@@ -570,6 +714,10 @@
         <globe:JurisdictionName>HM</globe:JurisdictionName>
       </globe:JurWithTaxingRights>
       <globe:ETRRange>GIR1301</globe:ETRRange>
+      <globe:SBIE>
+        <globe:NotApplicable>true</globe:NotApplicable>
+        <globe:NoTut>false</globe:NoTut>
+      </globe:SBIE>
       <globe:QDMTTut>GIR1401</globe:QDMTTut>
       <globe:GLoBETut>GIR1502</globe:GLoBETut>
       <globe:DocSpec>
@@ -590,6 +738,10 @@
         <globe:JurisdictionName>TF</globe:JurisdictionName>
       </globe:JurWithTaxingRights>
       <globe:ETRRange>GIR1303</globe:ETRRange>
+      <globe:SBIE>
+        <globe:NotApplicable>true</globe:NotApplicable>
+        <globe:NoTut>false</globe:NoTut>
+      </globe:SBIE>
       <globe:QDMTTut>GIR1402</globe:QDMTTut>
       <globe:GLoBETut>GIR1501</globe:GLoBETut>
       <globe:DocSpec>
@@ -609,8 +761,13 @@
           <globe:ETRStatus>
             <globe:ETRException>
               <globe:TransitionalCbCRSafeHarbour>
+                <globe:Revenue>5000</globe:Revenue>
                 <globe:Profit>1000</globe:Profit>
+                <globe:IncomeTax>250</globe:IncomeTax>
               </globe:TransitionalCbCRSafeHarbour>
+              <globe:UTPRSafeHarbour>
+                <globe:CITRate>0.21</globe:CITRate>
+              </globe:UTPRSafeHarbour>
             </globe:ETRException>
           </globe:ETRStatus>
         </globe:ETR>
@@ -625,7 +782,12 @@
       <globe:Jurisdiction>TF</globe:Jurisdiction>
       <globe:JurWithTaxingRights>
         <globe:JurisdictionName>TF</globe:JurisdictionName>
+        <globe:Subgroup>
+          <globe:TIN issuedBy="TF" TypeOfTIN="GIR3001">TIN-S</globe:TIN>
+          <globe:TypeofSubGroup>GIR1103</globe:TypeofSubGroup>
+        </globe:Subgroup>
       </globe:JurWithTaxingRights>
+      <globe:LocalCurrency>CHF</globe:LocalCurrency>
       <globe:GLoBETax>
         <globe:ETR>
           <globe:SubGroup>
@@ -654,6 +816,9 @@
                   </globe:DeferTaxAdjustAmt>
                 </globe:AdjustedCoveredTax>
                 <globe:TIN issuedBy="TF" TypeOfTIN="GIR3001">TIN-S</globe:TIN>
+                <globe:Elections>
+                  <globe:SimplCalculations>true</globe:SimplCalculations>
+                </globe:Elections>
               </globe:CEComputation>
               <globe:OverallComputation>
                 <globe:FANIL>200</globe:FANIL>
@@ -672,6 +837,8 @@
                 <globe:QDMTT>
                   <globe:FAS>US GAAP</globe:FAS>
                   <globe:Amount>20</globe:Amount>
+                  <globe:MinRate>0.16</globe:MinRate>
+                  <globe:BasisforBlending>Blended by Entity</globe:BasisforBlending>
                   <globe:SBIEAvailable>true</globe:SBIEAvailable>
                   <globe:DeMinAvailable>true</globe:DeMinAvailable>
                   <globe:Currency>EUR</globe:Currency>
@@ -684,8 +851,38 @@
                   <globe:Remaining>0</globe:Remaining>
                 </globe:ExcessNegTaxExpense>
               </globe:OverallComputation>
+              <globe:Non-MaterialCE>
+                <globe:RFY>
+                  <globe:TotalRevenue>1000</globe:TotalRevenue>
+                  <globe:AggregateSimplified>5</globe:AggregateSimplified>
+                </globe:RFY>
+                <globe:RFY-1>
+                  <globe:TotalRevenue>900</globe:TotalRevenue>
+                </globe:RFY-1>
+                <globe:RFY-2>
+                  <globe:TotalRevenue>800</globe:TotalRevenue>
+                </globe:RFY-2>
+                <globe:Average>
+                  <globe:TotalRevenue>900</globe:TotalRevenue>
+                </globe:Average>
+                <globe:ID>
+                  <globe:Name>S</globe:Name>
+                  <globe:ResCountryCode>TF</globe:ResCountryCode>
+                  <globe:TIN issuedBy="TF" TypeOfTIN="GIR3001">TIN-S</globe:TIN>
+                  <globe:Rules>GIR204</globe:Rules>
+                  <globe:GlobeStatus>GIR301</globe:GlobeStatus>
+                  <globe:GlobeStatus>GIR309</globe:GlobeStatus>
+                  <globe:GlobeStatus>GIR315</globe:GlobeStatus>
+                </globe:ID>
+              </globe:Non-MaterialCE>
             </globe:ETRComputation>
           </globe:ETRStatus>
+          <globe:Election>
+            <globe:Art4.5>
+              <globe:Status>true</globe:Status>
+              <globe:ElectionYear>2025-01-01</globe:ElectionYear>
+            </globe:Art4.5>
+          </globe:Election>
         </globe:ETR>
       </globe:GLoBETax>
       <globe:DocSpec>
@@ -698,12 +895,46 @@
       <globe:Jurisdiction>GS</globe:Jurisdiction>
       <globe:JurWithTaxingRights>
         <globe:JurisdictionName>AQ</globe:JurisdictionName>
+        <globe:Subgroup>
+          <globe:TIN unknown="true" TypeOfTIN="GIR3004">NOTIN</globe:TIN>
+          <globe:TypeofSubGroup>GIR1104</globe:TypeofSubGroup>
+        </globe:Subgroup>
+        <globe:Subgroup>
+          <globe:TIN issuedBy="GS" TypeOfTIN="GIR3001">TIN-JV</globe:TIN>
+          <globe:TypeofSubGroup>GIR1105</globe:TypeofSubGroup>
+        </globe:Subgroup>
+        <globe:Subgroup>
+          <globe:TIN issuedBy="GS" TypeOfTIN="GIR3001">TIN-JS2</globe:TIN>
+          <globe:TypeofSubGroup>GIR1103</globe:TypeofSubGroup>
+        </globe:Subgroup>
+        <globe:Subgroup>
+          <globe:TIN issuedBy="AQ" TypeOfTIN="GIR3001">TIN-P1</globe:TIN>
+          <globe:TypeofSubGroup>GIR1102</globe:TypeofSubGroup>
+          <globe:TypeofSubGroup>GIR1104</globe:TypeofSubGroup>
+        </globe:Subgroup>
       </globe:JurWithTaxingRights>
       <globe:JurWithTaxingRights>
         <globe:JurisdictionName>BV</globe:JurisdictionName>
+        <globe:Subgroup>
+          <globe:TIN unknown="true" TypeOfTIN="GIR3004">NOTIN</globe:TIN>
+          <globe:TypeofSubGroup>GIR1104</globe:TypeofSubGroup>
+        </globe:Subgroup>
+        <globe:Subgroup>
+          <globe:TIN issuedBy="GS" TypeOfTIN="GIR3001">TIN-JV</globe:TIN>
+          <globe:TypeofSubGroup>GIR1105</globe:TypeofSubGroup>
+        </globe:Subgroup>
+        <globe:Subgroup>
+          <globe:TIN issuedBy="GS" TypeOfTIN="GIR3001">TIN-JS2</globe:TIN>
+          <globe:TypeofSubGroup>GIR1103</globe:TypeofSubGroup>
+        </globe:Subgroup>
       </globe:JurWithTaxingRights>
       <globe:JurWithTaxingRights>
         <globe:JurisdictionName>HM</globe:JurisdictionName>
+        <globe:Subgroup>
+          <globe:TIN issuedBy="AQ" TypeOfTIN="GIR3001">TIN-P1</globe:TIN>
+          <globe:TypeofSubGroup>GIR1102</globe:TypeofSubGroup>
+          <globe:TypeofSubGroup>GIR1104</globe:TypeofSubGroup>
+        </globe:Subgroup>
       </globe:JurWithTaxingRights>
       <globe:GLoBETax>
         <globe:ETR>
@@ -807,6 +1038,13 @@
                   </globe:DeferTaxAdjustAmt>
                 </globe:AdjustedCoveredTax>
                 <globe:TIN issuedBy="GS" TypeOfTIN="GIR3001">TIN-JV</globe:TIN>
+                <globe:Elections>
+                  <globe:AggregatedReporting>
+                    <globe:TaxConsolGroupTIN issuedBy="GS" TypeOfTIN="GIR3001">TCG-XL-1</globe:TaxConsolGroupTIN>
+                    <globe:EntityTIN issuedBy="GS" TypeOfTIN="GIR3001">TIN-JV</globe:EntityTIN>
+                    <globe:EntityTIN issuedBy="GS" TypeOfTIN="GIR3001">TIN-JS1</globe:EntityTIN>
+                  </globe:AggregatedReporting>
+                </globe:Elections>
               </globe:CEComputation>
               <globe:CEComputation>
                 <globe:AdjustedFANIL>
@@ -828,6 +1066,14 @@
                   </globe:DeferTaxAdjustAmt>
                 </globe:AdjustedCoveredTax>
                 <globe:TIN issuedBy="GS" TypeOfTIN="GIR3001">TIN-JS1</globe:TIN>
+                <globe:Elections>
+                  <globe:AggregatedReporting>
+                    <globe:TaxConsolGroupTIN issuedBy="GS" TypeOfTIN="GIR3001">TCG-XL-1</globe:TaxConsolGroupTIN>
+                    <globe:EntityTIN issuedBy="GS" TypeOfTIN="GIR3001">TIN-JV</globe:EntityTIN>
+                    <globe:EntityTIN issuedBy="GS" TypeOfTIN="GIR3001">TIN-JS1</globe:EntityTIN>
+                  </globe:AggregatedReporting>
+                </globe:Elections>
+                <globe:OtherFAS>Local GAAP</globe:OtherFAS>
               </globe:CEComputation>
               <globe:OverallComputation>
                 <globe:FANIL>600</globe:FANIL>
@@ -853,6 +1099,14 @@
               </globe:OverallComputation>
             </globe:ETRComputation>
           </globe:ETRStatus>
+          <globe:Election>
+            <globe:Art3.2.6>true</globe:Art3.2.6>
+            <globe:Art3.2.8>
+              <globe:Status>false</globe:Status>
+              <globe:ElectionYear>2020-01-01</globe:ElectionYear>
+              <globe:RevocationYear>2025-01-01</globe:RevocationYear>
+            </globe:Art3.2.8>
+          </globe:Election>
         </globe:ETR>
         <globe:ETR>
           <globe:SubGroup>
@@ -860,6 +1114,38 @@
             <globe:TypeofSubGroup>GIR1603</globe:TypeofSubGroup>
           </globe:SubGroup>
           <globe:ETRStatus>
+            <globe:ETRException>
+              <globe:Deminimis-SimplifiedNMCECalc>
+                <globe:Basis>GIR2901</globe:Basis>
+                <globe:FinancialData>
+                  <globe:Year>2025-12-31</globe:Year>
+                  <globe:Revenue>900</globe:Revenue>
+                  <globe:GlobeRevenue>900</globe:GlobeRevenue>
+                  <globe:NetGlobeIncome>100</globe:NetGlobeIncome>
+                  <globe:FANIL>100</globe:FANIL>
+                </globe:FinancialData>
+                <globe:FinancialData>
+                  <globe:Year>2024-12-31</globe:Year>
+                  <globe:Revenue>800</globe:Revenue>
+                  <globe:GlobeRevenue>800</globe:GlobeRevenue>
+                  <globe:NetGlobeIncome>90</globe:NetGlobeIncome>
+                  <globe:FANIL>90</globe:FANIL>
+                </globe:FinancialData>
+                <globe:FinancialData>
+                  <globe:Year>2023-12-31</globe:Year>
+                  <globe:Revenue>700</globe:Revenue>
+                  <globe:GlobeRevenue>700</globe:GlobeRevenue>
+                  <globe:NetGlobeIncome>80</globe:NetGlobeIncome>
+                  <globe:FANIL>80</globe:FANIL>
+                </globe:FinancialData>
+                <globe:Average>
+                  <globe:Revenue>800</globe:Revenue>
+                  <globe:GlobeRevenue>800</globe:GlobeRevenue>
+                  <globe:NetGlobeIncome>90</globe:NetGlobeIncome>
+                  <globe:FANIL>90</globe:FANIL>
+                </globe:Average>
+              </globe:Deminimis-SimplifiedNMCECalc>
+            </globe:ETRException>
             <globe:ETRComputation>
               <globe:CEComputation>
                 <globe:AdjustedFANIL>
@@ -870,11 +1156,15 @@
                   <globe:Total>100</globe:Total>
                 </globe:NetGlobeIncome>
                 <globe:AdjustedIncomeTax>
-                  <globe:Total>15</globe:Total>
-                  <globe:IncomeTax>15</globe:IncomeTax>
+                  <globe:Total>12</globe:Total>
+                  <globe:IncomeTax>12</globe:IncomeTax>
                 </globe:AdjustedIncomeTax>
                 <globe:AdjustedCoveredTax>
                   <globe:Total>15</globe:Total>
+                  <globe:Adjustments>
+                    <globe:Amount>3</globe:Amount>
+                    <globe:AdjustmentItem>GIR2414</globe:AdjustmentItem>
+                  </globe:Adjustments>
                   <globe:DeferTaxAdjustAmt>
                     <globe:Total>0</globe:Total>
                     <globe:DeferTaxExpense>0</globe:DeferTaxExpense>
@@ -888,12 +1178,34 @@
                 <globe:NetGlobeIncome>
                   <globe:Total>100</globe:Total>
                 </globe:NetGlobeIncome>
-                <globe:IncomeTaxExpense>15</globe:IncomeTaxExpense>
+                <globe:IncomeTaxExpense>12</globe:IncomeTaxExpense>
                 <globe:ETRRate>0.15</globe:ETRRate>
                 <globe:TopUpTaxPercentage>0.0</globe:TopUpTaxPercentage>
                 <globe:AdjustedCoveredTax>
                   <globe:Total>15</globe:Total>
-                  <globe:AggregrateCurrentTax>15</globe:AggregrateCurrentTax>
+                  <globe:AggregrateCurrentTax>12</globe:AggregrateCurrentTax>
+                  <globe:Adjustments>
+                    <globe:Amount>3</globe:Amount>
+                    <globe:AdjustmentItem>GIR2715</globe:AdjustmentItem>
+                  </globe:Adjustments>
+                  <globe:DeemedDistTax>
+                    <globe:Total>3</globe:Total>
+                    <globe:Election>
+                      <globe:Recapture>
+                        <globe:Year>2025-12-31</globe:Year>
+                        <globe:StartAmount>3</globe:StartAmount>
+                        <globe:DDTYear-0>0</globe:DDTYear-0>
+                        <globe:DDTYear-1>0</globe:DDTYear-1>
+                        <globe:DDTYear-2>0</globe:DDTYear-2>
+                        <globe:DDTYear-3>0</globe:DDTYear-3>
+                        <globe:TotalDDT>0</globe:TotalDDT>
+                        <globe:EndAmount>3</globe:EndAmount>
+                      </globe:Recapture>
+                      <globe:Reduction>0</globe:Reduction>
+                      <globe:IncrementalTopUpTax>0</globe:IncrementalTopUpTax>
+                      <globe:Ratio>0.0</globe:Ratio>
+                    </globe:Election>
+                  </globe:DeemedDistTax>
                 </globe:AdjustedCoveredTax>
                 <globe:ExcessProfits>100</globe:ExcessProfits>
                 <globe:TopUpTax>0</globe:TopUpTax>
@@ -1052,6 +1364,10 @@
       <globe:Jurisdiction>AQ</globe:Jurisdiction>
       <globe:JurWithTaxingRights>
         <globe:JurisdictionName>AQ</globe:JurisdictionName>
+        <globe:Subgroup>
+          <globe:TIN issuedBy="AQ" TypeOfTIN="GIR3001">TIN-P1</globe:TIN>
+          <globe:TypeofSubGroup>GIR1102</globe:TypeofSubGroup>
+        </globe:Subgroup>
       </globe:JurWithTaxingRights>
       <globe:GLoBETax>
         <globe:ETR>
@@ -1059,11 +1375,23 @@
             <globe:ETRComputation>
               <globe:CEComputation>
                 <globe:AdjustedFANIL>
-                  <globe:Total>800</globe:Total>
-                  <globe:FANIL>800</globe:FANIL>
+                  <globe:Total>780</globe:Total>
+                  <globe:FANIL>780</globe:FANIL>
+                  <globe:Adjustment>
+                    <globe:CrossBorderAdjustments>
+                      <globe:Basis>GIR1801</globe:Basis>
+                      <globe:OtherTIN issuedBy="BV" TypeOfTIN="GIR3001">TIN-B</globe:OtherTIN>
+                      <globe:ResCountryCode>BV</globe:ResCountryCode>
+                      <globe:Additions>20</globe:Additions>
+                    </globe:CrossBorderAdjustments>
+                  </globe:Adjustment>
                 </globe:AdjustedFANIL>
                 <globe:NetGlobeIncome>
                   <globe:Total>800</globe:Total>
+                  <globe:Adjustments>
+                    <globe:Amount>20</globe:Amount>
+                    <globe:AdjustmentItem>GIR2013</globe:AdjustmentItem>
+                  </globe:Adjustments>
                 </globe:NetGlobeIncome>
                 <globe:AdjustedIncomeTax>
                   <globe:Total>40</globe:Total>
@@ -1079,10 +1407,14 @@
                 <globe:TIN issuedBy="AQ" TypeOfTIN="GIR3001">TIN-A</globe:TIN>
               </globe:CEComputation>
               <globe:OverallComputation>
-                <globe:FANIL>800</globe:FANIL>
-                <globe:AdjustedFANIL>800</globe:AdjustedFANIL>
+                <globe:FANIL>780</globe:FANIL>
+                <globe:AdjustedFANIL>780</globe:AdjustedFANIL>
                 <globe:NetGlobeIncome>
                   <globe:Total>800</globe:Total>
+                  <globe:Adjustments>
+                    <globe:Amount>20</globe:Amount>
+                    <globe:AdjustmentItem>GIR2013</globe:AdjustmentItem>
+                  </globe:Adjustments>
                 </globe:NetGlobeIncome>
                 <globe:IncomeTaxExpense>40</globe:IncomeTaxExpense>
                 <globe:ETRRate>0.05</globe:ETRRate>
@@ -1090,7 +1422,24 @@
                 <globe:AdjustedCoveredTax>
                   <globe:Total>40</globe:Total>
                   <globe:AggregrateCurrentTax>40</globe:AggregrateCurrentTax>
+                  <globe:TransBlendCFC>
+                    <globe:CFCJur>
+                      <globe:Jurisdiction>BV</globe:Jurisdiction>
+                      <globe:Allocation>
+                        <globe:SubGroupTIN issuedBy="BV" TypeOfTIN="GIR3001">TIN-B</globe:SubGroupTIN>
+                        <globe:AggAllocTax>7</globe:AggAllocTax>
+                      </globe:Allocation>
+                    </globe:CFCJur>
+                    <globe:Total>7</globe:Total>
+                  </globe:TransBlendCFC>
                 </globe:AdjustedCoveredTax>
+                <globe:SubstanceExclusion>
+                  <globe:Total>100</globe:Total>
+                  <globe:PayrollCost>250</globe:PayrollCost>
+                  <globe:PayrollMarkUp>0.096</globe:PayrollMarkUp>
+                  <globe:TangibleAssetValue>1000</globe:TangibleAssetValue>
+                  <globe:TangibleAssetMarkup>0.076</globe:TangibleAssetMarkup>
+                </globe:SubstanceExclusion>
                 <globe:ExcessProfits>700</globe:ExcessProfits>
                 <globe:TopUpTax>70</globe:TopUpTax>
                 <globe:ExcessNegTaxExpense>
@@ -1102,6 +1451,20 @@
               </globe:OverallComputation>
             </globe:ETRComputation>
           </globe:ETRStatus>
+          <globe:Election>
+            <globe:NoDefTaxAllocation>
+              <globe:Status>true</globe:Status>
+              <globe:ElectionYear>2025-01-01</globe:ElectionYear>
+            </globe:NoDefTaxAllocation>
+            <globe:Art3.2.1.c>
+              <globe:Status>true</globe:Status>
+              <globe:ElectionYear>2024-01-01</globe:ElectionYear>
+              <globe:QualOwnerIntentBalance>100</globe:QualOwnerIntentBalance>
+              <globe:Additions>20</globe:Additions>
+              <globe:Reductions>5</globe:Reductions>
+              <globe:OutstandingBalance>115</globe:OutstandingBalance>
+            </globe:Art3.2.1.c>
+          </globe:Election>
         </globe:ETR>
         <globe:ETR>
           <globe:SubGroup>
@@ -1130,6 +1493,13 @@
                   </globe:DeferTaxAdjustAmt>
                 </globe:AdjustedCoveredTax>
                 <globe:TIN issuedBy="AQ" TypeOfTIN="GIR3001">TIN-P1</globe:TIN>
+                <globe:Elections>
+                  <globe:Art3.2.1c>
+                    <globe:Status>false</globe:Status>
+                    <globe:ElectionYear>2020-01-01</globe:ElectionYear>
+                    <globe:RevocationYear>2025-01-01</globe:RevocationYear>
+                  </globe:Art3.2.1c>
+                </globe:Elections>
               </globe:CEComputation>
               <globe:OverallComputation>
                 <globe:FANIL>200</globe:FANIL>
@@ -1180,6 +1550,11 @@
           </globe:UTPRCalculation>
         </globe:UTPR>
       </globe:LowTaxJurisdiction>
+      <globe:AdditionalDataPoint>
+        <globe:Description>Occupancy</globe:Description>
+        <globe:Amount>40</globe:Amount>
+        <globe:Percentage>0.8</globe:Percentage>
+      </globe:AdditionalDataPoint>
       <globe:DocSpec>
         <stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
         <stf:DocRefId>DOC-AQ</stf:DocRefId>
@@ -1200,36 +1575,103 @@
             <globe:ETRComputation>
               <globe:CEComputation>
                 <globe:AdjustedFANIL>
-                  <globe:Total>600</globe:Total>
-                  <globe:FANIL>600</globe:FANIL>
+                  <globe:Total>640</globe:Total>
+                  <globe:FANIL>640</globe:FANIL>
+                  <globe:Adjustment>
+                    <globe:CrossBorderAdjustments>
+                      <globe:Basis>GIR1801</globe:Basis>
+                      <globe:OtherTIN issuedBy="AQ" TypeOfTIN="GIR3001">TIN-A</globe:OtherTIN>
+                      <globe:ResCountryCode>AQ</globe:ResCountryCode>
+                      <globe:Reductions>20</globe:Reductions>
+                    </globe:CrossBorderAdjustments>
+                  </globe:Adjustment>
                 </globe:AdjustedFANIL>
                 <globe:NetGlobeIncome>
                   <globe:Total>600</globe:Total>
+                  <globe:Adjustments>
+                    <globe:Amount>-30</globe:Amount>
+                    <globe:AdjustmentItem>GIR2002</globe:AdjustmentItem>
+                  </globe:Adjustments>
+                  <globe:Adjustments>
+                    <globe:Amount>10</globe:Amount>
+                    <globe:AdjustmentItem>GIR2007</globe:AdjustmentItem>
+                  </globe:Adjustments>
+                  <globe:Adjustments>
+                    <globe:Amount>-20</globe:Amount>
+                    <globe:AdjustmentItem>GIR2013</globe:AdjustmentItem>
+                  </globe:Adjustments>
                 </globe:NetGlobeIncome>
                 <globe:AdjustedIncomeTax>
-                  <globe:Total>60</globe:Total>
-                  <globe:IncomeTax>60</globe:IncomeTax>
+                  <globe:Total>51</globe:Total>
+                  <globe:IncomeTax>51</globe:IncomeTax>
                 </globe:AdjustedIncomeTax>
                 <globe:AdjustedCoveredTax>
                   <globe:Total>60</globe:Total>
+                  <globe:Adjustments>
+                    <globe:Amount>-4</globe:Amount>
+                    <globe:AdjustmentItem>GIR2405</globe:AdjustmentItem>
+                  </globe:Adjustments>
+                  <globe:Adjustments>
+                    <globe:Amount>13</globe:Amount>
+                    <globe:AdjustmentItem>GIR2416</globe:AdjustmentItem>
+                  </globe:Adjustments>
                   <globe:DeferTaxAdjustAmt>
-                    <globe:Total>0</globe:Total>
-                    <globe:DeferTaxExpense>0</globe:DeferTaxExpense>
+                    <globe:Total>13</globe:Total>
+                    <globe:DeferTaxExpense>12</globe:DeferTaxExpense>
+                    <globe:Adjustment>
+                      <globe:Amount>-2</globe:Amount>
+                      <globe:AdjustmentItem>GIR2501</globe:AdjustmentItem>
+                      <globe:Recast>
+                        <globe:Lower>1</globe:Lower>
+                      </globe:Recast>
+                    </globe:Adjustment>
+                    <globe:Adjustment>
+                      <globe:Amount>5</globe:Amount>
+                      <globe:AdjustmentItem>GIR2504</globe:AdjustmentItem>
+                      <globe:Recast>
+                        <globe:Higher>-3</globe:Higher>
+                      </globe:Recast>
+                    </globe:Adjustment>
                   </globe:DeferTaxAdjustAmt>
                 </globe:AdjustedCoveredTax>
                 <globe:TIN issuedBy="BV" TypeOfTIN="GIR3001">TIN-B</globe:TIN>
+                <globe:Elections>
+                  <globe:Art3.2.1b>
+                    <globe:Status>true</globe:Status>
+                    <globe:ElectionYear>2024-01-01</globe:ElectionYear>
+                  </globe:Art3.2.1b>
+                  <globe:Art4.4.7>
+                    <globe:Status>true</globe:Status>
+                    <globe:ElectionYear>2025-01-01</globe:ElectionYear>
+                  </globe:Art4.4.7>
+                </globe:Elections>
               </globe:CEComputation>
               <globe:CEComputation>
                 <globe:AdjustedFANIL>
                   <globe:Total>200</globe:Total>
-                  <globe:FANIL>200</globe:FANIL>
+                  <globe:FANIL>150</globe:FANIL>
+                  <globe:Adjustment>
+                    <globe:MainEntityPEandFTE>
+                      <globe:Basis>GIR1701</globe:Basis>
+                      <globe:OtherTIN issuedBy="HM" TypeOfTIN="GIR3001">TIN-C</globe:OtherTIN>
+                      <globe:ResCountryCode>HM</globe:ResCountryCode>
+                      <globe:Additions>50</globe:Additions>
+                      <globe:Reductions>0</globe:Reductions>
+                    </globe:MainEntityPEandFTE>
+                  </globe:Adjustment>
                 </globe:AdjustedFANIL>
                 <globe:NetGlobeIncome>
                   <globe:Total>200</globe:Total>
                 </globe:NetGlobeIncome>
                 <globe:AdjustedIncomeTax>
                   <globe:Total>20</globe:Total>
-                  <globe:IncomeTax>20</globe:IncomeTax>
+                  <globe:IncomeTax>15</globe:IncomeTax>
+                  <globe:CrossAllocation>
+                    <globe:Basis>GIR2301</globe:Basis>
+                    <globe:OtherTIN issuedBy="HM" TypeOfTIN="GIR3001">TIN-C</globe:OtherTIN>
+                    <globe:ResCountryCode>HM</globe:ResCountryCode>
+                    <globe:Additions>5</globe:Additions>
+                  </globe:CrossAllocation>
                 </globe:AdjustedIncomeTax>
                 <globe:AdjustedCoveredTax>
                   <globe:Total>20</globe:Total>
@@ -1241,17 +1683,111 @@
                 <globe:TIN issuedBy="BV" TypeOfTIN="GIR3001">TIN-PE</globe:TIN>
               </globe:CEComputation>
               <globe:OverallComputation>
-                <globe:FANIL>800</globe:FANIL>
-                <globe:AdjustedFANIL>800</globe:AdjustedFANIL>
+                <globe:FANIL>790</globe:FANIL>
+                <globe:AdjustedFANIL>840</globe:AdjustedFANIL>
                 <globe:NetGlobeIncome>
                   <globe:Total>800</globe:Total>
+                  <globe:Adjustments>
+                    <globe:Amount>10</globe:Amount>
+                    <globe:AdjustmentItem>GIR2007</globe:AdjustmentItem>
+                  </globe:Adjustments>
+                  <globe:Adjustments>
+                    <globe:Amount>-30</globe:Amount>
+                    <globe:AdjustmentItem>GIR2002</globe:AdjustmentItem>
+                  </globe:Adjustments>
+                  <globe:Adjustments>
+                    <globe:Amount>-20</globe:Amount>
+                    <globe:AdjustmentItem>GIR2013</globe:AdjustmentItem>
+                  </globe:Adjustments>
                 </globe:NetGlobeIncome>
-                <globe:IncomeTaxExpense>80</globe:IncomeTaxExpense>
+                <globe:IncomeTaxExpense>66</globe:IncomeTaxExpense>
                 <globe:ETRRate>0.1</globe:ETRRate>
                 <globe:TopUpTaxPercentage>0.05</globe:TopUpTaxPercentage>
                 <globe:AdjustedCoveredTax>
                   <globe:Total>80</globe:Total>
-                  <globe:AggregrateCurrentTax>80</globe:AggregrateCurrentTax>
+                  <globe:AggregrateCurrentTax>71</globe:AggregrateCurrentTax>
+                  <globe:Adjustments>
+                    <globe:Amount>13</globe:Amount>
+                    <globe:AdjustmentItem>GIR2717</globe:AdjustmentItem>
+                  </globe:Adjustments>
+                  <globe:Adjustments>
+                    <globe:Amount>-4</globe:Amount>
+                    <globe:AdjustmentItem>GIR2706</globe:AdjustmentItem>
+                  </globe:Adjustments>
+                  <globe:DeferTaxAdjustAmt>
+                    <globe:Total>13</globe:Total>
+                    <globe:DefTaxAmt>12</globe:DefTaxAmt>
+                    <globe:DiffCarryValue>2</globe:DiffCarryValue>
+                    <globe:GLoBEValue>2</globe:GLoBEValue>
+                    <globe:BefRecastAdjust>12</globe:BefRecastAdjust>
+                    <globe:TotalAdjust>3</globe:TotalAdjust>
+                    <globe:PreRecast>15</globe:PreRecast>
+                    <globe:Recast>
+                      <globe:Higher>-3</globe:Higher>
+                      <globe:Lower>1</globe:Lower>
+                    </globe:Recast>
+                    <globe:Adjustments>
+                      <globe:Amount>5</globe:Amount>
+                      <globe:AdjustmentItem>GIR2504</globe:AdjustmentItem>
+                      <globe:RecaptureDeferred>
+                        <globe:DTLRFYMinus5>0</globe:DTLRFYMinus5>
+                        <globe:RecapDTLRFYMinus5>0</globe:RecapDTLRFYMinus5>
+                        <globe:DTLRFY>9</globe:DTLRFY>
+                        <globe:AggregateDTL>
+                          <globe:ReportingFiscalYear>
+                            <globe:AmountPreTransition>0</globe:AmountPreTransition>
+                            <globe:AmountOutBalance>9</globe:AmountOutBalance>
+                            <globe:AmountUnjustified>0</globe:AmountUnjustified>
+                          </globe:ReportingFiscalYear>
+                          <globe:PriorFiscalYear>
+                            <globe:AmountPreTransition>0</globe:AmountPreTransition>
+                            <globe:AmountOutBalance>0</globe:AmountOutBalance>
+                            <globe:AmountUnjustified>0</globe:AmountUnjustified>
+                          </globe:PriorFiscalYear>
+                        </globe:AggregateDTL>
+                      </globe:RecaptureDeferred>
+                    </globe:Adjustments>
+                    <globe:Adjustments>
+                      <globe:Amount>-2</globe:Amount>
+                      <globe:AdjustmentItem>GIR2501</globe:AdjustmentItem>
+                      <globe:RecaptureDeferred>
+                        <globe:DTLRFYMinus5>0</globe:DTLRFYMinus5>
+                        <globe:RecapDTLRFYMinus5>0</globe:RecapDTLRFYMinus5>
+                        <globe:DTLRFY>9</globe:DTLRFY>
+                        <globe:AggregateDTL>
+                          <globe:ReportingFiscalYear>
+                            <globe:AmountPreTransition>0</globe:AmountPreTransition>
+                            <globe:AmountOutBalance>9</globe:AmountOutBalance>
+                            <globe:AmountUnjustified>0</globe:AmountUnjustified>
+                          </globe:ReportingFiscalYear>
+                          <globe:PriorFiscalYear>
+                            <globe:AmountPreTransition>0</globe:AmountPreTransition>
+                            <globe:AmountOutBalance>0</globe:AmountOutBalance>
+                            <globe:AmountUnjustified>0</globe:AmountUnjustified>
+                          </globe:PriorFiscalYear>
+                        </globe:AggregateDTL>
+                      </globe:RecaptureDeferred>
+                    </globe:Adjustments>
+                    <globe:Transition>
+                      <globe:Year>2024-12-31</globe:Year>
+                      <globe:DeferredTaxLiabilityStart>50</globe:DeferredTaxLiabilityStart>
+                      <globe:DeferredTaxLiabilityRecast>40</globe:DeferredTaxLiabilityRecast>
+                      <globe:DeferredTaxAssets>
+                        <globe:Total>30</globe:Total>
+                        <globe:DeferredTaxAssetStart>30</globe:DeferredTaxAssetStart>
+                        <globe:DeferredTaxAssetRecast>0</globe:DeferredTaxAssetRecast>
+                        <globe:DeferredTaxAssetExcluded>0</globe:DeferredTaxAssetExcluded>
+                      </globe:DeferredTaxAssets>
+                      <globe:Disposal>
+                        <globe:ResCountryCode>HM</globe:ResCountryCode>
+                        <globe:NetDTADTL>4</globe:NetDTADTL>
+                        <globe:CarryingValue>100</globe:CarryingValue>
+                        <globe:TaxPaid>6</globe:TaxPaid>
+                        <globe:DTADTL>3</globe:DTADTL>
+                      </globe:Disposal>
+                      <globe:AltJurisdiction>HM</globe:AltJurisdiction>
+                    </globe:Transition>
+                  </globe:DeferTaxAdjustAmt>
                 </globe:AdjustedCoveredTax>
                 <globe:ExcessProfits>800</globe:ExcessProfits>
                 <globe:QDMTT>
@@ -1260,6 +1796,11 @@
                   <globe:SBIEAvailable>true</globe:SBIEAvailable>
                   <globe:DeMinAvailable>true</globe:DeMinAvailable>
                   <globe:Currency>EUR</globe:Currency>
+                  <globe:CurrencyElection>
+                    <globe:Status>true</globe:Status>
+                    <globe:ElectionYear>2024-01-01</globe:ElectionYear>
+                    <globe:Currency>GIR3101</globe:Currency>
+                  </globe:CurrencyElection>
                 </globe:QDMTT>
                 <globe:TopUpTax>0</globe:TopUpTax>
                 <globe:ExcessNegTaxExpense>
@@ -1271,6 +1812,13 @@
               </globe:OverallComputation>
             </globe:ETRComputation>
           </globe:ETRStatus>
+          <globe:Election>
+            <globe:Art4.6.1>true</globe:Art4.6.1>
+            <globe:Art3.2.2>
+              <globe:Status>true</globe:Status>
+              <globe:ElectionYear>2024-01-01</globe:ElectionYear>
+            </globe:Art3.2.2>
+          </globe:Election>
         </globe:ETR>
       </globe:GLoBETax>
       <globe:DocSpec>
@@ -1283,9 +1831,30 @@
       <globe:Jurisdiction>HM</globe:Jurisdiction>
       <globe:JurWithTaxingRights>
         <globe:JurisdictionName>AQ</globe:JurisdictionName>
+        <globe:Subgroup>
+          <globe:TIN issuedBy="AQ" TypeOfTIN="GIR3001">TIN-P1</globe:TIN>
+          <globe:TypeofSubGroup>GIR1102</globe:TypeofSubGroup>
+        </globe:Subgroup>
       </globe:JurWithTaxingRights>
       <globe:JurWithTaxingRights>
         <globe:JurisdictionName>BV</globe:JurisdictionName>
+        <globe:ReportDifference>
+          <globe:ETRDifference>0.12</globe:ETRDifference>
+          <globe:AdjCoveredTaxDifference>
+            <globe:AggCurrentTaxExpense>20</globe:AggCurrentTaxExpense>
+            <globe:QRTCExpense>0</globe:QRTCExpense>
+            <globe:OtherTaxCredits>0</globe:OtherTaxCredits>
+            <globe:DeferTaxExpense>0</globe:DeferTaxExpense>
+          </globe:AdjCoveredTaxDifference>
+          <globe:NetGLoBEDifference>400</globe:NetGLoBEDifference>
+          <globe:SBIEDifference>0</globe:SBIEDifference>
+          <globe:AddCurrentTuTDifference>0</globe:AddCurrentTuTDifference>
+          <globe:TuTDifference>12</globe:TuTDifference>
+          <globe:ElectionsDifference>No differences in elections</globe:ElectionsDifference>
+          <globe:QRTCIncome>0</globe:QRTCIncome>
+          <globe:ExcessNegTaxCarryForw>0</globe:ExcessNegTaxCarryForw>
+          <globe:TransitionDifference>false</globe:TransitionDifference>
+        </globe:ReportDifference>
       </globe:JurWithTaxingRights>
       <globe:GLoBETax>
         <globe:ETR>
@@ -1293,15 +1862,54 @@
             <globe:ETRComputation>
               <globe:CEComputation>
                 <globe:AdjustedFANIL>
-                  <globe:Total>500</globe:Total>
-                  <globe:FANIL>500</globe:FANIL>
+                  <globe:Total>565</globe:Total>
+                  <globe:FANIL>615</globe:FANIL>
+                  <globe:Adjustment>
+                    <globe:MainEntityPEandFTE>
+                      <globe:Basis>GIR1701</globe:Basis>
+                      <globe:OtherTIN issuedBy="BV" TypeOfTIN="GIR3001">TIN-PE</globe:OtherTIN>
+                      <globe:ResCountryCode>BV</globe:ResCountryCode>
+                      <globe:Additions>0</globe:Additions>
+                      <globe:Reductions>50</globe:Reductions>
+                    </globe:MainEntityPEandFTE>
+                  </globe:Adjustment>
                 </globe:AdjustedFANIL>
                 <globe:NetGlobeIncome>
                   <globe:Total>500</globe:Total>
+                  <globe:Adjustments>
+                    <globe:Amount>-65</globe:Amount>
+                    <globe:AdjustmentItem>GIR2025</globe:AdjustmentItem>
+                  </globe:Adjustments>
+                  <globe:IntShippingIncome>
+                    <globe:InternationalShipIncome>
+                      <globe:Total>40</globe:Total>
+                      <globe:Category>GIR2101</globe:Category>
+                      <globe:Category>GIR2103</globe:Category>
+                      <globe:Revenue>100</globe:Revenue>
+                      <globe:Costs>60</globe:Costs>
+                    </globe:InternationalShipIncome>
+                    <globe:QualifiedAncShipIncome>
+                      <globe:Total>25</globe:Total>
+                      <globe:Category>GIR2201</globe:Category>
+                      <globe:Revenue>30</globe:Revenue>
+                      <globe:Costs>5</globe:Costs>
+                    </globe:QualifiedAncShipIncome>
+                    <globe:SubstanceExclusion>
+                      <globe:PayrollCosts>10</globe:PayrollCosts>
+                      <globe:TangibleAssets>200</globe:TangibleAssets>
+                    </globe:SubstanceExclusion>
+                    <globe:CoveredTaxes>0</globe:CoveredTaxes>
+                  </globe:IntShippingIncome>
                 </globe:NetGlobeIncome>
                 <globe:AdjustedIncomeTax>
                   <globe:Total>100</globe:Total>
-                  <globe:IncomeTax>100</globe:IncomeTax>
+                  <globe:IncomeTax>105</globe:IncomeTax>
+                  <globe:CrossAllocation>
+                    <globe:Basis>GIR2301</globe:Basis>
+                    <globe:OtherTIN issuedBy="BV" TypeOfTIN="GIR3001">TIN-PE</globe:OtherTIN>
+                    <globe:ResCountryCode>BV</globe:ResCountryCode>
+                    <globe:Reductions>5</globe:Reductions>
+                  </globe:CrossAllocation>
                 </globe:AdjustedIncomeTax>
                 <globe:AdjustedCoveredTax>
                   <globe:Total>100</globe:Total>
@@ -1313,20 +1921,74 @@
                 <globe:TIN issuedBy="HM" TypeOfTIN="GIR3001">TIN-C</globe:TIN>
               </globe:CEComputation>
               <globe:OverallComputation>
-                <globe:FANIL>500</globe:FANIL>
-                <globe:AdjustedFANIL>500</globe:AdjustedFANIL>
+                <globe:FANIL>615</globe:FANIL>
+                <globe:AdjustedFANIL>565</globe:AdjustedFANIL>
                 <globe:NetGlobeIncome>
-                  <globe:Total>500</globe:Total>
+                  <globe:Total>505</globe:Total>
+                  <globe:Adjustments>
+                    <globe:Amount>-65</globe:Amount>
+                    <globe:AdjustmentItem>GIR2025</globe:AdjustmentItem>
+                  </globe:Adjustments>
+                  <globe:IntShippingIncome>
+                    <globe:Total>60</globe:Total>
+                    <globe:TotalIntShipIncome>40</globe:TotalIntShipIncome>
+                    <globe:FiftyPercentCap>20</globe:FiftyPercentCap>
+                    <globe:TotalQualifiedAncIncome>25</globe:TotalQualifiedAncIncome>
+                    <globe:ExcessOfCap>5</globe:ExcessOfCap>
+                  </globe:IntShippingIncome>
                 </globe:NetGlobeIncome>
-                <globe:IncomeTaxExpense>100</globe:IncomeTaxExpense>
-                <globe:ETRRate>0.2</globe:ETRRate>
+                <globe:IncomeTaxExpense>105</globe:IncomeTaxExpense>
+                <globe:ETRRate>0.198</globe:ETRRate>
                 <globe:TopUpTaxPercentage>0.0</globe:TopUpTaxPercentage>
                 <globe:AdjustedCoveredTax>
                   <globe:Total>100</globe:Total>
                   <globe:AggregrateCurrentTax>100</globe:AggregrateCurrentTax>
                 </globe:AdjustedCoveredTax>
-                <globe:ExcessProfits>500</globe:ExcessProfits>
-                <globe:TopUpTax>0</globe:TopUpTax>
+                <globe:SubstanceExclusion>
+                  <globe:Total>0</globe:Total>
+                  <globe:PayrollCost>0</globe:PayrollCost>
+                  <globe:PayrollMarkUp>0.096</globe:PayrollMarkUp>
+                  <globe:TangibleAssetValue>0</globe:TangibleAssetValue>
+                  <globe:TangibleAssetMarkup>0.076</globe:TangibleAssetMarkup>
+                  <globe:PEAllocation>
+                    <globe:JurOfOwners>
+                      <globe:ResCountryCode>BV</globe:ResCountryCode>
+                    </globe:JurOfOwners>
+                    <globe:PayrollCost>
+                      <globe:Total>400</globe:Total>
+                      <globe:Allocation>100</globe:Allocation>
+                    </globe:PayrollCost>
+                    <globe:TangibleAssetValue>
+                      <globe:Total>800</globe:Total>
+                      <globe:Allocation>200</globe:Allocation>
+                    </globe:TangibleAssetValue>
+                  </globe:PEAllocation>
+                </globe:SubstanceExclusion>
+                <globe:ExcessProfits>505</globe:ExcessProfits>
+                <globe:AdditionalTopUpTax>
+                  <globe:NONArt4.1.5>
+                    <globe:Articles>GIR2601</globe:Articles>
+                    <globe:Year>2024-12-31</globe:Year>
+                    <globe:Previous>
+                      <globe:NetGlobeIncome>480</globe:NetGlobeIncome>
+                      <globe:AdjustedCoveredTax>72</globe:AdjustedCoveredTax>
+                      <globe:ETRRate>0.15</globe:ETRRate>
+                      <globe:ExcessProfits>480</globe:ExcessProfits>
+                      <globe:TopUpTaxPercentage>0.0</globe:TopUpTaxPercentage>
+                      <globe:TopUpTax>0</globe:TopUpTax>
+                    </globe:Previous>
+                    <globe:Recalculated>
+                      <globe:NetGlobeIncome>480</globe:NetGlobeIncome>
+                      <globe:AdjustedCoveredTax>64</globe:AdjustedCoveredTax>
+                      <globe:ETRRate>0.1333</globe:ETRRate>
+                      <globe:ExcessProfits>480</globe:ExcessProfits>
+                      <globe:TopUpTaxPercentage>0.0167</globe:TopUpTaxPercentage>
+                      <globe:TopUpTax>8</globe:TopUpTax>
+                    </globe:Recalculated>
+                    <globe:AdditionalTopUpTax>8</globe:AdditionalTopUpTax>
+                  </globe:NONArt4.1.5>
+                </globe:AdditionalTopUpTax>
+                <globe:TopUpTax>8</globe:TopUpTax>
                 <globe:ExcessNegTaxExpense>
                   <globe:PriorYearBalance>0</globe:PriorYearBalance>
                   <globe:GeneratedInRFY>0</globe:GeneratedInRFY>
@@ -1364,6 +2026,9 @@
                   </globe:DeferTaxAdjustAmt>
                 </globe:AdjustedCoveredTax>
                 <globe:TIN issuedBy="HM" TypeOfTIN="GIR3001">TIN-P2</globe:TIN>
+                <globe:Elections>
+                  <globe:Art3.2.1>true</globe:Art3.2.1>
+                </globe:Elections>
               </globe:CEComputation>
               <globe:CEComputation>
                 <globe:AdjustedFANIL>
@@ -1385,6 +2050,14 @@
                   </globe:DeferTaxAdjustAmt>
                 </globe:AdjustedCoveredTax>
                 <globe:TIN issuedBy="HM" TypeOfTIN="GIR3001">TIN-P3</globe:TIN>
+                <globe:Elections>
+                  <globe:Art6.3.4>
+                    <globe:FYTriggerEvent>2025-12-31</globe:FYTriggerEvent>
+                    <globe:Inclusion>
+                      <globe:Art6.3.4.c.ii>true</globe:Art6.3.4.c.ii>
+                    </globe:Inclusion>
+                  </globe:Art6.3.4>
+                </globe:Elections>
               </globe:CEComputation>
               <globe:OverallComputation>
                 <globe:FANIL>400</globe:FANIL>
@@ -1398,6 +2071,26 @@
                 <globe:AdjustedCoveredTax>
                   <globe:Total>20</globe:Total>
                   <globe:AggregrateCurrentTax>20</globe:AggregrateCurrentTax>
+                  <globe:PostFilingAdjust>
+                    <globe:DeferTaxAsset>
+                      <globe:Total>10</globe:Total>
+                      <globe:AmountAttributed>
+                        <globe:Year>2023-12-31</globe:Year>
+                        <globe:Amount>6</globe:Amount>
+                      </globe:AmountAttributed>
+                      <globe:AmountAttributed>
+                        <globe:Year>2024-12-31</globe:Year>
+                        <globe:Amount>4</globe:Amount>
+                      </globe:AmountAttributed>
+                    </globe:DeferTaxAsset>
+                    <globe:CoveredTaxRefund>
+                      <globe:Total>3</globe:Total>
+                      <globe:AmountAttributed>
+                        <globe:Year>2024-12-31</globe:Year>
+                        <globe:Amount>3</globe:Amount>
+                      </globe:AmountAttributed>
+                    </globe:CoveredTaxRefund>
+                  </globe:PostFilingAdjust>
                 </globe:AdjustedCoveredTax>
                 <globe:ExcessProfits>400</globe:ExcessProfits>
                 <globe:TopUpTax>40</globe:TopUpTax>
@@ -1410,10 +2103,33 @@
               </globe:OverallComputation>
             </globe:ETRComputation>
           </globe:ETRStatus>
+          <globe:Election>
+            <globe:Art3.2.5>
+              <globe:Status>true</globe:Status>
+              <globe:ElectionYear>2024-01-01</globe:ElectionYear>
+            </globe:Art3.2.5>
+            <globe:SimplifiedReporting>true</globe:SimplifiedReporting>
+          </globe:Election>
         </globe:ETR>
       </globe:GLoBETax>
       <globe:LowTaxJurisdiction>
-        <globe:TopUpTaxAmount>40</globe:TopUpTaxAmount>
+        <globe:TopUpTaxAmount>48</globe:TopUpTaxAmount>
+        <globe:LTCE>
+          <globe:TIN issuedBy="HM" TypeOfTIN="GIR3001">TIN-C</globe:TIN>
+          <globe:IIR>
+            <globe:NetGlobeIncome>500</globe:NetGlobeIncome>
+            <globe:TopUpTax>8</globe:TopUpTax>
+            <globe:ParentEntity>
+              <globe:TIN issuedBy="BV" TypeOfTIN="GIR3001">TIN-B</globe:TIN>
+              <globe:ResCountryCode>BV</globe:ResCountryCode>
+              <globe:OtherOwnershipAllocation>0</globe:OtherOwnershipAllocation>
+              <globe:InclusionRatio>1.0</globe:InclusionRatio>
+              <globe:TopUpTaxShare>8</globe:TopUpTaxShare>
+              <globe:IIROffSet>0</globe:IIROffSet>
+              <globe:TopUpTax>8</globe:TopUpTax>
+            </globe:ParentEntity>
+          </globe:IIR>
+        </globe:LTCE>
         <globe:LTCE>
           <globe:TIN issuedBy="HM" TypeOfTIN="GIR3001">TIN-P2</globe:TIN>
           <globe:IIR>
@@ -1445,9 +2161,17 @@
       <globe:Jurisdiction>X5</globe:Jurisdiction>
       <globe:JurWithTaxingRights>
         <globe:JurisdictionName>AQ</globe:JurisdictionName>
+        <globe:Subgroup>
+          <globe:TIN TypeOfTIN="GIR3001">TIN-ST</globe:TIN>
+          <globe:TypeofSubGroup>GIR1106</globe:TypeofSubGroup>
+        </globe:Subgroup>
       </globe:JurWithTaxingRights>
       <globe:JurWithTaxingRights>
         <globe:JurisdictionName>BV</globe:JurisdictionName>
+        <globe:Subgroup>
+          <globe:TIN TypeOfTIN="GIR3001">TIN-ST</globe:TIN>
+          <globe:TypeofSubGroup>GIR1106</globe:TypeofSubGroup>
+        </globe:Subgroup>
       </globe:JurWithTaxingRights>
       <globe:GLoBETax>
         <globe:ETR>
@@ -1502,6 +2226,9 @@
               </globe:OverallComputation>
             </globe:ETRComputation>
           </globe:ETRStatus>
+          <globe:Election>
+            <globe:Art5.3.1>true</globe:Art5.3.1>
+          </globe:Election>
         </globe:ETR>
       </globe:GLoBETax>
       <globe:LowTaxJurisdiction>
@@ -1540,6 +2267,13 @@
         <globe:AddCashTaxExpense>145</globe:AddCashTaxExpense>
         <globe:UTPRTopUpTaxCarriedForward>0</globe:UTPRTopUpTaxCarriedForward>
       </globe:Attribution>
+      <globe:AdditionalDataPoint>
+        <globe:Description>UTPR in force for the whole year</globe:Description>
+        <globe:Amount>12</globe:Amount>
+        <globe:Percentage>1.0</globe:Percentage>
+        <globe:Text>Months</globe:Text>
+        <globe:Boolean>true</globe:Boolean>
+      </globe:AdditionalDataPoint>
       <globe:DocSpec>
         <stf:DocTypeIndic>OECD1</stf:DocTypeIndic>
         <stf:DocRefId>DOC-UTPRAttribution</stf:DocRefId>

@@ -1,5 +1,4 @@
-"""Write Map.md, every value vector of the Output Model and where the Link Model takes it
-from, and Unlinked.md, the vectors that are not linked yet, by topic.
+"""Write Map.md: every value vector of the Output Model and where the Link Model takes it from.
 
 Usage: python map.py     (run from GIR-Model/Link; needs numpy)
 """
@@ -13,21 +12,42 @@ with contextlib.redirect_stdout(io.StringIO()):
     import check as c
 g = c.g
 
-# The first matching rule gives the source of a linked vector.
+# The first matching rule gives the source of a vector.
 RULES = [
-    (r"/(MessageSpec|FilingInfo|DocSpec)/|/GeneralSection/RecJurCode$|/UTPRAttribution/RecJurCode$", "Input", "filing data"),
+    (r"/(MessageSpec|FilingInfo|DocSpec)/|@version$|/GeneralSection/RecJurCode$|/UTPRAttribution/RecJurCode$", "Input", "filing data"),
+    (r"/AdditionalDataPoint/", "Input", "data points"),
     (r"/ExcludedEntity/(Type|Change)$|/ExcludedUPEStatus$", "Input", "Entity classification"),
+    (r"/OwnershipChange/(ChangeDate|PreGlobeStatus|PreOwnership/PreOwnershipPercentage)$|/UnreportChangeCorpStr$", "Input", "changes during the year"),
+    (r"/QUTPR/Art9\.3$|/InitialIntActivity/(StartDate|ReferenceJurisdiction/TangibleAssetValue|OtherJurisdiction/TangibleAssetValue)$", "Input", "Article 9.3"),
+    (r"/QUTPR/", "Calculation", "UTPR"),
+    (r"/InitialIntActivity/RFY", "Aggregate", "Entities and their tangible assets"),
+    (r"/EntityOwner/|/IndOwners/|/TaxConsolGroupTIN/", "Input", "owners of the UPE, tax consolidation groups"),
     (r"/RecJurCode$", "Input", "recipients of the section"),
-    (r"/TIN/|/Name$|ResCountryCode$|/Jurisdiction$|JurisdictionName$", "Reference", "Entity, TIN, or jurisdiction"),
+    (r"TIN/|/Name$|ResCountryCode$|/Jurisdiction$|JurisdictionName$|/AltJurisdiction$|/Art10\.3\.5$", "Reference", "Entity, TIN, or jurisdiction"),
     (r"/Rules$", "Reference", "implementation status of the jurisdiction"),
     (r"/GlobeStatus$|/OwnershipType$|/POPE-IPE$|/Art2\.1\.[35]$|TypeofSubGroup$", "Calculation", "classification"),
     (r"/OwnershipPercentage$", "Calculation", "Ownership Interest"),
-    (r"/Summary/(SafeHarbour|ETRRange|QDMTTut|GLoBETut)$", "Calculation", "TCSH and Top-up Tax Calculation"),
+    (r"/Summary/(SafeHarbour|ETRRange|QDMTTut|GLoBETut|SBIE/\w+)$", "Calculation", "TCSH and Top-up Tax Calculation"),
+    (r"/ReportDifference/|/DiffDomesticTut$|/LocalCurrency$", "Input", "differences under domestic law"),
     (r"/TransitionalCbCRSafeHarbour/", "Calculation", "TCSH"),
-    (r"/CEComputation/NetGlobeIncome/Total$|/CEComputation/AdjustedCoveredTax/Total$", "Input", "Entity amounts of Top-up Tax Calculation"),
-    (r"/CEComputation/", "Input", "Entity amounts"),
-    (r"/OverallComputation/QDMTT/(FAS|SBIEAvailable|DeMinAvailable|Currency)$", "Input", "QDMTT data"),
-    (r"/OverallComputation/(FANIL|AdjustedFANIL|IncomeTaxExpense)$|AggregrateCurrentTax$", "Calculation", "sum of Entity amounts over the group"),
+    (r"UTPRSafeHarbour/", "Input", "Transitional UTPR Safe Harbour"),
+    (r"/Deminimis-SimplifiedNMCECalc/Average/|/Non-MaterialCE/Average/", "Aggregate", "average of the years"),
+    (r"/Deminimis-SimplifiedNMCECalc/|/Non-MaterialCE/", "Input", "de minimis exclusion, non-material Entities"),
+    (r"/Elections?/.*OutstandingBalance$", "Aggregate", "balance of the year"),
+    (r"/Election/Art4\.1\.5$", "Input", "election of Top-up Tax Calculation"),
+    (r"/Elections?/", "Input", "elections"),
+    (r"/CEComputation/(AdjustedFANIL|NetGlobeIncome|AdjustedIncomeTax|AdjustedCoveredTax|AdjustedCoveredTax/DeferTaxAdjustAmt)/Total$"
+     r"|ShipIncome/Total$", "Aggregate", "derived amount of the Entity"),
+    (r"/CEComputation/", "Input", "Entity amounts and their detail"),
+    (r"/OverallComputation/QDMTT/Amount$", "Calculation", "Top-up Tax Calculation"),
+    (r"/OverallComputation/QDMTT/", "Input", "QDMTT terms of the jurisdiction"),
+    (r"/OverallComputation/(FANIL|AdjustedFANIL|IncomeTaxExpense)$|AggregrateCurrentTax$|/OverallComputation/.*/Adjustments/Amount$"
+     r"|/OverallComputation/NetGlobeIncome/IntShippingIncome/|/(PostFilingAdjust/\w+|DeemedDistTax|TransBlendCFC)/Total$|/TotalDDT$"
+     r"|/DeferTaxAdjustAmt/(Total|DefTaxAmt|BefRecastAdjust|TotalAdjust|PreRecast|Recast/\w+)$"
+     r"|/SubstanceExclusion/(Total|PayrollCost|TangibleAssetValue)$|/NONArt4\.1\.5/AdditionalTopUpTax$",
+     "Aggregate", "sum over the group"),
+    (r"/NONArt4\.1\.5/|/PostFilingAdjust/|/DeemedDistTax/|/DeferTaxAdjustAmt/|/TransBlendCFC/|/SubstanceExclusion/|AdjustmentItem$",
+     "Input", "group detail"),
     (r"/OverallComputation/", "Calculation", "Top-up Tax Calculation"),
     (r"/LowTaxJurisdiction/UTPR/|/Attribution/(UTPRPercentage|UTPRTopUpTaxAttributed|Employees|TangibleAssetValue|UTPRTopUpTaxCarriedForward)$", "Calculation", "UTPR"),
     (r"/Attribution/", "Input", "UTPR carry-forward and cash tax"),
@@ -41,93 +61,40 @@ def source(path):
     for pattern, kind, what in RULES:
         if re.search(pattern, path):
             return kind, what
-    return "Input", ""
+    raise ValueError("no source for " + path)
 
 
-rows, count = {s: [] for s in SECTIONS}, {}
+rows, count, shown = {s: [] for s in SECTIONS}, {}, 0
 for v in g.vectors:
     if v["kind"] != "value":
         continue
+    assert v["vector_id"] in c.linked, v["path"]
     path = c.plain(v["path"])
     section = next(s for s in SECTIONS if "/" + s in path or path.endswith("@version") and s == "MessageSpec")
-    kind, what = source(path) if v["vector_id"] in c.linked else ("Not linked", "")
+    kind, what = source(path)
+    used = any(a is not None for a in c.x[v["vector_id"]])
+    shown += used
     count[(section, kind)] = count.get((section, kind), 0) + 1
-    rows[section].append("| %d | %s | %s | %s |" % (int(v["vector_id"][1:]), path.split("GLOBEBody/")[-1].replace("GLOBE_OECD/", "").replace("_", "\\_"), kind, what))
+    rows[section].append("| %d | %s | %s | %s | %s |" % (int(v["vector_id"][1:]), path.split("GLOBEBody/")[-1].replace("GLOBE_OECD/", "").replace("_", "\\_"), kind, what, "yes" if used else ""))
 
-kinds = ["Reference", "Calculation", "Input", "Not linked"]
+kinds = ["Reference", "Calculation", "Aggregate", "Input"]
+total = sum(len(r) for r in rows.values())
 L = ["# Link Map", "",
      "Every value vector of the [Output Model](../Output/Model.md) and where the [Link Model](Model.md) takes it from. Generated by `map.py`; do not edit.", "",
      "- **Reference:** an Entity, a TIN, or a jurisdiction of the Input Model, selected for the row.",
      "- **Calculation:** a result of the Calculation Model.",
-     "- **Input:** an atom of the Input Model, passed through.",
-     "- **Not linked:** left absent. These are optional parts of the return.", "",
+     "- **Aggregate:** a sum, a difference, or an average of atoms of the Input Model.",
+     "- **Input:** an atom of the Input Model, passed through.", "",
+     "The last column marks the %d vectors that have a value in the example of `check.py`; the other %d are linked but the example has nothing to report in them." % (shown, total - shown), "",
      "| Section | " + " | ".join(kinds) + " | Total |", "| --- |" + " --- |" * (len(kinds) + 1)]
 for s in SECTIONS:
     L.append("| %s | %s | %d |" % (s, " | ".join(str(count.get((s, k), 0)) for k in kinds), len(rows[s])))
-L.append("| **Total** | %s | %d |" % (" | ".join(str(sum(count.get((s, k), 0) for s in SECTIONS)) for k in kinds), sum(len(r) for r in rows.values())))
+L.append("| **Total** | %s | %d |" % (" | ".join(str(sum(count.get((s, k), 0) for s in SECTIONS)) for k in kinds), total))
 L.append("")
 for s in SECTIONS:
-    L += ["# " + s, "", "| Vector | Path | Source | From |", "| --- | --- | --- | --- |"] + rows[s] + [""]
+    L += ["# " + s, "", "| Vector | Path | Source | From | In example |", "| --- | --- | --- | --- | --- |"] + rows[s] + [""]
 with open(os.path.join(HERE, "Map.md"), "w", newline="\n", encoding="utf-8") as fh:
     fh.write("\n".join(L))
 
-# ---------------------------------------------------------------- Unlinked.md
-# (pattern, topic, what it reports, what linking it needs, pages of ../xml schema.txt); the first match wins.
-NOW, INPUT, CALC = "Can be linked now", "Needs new input", "Needs Calculation Model work"
-TOPICS = [
-    (r"/JurWithTaxingRights/Subgroup/", "Subgroups with taxing rights", "The subgroup to which a jurisdiction's taxing right relates", NOW, "The calculation units of the Link Model", "45-46"),
-    (r"/CE/QUTPR/", "QUTPR of each Entity", "Whether Article 9.3 applies, the aggregate share charged under Qualified IIRs, and whether all UPE interests are so held", NOW, "`Charged` and `r` of UTPR; Article 9.3 as input", "34-35"),
-    (r"/Summary/SBIE/", "SBIE flags of the summary", "Whether no SBIE was calculated, and whether the SBIE removed all Top-up Tax", NOW, "`sbie` and `excess-profit` of Top-up Tax Calculation", "41"),
-    (r"/SubstanceExclusion/", "Breakdown of the SBIE", "Payroll costs, tangible assets, mark-up rates, and their allocation to PEs and Flow-through Entities", INPUT, "Payroll and tangible assets by Entity and the rates of the year; Top-up Tax Calculation takes the SBIE as one amount", "106-111"),
-    (r"/AdjustedFANIL/Adjustment/", "Adjustments to accounting income", "Allocations between Main Entity, PE and Flow-through Entity, cross-border adjustments, and UPE adjustments with the owners concerned", INPUT, "Adjustment rows by Entity with their counterpart Entity", "64-69"),
-    (r"/NetGlobeIncome/Adjustments/", "GloBE Income adjustments by item", "The amount of each adjustment item, by Entity and by group", INPUT, "An Entity-by-item matrix whose row sums reconcile accounting income to GloBE Income", "70-71, 90"),
-    (r"/IntShippingIncome/", "International shipping income", "Shipping income, ancillary income, the 50% cap, and the related substance and taxes", INPUT, "Shipping amounts by Entity", "72-73, 89-90"),
-    (r"/AdjustedIncomeTax/CrossAllocation/", "Cross-allocation of taxes", "Covered Taxes moved to or from another Entity", INPUT, "Allocation rows by Entity with their counterpart Entity", "74-75"),
-    (r"/AdjustedCoveredTax/Adjustments/", "Covered Tax adjustments by item", "The amount of each adjustment item to current tax, by Entity and by group", INPUT, "An Entity-by-item matrix whose row sums reconcile income tax expense to Adjusted Covered Taxes", "76-77, 93-94"),
-    (r"/DeferTaxAdjustAmt/", "Deferred tax", "Deferred tax adjustment items, recast to the Minimum Rate, recapture of deferred tax liabilities, and transition-year balances", CALC, "A deferred tax model across Fiscal Years", "78-79, 92-105"),
-    (r"/PostFilingAdjust/", "Post-filing adjustments", "Deferred tax assets and tax refunds attributed to earlier years", CALC, "Results of earlier Fiscal Years", "92-105"),
-    (r"/DeemedDistTax/", "Deemed distribution tax", "The Article 4.4.7 election: recapture account by year and the resulting Top-up Tax", CALC, "A recapture account across Fiscal Years", "92-105"),
-    (r"/TransBlendCFC/", "Blended CFC taxes", "CFC tax allocated to the jurisdiction during the transition", INPUT, "Allocated amounts by CFC jurisdiction and subgroup", "92-105"),
-    (r"/AdditionalTopUpTax/NONArt4\.1\.5/", "Additional Top-up Tax from recalculation", "The earlier and the recalculated ETR and Top-up Tax of each prior year, and the article that caused it", CALC, "Recalculation of prior Fiscal Years; Top-up Tax Calculation takes the result as `actt-prior`", "112-115"),
-    (r"/OverallComputation/QDMTT/", "QDMTT details", "Minimum rate, basis for blending, and currency election of the QDMTT", INPUT, "QDMTT terms by jurisdiction", "116-118"),
-    (r"/Non-MaterialCE/", "Non-material Constituent Entities", "Revenue of three years and the simplified amounts of non-material CEs", INPUT, "The non-material CE election and its amounts", "119-120"),
-    (r"/Deminimis-SimplifiedNMCECalc/", "De minimis exclusion", "Revenue, GloBE revenue, income and their three-year averages", CALC, "The De Minimis document of the Calculation Model", "60-62"),
-    (r"UTPRSafeHarbour/", "Transitional UTPR Safe Harbour", "The corporate income tax rate of the UPE jurisdiction", CALC, "UTPR Safe Harbour, not modelled in UTPR", "62-63, 123"),
-    (r"/GLoBETax/InitialIntActivity/", "Initial phase of international activity", "Start date, reference jurisdiction, and tangible assets by jurisdiction", CALC, "Article 9.3, not modelled in UTPR", "49-51"),
-    (r"/CEComputation/Elections/", "Elections of an Entity", "Status, election year and revocation year of each Entity-level election, with the Entities concerned", INPUT, "Elections by Entity; Articles 7.5 and 7.6 also need the Investment Entity rules", "80-87"),
-    (r"/ETR/Election/", "Elections of a jurisdiction", "Status, election year and revocation year of each jurisdictional election", INPUT, "Elections by group", "53-58"),
-    (r"/CEComputation/OtherFAS$", "Accounting standard of an Entity", "A standard other than that of the consolidated statements", INPUT, "Accounting standard by Entity", "63-87"),
-    (r"/ReportDifference/|/DiffDomesticTut$", "Differences under domestic law", "The amounts as they would be under the legislation of a jurisdiction with taxing rights", INPUT, "A second calculation under each domestic law", "39, 46-48"),
-    (r"/LocalCurrency$", "Local currency", "The currency of a local filing, where it differs", INPUT, "Currency by jurisdiction", "48"),
-    (r"/OwnershipChange/|/UnreportChangeCorpStr$", "Changes of ownership during the year", "Date of each change, and status and owners before it", CALC, "Effective periods in the Calculation Model", "29-31, 36"),
-    (r"/Art10\.3\.5$", "Article 10.3.5", "The jurisdiction that requires a Parent Entity located elsewhere to apply its IIR", INPUT, "The `art-10.3.5` classification and its jurisdiction", "27"),
-    (r"/AdditionalDataPoint/", "Additional data points", "Free-form data required by government guidance", INPUT, "None defined", "19"),
-    (r"/CorrDocRefId$", "Corrections", "The reference of the document being corrected", INPUT, "A correction workflow", "128-130"),
-    (r"@version$|/MessageSpec/|/FilingInfo/AdditionalInfo$", "Optional header fields", "Schema version, sending Entity, contact, warning, additional information", INPUT, "Filing data", "12-13, 24"),
-]
-found = {t[1]: 0 for t in TOPICS}
-for v in g.vectors:
-    if v["kind"] == "value" and v["vector_id"] not in c.linked:
-        path = c.plain(v["path"])
-        topic = next((t[1] for t in TOPICS if re.search(t[0], path)), None)
-        assert topic, "no topic for " + path
-        found[topic] += 1
-U = ["# Unlinked", "",
-     "The %d value vectors of the [Output Model](../Output/Model.md) that the [Link Model](Model.md) does not define yet, by topic. All are optional in the schema, so the return is valid without them. The vectors themselves are listed in [Map](Map.md). Generated by `map.py`; do not edit." % sum(found.values()), ""]
-for status in (NOW, INPUT, CALC):
-    part = [t for t in TOPICS if t[3] == status]
-    U += ["# %s" % status, "",
-          {NOW: "The Calculation Model already produces what these need.",
-           INPUT: "These report detail that the Calculation Model takes as a single amount, or does not use at all. Each needs its own atoms in the Input Model.",
-           CALC: "These depend on rules the Calculation Model does not cover yet."}[status], "",
-          "| Topic | Vectors | Reports | Needs | Guide pages |", "| --- | --- | --- | --- | --- |"]
-    for _, topic, reports, _, needs, pages in part:
-        U.append("| %s | %d | %s | %s | %s |" % (topic, found[topic], reports, needs, pages))
-    U += ["| **Total** | %d | | | |" % sum(found[t[1]] for t in part), ""]
-U += ["Guide pages are those of `../xml schema.txt`.", ""]
-with open(os.path.join(HERE, "Unlinked.md"), "w", newline="\n", encoding="utf-8") as fh:
-    fh.write("\n".join(U))
-
 if __name__ == "__main__":
-    print("\n".join(L[9:19]))
-    print({st: sum(found[t[1]] for t in TOPICS if t[3] == st) for st in (NOW, INPUT, CALC)})
+    print("\n".join(L[9:20]))

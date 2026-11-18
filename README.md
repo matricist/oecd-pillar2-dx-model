@@ -24,7 +24,7 @@ flowchart LR
     O --> X
 ```
 
-1. **[Input](GIR-Model/Input/Model.md)** holds only what cannot be derived: an Entity list, the direct Ownership Interest matrix $\mathbf{X}_0$, the direct Controlling Interest matrix $\mathbf{C}_0$, jurisdictions, and a few classification vectors.
+1. **[Input](GIR-Model/Input/Model.md)** holds only what cannot be derived: an Entity list, the direct Ownership Interest matrix $\mathbf{X}_0$, the direct Controlling Interest matrix $\mathbf{C}_0$, jurisdictions, a few classification vectors, and the amounts, items, and tables of the return.
 2. **[Calculation Model](Calculation-Model/Workflow.md)** turns the input into results by matrix algebra: indirect ownership, JV Groups, Minority-Owned Subgroups, calculation groups, Parent Entities, and IIR payability.
 3. **[Link](GIR-Model/Link/Model.md)** defines each atom of the return as a selection, expansion, or aggregation of inputs and results. It calculates nothing itself.
 4. **[Output](GIR-Model/Output/Model.md)** is the GIR XSD rewritten as 84 relations, their vectors, and 782 equations. A document is schema-valid exactly when every equation holds.
@@ -73,7 +73,7 @@ This is work in progress.
 
 - **Settled:** Ownership Interest, Controlling Interest, JV, MOSG, Group, Transitional CbCR Safe Harbour, Top-up Tax Calculation, Taxing Rights, UTPR, and the Output model of the whole schema.
 - **Draft:** IIR.
-- **Return:** on the example group the model produces a complete return: every Output equation holds and the XML is accepted by two XSD validators. All required parts are linked; 335 of the 493 value fields are optional detail that is not linked yet, listed by topic in [Unlinked](GIR-Model/Link/Unlinked.md).
+- **Return:** on the example group the model produces a complete return: every Output equation holds and the XML is accepted by two XSD validators. All 493 value fields are linked, and the [Link Map](GIR-Model/Link/Map.md) gives the source of each. Elections, exclusions, and prior-year detail are reported from the input; their effect on the calculation is not modelled yet ([Open](GIR-Model/Link/Model.md#open)).
 - **Checked:** on random documents over the whole schema, "every Output equation holds" and "the XSD validators accept" have always coincided.
 - **Not modelled:** changes of ownership or control within a Fiscal Year, and the Simplified ETR Safe Harbour.
 

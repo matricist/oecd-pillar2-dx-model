@@ -1,6 +1,6 @@
 # Link Model
 
-Each atom of the [Output Model](../Output/Model.md) defined in terms of the [Input Model](../Input/Model.md) and the results of the [Calculation Model](../../Calculation-Model/Workflow.md). The Link Model only selects, expands, and aggregates; it calculates nothing itself. It follows the user guide (`../xml schema.txt`) and produces every required part of the return; [Map](Map.md) lists each value vector of the Output Model with its source, including the optional parts that are not linked.
+Each atom of the [Output Model](../Output/Model.md) defined in terms of the [Input Model](../Input/Model.md) and the results of the [Calculation Model](../../Calculation-Model/Workflow.md). The Link Model only selects, expands, and aggregates; it calculates nothing itself. It follows the user guide (`../xml schema.txt`) and defines every value vector of the return; [Map](Map.md) lists each of them with its source.
 
 # Operators
 
@@ -11,6 +11,20 @@ Each atom of the [Output Model](../Output/Model.md) defined in terms of the [Inp
 | $\operatorname{val}(\mathbf{A})$ | The $k$ non-zero entries of $\mathbf{A}$, in the same order |
 
 A relation with $\mathbf{P}=\mathbf{R}$ therefore has one row per non-zero cell, and $\mathbf{Q}\times\mathbf{a}$ carries an attribute $\mathbf{a}$ of the columns into its rows.
+
+# General Rules
+
+**Tables.** A [table](../Input/Model.md#tables) $t$ of the Input Model is reported under the rows of an Output relation that belong to the same Entity, group, or section. With $\mathbf{H}$ relating the rows of the parent relation to those owners, and $\mathbf{T}_t$ relating the rows of the table to them:
+
+$$
+(\mathbf{R},\mathbf{Q}):=\operatorname{cells}(\mathbf{H}\times\mathbf{T}_t^{T}),\qquad\mathbf{P}=\mathbf{R},
+$$
+
+and a column $\mathbf{a}$ of the table is reported as $\mathbf{Q}\times\mathbf{a}$. Below, "table `t` under $\mathbf{H}$" stands for this.
+
+**Presence.** Where no presence vector is defined below, an optional node is present in a row exactly where it has content there: a value, a present node inside it, or a row of a relation inside it. An optional atom without a value is therefore left out, together with every optional element that would then be empty.
+
+**References.** Where a row refers to an Entity, the return shows its first TIN and, where the element asks for it, the code of its jurisdiction, as in the [ID block](#id-block).
 
 # Entity-Level Matrices
 
@@ -77,6 +91,7 @@ $\mathbf{S}_{U}:=\operatorname{rows}(\mathbf{group\text{-}upe})$.
 | $\boldsymbol{\pi}_{\text{OtherUPE}}$ | $\mathbf{S}_{U}\times\neg\mathbf{ee}$ |
 | `ExcludedUPE/ExcludedUPEStatus` | $\mathbf{S}_{U}\times\mathbf{ee\text{-}type}$, as the GIR60x code of the same kind |
 | `ExcludedUPE/ID`, `OtherUPE/ID` | [ID block](#id-block) with $\operatorname{diag}(\boldsymbol{\pi})\times\mathbf{S}_{U}$; an Excluded UPE reports no `ResCountryCode` and no `Rules` |
+| `Art10.3.5` | $\mathbf{S}_{U}\times\mathbf{Art\text{-}10.3.5}\times\mathbf{code}$, in the alternative of the row |
 
 # CE
 
@@ -96,6 +111,15 @@ $\mathbf{S}_{C}:=\operatorname{rows}\bigl((\mathbf{ce}\lor\mathbf{jvmember})\lan
 | $\boldsymbol{\pi}_{\text{Art2.1.5}}$ | $\mathbf{S}_{C}\times\bigl[\mathbf{pope}\land\mathbf{qiir}\land\bigl((\mathbf{Wholly\text{-}own}^{T}\times(\mathbf{qiir}\land\mathbf{pope}))>0\bigr)\bigr]$ |
 | $\boldsymbol{\pi}_{\text{Exception}}$ | $\boldsymbol{\pi}_{\text{Art2.1.3}}+\boldsymbol{\pi}_{\text{Art2.1.5}}$ |
 | `QIIR/Exception/TIN` | First TIN of the displacing Parent Entity that is not itself displaced |
+| `OwnershipChange` | Table `change` under $\mathbf{S}_{C}$, with $\mathbf{Q}$ of that link |
+| `OwnershipChange/PreGlobeStatus` | $\operatorname{cells}$ of the statuses of each row; value GIR701 to GIR721 |
+| `OwnershipChange/PreOwnership` | $\operatorname{cells}(\mathbf{Q}\times\mathbf{W}^{pre})$, with type, TIN, and percentage as in `Ownership` |
+| $\boldsymbol{\pi}_{\text{QUTPR}}$ | $\mathbf{S}_{C}\times(\mathbf{ce}\lor\mathbf{jvmember})$ if some jurisdiction is in $\mathbf{utpr\text{-}jur}$, otherwise $\mathbf{0}$ |
+| `QUTPR/Art9.3` | $\mathit{art\text{-}9.3}$ |
+| `QUTPR/AggOwnership` | $\mathbf{S}_{C}\times(\mathbf{Charged}^{T}\times\mathbf{1}_N)$: the share of the Entity's Top-up Tax charged under Qualified IIRs |
+| `QUTPR/UPEOwnership` | $\mathbf{S}_{C}\times(\mathbf{r}=\mathbf{0})$: no interest of a UPE is left uncharged |
+
+$\mathbf{utpr\text{-}jur}$, $\mathbf{Charged}$ and $\mathbf{r}$ are those of [UTPR](<../../Calculation-Model/UTPR.md>). `AggOwnership` and `UPEOwnership` are left out under Article 9.3, and for an Entity for which a UPE is payable under a Qualified IIR.
 
 # Excluded Entity
 
@@ -105,6 +129,8 @@ $\mathbf{S}_{E}:=\operatorname{rows}(\mathbf{ee}\land\neg\mathbf{group\text{-}up
 | --- | --- |
 | $\mathbf{P}_{\text{ExcludedEntity}}$ | $\mathbf{1}^{T}$ |
 | `Name`, `Type`, `Change` | $\mathbf{S}_{E}\times\mathbf{name}$, $\mathbf{S}_{E}\times\mathbf{ee\text{-}type}$, $\mathbf{S}_{E}\times\mathbf{ee\text{-}change}$ |
+
+`UnreportChangeCorpStr` is $\mathit{unreported\text{-}change}$.
 
 # Jurisdiction Section
 
@@ -127,9 +153,12 @@ $\mathbf{Iir\text{-}rights}$ and $\mathbf{Qdmtt\text{-}rights}$ have collecting 
 | `RecJurCode` | $(\mathbf{R},\mathbf{Q}):=\operatorname{cells}(\mathbf{S}_{J}\times\mathbf{rec\text{-}jur})$; $\mathbf{P}=\mathbf{R}$, value $\mathbf{Q}\times\mathbf{code}$ |
 | `JurWithTaxingRights` | $(\mathbf{R},\mathbf{Q}):=\operatorname{cells}\bigl(\mathbf{S}_{J}\times(\mathbf{Iir\text{-}rights}\lor\mathbf{Qdmtt\text{-}rights})^{T}\bigr)$; $\mathbf{P}=\mathbf{R}$ |
 | `JurWithTaxingRights/JurisdictionName` | $\mathbf{Q}\times\mathbf{code}$ |
-| `DocSpec` | $\mathbf{S}_{J}\times\mathbf{doc\text{-}type}$, $\mathbf{S}_{J}\times\mathbf{doc\text{-}ref}$ |
+| `JurWithTaxingRights/ReportDifference` | The `diff` row with the section and the jurisdiction of the row, if there is one |
+| `LocalCurrency` | $\mathbf{S}_{J}\times(\mathbf{local\text{-}currency},\text{none})$ |
+| `AdditionalDataPoint` | Table `data-point` under $\mathbf{S}_{J}$ |
+| `DocSpec` | $\mathbf{S}_{J}\times\mathbf{doc\text{-}type}$, $\mathbf{S}_{J}\times\mathbf{doc\text{-}ref}$, $\mathbf{S}_{J}\times\mathbf{corr\text{-}ref}$ |
 
-`Subgroup` and `ReportDifference` under `JurWithTaxingRights` are not linked. UTPR taxing rights are not included in `JurWithTaxingRights`.
+UTPR taxing rights are not included in `JurWithTaxingRights`. `JurWithTaxingRights/Subgroup` follows under [Calculation Units](#calculation-units).
 
 # Calculation Units
 
@@ -159,7 +188,23 @@ A unit is a subgroup, and is reported with the TIN of its top Entity, as follows
 | Investment Entities | GIR1104 | GIR1604 | none |
 | Other CEs | none | none | none |
 
-A group of Investment Entities inside a Minority-Owned Subgroup or a JV Group carries both types. Where there is no top Entity the TIN is `NOTIN`.
+A group of Investment Entities inside a Minority-Owned Subgroup or a JV Group carries both types. Where there is no top Entity the TIN is `NOTIN`. $\mathbf{subgroup}$ marks the units that have a Summary type.
+
+A jurisdiction has taxing rights over a unit if one of its Entities is payable under the IIR for a member of the unit, or if it applies a QDMTT to the unit:
+
+$$
+\mathbf{Unit\text{-}rights}:=\Bigl(\mathbf{Entt\text{-}jur}^{T}\times\bigl(((\mathbf{Iir\text{-}payable}\lor\operatorname{diag}(\mathbf{self\text{-}payable}))\times\mathbf{Unit})>0\bigr)\Bigr)>0\;\lor\;\bigl(\operatorname{diag}(\mathbf{qdmtt\text{-}impl})\times\mathbf{Entt\text{-}jur}^{T}\times\mathbf{Unit}\bigr)>0
+$$
+
+With $(\mathbf{R},\mathbf{Q})$ of `JurWithTaxingRights` in [Jurisdiction Section](#jurisdiction-section), `JurWithTaxingRights/Subgroup` has one row for each of its rows and each unit that is a subgroup of the same section over which the jurisdiction of the row has taxing rights:
+
+$$
+\mathbf{P}_{\text{Subgroup}}:=\mathbf{R}'\quad\text{where}\quad(\mathbf{R}',\mathbf{Q}'):=\operatorname{cells}\bigl((\mathbf{R}^{T}\times\mathbf{Unit\text{-}section})\odot(\mathbf{Q}\times\mathbf{Unit\text{-}rights})\times\operatorname{diag}(\mathbf{subgroup})\bigr)
+$$
+
+Its `TIN` and `TypeofSubGroup` are the top Entity and the Summary type of the unit.
+
+**Group amounts.** $\mathbf{H}_{G}\in\{0,1\}^{U\times M_{Calc}}$ relates each unit that is a Full Calculation Group to that group. A group vector $\mathbf{v}$ is reported in the rows of the units as $\mathbf{H}_{G}\times\mathbf{v}$, and has no value for a TCSH unit.
 
 # Summary
 
@@ -173,6 +218,12 @@ One row per unit. Apart from the name of the jurisdiction, a row is completed on
 | `SafeHarbour` | GIR1203, GIR1204, GIR1205 for each of $\mathbf{dm}$, $\mathbf{setr}$, $\mathbf{rp}$ that the TCSH unit passes |
 | `ETRRange` | GIR1314 for a TCSH unit; otherwise the 2.5-point band of $\mathbf{etr}$, where $\mathbf{positive}$ |
 | `QDMTTut`, `GLoBETut` | Band of $\mathbf{qdmtt}$ and of $\mathbf{tt\text{-}group}$ |
+| `SBIE/NotApplicable` | $\mathbf{G}^{T}\times\mathbf{sbie}=\mathbf{0}$, for a full unit |
+| `SBIE/NoTut` | $(\mathbf{G}^{T}\times\mathbf{sbie}>\mathbf{0})\land(\mathbf{tt\text{-}percent}>\mathbf{0})\land(\mathbf{excess\text{-}profit}=\mathbf{0})$, for a full unit |
+| `JurWithTaxingRights/DiffDomesticTut` | Band of the Top-up Tax in the `diff` row of the section and jurisdiction, if there is one |
+| `AdditionalDataPoint` | Table `data-point` under $\mathbf{H}_{G}$ |
+
+$\mathbf{G}:=\mathbf{Entt\text{-}group}$.
 
 # Jurisdiction Section: ETR
 
@@ -183,19 +234,98 @@ One `ETR` row per unit, $\mathbf{P}=\mathbf{Unit\text{-}section}$. Amounts are t
 | `SubGroup` | TIN of the top Entity and ETR type, for a subgroup |
 | `ETRException/TransitionalCbCRSafeHarbour` | `Revenue`, `Profit`, `IncomeTax` are $\mathbf{r}$, $\mathbf{p}$, $\mathbf{t}$ of the TCSH unit |
 | $\boldsymbol{\pi}_{\text{ETRComputation}}$ | $\mathbf{full}$ |
-| `OverallComputation/FANIL`, `AdjustedFANIL` | $\mathbf{Entt\text{-}group}^{T}\times\mathbf{fanil}$ |
-| `OverallComputation/IncomeTaxExpense` | $\mathbf{Entt\text{-}group}^{T}\times\mathbf{income\text{-}tax}$ |
+| `ETRException/UTPRSafeHarbour/CITRate` | $\mathit{cit\text{-}rate}$, for the units of the UPE jurisdiction where $\mathit{utpr\text{-}sh}$ |
+| `OverallComputation/FANIL`, `AdjustedFANIL` | $\mathbf{G}^{T}\times\mathbf{fanil}$, $\mathbf{G}^{T}\times\mathbf{adj\text{-}fanil}$ |
+| `OverallComputation/IncomeTaxExpense` | $\mathbf{G}^{T}\times\mathbf{income\text{-}tax}$ |
 | `OverallComputation/NetGlobeIncome/Total` | $\mathbf{income}$ |
-| `OverallComputation/AdjustedCoveredTax/Total` | $\mathbf{tax}$ |
+| `OverallComputation/AdjustedCoveredTax/AggregrateCurrentTax` | $\mathbf{G}^{T}\times\mathbf{adj\text{-}tax}$ |
+| `OverallComputation/AdjustedCoveredTax/Total` | $\mathbf{tax}+\mathbf{ente\text{-}generated}-\mathbf{ente\text{-}used}$ |
 | `OverallComputation/ETRRate`, `TopUpTaxPercentage` | $\mathbf{etr}$, $\mathbf{tt\text{-}percent}$ |
 | `OverallComputation/ExcessProfits`, `TopUpTax` | $\mathbf{excess\text{-}profit}$, $\mathbf{tt\text{-}group}$ |
 | `OverallComputation/ExcessNegTaxExpense` | $\mathbf{ente\text{-}prior}$, $\mathbf{ente\text{-}generated}$, $\mathbf{ente\text{-}used}$, $\mathbf{ente\text{-}next}$ |
 | `OverallComputation/AdditionalTopUpTax/Art4.1.5` | $\mathbf{tax}$, $\mathbf{income}$, $\mathbf{expected}$, $\mathbf{actt\text{-}4.1.5}$, where $\mathbf{art\text{-}4.1.5}$ |
-| `OverallComputation/QDMTT/Amount` | $\mathbf{qdmtt}$, where positive |
+| `OverallComputation/QDMTT` | `Amount` is $\mathbf{qdmtt}$, where positive; the other elements are the QDMTT terms of the unit's jurisdiction |
 | `CEComputation` | $(\mathbf{R},\mathbf{Q}):=\operatorname{cells}\bigl((\mathbf{Unit}\times\operatorname{diag}(\mathbf{full}))^{T}\bigr)$; $\mathbf{P}=\mathbf{R}$: one row per Entity of a full unit |
 | `CEComputation/TIN` | $\mathbf{Q}\times$ first TIN |
-| `CEComputation/AdjustedFANIL`, `NetGlobeIncome/Total` | $\mathbf{Q}\times\mathbf{fanil}$, $\mathbf{Q}\times\mathbf{globe\text{-}income}$ |
-| `CEComputation/AdjustedIncomeTax`, `AdjustedCoveredTax/Total` | $\mathbf{Q}\times\mathbf{income\text{-}tax}$, $\mathbf{Q}\times\mathbf{act}$ |
+| `CEComputation/AdjustedFANIL/FANIL`, `Total` | $\mathbf{Q}\times\mathbf{fanil}$, $\mathbf{Q}\times\mathbf{adj\text{-}fanil}$ |
+| `CEComputation/NetGlobeIncome/Total` | $\mathbf{Q}\times\mathbf{globe\text{-}income}$ |
+| `CEComputation/AdjustedIncomeTax/IncomeTax`, `Total` | $\mathbf{Q}\times\mathbf{income\text{-}tax}$, $\mathbf{Q}\times\mathbf{adj\text{-}tax}$ |
+| `CEComputation/AdjustedCoveredTax/Total` | $\mathbf{Q}\times\mathbf{act}$ |
+| `CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/DeferTaxExpense`, `Total` | $\mathbf{Q}\times\mathbf{defer\text{-}expense}$, $\mathbf{Q}\times\mathbf{defer\text{-}total}$ |
+
+$\mathbf{adj\text{-}fanil}$, $\mathbf{adj\text{-}tax}$, $\mathbf{defer\text{-}total}$ and the amounts taken by Top-up Tax Calculation are the [derived amounts](../Input/Model.md#derived-amounts) of the Input Model. The Adjusted Covered Taxes of a group are reported after the Excess Negative Tax Expense generated and used, which is the numerator of $\mathbf{etr}$.
+
+# Jurisdiction Section: Entity Detail
+
+Under the rows of `CEComputation`, whose $\mathbf{Q}$ is written $\mathbf{Q}_{CE}$ here. An item matrix is reported with one row per Entity and item:
+
+$$
+(\mathbf{R},\mathbf{Q}):=\operatorname{cells}\bigl(\mathbf{Q}_{CE}\times((\mathbf{A}^{+}+\mathbf{A}^{-})>0)\bigr)
+$$
+
+`AdjustmentItem` is the code of the column, and `Amount` has up to two rows: the entry of $\mathbf{A}^{+}$, and the entry of $\mathbf{A}^{-}$ as a negative amount.
+
+| Output | Link |
+| --- | --- |
+| `AdjustedFANIL/Adjustment/MainEntityPEandFTE` | $\operatorname{cells}(\mathbf{Q}_{CE}\times(\mathbf{To}+\mathbf{From})^{T})$ of `transfer`: one row for each end of a transfer. `Additions` is the amount at the destination and `Reductions` at the source, the other being 0; `OtherTIN` and `ResCountryCode` refer to the other end. |
+| `AdjustedFANIL/Adjustment/CrossBorderAdjustments` | Table `cross-border` under $\mathbf{Q}_{CE}$ |
+| `AdjustedFANIL/Adjustment/UPEAdjustments` | Table `upe-adj` under $\mathbf{Q}_{CE}$; `IdentificationOfOwners` is table `upe-owner` under its rows |
+| `NetGlobeIncome/Adjustments` | Item matrices $\mathbf{Inc}^{+},\mathbf{Inc}^{-}$ |
+| `NetGlobeIncome/IntShippingIncome` | For an Entity with an entry in $\mathbf{Ship\text{-}cat}$: the totals $\mathbf{ship}$ and $\mathbf{anc}$, and the shipping atoms; `Category` is $\operatorname{cells}(\mathbf{Q}_{CE}\times\mathbf{Ship\text{-}cat})$ |
+| `AdjustedIncomeTax/CrossAllocation` | As `MainEntityPEandFTE`, from `tax-transfer`, reporting only the one of `Additions` and `Reductions` that applies; `Basis` is $\operatorname{cells}$ of the bases of the row |
+| `AdjustedCoveredTax/Adjustments` | Item matrices $\mathbf{Tax}^{+},\mathbf{Tax}^{-}$ |
+| `AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustment` | Item matrices $\mathbf{Def}^{+},\mathbf{Def}^{-}$; `Recast/Higher` and `Lower` are the entries of $\mathbf{Def}^{hi}$ and $\mathbf{Def}^{lo}$ in the same cell, where not zero |
+| `Elections` | The five-year elections and flags of the Entity; `Art6.3.4`, `Art7.5`, `Art7.6` are the tables of those names under $\mathbf{Q}_{CE}$ |
+| `Elections/AggregatedReporting` | TIN of the Entity's `tax-group`; `EntityTIN` is $\operatorname{cells}(\mathbf{Q}_{CE}\times\mathbf{Entt\text{-}taxgroup}\times\mathbf{Entt\text{-}taxgroup}^{T})$, the members of that group |
+| `OtherFAS` | $\mathbf{Q}_{CE}\times\mathbf{other\text{-}fas}$ |
+
+# Jurisdiction Section: Group Detail
+
+Under the `ETR` row of each full unit. An item matrix of a group is reported with one row per item and sign:
+
+$$
+(\mathbf{R},\mathbf{Q}):=\operatorname{cells}\bigl(\mathbf{H}_{G}\times(\mathbf{A}^{+}\;\;{-\mathbf{A}^{-}})\bigr),\qquad\texttt{Amount}:=\operatorname{val}\bigl(\mathbf{H}_{G}\times(\mathbf{A}^{+}\;\;{-\mathbf{A}^{-}})\bigr)
+$$
+
+The items of the group's Adjusted Covered Taxes, GIR2701 to GIR2720, are $\mathbf{Fin}^{+},\mathbf{Fin}^{-}\in\mathbb{R}_{\ge0}^{M_{Calc}\times20}$:
+
+| Column | $\mathbf{Fin}^{+}$ | $\mathbf{Fin}^{-}$ |
+| --- | --- | --- |
+| GIR2701, GIR2703 to GIR2718 | $\mathbf{G}^{T}\times\mathbf{Tax}^{+}$, columns in order | $\mathbf{G}^{T}\times\mathbf{Tax}^{-}$ |
+| GIR2702 | $[\mathbf{act\text{-}adj}]^{+}$ | $[-\mathbf{act\text{-}adj}]^{+}$ |
+| GIR2719 | $\mathbf{ente\text{-}generated}$ | $\mathbf{0}$ |
+| GIR2720 | $\mathbf{0}$ | $\mathbf{ente\text{-}used}$ |
+
+| Output | Link |
+| --- | --- |
+| `OverallComputation/NetGlobeIncome/Adjustments` | Item matrices $\mathbf{G}^{T}\times\mathbf{Inc}^{+}$, $\mathbf{G}^{T}\times\mathbf{Inc}^{-}$ |
+| `OverallComputation/NetGlobeIncome/IntShippingIncome` | `TotalIntShipIncome` is $\mathbf{G}^{T}\times\mathbf{ship}$, `FiftyPercentCap` is $\mathbf{ship\text{-}cap}$, `TotalQualifiedAncIncome` is $\mathbf{G}^{T}\times\mathbf{anc}$, `ExcessOfCap` is $\mathbf{income\text{-}adj}$ where positive, and `Total` is $\mathbf{G}^{T}\times(\mathbf{ship}+\mathbf{anc})-\mathbf{income\text{-}adj}$; for a group with a shipping Entity |
+| `AdjustedCoveredTax/Adjustments` | Item matrices $\mathbf{Fin}^{+},\mathbf{Fin}^{-}$ |
+| `AdjustedCoveredTax/PostFilingAdjust` | `AmountAttributed` is table `post-dta` or `post-refund` under $\mathbf{H}_{G}$; each `Total` is $\mathbf{R}\times\mathbf{amount}$ |
+| `AdjustedCoveredTax/DeemedDistTax` | `Total` is item GIR2414 of the group, $\mathbf{G}^{T}\times(\mathbf{Tax}^{+}-\mathbf{Tax}^{-})$ in that column. `Election/Recapture` is table `ddt` under $\mathbf{H}_{G}$, with `TotalDDT` the sum of the four years; `Reduction`, `IncrementalTopUpTax`, `Ratio` are the atoms of the group. |
+| `AdjustedCoveredTax/DeferTaxAdjustAmt` | See below |
+| `AdjustedCoveredTax/TransBlendCFC` | `CFCJur` is table `cfc` under $\mathbf{H}_{G}$; `Total` is $\mathbf{R}\times\mathbf{amount}$ |
+| `SubstanceExclusion` | `Total` is $\mathbf{G}^{T}\times\mathbf{sbie}$, `PayrollCost` $\mathbf{G}^{T}\times\mathbf{payroll}$, `TangibleAssetValue` $\mathbf{G}^{T}\times\mathbf{tangible}$, the mark-ups $\rho_{p}$ and $\rho_{t}$; `PEAllocation` and `FTEAllocation` are tables `sbie-pe` and `sbie-fte` under $\mathbf{H}_{G}$ |
+| `AdditionalTopUpTax/NONArt4.1.5` | Table `recalc` under $\mathbf{H}_{G}$; `Articles` is $\operatorname{cells}$ of the articles of the row; `AdditionalTopUpTax` is the recalculated less the previous Top-up Tax |
+| `Election` | The five-year elections and flags of the group; `Art4.1.5` is $\mathbf{ente\text{-}elected}$; `Art3.2.1.c/OutstandingBalance` is $\mathbf{qo\text{-}opening}+\mathbf{qo\text{-}add}-\mathbf{qo\text{-}red}$ |
+| `ETRException/Deminimis-SimplifiedNMCECalc` | `Basis` is $\mathbf{dm\text{-}basis}$. `FinancialData` has a row for the Fiscal Year, with $\mathbf{dm\text{-}rev}$, $\mathbf{dm\text{-}globe\text{-}rev}$, $\mathbf{income}$ and $\mathbf{G}^{T}\times\mathbf{fanil}$, followed by table `dm-prior` under $\mathbf{H}_{G}$. `Average` is the mean of those rows. |
+| `Non-MaterialCE` | $(\mathbf{R},\mathbf{Q}):=\operatorname{cells}\bigl((\mathbf{Unit}\times\operatorname{diag}(\mathbf{full}))^{T}\times\operatorname{diag}(\mathbf{nmce})\bigr)$: one row per non-material Entity of a full unit. `RFY`, `RFY-1`, `RFY-2` are the columns of $\mathbf{Q}\times\mathbf{nm\text{-}rev}$, `Average` their mean, `AggregateSimplified` is $\mathbf{Q}\times\mathbf{nm\text{-}simplified}$, and `ID` is the [ID block](#id-block) with $\mathbf{Q}$. |
+
+**Deferred tax of a group**
+
+$$
+\begin{aligned}
+\texttt{BefRecastAdjust}&:=\mathbf{G}^{T}\times\mathbf{defer\text{-}expense}\\
+\texttt{DiffCarryValue},\texttt{GLoBEValue}&:=\mathbf{def\text{-}diff},\mathbf{def\text{-}globe}\\
+\texttt{DefTaxAmt}&:=\texttt{BefRecastAdjust}+\mathbf{def\text{-}diff}-\mathbf{def\text{-}globe}\\
+\texttt{TotalAdjust}&:=\mathbf{G}^{T}\times(\mathbf{Def}^{+}-\mathbf{Def}^{-})\times\mathbf{1}\\
+\texttt{PreRecast}&:=\texttt{BefRecastAdjust}+\texttt{TotalAdjust}\\
+\texttt{Recast/Higher},\texttt{Recast/Lower}&:=\mathbf{G}^{T}\times\mathbf{Def}^{hi}\times\mathbf{1},\;\mathbf{G}^{T}\times\mathbf{Def}^{lo}\times\mathbf{1}\\
+\texttt{Total}&:=\texttt{PreRecast}+\texttt{Recast/Higher}+\texttt{Recast/Lower}=\mathbf{G}^{T}\times\mathbf{defer\text{-}total}
+\end{aligned}
+$$
+
+`Adjustments` are the item matrices $\mathbf{G}^{T}\times\mathbf{Def}^{+}$, $\mathbf{G}^{T}\times\mathbf{Def}^{-}$; the schema asks for `RecaptureDeferred` in each of its rows, which is $\mathbf{Recapture}$ of the group. `Transition` is table `transition` under $\mathbf{H}_{G}$. The block is reported for a group with deferred tax expense, an adjustment, or a `transition` row.
 
 # Jurisdiction Section: Low-Tax Jurisdiction
 
@@ -213,6 +343,21 @@ Present for a section whose units have Top-up Tax. Parent Entities are those pay
 | `IIROffSet` | $\bigl((\mathbf{Y})_{kj}-(\mathbf{Net\text{-}iir}^{Q})_{kj}\bigr)\cdot(\mathbf{tt\text{-}entt})_j$ |
 | `TopUpTax` | $(\mathbf{Net\text{-}iir}^{Q})_{kj}\cdot(\mathbf{tt\text{-}entt})_j$ |
 | `UTPR/UTPRCalculation` | Both amounts are $\mathbf{utpr\text{-}ratio}\odot\mathbf{tt\text{-}entt}$ summed over the Entities of the section, where positive |
+| `UTPR/UTPRSafeHarbour/CITRate` | $\mathit{cit\text{-}rate}$, in place of `UTPRCalculation`, for the section of the UPE jurisdiction where $\mathit{utpr\text{-}sh}$ |
+
+# Jurisdiction Section: Initial Phase of International Activity
+
+`InitialIntActivity` is reported in every section where $\mathit{art\text{-}9.3}$. With $\mathit{ref}$ the Reference Jurisdiction and $\mathbf{tan}^{0}$ the tangible assets by jurisdiction in the first Fiscal Year in scope:
+
+| Output | Link |
+| --- | --- |
+| `StartDate` | First day of the first Fiscal Year in scope |
+| `ReferenceJurisdiction` | $(\mathbf{code})_{\mathit{ref}}$ and $(\mathbf{tan}^{0})_{\mathit{ref}}$ |
+| `OtherJurisdiction` | One row per other jurisdiction $j$ with $(\mathbf{tan}^{0})_j>0$: $(\mathbf{code})_j$ and $(\mathbf{tan}^{0})_j$ |
+| `RFYNumberOfJurisdictions` | Number of jurisdictions with a non-zero entry in $\mathbf{Entt\text{-}jur}^{T}\times(\mathbf{ce}\land\neg\mathbf{ie})$ |
+| `RFYSumTangibleAssetValue` | $\mathbf{Entt\text{-}jur}^{+T}\times((\mathbf{ce}\land\neg\mathbf{ie})\odot\mathbf{tan})$ summed over the jurisdictions other than $\mathit{ref}$ |
+
+The last two are left out in the first Fiscal Year in scope.
 
 # UTPR Attribution
 
@@ -227,7 +372,7 @@ Present when $\mathit{total}>0$, with one `Attribution` row per jurisdiction in 
 
 # Message Header and Filing Information
 
-`MessageSpec`, `FilingInfo`, `GeneralSection/RecJurCode`, and every `DocSpec` are filing data of the Input Model, passed through. The Filing Constituent Entity is an Entity of the Input Model, so its name, jurisdiction, and TIN are references.
+`MessageSpec`, `FilingInfo`, `GeneralSection/RecJurCode`, and every `DocSpec` are filing data of the Input Model, passed through. The Filing Constituent Entity is an Entity of the Input Model, so its name, jurisdiction, and TIN are references. `AdditionalDataPoint` of the general section and of the UTPR attribution are the `data-point` tables that belong to nothing, with all rows under the single parent row.
 
 # Rounding
 
@@ -248,19 +393,26 @@ Substituting the links, the Output equations of `CorporateStructure` follow from
 | `OwnershipPercentage` is a percentage | $\mathbf{W}$ is rounded to four decimal places. |
 | At least one `ResCountryCode` | $\mathbf{Entt\text{-}jur}\times\mathbf{1}_M=\neg\mathbf{stateless}$, and a Stateless Entity reports X5. |
 
-`check.py` applies the links to the structure of [Example](../../Calculation-Model/Example.md), with example amounts, and evaluates the 782 Output equations on the whole return; all hold.
+`check.py` applies the links to the structure of [Example](../../Calculation-Model/Example.md), with example amounts and detail, and evaluates the 782 Output equations on the whole return; all hold. The example has a value in 390 of the 493 value vectors; [Map](Map.md) marks them. The others are linked, but the example has nothing to report in them: it has no Excluded UPE, Flow-through UPE, Investment Entity election, correction, or Article 9.3 exclusion.
 
 `validate.py` writes the same atoms as XML with `../Output/serialize.py` and validates the document against the XSD with two validators. The document, [sample.xml](sample.xml), is valid without any filler value, and in six deliberately broken variants the equations and the validators reject the same thing. `fuzz.py` repeats the comparison on random documents over the whole schema; no disagreement has been found.
 
 # Open
 
+- **Effects that are reported but not calculated.** The elections, the de minimis exclusion, the simplified calculation for non-material Entities, the Transitional UTPR Safe Harbour, and Article 9.3 change the calculation, and the Calculation Model does not apply them. The return is consistent only if the amounts of the Input already reflect them.
+- **Changes during the year.** `OwnershipChange` is passed through from the `change` table; the Calculation Model uses the structure at the end of the year, without [effective periods](<../../Calculation-Model/Ownership Interest.md#effective-periods>).
+- **Recalculations.** The `recalc` rows are inputs: prior Fiscal Years are not recalculated here.
+- **Deferred tax.** The Total Deferred Tax Adjustment Amount is taken as expense plus adjustments plus both recasts. The recapture accounts and the transition balances are passed through, not rolled forward from earlier years.
+- **Adjusted Covered Taxes of a group.** Reported after Excess Negative Tax Expense, so that the items add up to the total.
+- **Shipping.** `Total` of the group is taken to be the income that is excluded. A loss from shipping is treated like income.
+- **`QUTPR`.** Reported for every Entity once any jurisdiction applies a Qualified UTPR. The guide also leaves out the shares where every Parent Entity payable under a Qualified IIR holds the whole Entity.
+- **`InitialIntActivity/OtherJurisdiction`.** One row per jurisdiction, although the schema allows up to five codes in a row.
+- **Group detail of TCSH units.** Elections and data points are reported for Full Calculation Groups only.
+- **Corrections.** `CorrDocRefId` is passed through; which sections a correction must resend is not modelled.
 - **Interests held through non-group members.** Looked through only for Excluded Entities; non-group members are not Entities of the Input Model.
 - **GIR309.** Assigned to Single MOCEs only, although a MOPE and a MOS are also MOCEs.
 - **Several statuses per owner.** The user guide asks for a separate `ID` where owners treat a Flow-through Entity differently; one `ID` per Entity is produced here.
 - **`QIIR/Exception`.** Decided per Entity here, whereas [Taxing Rights](<../../Calculation-Model/Taxing Rights.md#iir-payability>) decides displacement per low-taxed Entity.
-- **`QUTPR`, `Art10.3.5`.** Not linked; `QUTPR` waits for the UTPR document.
-- **`OwnershipChange`.** Not linked; it needs the [effective periods](<../../Calculation-Model/Ownership Interest.md#effective-periods>).
-- **Optional detail.** 335 of the 493 value vectors are not linked: adjustments by item, elections, international shipping, deferred tax, transition, de minimis, and the like. They are optional in the schema; [Unlinked](Unlinked.md) lists them by topic with what each needs.
 - **Units.** One `Summary` row and one `ETR` row per unit is an assumption, as is treating a group under an applied TCSH as having no Top-up Tax.
 - **Subgroup TIN.** `NOTIN` is reported for a group of Investment Entities and for a TCSH unit of CEs, which have no single top Entity.
 - **`SafeHarbour`.** Every TCSH test that is passed is reported.

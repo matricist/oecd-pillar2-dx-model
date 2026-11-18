@@ -4,538 +4,540 @@ Every value vector of the [Output Model](../Output/Model.md) and where the [Link
 
 - **Reference:** an Entity, a TIN, or a jurisdiction of the Input Model, selected for the row.
 - **Calculation:** a result of the Calculation Model.
+- **Aggregate:** a sum, a difference, or an average of atoms of the Input Model.
 - **Input:** an atom of the Input Model, passed through.
-- **Not linked:** left absent. These are optional parts of the return.
 
-| Section | Reference | Calculation | Input | Not linked | Total |
+The last column marks the 390 vectors that have a value in the example of `check.py`; the other 103 are linked but the example has nothing to report in them.
+
+| Section | Reference | Calculation | Aggregate | Input | Total |
 | --- | --- | --- | --- | --- | --- |
-| MessageSpec | 0 | 0 | 7 | 4 | 11 |
-| FilingInfo | 0 | 0 | 15 | 2 | 17 |
-| GeneralSection | 30 | 8 | 6 | 20 | 64 |
-| Summary | 6 | 5 | 3 | 9 | 23 |
-| JurisdictionSection | 19 | 33 | 15 | 294 | 361 |
-| UTPRAttribution | 1 | 5 | 5 | 6 | 17 |
-| **Total** | 56 | 51 | 51 | 335 | 493 |
+| MessageSpec | 0 | 0 | 0 | 11 | 11 |
+| FilingInfo | 0 | 0 | 0 | 17 | 17 |
+| GeneralSection | 36 | 11 | 0 | 17 | 64 |
+| Summary | 6 | 7 | 0 | 10 | 23 |
+| JurisdictionSection | 68 | 32 | 42 | 219 | 361 |
+| UTPRAttribution | 1 | 5 | 0 | 11 | 17 |
+| **Total** | 111 | 55 | 42 | 285 | 493 |
 
 # MessageSpec
 
-| Vector | Path | Source | From |
-| --- | --- | --- | --- |
-| 2 | @version | Not linked |  |
-| 4 | MessageSpec/SendingEntityIN | Not linked |  |
-| 5 | MessageSpec/TransmittingCountry | Input | filing data |
-| 6 | MessageSpec/ReceivingCountry | Input | filing data |
-| 7 | MessageSpec/MessageType | Input | filing data |
-| 9 | MessageSpec/Warning | Not linked |  |
-| 11 | MessageSpec/Contact | Not linked |  |
-| 12 | MessageSpec/MessageRefId | Input | filing data |
-| 13 | MessageSpec/MessageTypeIndic | Input | filing data |
-| 14 | MessageSpec/ReportingPeriod | Input | filing data |
-| 15 | MessageSpec/Timestamp | Input | filing data |
+| Vector | Path | Source | From | In example |
+| --- | --- | --- | --- | --- |
+| 2 | @version | Input | filing data | yes |
+| 4 | MessageSpec/SendingEntityIN | Input | filing data | yes |
+| 5 | MessageSpec/TransmittingCountry | Input | filing data | yes |
+| 6 | MessageSpec/ReceivingCountry | Input | filing data | yes |
+| 7 | MessageSpec/MessageType | Input | filing data | yes |
+| 9 | MessageSpec/Warning | Input | filing data | yes |
+| 11 | MessageSpec/Contact | Input | filing data | yes |
+| 12 | MessageSpec/MessageRefId | Input | filing data | yes |
+| 13 | MessageSpec/MessageTypeIndic | Input | filing data | yes |
+| 14 | MessageSpec/ReportingPeriod | Input | filing data | yes |
+| 15 | MessageSpec/Timestamp | Input | filing data | yes |
 
 # FilingInfo
 
-| Vector | Path | Source | From |
-| --- | --- | --- | --- |
-| 16 | FilingInfo/FilingCE/ResCountryCode | Input | filing data |
-| 17 | FilingInfo/FilingCE/Name | Input | filing data |
-| 18 | FilingInfo/FilingCE/TIN/#text | Input | filing data |
-| 20 | FilingInfo/FilingCE/TIN/@issuedBy | Input | filing data |
-| 22 | FilingInfo/FilingCE/TIN/@unknown | Input | filing data |
-| 24 | FilingInfo/FilingCE/TIN/@TypeOfTIN | Input | filing data |
-| 25 | FilingInfo/FilingCE/Role | Input | filing data |
-| 26 | FilingInfo/AccountingInfo/CFSofUPE | Input | filing data |
-| 27 | FilingInfo/AccountingInfo/FAS | Input | filing data |
-| 28 | FilingInfo/AccountingInfo/Currency | Input | filing data |
-| 29 | FilingInfo/Period/Start | Input | filing data |
-| 30 | FilingInfo/Period/End | Input | filing data |
-| 31 | FilingInfo/NameMNE | Input | filing data |
-| 33 | FilingInfo/AdditionalInfo | Not linked |  |
-| 34 | FilingInfo/DocSpec/DocTypeIndic | Input | filing data |
-| 35 | FilingInfo/DocSpec/DocRefId | Input | filing data |
-| 37 | FilingInfo/DocSpec/CorrDocRefId | Not linked |  |
+| Vector | Path | Source | From | In example |
+| --- | --- | --- | --- | --- |
+| 16 | FilingInfo/FilingCE/ResCountryCode | Input | filing data | yes |
+| 17 | FilingInfo/FilingCE/Name | Input | filing data | yes |
+| 18 | FilingInfo/FilingCE/TIN/#text | Input | filing data | yes |
+| 20 | FilingInfo/FilingCE/TIN/@issuedBy | Input | filing data | yes |
+| 22 | FilingInfo/FilingCE/TIN/@unknown | Input | filing data |  |
+| 24 | FilingInfo/FilingCE/TIN/@TypeOfTIN | Input | filing data | yes |
+| 25 | FilingInfo/FilingCE/Role | Input | filing data | yes |
+| 26 | FilingInfo/AccountingInfo/CFSofUPE | Input | filing data | yes |
+| 27 | FilingInfo/AccountingInfo/FAS | Input | filing data | yes |
+| 28 | FilingInfo/AccountingInfo/Currency | Input | filing data | yes |
+| 29 | FilingInfo/Period/Start | Input | filing data | yes |
+| 30 | FilingInfo/Period/End | Input | filing data | yes |
+| 31 | FilingInfo/NameMNE | Input | filing data | yes |
+| 33 | FilingInfo/AdditionalInfo | Input | filing data | yes |
+| 34 | FilingInfo/DocSpec/DocTypeIndic | Input | filing data | yes |
+| 35 | FilingInfo/DocSpec/DocRefId | Input | filing data | yes |
+| 37 | FilingInfo/DocSpec/CorrDocRefId | Input | filing data |  |
 
 # GeneralSection
 
-| Vector | Path | Source | From |
-| --- | --- | --- | --- |
-| 39 | GeneralSection/RecJurCode | Input | filing data |
-| 41 | GeneralSection/CorporateStructure/UPE/ExcludedUPE/ExcludedUPEStatus | Input | Entity classification |
-| 43 | GeneralSection/CorporateStructure/UPE/ExcludedUPE/Art10.3.5 | Not linked |  |
-| 44 | GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/Name | Reference | Entity, TIN, or jurisdiction |
-| 45 | GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/ResCountryCode | Reference | Entity, TIN, or jurisdiction |
-| 46 | GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/TIN/#text | Reference | Entity, TIN, or jurisdiction |
-| 48 | GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/TIN/@issuedBy | Reference | Entity, TIN, or jurisdiction |
-| 50 | GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/TIN/@unknown | Reference | Entity, TIN, or jurisdiction |
-| 52 | GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/TIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction |
-| 53 | GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/Rules | Reference | implementation status of the jurisdiction |
-| 54 | GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/GlobeStatus | Calculation | classification |
-| 56 | GeneralSection/CorporateStructure/UPE/OtherUPE/ID/Name | Reference | Entity, TIN, or jurisdiction |
-| 57 | GeneralSection/CorporateStructure/UPE/OtherUPE/ID/ResCountryCode | Reference | Entity, TIN, or jurisdiction |
-| 58 | GeneralSection/CorporateStructure/UPE/OtherUPE/ID/TIN/#text | Reference | Entity, TIN, or jurisdiction |
-| 60 | GeneralSection/CorporateStructure/UPE/OtherUPE/ID/TIN/@issuedBy | Reference | Entity, TIN, or jurisdiction |
-| 62 | GeneralSection/CorporateStructure/UPE/OtherUPE/ID/TIN/@unknown | Reference | Entity, TIN, or jurisdiction |
-| 64 | GeneralSection/CorporateStructure/UPE/OtherUPE/ID/TIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction |
-| 65 | GeneralSection/CorporateStructure/UPE/OtherUPE/ID/Rules | Reference | implementation status of the jurisdiction |
-| 66 | GeneralSection/CorporateStructure/UPE/OtherUPE/ID/GlobeStatus | Calculation | classification |
-| 68 | GeneralSection/CorporateStructure/UPE/OtherUPE/Art10.3.5 | Not linked |  |
-| 69 | GeneralSection/CorporateStructure/CE/ID/Name | Reference | Entity, TIN, or jurisdiction |
-| 70 | GeneralSection/CorporateStructure/CE/ID/ResCountryCode | Reference | Entity, TIN, or jurisdiction |
-| 71 | GeneralSection/CorporateStructure/CE/ID/TIN/#text | Reference | Entity, TIN, or jurisdiction |
-| 73 | GeneralSection/CorporateStructure/CE/ID/TIN/@issuedBy | Reference | Entity, TIN, or jurisdiction |
-| 75 | GeneralSection/CorporateStructure/CE/ID/TIN/@unknown | Reference | Entity, TIN, or jurisdiction |
-| 77 | GeneralSection/CorporateStructure/CE/ID/TIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction |
-| 78 | GeneralSection/CorporateStructure/CE/ID/Rules | Reference | implementation status of the jurisdiction |
-| 79 | GeneralSection/CorporateStructure/CE/ID/GlobeStatus | Calculation | classification |
-| 80 | GeneralSection/CorporateStructure/CE/OwnershipChange/ChangeDate | Not linked |  |
-| 81 | GeneralSection/CorporateStructure/CE/OwnershipChange/PreGlobeStatus | Not linked |  |
-| 82 | GeneralSection/CorporateStructure/CE/OwnershipChange/PreOwnership/OwnershipType | Not linked |  |
-| 83 | GeneralSection/CorporateStructure/CE/OwnershipChange/PreOwnership/TIN/#text | Not linked |  |
-| 85 | GeneralSection/CorporateStructure/CE/OwnershipChange/PreOwnership/TIN/@issuedBy | Not linked |  |
-| 87 | GeneralSection/CorporateStructure/CE/OwnershipChange/PreOwnership/TIN/@unknown | Not linked |  |
-| 89 | GeneralSection/CorporateStructure/CE/OwnershipChange/PreOwnership/TIN/@TypeOfTIN | Not linked |  |
-| 90 | GeneralSection/CorporateStructure/CE/OwnershipChange/PreOwnership/PreOwnershipPercentage | Not linked |  |
-| 91 | GeneralSection/CorporateStructure/CE/Ownership/OwnershipType | Calculation | classification |
-| 92 | GeneralSection/CorporateStructure/CE/Ownership/TIN/#text | Reference | Entity, TIN, or jurisdiction |
-| 94 | GeneralSection/CorporateStructure/CE/Ownership/TIN/@issuedBy | Reference | Entity, TIN, or jurisdiction |
-| 96 | GeneralSection/CorporateStructure/CE/Ownership/TIN/@unknown | Reference | Entity, TIN, or jurisdiction |
-| 98 | GeneralSection/CorporateStructure/CE/Ownership/TIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction |
-| 99 | GeneralSection/CorporateStructure/CE/Ownership/OwnershipPercentage | Calculation | Ownership Interest |
-| 101 | GeneralSection/CorporateStructure/CE/QIIR/POPE-IPE | Calculation | classification |
-| 104 | GeneralSection/CorporateStructure/CE/QIIR/Exception/ExceptionRule/Art2.1.3 | Calculation | classification |
-| 106 | GeneralSection/CorporateStructure/CE/QIIR/Exception/ExceptionRule/Art2.1.5 | Calculation | classification |
-| 107 | GeneralSection/CorporateStructure/CE/QIIR/Exception/TIN/#text | Reference | Entity, TIN, or jurisdiction |
-| 109 | GeneralSection/CorporateStructure/CE/QIIR/Exception/TIN/@issuedBy | Reference | Entity, TIN, or jurisdiction |
-| 111 | GeneralSection/CorporateStructure/CE/QIIR/Exception/TIN/@unknown | Reference | Entity, TIN, or jurisdiction |
-| 113 | GeneralSection/CorporateStructure/CE/QIIR/Exception/TIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction |
-| 115 | GeneralSection/CorporateStructure/CE/QUTPR/Art9.3 | Not linked |  |
-| 117 | GeneralSection/CorporateStructure/CE/QUTPR/AggOwnership | Not linked |  |
-| 119 | GeneralSection/CorporateStructure/CE/QUTPR/UPEOwnership | Not linked |  |
-| 120 | GeneralSection/CorporateStructure/ExcludedEntity/Name | Reference | Entity, TIN, or jurisdiction |
-| 121 | GeneralSection/CorporateStructure/ExcludedEntity/Type | Input | Entity classification |
-| 122 | GeneralSection/CorporateStructure/ExcludedEntity/Change | Input | Entity classification |
-| 124 | GeneralSection/CorporateStructure/UnreportChangeCorpStr | Not linked |  |
-| 126 | GeneralSection/AdditionalDataPoint/Description | Not linked |  |
-| 128 | GeneralSection/AdditionalDataPoint/Amount | Not linked |  |
-| 130 | GeneralSection/AdditionalDataPoint/Percentage | Not linked |  |
-| 132 | GeneralSection/AdditionalDataPoint/Text | Not linked |  |
-| 134 | GeneralSection/AdditionalDataPoint/Boolean | Not linked |  |
-| 135 | GeneralSection/DocSpec/DocTypeIndic | Input | filing data |
-| 136 | GeneralSection/DocSpec/DocRefId | Input | filing data |
-| 138 | GeneralSection/DocSpec/CorrDocRefId | Not linked |  |
+| Vector | Path | Source | From | In example |
+| --- | --- | --- | --- | --- |
+| 39 | GeneralSection/RecJurCode | Input | filing data | yes |
+| 41 | GeneralSection/CorporateStructure/UPE/ExcludedUPE/ExcludedUPEStatus | Input | Entity classification |  |
+| 43 | GeneralSection/CorporateStructure/UPE/ExcludedUPE/Art10.3.5 | Reference | Entity, TIN, or jurisdiction |  |
+| 44 | GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/Name | Reference | Entity, TIN, or jurisdiction |  |
+| 45 | GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/ResCountryCode | Reference | Entity, TIN, or jurisdiction |  |
+| 46 | GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/TIN/#text | Reference | Entity, TIN, or jurisdiction |  |
+| 48 | GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/TIN/@issuedBy | Reference | Entity, TIN, or jurisdiction |  |
+| 50 | GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/TIN/@unknown | Reference | Entity, TIN, or jurisdiction |  |
+| 52 | GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/TIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction |  |
+| 53 | GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/Rules | Reference | implementation status of the jurisdiction |  |
+| 54 | GeneralSection/CorporateStructure/UPE/ExcludedUPE/ID/GlobeStatus | Calculation | classification |  |
+| 56 | GeneralSection/CorporateStructure/UPE/OtherUPE/ID/Name | Reference | Entity, TIN, or jurisdiction | yes |
+| 57 | GeneralSection/CorporateStructure/UPE/OtherUPE/ID/ResCountryCode | Reference | Entity, TIN, or jurisdiction | yes |
+| 58 | GeneralSection/CorporateStructure/UPE/OtherUPE/ID/TIN/#text | Reference | Entity, TIN, or jurisdiction | yes |
+| 60 | GeneralSection/CorporateStructure/UPE/OtherUPE/ID/TIN/@issuedBy | Reference | Entity, TIN, or jurisdiction | yes |
+| 62 | GeneralSection/CorporateStructure/UPE/OtherUPE/ID/TIN/@unknown | Reference | Entity, TIN, or jurisdiction |  |
+| 64 | GeneralSection/CorporateStructure/UPE/OtherUPE/ID/TIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction | yes |
+| 65 | GeneralSection/CorporateStructure/UPE/OtherUPE/ID/Rules | Reference | implementation status of the jurisdiction | yes |
+| 66 | GeneralSection/CorporateStructure/UPE/OtherUPE/ID/GlobeStatus | Calculation | classification | yes |
+| 68 | GeneralSection/CorporateStructure/UPE/OtherUPE/Art10.3.5 | Reference | Entity, TIN, or jurisdiction |  |
+| 69 | GeneralSection/CorporateStructure/CE/ID/Name | Reference | Entity, TIN, or jurisdiction | yes |
+| 70 | GeneralSection/CorporateStructure/CE/ID/ResCountryCode | Reference | Entity, TIN, or jurisdiction | yes |
+| 71 | GeneralSection/CorporateStructure/CE/ID/TIN/#text | Reference | Entity, TIN, or jurisdiction | yes |
+| 73 | GeneralSection/CorporateStructure/CE/ID/TIN/@issuedBy | Reference | Entity, TIN, or jurisdiction | yes |
+| 75 | GeneralSection/CorporateStructure/CE/ID/TIN/@unknown | Reference | Entity, TIN, or jurisdiction |  |
+| 77 | GeneralSection/CorporateStructure/CE/ID/TIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction | yes |
+| 78 | GeneralSection/CorporateStructure/CE/ID/Rules | Reference | implementation status of the jurisdiction | yes |
+| 79 | GeneralSection/CorporateStructure/CE/ID/GlobeStatus | Calculation | classification | yes |
+| 80 | GeneralSection/CorporateStructure/CE/OwnershipChange/ChangeDate | Input | changes during the year | yes |
+| 81 | GeneralSection/CorporateStructure/CE/OwnershipChange/PreGlobeStatus | Input | changes during the year | yes |
+| 82 | GeneralSection/CorporateStructure/CE/OwnershipChange/PreOwnership/OwnershipType | Calculation | classification | yes |
+| 83 | GeneralSection/CorporateStructure/CE/OwnershipChange/PreOwnership/TIN/#text | Reference | Entity, TIN, or jurisdiction | yes |
+| 85 | GeneralSection/CorporateStructure/CE/OwnershipChange/PreOwnership/TIN/@issuedBy | Reference | Entity, TIN, or jurisdiction | yes |
+| 87 | GeneralSection/CorporateStructure/CE/OwnershipChange/PreOwnership/TIN/@unknown | Reference | Entity, TIN, or jurisdiction |  |
+| 89 | GeneralSection/CorporateStructure/CE/OwnershipChange/PreOwnership/TIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction | yes |
+| 90 | GeneralSection/CorporateStructure/CE/OwnershipChange/PreOwnership/PreOwnershipPercentage | Input | changes during the year | yes |
+| 91 | GeneralSection/CorporateStructure/CE/Ownership/OwnershipType | Calculation | classification | yes |
+| 92 | GeneralSection/CorporateStructure/CE/Ownership/TIN/#text | Reference | Entity, TIN, or jurisdiction | yes |
+| 94 | GeneralSection/CorporateStructure/CE/Ownership/TIN/@issuedBy | Reference | Entity, TIN, or jurisdiction | yes |
+| 96 | GeneralSection/CorporateStructure/CE/Ownership/TIN/@unknown | Reference | Entity, TIN, or jurisdiction | yes |
+| 98 | GeneralSection/CorporateStructure/CE/Ownership/TIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction | yes |
+| 99 | GeneralSection/CorporateStructure/CE/Ownership/OwnershipPercentage | Calculation | Ownership Interest | yes |
+| 101 | GeneralSection/CorporateStructure/CE/QIIR/POPE-IPE | Calculation | classification | yes |
+| 104 | GeneralSection/CorporateStructure/CE/QIIR/Exception/ExceptionRule/Art2.1.3 | Calculation | classification | yes |
+| 106 | GeneralSection/CorporateStructure/CE/QIIR/Exception/ExceptionRule/Art2.1.5 | Calculation | classification | yes |
+| 107 | GeneralSection/CorporateStructure/CE/QIIR/Exception/TIN/#text | Reference | Entity, TIN, or jurisdiction | yes |
+| 109 | GeneralSection/CorporateStructure/CE/QIIR/Exception/TIN/@issuedBy | Reference | Entity, TIN, or jurisdiction | yes |
+| 111 | GeneralSection/CorporateStructure/CE/QIIR/Exception/TIN/@unknown | Reference | Entity, TIN, or jurisdiction |  |
+| 113 | GeneralSection/CorporateStructure/CE/QIIR/Exception/TIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction | yes |
+| 115 | GeneralSection/CorporateStructure/CE/QUTPR/Art9.3 | Input | Article 9.3 | yes |
+| 117 | GeneralSection/CorporateStructure/CE/QUTPR/AggOwnership | Calculation | UTPR | yes |
+| 119 | GeneralSection/CorporateStructure/CE/QUTPR/UPEOwnership | Calculation | UTPR | yes |
+| 120 | GeneralSection/CorporateStructure/ExcludedEntity/Name | Reference | Entity, TIN, or jurisdiction | yes |
+| 121 | GeneralSection/CorporateStructure/ExcludedEntity/Type | Input | Entity classification | yes |
+| 122 | GeneralSection/CorporateStructure/ExcludedEntity/Change | Input | Entity classification | yes |
+| 124 | GeneralSection/CorporateStructure/UnreportChangeCorpStr | Input | changes during the year | yes |
+| 126 | GeneralSection/AdditionalDataPoint/Description | Input | data points | yes |
+| 128 | GeneralSection/AdditionalDataPoint/Amount | Input | data points | yes |
+| 130 | GeneralSection/AdditionalDataPoint/Percentage | Input | data points | yes |
+| 132 | GeneralSection/AdditionalDataPoint/Text | Input | data points | yes |
+| 134 | GeneralSection/AdditionalDataPoint/Boolean | Input | data points | yes |
+| 135 | GeneralSection/DocSpec/DocTypeIndic | Input | filing data | yes |
+| 136 | GeneralSection/DocSpec/DocRefId | Input | filing data | yes |
+| 138 | GeneralSection/DocSpec/CorrDocRefId | Input | filing data |  |
 
 # Summary
 
-| Vector | Path | Source | From |
-| --- | --- | --- | --- |
-| 139 | Summary/RecJurCode | Input | recipients of the section |
-| 141 | Summary/Jurisdiction/JurisdictionName | Reference | Entity, TIN, or jurisdiction |
-| 142 | Summary/Jurisdiction/Subgroup/TIN/#text | Reference | Entity, TIN, or jurisdiction |
-| 144 | Summary/Jurisdiction/Subgroup/TIN/@issuedBy | Reference | Entity, TIN, or jurisdiction |
-| 146 | Summary/Jurisdiction/Subgroup/TIN/@unknown | Reference | Entity, TIN, or jurisdiction |
-| 148 | Summary/Jurisdiction/Subgroup/TIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction |
-| 149 | Summary/Jurisdiction/Subgroup/TypeofSubGroup | Calculation | classification |
-| 151 | Summary/JurWithTaxingRights/JurisdictionName | Reference | Entity, TIN, or jurisdiction |
-| 153 | Summary/JurWithTaxingRights/DiffDomesticTut | Not linked |  |
-| 154 | Summary/SafeHarbour | Calculation | TCSH and Top-up Tax Calculation |
-| 156 | Summary/ETRRange | Calculation | TCSH and Top-up Tax Calculation |
-| 158 | Summary/SBIE/NotApplicable | Not linked |  |
-| 159 | Summary/SBIE/NoTut | Not linked |  |
-| 161 | Summary/QDMTTut | Calculation | TCSH and Top-up Tax Calculation |
-| 163 | Summary/GLoBETut | Calculation | TCSH and Top-up Tax Calculation |
-| 165 | Summary/AdditionalDataPoint/Description | Not linked |  |
-| 167 | Summary/AdditionalDataPoint/Amount | Not linked |  |
-| 169 | Summary/AdditionalDataPoint/Percentage | Not linked |  |
-| 171 | Summary/AdditionalDataPoint/Text | Not linked |  |
-| 173 | Summary/AdditionalDataPoint/Boolean | Not linked |  |
-| 174 | Summary/DocSpec/DocTypeIndic | Input | filing data |
-| 175 | Summary/DocSpec/DocRefId | Input | filing data |
-| 177 | Summary/DocSpec/CorrDocRefId | Not linked |  |
+| Vector | Path | Source | From | In example |
+| --- | --- | --- | --- | --- |
+| 139 | Summary/RecJurCode | Input | recipients of the section | yes |
+| 141 | Summary/Jurisdiction/JurisdictionName | Reference | Entity, TIN, or jurisdiction | yes |
+| 142 | Summary/Jurisdiction/Subgroup/TIN/#text | Reference | Entity, TIN, or jurisdiction | yes |
+| 144 | Summary/Jurisdiction/Subgroup/TIN/@issuedBy | Reference | Entity, TIN, or jurisdiction | yes |
+| 146 | Summary/Jurisdiction/Subgroup/TIN/@unknown | Reference | Entity, TIN, or jurisdiction | yes |
+| 148 | Summary/Jurisdiction/Subgroup/TIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction | yes |
+| 149 | Summary/Jurisdiction/Subgroup/TypeofSubGroup | Calculation | classification | yes |
+| 151 | Summary/JurWithTaxingRights/JurisdictionName | Reference | Entity, TIN, or jurisdiction | yes |
+| 153 | Summary/JurWithTaxingRights/DiffDomesticTut | Input | differences under domestic law | yes |
+| 154 | Summary/SafeHarbour | Calculation | TCSH and Top-up Tax Calculation |  |
+| 156 | Summary/ETRRange | Calculation | TCSH and Top-up Tax Calculation | yes |
+| 158 | Summary/SBIE/NotApplicable | Calculation | TCSH and Top-up Tax Calculation | yes |
+| 159 | Summary/SBIE/NoTut | Calculation | TCSH and Top-up Tax Calculation | yes |
+| 161 | Summary/QDMTTut | Calculation | TCSH and Top-up Tax Calculation | yes |
+| 163 | Summary/GLoBETut | Calculation | TCSH and Top-up Tax Calculation | yes |
+| 165 | Summary/AdditionalDataPoint/Description | Input | data points | yes |
+| 167 | Summary/AdditionalDataPoint/Amount | Input | data points | yes |
+| 169 | Summary/AdditionalDataPoint/Percentage | Input | data points |  |
+| 171 | Summary/AdditionalDataPoint/Text | Input | data points | yes |
+| 173 | Summary/AdditionalDataPoint/Boolean | Input | data points | yes |
+| 174 | Summary/DocSpec/DocTypeIndic | Input | filing data | yes |
+| 175 | Summary/DocSpec/DocRefId | Input | filing data | yes |
+| 177 | Summary/DocSpec/CorrDocRefId | Input | filing data |  |
 
 # JurisdictionSection
 
-| Vector | Path | Source | From |
-| --- | --- | --- | --- |
-| 178 | JurisdictionSection/RecJurCode | Input | recipients of the section |
-| 179 | JurisdictionSection/Jurisdiction | Reference | Entity, TIN, or jurisdiction |
-| 180 | JurisdictionSection/JurWithTaxingRights/JurisdictionName | Reference | Entity, TIN, or jurisdiction |
-| 181 | JurisdictionSection/JurWithTaxingRights/Subgroup/TIN/#text | Not linked |  |
-| 183 | JurisdictionSection/JurWithTaxingRights/Subgroup/TIN/@issuedBy | Not linked |  |
-| 185 | JurisdictionSection/JurWithTaxingRights/Subgroup/TIN/@unknown | Not linked |  |
-| 187 | JurisdictionSection/JurWithTaxingRights/Subgroup/TIN/@TypeOfTIN | Not linked |  |
-| 188 | JurisdictionSection/JurWithTaxingRights/Subgroup/TypeofSubGroup | Not linked |  |
-| 191 | JurisdictionSection/JurWithTaxingRights/ReportDifference/ETRDifference | Not linked |  |
-| 194 | JurisdictionSection/JurWithTaxingRights/ReportDifference/AdjCoveredTaxDifference/AggCurrentTaxExpense | Not linked |  |
-| 196 | JurisdictionSection/JurWithTaxingRights/ReportDifference/AdjCoveredTaxDifference/QRTCExpense | Not linked |  |
-| 198 | JurisdictionSection/JurWithTaxingRights/ReportDifference/AdjCoveredTaxDifference/OtherTaxCredits | Not linked |  |
-| 200 | JurisdictionSection/JurWithTaxingRights/ReportDifference/AdjCoveredTaxDifference/DeferTaxExpense | Not linked |  |
-| 202 | JurisdictionSection/JurWithTaxingRights/ReportDifference/NetGLoBEDifference | Not linked |  |
-| 204 | JurisdictionSection/JurWithTaxingRights/ReportDifference/SBIEDifference | Not linked |  |
-| 206 | JurisdictionSection/JurWithTaxingRights/ReportDifference/AddCurrentTuTDifference | Not linked |  |
-| 208 | JurisdictionSection/JurWithTaxingRights/ReportDifference/TuTDifference | Not linked |  |
-| 210 | JurisdictionSection/JurWithTaxingRights/ReportDifference/ElectionsDifference | Not linked |  |
-| 212 | JurisdictionSection/JurWithTaxingRights/ReportDifference/QRTCIncome | Not linked |  |
-| 214 | JurisdictionSection/JurWithTaxingRights/ReportDifference/ExcessNegTaxCarryForw | Not linked |  |
-| 216 | JurisdictionSection/JurWithTaxingRights/ReportDifference/TransitionDifference | Not linked |  |
-| 218 | JurisdictionSection/LocalCurrency | Not linked |  |
-| 220 | JurisdictionSection/GLoBETax/ETR/SubGroup/TIN/#text | Reference | Entity, TIN, or jurisdiction |
-| 222 | JurisdictionSection/GLoBETax/ETR/SubGroup/TIN/@issuedBy | Reference | Entity, TIN, or jurisdiction |
-| 224 | JurisdictionSection/GLoBETax/ETR/SubGroup/TIN/@unknown | Reference | Entity, TIN, or jurisdiction |
-| 226 | JurisdictionSection/GLoBETax/ETR/SubGroup/TIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction |
-| 227 | JurisdictionSection/GLoBETax/ETR/SubGroup/TypeofSubGroup | Calculation | classification |
-| 230 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/Deminimis-SimplifiedNMCECalc/Basis | Not linked |  |
-| 231 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/Deminimis-SimplifiedNMCECalc/FinancialData/Year | Not linked |  |
-| 233 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/Deminimis-SimplifiedNMCECalc/FinancialData/Revenue | Not linked |  |
-| 234 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/Deminimis-SimplifiedNMCECalc/FinancialData/GlobeRevenue | Not linked |  |
-| 235 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/Deminimis-SimplifiedNMCECalc/FinancialData/NetGlobeIncome | Not linked |  |
-| 236 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/Deminimis-SimplifiedNMCECalc/FinancialData/FANIL | Not linked |  |
-| 238 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/Deminimis-SimplifiedNMCECalc/Average/Revenue | Not linked |  |
-| 239 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/Deminimis-SimplifiedNMCECalc/Average/GlobeRevenue | Not linked |  |
-| 240 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/Deminimis-SimplifiedNMCECalc/Average/NetGlobeIncome | Not linked |  |
-| 241 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/Deminimis-SimplifiedNMCECalc/Average/FANIL | Not linked |  |
-| 244 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour/Revenue | Calculation | TCSH |
-| 245 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour/Profit | Calculation | TCSH |
-| 247 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour/IncomeTax | Calculation | TCSH |
-| 249 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/UTPRSafeHarbour/CITRate | Not linked |  |
-| 251 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Total | Input | Entity amounts |
-| 252 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/FANIL | Input | Entity amounts |
-| 254 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/Basis | Not linked |  |
-| 255 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/OtherTIN/#text | Not linked |  |
-| 257 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/OtherTIN/@issuedBy | Not linked |  |
-| 259 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/OtherTIN/@unknown | Not linked |  |
-| 261 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/OtherTIN/@TypeOfTIN | Not linked |  |
-| 263 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/ResCountryCode | Not linked |  |
-| 264 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/Additions | Not linked |  |
-| 265 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/Reductions | Not linked |  |
-| 266 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/CrossBorderAdjustments/Basis | Not linked |  |
-| 267 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/CrossBorderAdjustments/OtherTIN/#text | Not linked |  |
-| 269 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/CrossBorderAdjustments/OtherTIN/@issuedBy | Not linked |  |
-| 271 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/CrossBorderAdjustments/OtherTIN/@unknown | Not linked |  |
-| 273 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/CrossBorderAdjustments/OtherTIN/@TypeOfTIN | Not linked |  |
-| 275 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/CrossBorderAdjustments/ResCountryCode | Not linked |  |
-| 277 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/CrossBorderAdjustments/Additions | Not linked |  |
-| 279 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/CrossBorderAdjustments/Reductions | Not linked |  |
-| 280 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Basis | Not linked |  |
-| 283 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Reductions/Amount | Not linked |  |
-| 285 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Reductions/Exception | Not linked |  |
-| 286 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/OwnershipPercentage | Not linked |  |
-| 288 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/IndOwners/NumOfOwners | Not linked |  |
-| 290 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/IndOwners/ResCountryCode | Not linked |  |
-| 292 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/IndOwners/TaxRate | Not linked |  |
-| 294 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/TIN/#text | Not linked |  |
-| 296 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/TIN/@issuedBy | Not linked |  |
-| 298 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/TIN/@unknown | Not linked |  |
-| 300 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/TIN/@TypeOfTIN | Not linked |  |
-| 301 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/ResCountryCode | Not linked |  |
-| 303 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/TaxRate | Not linked |  |
-| 305 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/ExTypeOfEntity | Not linked |  |
-| 306 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/Total | Input | Entity amounts of Top-up Tax Calculation |
-| 307 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/Adjustments/Amount | Not linked |  |
-| 308 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/Adjustments/AdjustmentItem | Not linked |  |
-| 310 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/IntShippingIncome/InternationalShipIncome/Total | Not linked |  |
-| 311 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/IntShippingIncome/InternationalShipIncome/Category | Not linked |  |
-| 312 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/IntShippingIncome/InternationalShipIncome/Revenue | Not linked |  |
-| 313 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/IntShippingIncome/InternationalShipIncome/Costs | Not linked |  |
-| 314 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/IntShippingIncome/QualifiedAncShipIncome/Total | Not linked |  |
-| 315 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/IntShippingIncome/QualifiedAncShipIncome/Category | Not linked |  |
-| 316 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/IntShippingIncome/QualifiedAncShipIncome/Revenue | Not linked |  |
-| 317 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/IntShippingIncome/QualifiedAncShipIncome/Costs | Not linked |  |
-| 318 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/IntShippingIncome/SubstanceExclusion/PayrollCosts | Not linked |  |
-| 319 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/IntShippingIncome/SubstanceExclusion/TangibleAssets | Not linked |  |
-| 320 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/IntShippingIncome/CoveredTaxes | Not linked |  |
-| 321 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/Total | Input | Entity amounts |
-| 322 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/IncomeTax | Input | Entity amounts |
-| 323 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/CrossAllocation/Basis | Not linked |  |
-| 324 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/CrossAllocation/OtherTIN/#text | Not linked |  |
-| 326 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/CrossAllocation/OtherTIN/@issuedBy | Not linked |  |
-| 328 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/CrossAllocation/OtherTIN/@unknown | Not linked |  |
-| 330 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/CrossAllocation/OtherTIN/@TypeOfTIN | Not linked |  |
-| 331 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/CrossAllocation/ResCountryCode | Not linked |  |
-| 333 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/CrossAllocation/Additions | Not linked |  |
-| 335 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/CrossAllocation/Reductions | Not linked |  |
-| 336 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/Total | Input | Entity amounts of Top-up Tax Calculation |
-| 337 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/Adjustments/Amount | Not linked |  |
-| 338 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/Adjustments/AdjustmentItem | Not linked |  |
-| 339 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Total | Input | Entity amounts |
-| 340 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/DeferTaxExpense | Input | Entity amounts |
-| 341 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustment/Amount | Not linked |  |
-| 342 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustment/AdjustmentItem | Not linked |  |
-| 345 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustment/Recast/Higher | Not linked |  |
-| 347 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustment/Recast/Lower | Not linked |  |
-| 348 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/TIN/#text | Reference | Entity, TIN, or jurisdiction |
-| 350 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/TIN/@issuedBy | Reference | Entity, TIN, or jurisdiction |
-| 352 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/TIN/@unknown | Reference | Entity, TIN, or jurisdiction |
-| 354 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/TIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction |
-| 357 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art1.5.3/Status | Not linked |  |
-| 359 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art1.5.3/ElectionYear | Not linked |  |
-| 361 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art1.5.3/RevocationYear | Not linked |  |
-| 363 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/SimplCalculations | Not linked |  |
-| 365 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art3.2.1 | Not linked |  |
-| 367 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art3.2.1b/Status | Not linked |  |
-| 369 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art3.2.1b/ElectionYear | Not linked |  |
-| 371 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art3.2.1b/RevocationYear | Not linked |  |
-| 373 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art3.2.1c/Status | Not linked |  |
-| 375 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art3.2.1c/ElectionYear | Not linked |  |
-| 377 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art3.2.1c/RevocationYear | Not linked |  |
-| 378 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art6.3.4/FYTriggerEvent | Not linked |  |
-| 380 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art6.3.4/Inclusion/Art6.3.4.c.i | Not linked |  |
-| 382 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art6.3.4/Inclusion/Art6.3.4.c.ii | Not linked |  |
-| 384 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/TaxConsolGroupTIN/#text | Not linked |  |
-| 386 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/TaxConsolGroupTIN/@issuedBy | Not linked |  |
-| 388 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/TaxConsolGroupTIN/@unknown | Not linked |  |
-| 390 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/TaxConsolGroupTIN/@TypeOfTIN | Not linked |  |
-| 391 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/EntityTIN/#text | Not linked |  |
-| 393 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/EntityTIN/@issuedBy | Not linked |  |
-| 395 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/EntityTIN/@unknown | Not linked |  |
-| 397 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/EntityTIN/@TypeOfTIN | Not linked |  |
-| 399 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art4.4.7/Status | Not linked |  |
-| 401 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art4.4.7/ElectionYear | Not linked |  |
-| 403 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art4.4.7/RevocationYear | Not linked |  |
-| 405 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art4.5.6/Status | Not linked |  |
-| 407 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art4.5.6/ElectionYear | Not linked |  |
-| 409 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art4.5.6/RevocationYear | Not linked |  |
-| 410 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.5/Status | Not linked |  |
-| 412 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.5/ElectionYear | Not linked |  |
-| 414 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.5/RevocationYear | Not linked |  |
-| 415 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.5/CEOwnerTIN/#text | Not linked |  |
-| 417 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.5/CEOwnerTIN/@issuedBy | Not linked |  |
-| 419 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.5/CEOwnerTIN/@unknown | Not linked |  |
-| 421 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.5/CEOwnerTIN/@TypeOfTIN | Not linked |  |
-| 422 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6/Status | Not linked |  |
-| 423 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6/ElectionYear | Not linked |  |
-| 425 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6/RevocationYear | Not linked |  |
-| 426 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6/ActualDeemedDist | Not linked |  |
-| 427 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6/LocalCreditableTaxGross | Not linked |  |
-| 428 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6/ShareOfUndistNetGlobeInc | Not linked |  |
-| 429 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6/InvestmentEntityTIN/#text | Not linked |  |
-| 431 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6/InvestmentEntityTIN/@issuedBy | Not linked |  |
-| 433 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6/InvestmentEntityTIN/@unknown | Not linked |  |
-| 435 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6/InvestmentEntityTIN/@TypeOfTIN | Not linked |  |
-| 437 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/OtherFAS | Not linked |  |
-| 439 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/FANIL | Calculation | sum of Entity amounts over the group |
-| 440 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedFANIL | Calculation | sum of Entity amounts over the group |
-| 441 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/Total | Calculation | Top-up Tax Calculation |
-| 442 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/Adjustments/Amount | Not linked |  |
-| 443 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/Adjustments/AdjustmentItem | Not linked |  |
-| 445 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/IntShippingIncome/Total | Not linked |  |
-| 446 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/IntShippingIncome/TotalIntShipIncome | Not linked |  |
-| 447 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/IntShippingIncome/FiftyPercentCap | Not linked |  |
-| 448 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/IntShippingIncome/TotalQualifiedAncIncome | Not linked |  |
-| 450 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/IntShippingIncome/ExcessOfCap | Not linked |  |
-| 451 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/IncomeTaxExpense | Calculation | sum of Entity amounts over the group |
-| 452 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ETRRate | Calculation | Top-up Tax Calculation |
-| 453 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/TopUpTaxPercentage | Calculation | Top-up Tax Calculation |
-| 455 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Total | Calculation | Top-up Tax Calculation |
-| 456 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/AggregrateCurrentTax | Calculation | sum of Entity amounts over the group |
-| 457 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Adjustments/Amount | Not linked |  |
-| 458 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Adjustments/AdjustmentItem | Not linked |  |
-| 460 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/DeferTaxAsset/Total | Not linked |  |
-| 461 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/DeferTaxAsset/AmountAttributed/Year | Not linked |  |
-| 462 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/DeferTaxAsset/AmountAttributed/Amount | Not linked |  |
-| 463 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/CoveredTaxRefund/Total | Not linked |  |
-| 464 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/CoveredTaxRefund/AmountAttributed/Year | Not linked |  |
-| 465 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/CoveredTaxRefund/AmountAttributed/Amount | Not linked |  |
-| 467 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Total | Not linked |  |
-| 469 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/Year | Not linked |  |
-| 470 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/StartAmount | Not linked |  |
-| 471 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-0 | Not linked |  |
-| 472 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-1 | Not linked |  |
-| 473 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-2 | Not linked |  |
-| 474 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-3 | Not linked |  |
-| 475 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/TotalDDT | Not linked |  |
-| 476 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/EndAmount | Not linked |  |
-| 477 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Reduction | Not linked |  |
-| 478 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/IncrementalTopUpTax | Not linked |  |
-| 479 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Ratio | Not linked |  |
-| 481 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Total | Not linked |  |
-| 482 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/DefTaxAmt | Not linked |  |
-| 483 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/DiffCarryValue | Not linked |  |
-| 484 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/GLoBEValue | Not linked |  |
-| 485 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/BefRecastAdjust | Not linked |  |
-| 486 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/TotalAdjust | Not linked |  |
-| 487 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/PreRecast | Not linked |  |
-| 490 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Recast/Higher | Not linked |  |
-| 492 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Recast/Lower | Not linked |  |
-| 493 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/Amount | Not linked |  |
-| 494 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/AdjustmentItem | Not linked |  |
-| 495 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/RecaptureDeferred/DTLRFYMinus5 | Not linked |  |
-| 496 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/RecaptureDeferred/RecapDTLRFYMinus5 | Not linked |  |
-| 497 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/RecaptureDeferred/DTLRFY | Not linked |  |
-| 498 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/RecaptureDeferred/AggregateDTL/ReportingFiscalYear/AmountPreTransition | Not linked |  |
-| 499 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/RecaptureDeferred/AggregateDTL/ReportingFiscalYear/AmountOutBalance | Not linked |  |
-| 500 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/RecaptureDeferred/AggregateDTL/ReportingFiscalYear/AmountUnjustified | Not linked |  |
-| 501 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/RecaptureDeferred/AggregateDTL/PriorFiscalYear/AmountPreTransition | Not linked |  |
-| 502 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/RecaptureDeferred/AggregateDTL/PriorFiscalYear/AmountOutBalance | Not linked |  |
-| 503 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/RecaptureDeferred/AggregateDTL/PriorFiscalYear/AmountUnjustified | Not linked |  |
-| 504 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/Year | Not linked |  |
-| 506 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxLiabilityStart | Not linked |  |
-| 508 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxLiabilityRecast | Not linked |  |
-| 510 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/Total | Not linked |  |
-| 511 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/DeferredTaxAssetStart | Not linked |  |
-| 512 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/DeferredTaxAssetRecast | Not linked |  |
-| 513 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/DeferredTaxAssetExcluded | Not linked |  |
-| 515 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/Disposal/ResCountryCode | Not linked |  |
-| 516 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/Disposal/NetDTADTL | Not linked |  |
-| 517 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/Disposal/CarryingValue | Not linked |  |
-| 518 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/Disposal/TaxPaid | Not linked |  |
-| 519 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/Disposal/DTADTL | Not linked |  |
-| 521 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/AltJurisdiction | Not linked |  |
-| 523 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/TransBlendCFC/CFCJur/Jurisdiction | Not linked |  |
-| 524 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/TransBlendCFC/CFCJur/Allocation/SubGroupTIN/#text | Not linked |  |
-| 526 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/TransBlendCFC/CFCJur/Allocation/SubGroupTIN/@issuedBy | Not linked |  |
-| 528 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/TransBlendCFC/CFCJur/Allocation/SubGroupTIN/@unknown | Not linked |  |
-| 530 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/TransBlendCFC/CFCJur/Allocation/SubGroupTIN/@TypeOfTIN | Not linked |  |
-| 531 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/TransBlendCFC/CFCJur/Allocation/AggAllocTax | Not linked |  |
-| 532 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/TransBlendCFC/Total | Not linked |  |
-| 534 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/Total | Not linked |  |
-| 535 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PayrollCost | Not linked |  |
-| 536 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PayrollMarkUp | Not linked |  |
-| 537 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/TangibleAssetValue | Not linked |  |
-| 538 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/TangibleAssetMarkup | Not linked |  |
-| 540 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PEAllocation/JurOfOwners/ResCountryCode | Not linked |  |
-| 542 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PEAllocation/JurOfOwners/UPE | Not linked |  |
-| 544 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PEAllocation/JurOfOwners/NotApplicable | Not linked |  |
-| 545 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PEAllocation/PayrollCost/Total | Not linked |  |
-| 546 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PEAllocation/PayrollCost/Allocation | Not linked |  |
-| 547 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PEAllocation/TangibleAssetValue/Total | Not linked |  |
-| 548 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PEAllocation/TangibleAssetValue/Allocation | Not linked |  |
-| 550 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/FTEAllocation/JurOfOwners/ResCountryCode | Not linked |  |
-| 552 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/FTEAllocation/JurOfOwners/UPE | Not linked |  |
-| 554 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/FTEAllocation/JurOfOwners/NotApplicable | Not linked |  |
-| 555 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/FTEAllocation/PayrollCost/Total | Not linked |  |
-| 556 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/FTEAllocation/PayrollCost/Allocation | Not linked |  |
-| 557 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/FTEAllocation/TangibleAssetValue/Total | Not linked |  |
-| 558 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/FTEAllocation/TangibleAssetValue/Allocation | Not linked |  |
-| 559 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessProfits | Calculation | Top-up Tax Calculation |
-| 561 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Articles | Not linked |  |
-| 562 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Year | Not linked |  |
-| 563 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Previous/NetGlobeIncome | Not linked |  |
-| 564 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Previous/AdjustedCoveredTax | Not linked |  |
-| 565 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Previous/ETRRate | Not linked |  |
-| 566 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Previous/ExcessProfits | Not linked |  |
-| 567 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Previous/TopUpTaxPercentage | Not linked |  |
-| 568 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Previous/TopUpTax | Not linked |  |
-| 569 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Recalculated/NetGlobeIncome | Not linked |  |
-| 570 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Recalculated/AdjustedCoveredTax | Not linked |  |
-| 571 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Recalculated/ETRRate | Not linked |  |
-| 572 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Recalculated/ExcessProfits | Not linked |  |
-| 573 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Recalculated/TopUpTaxPercentage | Not linked |  |
-| 574 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Recalculated/TopUpTax | Not linked |  |
-| 575 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/AdditionalTopUpTax | Not linked |  |
-| 577 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/AdjustedCoveredTax | Calculation | Top-up Tax Calculation |
-| 578 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/GlobeLoss | Calculation | Top-up Tax Calculation |
-| 579 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/ExpectedAdjustedCoveredTax | Calculation | Top-up Tax Calculation |
-| 580 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/AdditionalTopUpTax | Calculation | Top-up Tax Calculation |
-| 582 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/FAS | Input | QDMTT data |
-| 583 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/Amount | Calculation | Top-up Tax Calculation |
-| 585 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/MinRate | Not linked |  |
-| 587 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/BasisforBlending | Not linked |  |
-| 588 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/SBIEAvailable | Input | QDMTT data |
-| 589 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/DeMinAvailable | Input | QDMTT data |
-| 590 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/Currency | Input | QDMTT data |
-| 592 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/CurrencyElection/Status | Not linked |  |
-| 593 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/CurrencyElection/ElectionYear | Not linked |  |
-| 595 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/CurrencyElection/RevocationYear | Not linked |  |
-| 596 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/CurrencyElection/Currency | Not linked |  |
-| 597 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/TopUpTax | Calculation | Top-up Tax Calculation |
-| 598 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/PriorYearBalance | Calculation | Top-up Tax Calculation |
-| 599 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/GeneratedInRFY | Calculation | Top-up Tax Calculation |
-| 600 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/UtilizedInRFY | Calculation | Top-up Tax Calculation |
-| 601 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/Remaining | Calculation | Top-up Tax Calculation |
-| 602 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/RFY/TotalRevenue | Not linked |  |
-| 604 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/RFY/AggregateSimplified | Not linked |  |
-| 606 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/RFY-1/TotalRevenue | Not linked |  |
-| 608 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/RFY-2/TotalRevenue | Not linked |  |
-| 609 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/Average/TotalRevenue | Not linked |  |
-| 610 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/ID/Name | Not linked |  |
-| 611 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/ID/ResCountryCode | Not linked |  |
-| 612 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/ID/TIN/#text | Not linked |  |
-| 614 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/ID/TIN/@issuedBy | Not linked |  |
-| 616 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/ID/TIN/@unknown | Not linked |  |
-| 618 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/ID/TIN/@TypeOfTIN | Not linked |  |
-| 619 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/ID/Rules | Not linked |  |
-| 620 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/ID/GlobeStatus | Not linked |  |
-| 623 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.6 | Not linked |  |
-| 625 | JurisdictionSection/GLoBETax/ETR/Election/Art4.1.5 | Not linked |  |
-| 627 | JurisdictionSection/GLoBETax/ETR/Election/Art4.6.1 | Not linked |  |
-| 629 | JurisdictionSection/GLoBETax/ETR/Election/Art5.3.1 | Not linked |  |
-| 631 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.2/Status | Not linked |  |
-| 632 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.2/ElectionYear | Not linked |  |
-| 634 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.2/RevocationYear | Not linked |  |
-| 636 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.5/Status | Not linked |  |
-| 638 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.5/ElectionYear | Not linked |  |
-| 640 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.5/RevocationYear | Not linked |  |
-| 642 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.8/Status | Not linked |  |
-| 644 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.8/ElectionYear | Not linked |  |
-| 646 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.8/RevocationYear | Not linked |  |
-| 648 | JurisdictionSection/GLoBETax/ETR/Election/NoDefTaxAllocation/Status | Not linked |  |
-| 649 | JurisdictionSection/GLoBETax/ETR/Election/NoDefTaxAllocation/ElectionYear | Not linked |  |
-| 651 | JurisdictionSection/GLoBETax/ETR/Election/NoDefTaxAllocation/RevocationYear | Not linked |  |
-| 653 | JurisdictionSection/GLoBETax/ETR/Election/Art4.5/Status | Not linked |  |
-| 655 | JurisdictionSection/GLoBETax/ETR/Election/Art4.5/ElectionYear | Not linked |  |
-| 657 | JurisdictionSection/GLoBETax/ETR/Election/Art4.5/RevocationYear | Not linked |  |
-| 659 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.1.c/Status | Not linked |  |
-| 660 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.1.c/ElectionYear | Not linked |  |
-| 662 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.1.c/RevocationYear | Not linked |  |
-| 663 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.1.c/QualOwnerIntentBalance | Not linked |  |
-| 664 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.1.c/Additions | Not linked |  |
-| 665 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.1.c/Reductions | Not linked |  |
-| 666 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.1.c/OutstandingBalance | Not linked |  |
-| 668 | JurisdictionSection/GLoBETax/ETR/Election/SimplifiedReporting | Not linked |  |
-| 670 | JurisdictionSection/GLoBETax/InitialIntActivity/StartDate | Not linked |  |
-| 671 | JurisdictionSection/GLoBETax/InitialIntActivity/ReferenceJurisdiction/ResCountryCode | Not linked |  |
-| 672 | JurisdictionSection/GLoBETax/InitialIntActivity/ReferenceJurisdiction/TangibleAssetValue | Not linked |  |
-| 673 | JurisdictionSection/GLoBETax/InitialIntActivity/OtherJurisdiction/ResCountryCode | Not linked |  |
-| 674 | JurisdictionSection/GLoBETax/InitialIntActivity/OtherJurisdiction/TangibleAssetValue | Not linked |  |
-| 676 | JurisdictionSection/GLoBETax/InitialIntActivity/RFYNumberOfJurisdictions | Not linked |  |
-| 678 | JurisdictionSection/GLoBETax/InitialIntActivity/RFYSumTangibleAssetValue | Not linked |  |
-| 680 | JurisdictionSection/LowTaxJurisdiction/TopUpTaxAmount | Calculation | Top-up Tax Calculation |
-| 681 | JurisdictionSection/LowTaxJurisdiction/LTCE/TIN/#text | Reference | Entity, TIN, or jurisdiction |
-| 683 | JurisdictionSection/LowTaxJurisdiction/LTCE/TIN/@issuedBy | Reference | Entity, TIN, or jurisdiction |
-| 685 | JurisdictionSection/LowTaxJurisdiction/LTCE/TIN/@unknown | Reference | Entity, TIN, or jurisdiction |
-| 687 | JurisdictionSection/LowTaxJurisdiction/LTCE/TIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction |
-| 689 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/NetGlobeIncome | Calculation | Top-up Tax Calculation |
-| 690 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/TopUpTax | Calculation | Top-up Tax Calculation |
-| 691 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/TIN/#text | Reference | Entity, TIN, or jurisdiction |
-| 693 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/TIN/@issuedBy | Reference | Entity, TIN, or jurisdiction |
-| 695 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/TIN/@unknown | Reference | Entity, TIN, or jurisdiction |
-| 697 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/TIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction |
-| 698 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/ResCountryCode | Reference | Entity, TIN, or jurisdiction |
-| 699 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/OtherOwnershipAllocation | Calculation | IIR |
-| 700 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/InclusionRatio | Calculation | IIR |
-| 701 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/TopUpTaxShare | Calculation | IIR |
-| 702 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/IIROffSet | Calculation | IIR |
-| 703 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/TopUpTax | Calculation | IIR |
-| 706 | JurisdictionSection/LowTaxJurisdiction/UTPR/UTPRSafeHarbour/CITRate | Not linked |  |
-| 708 | JurisdictionSection/LowTaxJurisdiction/UTPR/UTPRCalculation/TotalUTPRTopUpTax | Calculation | UTPR |
-| 709 | JurisdictionSection/LowTaxJurisdiction/UTPR/UTPRCalculation/Article2.5.1TopUpTax | Calculation | UTPR |
-| 711 | JurisdictionSection/AdditionalDataPoint/Description | Not linked |  |
-| 713 | JurisdictionSection/AdditionalDataPoint/Amount | Not linked |  |
-| 715 | JurisdictionSection/AdditionalDataPoint/Percentage | Not linked |  |
-| 717 | JurisdictionSection/AdditionalDataPoint/Text | Not linked |  |
-| 719 | JurisdictionSection/AdditionalDataPoint/Boolean | Not linked |  |
-| 720 | JurisdictionSection/DocSpec/DocTypeIndic | Input | filing data |
-| 721 | JurisdictionSection/DocSpec/DocRefId | Input | filing data |
-| 723 | JurisdictionSection/DocSpec/CorrDocRefId | Not linked |  |
+| Vector | Path | Source | From | In example |
+| --- | --- | --- | --- | --- |
+| 178 | JurisdictionSection/RecJurCode | Input | recipients of the section | yes |
+| 179 | JurisdictionSection/Jurisdiction | Reference | Entity, TIN, or jurisdiction | yes |
+| 180 | JurisdictionSection/JurWithTaxingRights/JurisdictionName | Reference | Entity, TIN, or jurisdiction | yes |
+| 181 | JurisdictionSection/JurWithTaxingRights/Subgroup/TIN/#text | Reference | Entity, TIN, or jurisdiction | yes |
+| 183 | JurisdictionSection/JurWithTaxingRights/Subgroup/TIN/@issuedBy | Reference | Entity, TIN, or jurisdiction | yes |
+| 185 | JurisdictionSection/JurWithTaxingRights/Subgroup/TIN/@unknown | Reference | Entity, TIN, or jurisdiction | yes |
+| 187 | JurisdictionSection/JurWithTaxingRights/Subgroup/TIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction | yes |
+| 188 | JurisdictionSection/JurWithTaxingRights/Subgroup/TypeofSubGroup | Calculation | classification | yes |
+| 191 | JurisdictionSection/JurWithTaxingRights/ReportDifference/ETRDifference | Input | differences under domestic law | yes |
+| 194 | JurisdictionSection/JurWithTaxingRights/ReportDifference/AdjCoveredTaxDifference/AggCurrentTaxExpense | Input | differences under domestic law | yes |
+| 196 | JurisdictionSection/JurWithTaxingRights/ReportDifference/AdjCoveredTaxDifference/QRTCExpense | Input | differences under domestic law | yes |
+| 198 | JurisdictionSection/JurWithTaxingRights/ReportDifference/AdjCoveredTaxDifference/OtherTaxCredits | Input | differences under domestic law | yes |
+| 200 | JurisdictionSection/JurWithTaxingRights/ReportDifference/AdjCoveredTaxDifference/DeferTaxExpense | Input | differences under domestic law | yes |
+| 202 | JurisdictionSection/JurWithTaxingRights/ReportDifference/NetGLoBEDifference | Input | differences under domestic law | yes |
+| 204 | JurisdictionSection/JurWithTaxingRights/ReportDifference/SBIEDifference | Input | differences under domestic law | yes |
+| 206 | JurisdictionSection/JurWithTaxingRights/ReportDifference/AddCurrentTuTDifference | Input | differences under domestic law | yes |
+| 208 | JurisdictionSection/JurWithTaxingRights/ReportDifference/TuTDifference | Input | differences under domestic law | yes |
+| 210 | JurisdictionSection/JurWithTaxingRights/ReportDifference/ElectionsDifference | Input | differences under domestic law | yes |
+| 212 | JurisdictionSection/JurWithTaxingRights/ReportDifference/QRTCIncome | Input | differences under domestic law | yes |
+| 214 | JurisdictionSection/JurWithTaxingRights/ReportDifference/ExcessNegTaxCarryForw | Input | differences under domestic law | yes |
+| 216 | JurisdictionSection/JurWithTaxingRights/ReportDifference/TransitionDifference | Input | differences under domestic law | yes |
+| 218 | JurisdictionSection/LocalCurrency | Input | differences under domestic law | yes |
+| 220 | JurisdictionSection/GLoBETax/ETR/SubGroup/TIN/#text | Reference | Entity, TIN, or jurisdiction | yes |
+| 222 | JurisdictionSection/GLoBETax/ETR/SubGroup/TIN/@issuedBy | Reference | Entity, TIN, or jurisdiction | yes |
+| 224 | JurisdictionSection/GLoBETax/ETR/SubGroup/TIN/@unknown | Reference | Entity, TIN, or jurisdiction | yes |
+| 226 | JurisdictionSection/GLoBETax/ETR/SubGroup/TIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction | yes |
+| 227 | JurisdictionSection/GLoBETax/ETR/SubGroup/TypeofSubGroup | Calculation | classification | yes |
+| 230 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/Deminimis-SimplifiedNMCECalc/Basis | Input | de minimis exclusion, non-material Entities | yes |
+| 231 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/Deminimis-SimplifiedNMCECalc/FinancialData/Year | Input | de minimis exclusion, non-material Entities | yes |
+| 233 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/Deminimis-SimplifiedNMCECalc/FinancialData/Revenue | Input | de minimis exclusion, non-material Entities | yes |
+| 234 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/Deminimis-SimplifiedNMCECalc/FinancialData/GlobeRevenue | Input | de minimis exclusion, non-material Entities | yes |
+| 235 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/Deminimis-SimplifiedNMCECalc/FinancialData/NetGlobeIncome | Input | de minimis exclusion, non-material Entities | yes |
+| 236 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/Deminimis-SimplifiedNMCECalc/FinancialData/FANIL | Input | de minimis exclusion, non-material Entities | yes |
+| 238 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/Deminimis-SimplifiedNMCECalc/Average/Revenue | Aggregate | average of the years | yes |
+| 239 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/Deminimis-SimplifiedNMCECalc/Average/GlobeRevenue | Aggregate | average of the years | yes |
+| 240 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/Deminimis-SimplifiedNMCECalc/Average/NetGlobeIncome | Aggregate | average of the years | yes |
+| 241 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/Deminimis-SimplifiedNMCECalc/Average/FANIL | Aggregate | average of the years | yes |
+| 244 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour/Revenue | Calculation | TCSH | yes |
+| 245 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour/Profit | Calculation | TCSH | yes |
+| 247 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/TransitionalCbCRSafeHarbour/IncomeTax | Calculation | TCSH | yes |
+| 249 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRException/UTPRSafeHarbour/CITRate | Input | Transitional UTPR Safe Harbour | yes |
+| 251 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Total | Aggregate | derived amount of the Entity | yes |
+| 252 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/FANIL | Input | Entity amounts and their detail | yes |
+| 254 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/Basis | Input | Entity amounts and their detail | yes |
+| 255 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/OtherTIN/#text | Reference | Entity, TIN, or jurisdiction | yes |
+| 257 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/OtherTIN/@issuedBy | Reference | Entity, TIN, or jurisdiction | yes |
+| 259 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/OtherTIN/@unknown | Reference | Entity, TIN, or jurisdiction |  |
+| 261 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/OtherTIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction | yes |
+| 263 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/ResCountryCode | Reference | Entity, TIN, or jurisdiction | yes |
+| 264 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/Additions | Input | Entity amounts and their detail | yes |
+| 265 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/MainEntityPEandFTE/Reductions | Input | Entity amounts and their detail | yes |
+| 266 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/CrossBorderAdjustments/Basis | Input | Entity amounts and their detail | yes |
+| 267 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/CrossBorderAdjustments/OtherTIN/#text | Reference | Entity, TIN, or jurisdiction | yes |
+| 269 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/CrossBorderAdjustments/OtherTIN/@issuedBy | Reference | Entity, TIN, or jurisdiction | yes |
+| 271 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/CrossBorderAdjustments/OtherTIN/@unknown | Reference | Entity, TIN, or jurisdiction |  |
+| 273 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/CrossBorderAdjustments/OtherTIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction | yes |
+| 275 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/CrossBorderAdjustments/ResCountryCode | Reference | Entity, TIN, or jurisdiction | yes |
+| 277 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/CrossBorderAdjustments/Additions | Input | Entity amounts and their detail | yes |
+| 279 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/CrossBorderAdjustments/Reductions | Input | Entity amounts and their detail | yes |
+| 280 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Basis | Input | Entity amounts and their detail |  |
+| 283 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Reductions/Amount | Input | Entity amounts and their detail |  |
+| 285 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/Reductions/Exception | Input | Entity amounts and their detail |  |
+| 286 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/OwnershipPercentage | Calculation | Ownership Interest |  |
+| 288 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/IndOwners/NumOfOwners | Input | owners of the UPE, tax consolidation groups |  |
+| 290 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/IndOwners/ResCountryCode | Input | owners of the UPE, tax consolidation groups |  |
+| 292 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/IndOwners/TaxRate | Input | owners of the UPE, tax consolidation groups |  |
+| 294 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/TIN/#text | Input | owners of the UPE, tax consolidation groups |  |
+| 296 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/TIN/@issuedBy | Input | owners of the UPE, tax consolidation groups |  |
+| 298 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/TIN/@unknown | Input | owners of the UPE, tax consolidation groups |  |
+| 300 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/TIN/@TypeOfTIN | Input | owners of the UPE, tax consolidation groups |  |
+| 301 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/ResCountryCode | Input | owners of the UPE, tax consolidation groups |  |
+| 303 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/TaxRate | Input | owners of the UPE, tax consolidation groups |  |
+| 305 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedFANIL/Adjustment/UPEAdjustments/IdentificationOfOwners/EntityOwner/ExTypeOfEntity | Input | owners of the UPE, tax consolidation groups |  |
+| 306 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/Total | Aggregate | derived amount of the Entity | yes |
+| 307 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/Adjustments/Amount | Input | Entity amounts and their detail | yes |
+| 308 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/Adjustments/AdjustmentItem | Input | Entity amounts and their detail | yes |
+| 310 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/IntShippingIncome/InternationalShipIncome/Total | Aggregate | derived amount of the Entity | yes |
+| 311 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/IntShippingIncome/InternationalShipIncome/Category | Input | Entity amounts and their detail | yes |
+| 312 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/IntShippingIncome/InternationalShipIncome/Revenue | Input | Entity amounts and their detail | yes |
+| 313 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/IntShippingIncome/InternationalShipIncome/Costs | Input | Entity amounts and their detail | yes |
+| 314 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/IntShippingIncome/QualifiedAncShipIncome/Total | Aggregate | derived amount of the Entity | yes |
+| 315 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/IntShippingIncome/QualifiedAncShipIncome/Category | Input | Entity amounts and their detail | yes |
+| 316 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/IntShippingIncome/QualifiedAncShipIncome/Revenue | Input | Entity amounts and their detail | yes |
+| 317 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/IntShippingIncome/QualifiedAncShipIncome/Costs | Input | Entity amounts and their detail | yes |
+| 318 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/IntShippingIncome/SubstanceExclusion/PayrollCosts | Input | Entity amounts and their detail | yes |
+| 319 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/IntShippingIncome/SubstanceExclusion/TangibleAssets | Input | Entity amounts and their detail | yes |
+| 320 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/NetGlobeIncome/IntShippingIncome/CoveredTaxes | Input | Entity amounts and their detail | yes |
+| 321 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/Total | Aggregate | derived amount of the Entity | yes |
+| 322 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/IncomeTax | Input | Entity amounts and their detail | yes |
+| 323 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/CrossAllocation/Basis | Input | Entity amounts and their detail | yes |
+| 324 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/CrossAllocation/OtherTIN/#text | Reference | Entity, TIN, or jurisdiction | yes |
+| 326 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/CrossAllocation/OtherTIN/@issuedBy | Reference | Entity, TIN, or jurisdiction | yes |
+| 328 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/CrossAllocation/OtherTIN/@unknown | Reference | Entity, TIN, or jurisdiction |  |
+| 330 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/CrossAllocation/OtherTIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction | yes |
+| 331 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/CrossAllocation/ResCountryCode | Reference | Entity, TIN, or jurisdiction | yes |
+| 333 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/CrossAllocation/Additions | Input | Entity amounts and their detail | yes |
+| 335 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedIncomeTax/CrossAllocation/Reductions | Input | Entity amounts and their detail | yes |
+| 336 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/Total | Aggregate | derived amount of the Entity | yes |
+| 337 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/Adjustments/Amount | Input | Entity amounts and their detail | yes |
+| 338 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/Adjustments/AdjustmentItem | Input | Entity amounts and their detail | yes |
+| 339 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Total | Aggregate | derived amount of the Entity | yes |
+| 340 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/DeferTaxExpense | Input | Entity amounts and their detail | yes |
+| 341 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustment/Amount | Input | Entity amounts and their detail | yes |
+| 342 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustment/AdjustmentItem | Input | Entity amounts and their detail | yes |
+| 345 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustment/Recast/Higher | Input | Entity amounts and their detail | yes |
+| 347 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustment/Recast/Lower | Input | Entity amounts and their detail | yes |
+| 348 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/TIN/#text | Reference | Entity, TIN, or jurisdiction | yes |
+| 350 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/TIN/@issuedBy | Reference | Entity, TIN, or jurisdiction | yes |
+| 352 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/TIN/@unknown | Reference | Entity, TIN, or jurisdiction |  |
+| 354 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/TIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction | yes |
+| 357 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art1.5.3/Status | Input | elections |  |
+| 359 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art1.5.3/ElectionYear | Input | elections |  |
+| 361 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art1.5.3/RevocationYear | Input | elections |  |
+| 363 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/SimplCalculations | Input | elections | yes |
+| 365 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art3.2.1 | Input | elections | yes |
+| 367 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art3.2.1b/Status | Input | elections | yes |
+| 369 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art3.2.1b/ElectionYear | Input | elections | yes |
+| 371 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art3.2.1b/RevocationYear | Input | elections |  |
+| 373 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art3.2.1c/Status | Input | elections | yes |
+| 375 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art3.2.1c/ElectionYear | Input | elections | yes |
+| 377 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art3.2.1c/RevocationYear | Input | elections | yes |
+| 378 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art6.3.4/FYTriggerEvent | Input | elections | yes |
+| 380 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art6.3.4/Inclusion/Art6.3.4.c.i | Input | elections |  |
+| 382 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art6.3.4/Inclusion/Art6.3.4.c.ii | Input | elections | yes |
+| 384 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/TaxConsolGroupTIN/#text | Input | owners of the UPE, tax consolidation groups | yes |
+| 386 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/TaxConsolGroupTIN/@issuedBy | Input | owners of the UPE, tax consolidation groups | yes |
+| 388 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/TaxConsolGroupTIN/@unknown | Input | owners of the UPE, tax consolidation groups |  |
+| 390 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/TaxConsolGroupTIN/@TypeOfTIN | Input | owners of the UPE, tax consolidation groups | yes |
+| 391 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/EntityTIN/#text | Reference | Entity, TIN, or jurisdiction | yes |
+| 393 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/EntityTIN/@issuedBy | Reference | Entity, TIN, or jurisdiction | yes |
+| 395 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/EntityTIN/@unknown | Reference | Entity, TIN, or jurisdiction |  |
+| 397 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/AggregatedReporting/EntityTIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction | yes |
+| 399 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art4.4.7/Status | Input | elections | yes |
+| 401 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art4.4.7/ElectionYear | Input | elections | yes |
+| 403 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art4.4.7/RevocationYear | Input | elections |  |
+| 405 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art4.5.6/Status | Input | elections |  |
+| 407 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art4.5.6/ElectionYear | Input | elections |  |
+| 409 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art4.5.6/RevocationYear | Input | elections |  |
+| 410 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.5/Status | Input | elections |  |
+| 412 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.5/ElectionYear | Input | elections |  |
+| 414 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.5/RevocationYear | Input | elections |  |
+| 415 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.5/CEOwnerTIN/#text | Reference | Entity, TIN, or jurisdiction |  |
+| 417 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.5/CEOwnerTIN/@issuedBy | Reference | Entity, TIN, or jurisdiction |  |
+| 419 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.5/CEOwnerTIN/@unknown | Reference | Entity, TIN, or jurisdiction |  |
+| 421 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.5/CEOwnerTIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction |  |
+| 422 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6/Status | Input | elections |  |
+| 423 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6/ElectionYear | Input | elections |  |
+| 425 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6/RevocationYear | Input | elections |  |
+| 426 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6/ActualDeemedDist | Input | elections |  |
+| 427 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6/LocalCreditableTaxGross | Input | elections |  |
+| 428 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6/ShareOfUndistNetGlobeInc | Input | elections |  |
+| 429 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6/InvestmentEntityTIN/#text | Reference | Entity, TIN, or jurisdiction |  |
+| 431 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6/InvestmentEntityTIN/@issuedBy | Reference | Entity, TIN, or jurisdiction |  |
+| 433 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6/InvestmentEntityTIN/@unknown | Reference | Entity, TIN, or jurisdiction |  |
+| 435 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/Elections/Art7.6/InvestmentEntityTIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction |  |
+| 437 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/CEComputation/OtherFAS | Input | Entity amounts and their detail | yes |
+| 439 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/FANIL | Aggregate | sum over the group | yes |
+| 440 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedFANIL | Aggregate | sum over the group | yes |
+| 441 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/Total | Calculation | Top-up Tax Calculation | yes |
+| 442 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/Adjustments/Amount | Aggregate | sum over the group | yes |
+| 443 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/Adjustments/AdjustmentItem | Input | group detail | yes |
+| 445 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/IntShippingIncome/Total | Aggregate | sum over the group | yes |
+| 446 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/IntShippingIncome/TotalIntShipIncome | Aggregate | sum over the group | yes |
+| 447 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/IntShippingIncome/FiftyPercentCap | Aggregate | sum over the group | yes |
+| 448 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/IntShippingIncome/TotalQualifiedAncIncome | Aggregate | sum over the group | yes |
+| 450 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/NetGlobeIncome/IntShippingIncome/ExcessOfCap | Aggregate | sum over the group | yes |
+| 451 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/IncomeTaxExpense | Aggregate | sum over the group | yes |
+| 452 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ETRRate | Calculation | Top-up Tax Calculation | yes |
+| 453 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/TopUpTaxPercentage | Calculation | Top-up Tax Calculation | yes |
+| 455 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Total | Calculation | Top-up Tax Calculation | yes |
+| 456 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/AggregrateCurrentTax | Aggregate | sum over the group | yes |
+| 457 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Adjustments/Amount | Aggregate | sum over the group | yes |
+| 458 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/Adjustments/AdjustmentItem | Input | group detail | yes |
+| 460 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/DeferTaxAsset/Total | Aggregate | sum over the group | yes |
+| 461 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/DeferTaxAsset/AmountAttributed/Year | Input | group detail | yes |
+| 462 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/DeferTaxAsset/AmountAttributed/Amount | Input | group detail | yes |
+| 463 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/CoveredTaxRefund/Total | Aggregate | sum over the group | yes |
+| 464 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/CoveredTaxRefund/AmountAttributed/Year | Input | group detail | yes |
+| 465 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/PostFilingAdjust/CoveredTaxRefund/AmountAttributed/Amount | Input | group detail | yes |
+| 467 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Total | Aggregate | sum over the group | yes |
+| 469 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/Year | Input | elections | yes |
+| 470 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/StartAmount | Input | elections | yes |
+| 471 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-0 | Input | elections | yes |
+| 472 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-1 | Input | elections | yes |
+| 473 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-2 | Input | elections | yes |
+| 474 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/DDTYear-3 | Input | elections | yes |
+| 475 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/TotalDDT | Input | elections | yes |
+| 476 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Recapture/EndAmount | Input | elections | yes |
+| 477 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Reduction | Input | elections | yes |
+| 478 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/IncrementalTopUpTax | Input | elections | yes |
+| 479 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeemedDistTax/Election/Ratio | Input | elections | yes |
+| 481 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Total | Aggregate | sum over the group | yes |
+| 482 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/DefTaxAmt | Aggregate | sum over the group | yes |
+| 483 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/DiffCarryValue | Input | group detail | yes |
+| 484 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/GLoBEValue | Input | group detail | yes |
+| 485 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/BefRecastAdjust | Aggregate | sum over the group | yes |
+| 486 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/TotalAdjust | Aggregate | sum over the group | yes |
+| 487 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/PreRecast | Aggregate | sum over the group | yes |
+| 490 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Recast/Higher | Aggregate | sum over the group | yes |
+| 492 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Recast/Lower | Aggregate | sum over the group | yes |
+| 493 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/Amount | Aggregate | sum over the group | yes |
+| 494 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/AdjustmentItem | Input | group detail | yes |
+| 495 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/RecaptureDeferred/DTLRFYMinus5 | Input | group detail | yes |
+| 496 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/RecaptureDeferred/RecapDTLRFYMinus5 | Input | group detail | yes |
+| 497 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/RecaptureDeferred/DTLRFY | Input | group detail | yes |
+| 498 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/RecaptureDeferred/AggregateDTL/ReportingFiscalYear/AmountPreTransition | Input | group detail | yes |
+| 499 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/RecaptureDeferred/AggregateDTL/ReportingFiscalYear/AmountOutBalance | Input | group detail | yes |
+| 500 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/RecaptureDeferred/AggregateDTL/ReportingFiscalYear/AmountUnjustified | Input | group detail | yes |
+| 501 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/RecaptureDeferred/AggregateDTL/PriorFiscalYear/AmountPreTransition | Input | group detail | yes |
+| 502 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/RecaptureDeferred/AggregateDTL/PriorFiscalYear/AmountOutBalance | Input | group detail | yes |
+| 503 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Adjustments/RecaptureDeferred/AggregateDTL/PriorFiscalYear/AmountUnjustified | Input | group detail | yes |
+| 504 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/Year | Input | group detail | yes |
+| 506 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxLiabilityStart | Input | group detail | yes |
+| 508 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxLiabilityRecast | Input | group detail | yes |
+| 510 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/Total | Input | group detail | yes |
+| 511 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/DeferredTaxAssetStart | Input | group detail | yes |
+| 512 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/DeferredTaxAssetRecast | Input | group detail | yes |
+| 513 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/DeferredTaxAssets/DeferredTaxAssetExcluded | Input | group detail | yes |
+| 515 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/Disposal/ResCountryCode | Reference | Entity, TIN, or jurisdiction | yes |
+| 516 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/Disposal/NetDTADTL | Input | group detail | yes |
+| 517 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/Disposal/CarryingValue | Input | group detail | yes |
+| 518 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/Disposal/TaxPaid | Input | group detail | yes |
+| 519 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/Disposal/DTADTL | Input | group detail | yes |
+| 521 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/DeferTaxAdjustAmt/Transition/AltJurisdiction | Reference | Entity, TIN, or jurisdiction | yes |
+| 523 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/TransBlendCFC/CFCJur/Jurisdiction | Reference | Entity, TIN, or jurisdiction | yes |
+| 524 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/TransBlendCFC/CFCJur/Allocation/SubGroupTIN/#text | Reference | Entity, TIN, or jurisdiction | yes |
+| 526 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/TransBlendCFC/CFCJur/Allocation/SubGroupTIN/@issuedBy | Reference | Entity, TIN, or jurisdiction | yes |
+| 528 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/TransBlendCFC/CFCJur/Allocation/SubGroupTIN/@unknown | Reference | Entity, TIN, or jurisdiction |  |
+| 530 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/TransBlendCFC/CFCJur/Allocation/SubGroupTIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction | yes |
+| 531 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/TransBlendCFC/CFCJur/Allocation/AggAllocTax | Input | group detail | yes |
+| 532 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdjustedCoveredTax/TransBlendCFC/Total | Aggregate | sum over the group | yes |
+| 534 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/Total | Aggregate | sum over the group | yes |
+| 535 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PayrollCost | Aggregate | sum over the group | yes |
+| 536 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PayrollMarkUp | Input | group detail | yes |
+| 537 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/TangibleAssetValue | Aggregate | sum over the group | yes |
+| 538 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/TangibleAssetMarkup | Input | group detail | yes |
+| 540 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PEAllocation/JurOfOwners/ResCountryCode | Reference | Entity, TIN, or jurisdiction | yes |
+| 542 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PEAllocation/JurOfOwners/UPE | Input | group detail |  |
+| 544 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PEAllocation/JurOfOwners/NotApplicable | Input | group detail |  |
+| 545 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PEAllocation/PayrollCost/Total | Input | group detail | yes |
+| 546 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PEAllocation/PayrollCost/Allocation | Input | group detail | yes |
+| 547 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PEAllocation/TangibleAssetValue/Total | Input | group detail | yes |
+| 548 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/PEAllocation/TangibleAssetValue/Allocation | Input | group detail | yes |
+| 550 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/FTEAllocation/JurOfOwners/ResCountryCode | Reference | Entity, TIN, or jurisdiction |  |
+| 552 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/FTEAllocation/JurOfOwners/UPE | Input | group detail |  |
+| 554 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/FTEAllocation/JurOfOwners/NotApplicable | Input | group detail |  |
+| 555 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/FTEAllocation/PayrollCost/Total | Input | group detail |  |
+| 556 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/FTEAllocation/PayrollCost/Allocation | Input | group detail |  |
+| 557 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/FTEAllocation/TangibleAssetValue/Total | Input | group detail |  |
+| 558 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/SubstanceExclusion/FTEAllocation/TangibleAssetValue/Allocation | Input | group detail |  |
+| 559 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessProfits | Calculation | Top-up Tax Calculation | yes |
+| 561 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Articles | Input | group detail | yes |
+| 562 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Year | Input | group detail | yes |
+| 563 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Previous/NetGlobeIncome | Input | group detail | yes |
+| 564 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Previous/AdjustedCoveredTax | Input | group detail | yes |
+| 565 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Previous/ETRRate | Input | group detail | yes |
+| 566 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Previous/ExcessProfits | Input | group detail | yes |
+| 567 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Previous/TopUpTaxPercentage | Input | group detail | yes |
+| 568 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Previous/TopUpTax | Input | group detail | yes |
+| 569 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Recalculated/NetGlobeIncome | Input | group detail | yes |
+| 570 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Recalculated/AdjustedCoveredTax | Input | group detail | yes |
+| 571 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Recalculated/ETRRate | Input | group detail | yes |
+| 572 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Recalculated/ExcessProfits | Input | group detail | yes |
+| 573 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Recalculated/TopUpTaxPercentage | Input | group detail | yes |
+| 574 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/Recalculated/TopUpTax | Input | group detail | yes |
+| 575 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/NONArt4.1.5/AdditionalTopUpTax | Aggregate | sum over the group | yes |
+| 577 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/AdjustedCoveredTax | Calculation | Top-up Tax Calculation |  |
+| 578 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/GlobeLoss | Calculation | Top-up Tax Calculation |  |
+| 579 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/ExpectedAdjustedCoveredTax | Calculation | Top-up Tax Calculation |  |
+| 580 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/AdditionalTopUpTax/Art4.1.5/AdditionalTopUpTax | Calculation | Top-up Tax Calculation |  |
+| 582 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/FAS | Input | QDMTT terms of the jurisdiction | yes |
+| 583 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/Amount | Calculation | Top-up Tax Calculation | yes |
+| 585 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/MinRate | Input | QDMTT terms of the jurisdiction | yes |
+| 587 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/BasisforBlending | Input | QDMTT terms of the jurisdiction | yes |
+| 588 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/SBIEAvailable | Input | QDMTT terms of the jurisdiction | yes |
+| 589 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/DeMinAvailable | Input | QDMTT terms of the jurisdiction | yes |
+| 590 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/Currency | Input | QDMTT terms of the jurisdiction | yes |
+| 592 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/CurrencyElection/Status | Input | QDMTT terms of the jurisdiction | yes |
+| 593 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/CurrencyElection/ElectionYear | Input | QDMTT terms of the jurisdiction | yes |
+| 595 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/CurrencyElection/RevocationYear | Input | QDMTT terms of the jurisdiction |  |
+| 596 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/QDMTT/CurrencyElection/Currency | Input | QDMTT terms of the jurisdiction | yes |
+| 597 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/TopUpTax | Calculation | Top-up Tax Calculation | yes |
+| 598 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/PriorYearBalance | Calculation | Top-up Tax Calculation | yes |
+| 599 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/GeneratedInRFY | Calculation | Top-up Tax Calculation | yes |
+| 600 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/UtilizedInRFY | Calculation | Top-up Tax Calculation | yes |
+| 601 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/OverallComputation/ExcessNegTaxExpense/Remaining | Calculation | Top-up Tax Calculation | yes |
+| 602 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/RFY/TotalRevenue | Input | de minimis exclusion, non-material Entities | yes |
+| 604 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/RFY/AggregateSimplified | Input | de minimis exclusion, non-material Entities | yes |
+| 606 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/RFY-1/TotalRevenue | Input | de minimis exclusion, non-material Entities | yes |
+| 608 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/RFY-2/TotalRevenue | Input | de minimis exclusion, non-material Entities | yes |
+| 609 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/Average/TotalRevenue | Aggregate | average of the years | yes |
+| 610 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/ID/Name | Reference | Entity, TIN, or jurisdiction | yes |
+| 611 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/ID/ResCountryCode | Reference | Entity, TIN, or jurisdiction | yes |
+| 612 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/ID/TIN/#text | Reference | Entity, TIN, or jurisdiction | yes |
+| 614 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/ID/TIN/@issuedBy | Reference | Entity, TIN, or jurisdiction | yes |
+| 616 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/ID/TIN/@unknown | Reference | Entity, TIN, or jurisdiction |  |
+| 618 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/ID/TIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction | yes |
+| 619 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/ID/Rules | Reference | implementation status of the jurisdiction | yes |
+| 620 | JurisdictionSection/GLoBETax/ETR/ETRStatus/ETRComputation/Non-MaterialCE/ID/GlobeStatus | Calculation | classification | yes |
+| 623 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.6 | Input | elections | yes |
+| 625 | JurisdictionSection/GLoBETax/ETR/Election/Art4.1.5 | Input | election of Top-up Tax Calculation |  |
+| 627 | JurisdictionSection/GLoBETax/ETR/Election/Art4.6.1 | Input | elections | yes |
+| 629 | JurisdictionSection/GLoBETax/ETR/Election/Art5.3.1 | Input | elections | yes |
+| 631 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.2/Status | Input | elections | yes |
+| 632 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.2/ElectionYear | Input | elections | yes |
+| 634 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.2/RevocationYear | Input | elections |  |
+| 636 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.5/Status | Input | elections | yes |
+| 638 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.5/ElectionYear | Input | elections | yes |
+| 640 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.5/RevocationYear | Input | elections |  |
+| 642 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.8/Status | Input | elections | yes |
+| 644 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.8/ElectionYear | Input | elections | yes |
+| 646 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.8/RevocationYear | Input | elections | yes |
+| 648 | JurisdictionSection/GLoBETax/ETR/Election/NoDefTaxAllocation/Status | Input | elections | yes |
+| 649 | JurisdictionSection/GLoBETax/ETR/Election/NoDefTaxAllocation/ElectionYear | Input | elections | yes |
+| 651 | JurisdictionSection/GLoBETax/ETR/Election/NoDefTaxAllocation/RevocationYear | Input | elections |  |
+| 653 | JurisdictionSection/GLoBETax/ETR/Election/Art4.5/Status | Input | elections | yes |
+| 655 | JurisdictionSection/GLoBETax/ETR/Election/Art4.5/ElectionYear | Input | elections | yes |
+| 657 | JurisdictionSection/GLoBETax/ETR/Election/Art4.5/RevocationYear | Input | elections |  |
+| 659 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.1.c/Status | Input | elections | yes |
+| 660 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.1.c/ElectionYear | Input | elections | yes |
+| 662 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.1.c/RevocationYear | Input | elections |  |
+| 663 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.1.c/QualOwnerIntentBalance | Input | elections | yes |
+| 664 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.1.c/Additions | Input | elections | yes |
+| 665 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.1.c/Reductions | Input | elections | yes |
+| 666 | JurisdictionSection/GLoBETax/ETR/Election/Art3.2.1.c/OutstandingBalance | Aggregate | balance of the year | yes |
+| 668 | JurisdictionSection/GLoBETax/ETR/Election/SimplifiedReporting | Input | elections | yes |
+| 670 | JurisdictionSection/GLoBETax/InitialIntActivity/StartDate | Input | Article 9.3 |  |
+| 671 | JurisdictionSection/GLoBETax/InitialIntActivity/ReferenceJurisdiction/ResCountryCode | Reference | Entity, TIN, or jurisdiction |  |
+| 672 | JurisdictionSection/GLoBETax/InitialIntActivity/ReferenceJurisdiction/TangibleAssetValue | Input | Article 9.3 |  |
+| 673 | JurisdictionSection/GLoBETax/InitialIntActivity/OtherJurisdiction/ResCountryCode | Reference | Entity, TIN, or jurisdiction |  |
+| 674 | JurisdictionSection/GLoBETax/InitialIntActivity/OtherJurisdiction/TangibleAssetValue | Input | Article 9.3 |  |
+| 676 | JurisdictionSection/GLoBETax/InitialIntActivity/RFYNumberOfJurisdictions | Aggregate | Entities and their tangible assets |  |
+| 678 | JurisdictionSection/GLoBETax/InitialIntActivity/RFYSumTangibleAssetValue | Aggregate | Entities and their tangible assets |  |
+| 680 | JurisdictionSection/LowTaxJurisdiction/TopUpTaxAmount | Calculation | Top-up Tax Calculation | yes |
+| 681 | JurisdictionSection/LowTaxJurisdiction/LTCE/TIN/#text | Reference | Entity, TIN, or jurisdiction | yes |
+| 683 | JurisdictionSection/LowTaxJurisdiction/LTCE/TIN/@issuedBy | Reference | Entity, TIN, or jurisdiction | yes |
+| 685 | JurisdictionSection/LowTaxJurisdiction/LTCE/TIN/@unknown | Reference | Entity, TIN, or jurisdiction |  |
+| 687 | JurisdictionSection/LowTaxJurisdiction/LTCE/TIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction | yes |
+| 689 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/NetGlobeIncome | Calculation | Top-up Tax Calculation | yes |
+| 690 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/TopUpTax | Calculation | Top-up Tax Calculation | yes |
+| 691 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/TIN/#text | Reference | Entity, TIN, or jurisdiction | yes |
+| 693 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/TIN/@issuedBy | Reference | Entity, TIN, or jurisdiction | yes |
+| 695 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/TIN/@unknown | Reference | Entity, TIN, or jurisdiction |  |
+| 697 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/TIN/@TypeOfTIN | Reference | Entity, TIN, or jurisdiction | yes |
+| 698 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/ResCountryCode | Reference | Entity, TIN, or jurisdiction | yes |
+| 699 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/OtherOwnershipAllocation | Calculation | IIR | yes |
+| 700 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/InclusionRatio | Calculation | IIR | yes |
+| 701 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/TopUpTaxShare | Calculation | IIR | yes |
+| 702 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/IIROffSet | Calculation | IIR | yes |
+| 703 | JurisdictionSection/LowTaxJurisdiction/LTCE/IIR/ParentEntity/TopUpTax | Calculation | IIR | yes |
+| 706 | JurisdictionSection/LowTaxJurisdiction/UTPR/UTPRSafeHarbour/CITRate | Input | Transitional UTPR Safe Harbour |  |
+| 708 | JurisdictionSection/LowTaxJurisdiction/UTPR/UTPRCalculation/TotalUTPRTopUpTax | Calculation | UTPR | yes |
+| 709 | JurisdictionSection/LowTaxJurisdiction/UTPR/UTPRCalculation/Article2.5.1TopUpTax | Calculation | UTPR | yes |
+| 711 | JurisdictionSection/AdditionalDataPoint/Description | Input | data points | yes |
+| 713 | JurisdictionSection/AdditionalDataPoint/Amount | Input | data points | yes |
+| 715 | JurisdictionSection/AdditionalDataPoint/Percentage | Input | data points | yes |
+| 717 | JurisdictionSection/AdditionalDataPoint/Text | Input | data points |  |
+| 719 | JurisdictionSection/AdditionalDataPoint/Boolean | Input | data points |  |
+| 720 | JurisdictionSection/DocSpec/DocTypeIndic | Input | filing data | yes |
+| 721 | JurisdictionSection/DocSpec/DocRefId | Input | filing data | yes |
+| 723 | JurisdictionSection/DocSpec/CorrDocRefId | Input | filing data |  |
 
 # UTPRAttribution
 
-| Vector | Path | Source | From |
-| --- | --- | --- | --- |
-| 724 | UTPRAttribution/RecJurCode | Input | filing data |
-| 725 | UTPRAttribution/Attribution/ResCountryCode | Reference | Entity, TIN, or jurisdiction |
-| 726 | UTPRAttribution/Attribution/UTPRTopUpTaxCarryForward | Input | UTPR carry-forward and cash tax |
-| 728 | UTPRAttribution/Attribution/Employees | Calculation | UTPR |
-| 730 | UTPRAttribution/Attribution/TangibleAssetValue | Calculation | UTPR |
-| 731 | UTPRAttribution/Attribution/UTPRPercentage | Calculation | UTPR |
-| 732 | UTPRAttribution/Attribution/UTPRTopUpTaxAttributed | Calculation | UTPR |
-| 733 | UTPRAttribution/Attribution/AddCashTaxExpense | Input | UTPR carry-forward and cash tax |
-| 734 | UTPRAttribution/Attribution/UTPRTopUpTaxCarriedForward | Calculation | UTPR |
-| 736 | UTPRAttribution/AdditionalDataPoint/Description | Not linked |  |
-| 738 | UTPRAttribution/AdditionalDataPoint/Amount | Not linked |  |
-| 740 | UTPRAttribution/AdditionalDataPoint/Percentage | Not linked |  |
-| 742 | UTPRAttribution/AdditionalDataPoint/Text | Not linked |  |
-| 744 | UTPRAttribution/AdditionalDataPoint/Boolean | Not linked |  |
-| 745 | UTPRAttribution/DocSpec/DocTypeIndic | Input | filing data |
-| 746 | UTPRAttribution/DocSpec/DocRefId | Input | filing data |
-| 748 | UTPRAttribution/DocSpec/CorrDocRefId | Not linked |  |
+| Vector | Path | Source | From | In example |
+| --- | --- | --- | --- | --- |
+| 724 | UTPRAttribution/RecJurCode | Input | filing data | yes |
+| 725 | UTPRAttribution/Attribution/ResCountryCode | Reference | Entity, TIN, or jurisdiction | yes |
+| 726 | UTPRAttribution/Attribution/UTPRTopUpTaxCarryForward | Input | UTPR carry-forward and cash tax | yes |
+| 728 | UTPRAttribution/Attribution/Employees | Calculation | UTPR | yes |
+| 730 | UTPRAttribution/Attribution/TangibleAssetValue | Calculation | UTPR | yes |
+| 731 | UTPRAttribution/Attribution/UTPRPercentage | Calculation | UTPR | yes |
+| 732 | UTPRAttribution/Attribution/UTPRTopUpTaxAttributed | Calculation | UTPR | yes |
+| 733 | UTPRAttribution/Attribution/AddCashTaxExpense | Input | UTPR carry-forward and cash tax | yes |
+| 734 | UTPRAttribution/Attribution/UTPRTopUpTaxCarriedForward | Calculation | UTPR | yes |
+| 736 | UTPRAttribution/AdditionalDataPoint/Description | Input | data points | yes |
+| 738 | UTPRAttribution/AdditionalDataPoint/Amount | Input | data points | yes |
+| 740 | UTPRAttribution/AdditionalDataPoint/Percentage | Input | data points | yes |
+| 742 | UTPRAttribution/AdditionalDataPoint/Text | Input | data points | yes |
+| 744 | UTPRAttribution/AdditionalDataPoint/Boolean | Input | data points | yes |
+| 745 | UTPRAttribution/DocSpec/DocTypeIndic | Input | filing data | yes |
+| 746 | UTPRAttribution/DocSpec/DocRefId | Input | filing data | yes |
+| 748 | UTPRAttribution/DocSpec/CorrDocRefId | Input | filing data |  |
