@@ -9,6 +9,7 @@
 - The Entity-level Top-up Tax vector $\mathbf{topup\text{-}tax}$ from [Top-up Tax Calculation](<Top-up Tax Calculation.md>).
 - The direct and indirect Ownership Interest function $f(\mathbf{A})$ from [Ownership Interest.md](<Ownership Interest.md#direct-method>).
 - The current-year IIR payability matrix $\mathbf{Iir\text{-}payable}$ from [Taxing Rights.md](<Taxing Rights.md#iir-payability>).
+- The vector $\mathbf{qiir}\in\{0,1\}^{N\times1}$ of Entities located in a jurisdiction with a Qualified IIR in force, from [Taxing Rights.md](<Taxing Rights.md>).
 
 ## Exports
 
@@ -144,13 +145,15 @@ means that Parent Entity $i$ may apply the IIR to potential low-taxed Entity $j$
 
 ### Ownership Graph
 
-Retain CEs and members of a JV Group:
+Retain CEs, Excluded Entities and members of a JV Group:
 
 $$
 \mathbf{member}
 :=
-\mathbf{ce}\lor\mathbf{jv}\lor\mathbf{jvsub}.
+\mathbf{ce}\lor\mathbf{ee}\lor\mathbf{jv}\lor\mathbf{jvsub}.
 $$
+
+Excluded Entities stay in the graph. They are not Parent Entities and are never payable, but they are Group Entities consolidated in the UPE's financial statements, so an interest a Parent Entity or a UPE holds through one is still its interest. Removing them would cut every chain that runs through them: a UPE that is itself an Excluded Entity would hold nothing, and the Entities below an Excluded Entity would escape the UTPR (Article 2.5.2; Commentary on Article 2.1.3 ¶18). Entities outside the group are left out.
 
 First remove treasury shares from the direct Profit Ownership Interest matrix:
 
@@ -451,6 +454,34 @@ is the Schur complement of $\mathbf{D}$. In the IIR allocation, the $\mathcal{T}
 Accordingly, the iterative recurrence and the Direct Method are algebraically equivalent: the recurrence gives a constructive path-based characterization of the IIR Offset Mechanism, while the Direct Method solves the same allocation after the non-payable paths have been eliminated algebraically.
 
 The direct method is the implementation method because it solves each constrained allocation system directly.
+
+### IIR Offset Limited to a Qualified IIR
+
+Article 2.3.2 reduces a Parent Entity's Allocable Share only by the part brought into charge by a lower Parent Entity **under a Qualified IIR**. A charge under an IIR that is not qualified offsets nothing. Let
+
+$$
+\mathbf{Q}:=\operatorname{diag}(\mathbf{qiir})\times\mathbf{Iir\text{-}payable}
+$$
+
+and let $\mathbf{Net\text{-}iir}^{Q}$ be the Direct Method above with $\mathcal{S}_j:=\{\,i\mid\mathbf{Q}_{ij}=1\,\}$. Then
+
+$$
+\boxed{
+(\mathbf{Net\text{-}iir})_{ij}
+:=
+\begin{cases}
+(\mathbf{Net\text{-}iir}^{Q})_{ij} & \mathbf{Q}_{ij}=1\\[2pt]
+\left[\mathbf{Y}_{ij}-\sum_{k\ne i}\mathbf{Y}_{ik}(\mathbf{Net\text{-}iir}^{Q})_{kj}\right]^{+} & (\mathbf{Iir\text{-}payable})_{ij}=1,\ \mathbf{qiir}_i=0\\[2pt]
+0 & \text{otherwise}
+\end{cases}
+}
+$$
+
+- A Parent Entity under a Qualified IIR is offset only by Qualified IIRs below it.
+- A Parent Entity under an IIR that is not qualified is also offset only by Qualified IIRs below it, and never offsets anyone.
+- Where every payable Parent Entity is qualified, this is the Direct Method above.
+
+From here on, $\mathbf{Net\text{-}iir}$ denotes this matrix, and $\mathbf{Iir\text{-}offset}:=\mathbf{Gross\text{-}iir}-\mathbf{Net\text{-}iir}$.
 
 ## Investment Entity Special Rule
 

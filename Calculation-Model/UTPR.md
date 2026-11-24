@@ -7,7 +7,7 @@ All inputs are for the same $N$ Entities and $M$ jurisdictions.
 | $\mathbf{X},\mathbf{Y}$ | $[0,1]^{N\times N}$ | Direct, and direct and indirect, Profit Ownership Interest matrices of the ordinary IIR calculation, from [IIR](<IIR.md#ownership-graph>) |
 | $g$ | | Unit-diagonal function, $g(\mathbf{A}):=\mathbf{A}-\operatorname{diag}(\mathbf{A})+\mathbf{I}_N$, from [IIR](<IIR.md#unit-diagonal-function>) |
 | $\mathbf{Iir\text{-}payable}$ | $\{0,1\}^{N\times N}$ | IIR payability, from [Taxing Rights](<Taxing Rights.md#iir-payability>) |
-| $\mathbf{self\text{-}payable},\mathbf{upe},\mathbf{qiir}$ | $\{0,1\}^{N\times1}$ | Parent Entities paying their own Top-up Tax, UPEs, and Entities in a Qualified IIR jurisdiction, from [Taxing Rights](<Taxing Rights.md>) |
+| $\mathbf{self\text{-}payable},\mathbf{group\text{-}upe},\mathbf{qiir}$ | $\{0,1\}^{N\times1}$ | Parent Entities paying their own Top-up Tax, UPEs (including a UPE that is an Excluded Entity), and Entities in a Qualified IIR jurisdiction, from [Taxing Rights](<Taxing Rights.md>) |
 | $\mathbf{tt\text{-}entt}$ | $\mathbb{R}_{\ge0}^{N}$ | Top-up Tax of each Entity, from [Top-up Tax Calculation](<Top-up Tax Calculation.md>) |
 | $\mathbf{ce},\mathbf{ie}$ | $\{0,1\}^{N\times1}$ | CEs and Investment Entities |
 | $\mathbf{Entt\text{-}jur}$ | $\{0,1\}^{N\times M}$ | Entity-to-jurisdiction matrix |
@@ -39,12 +39,12 @@ $(\mathbf{Charged})_{kj}$ is the share of the Top-up Tax of Entity $j$ that Pare
 
 ## UPE Residual
 
-$\mathbf{Residual}$ is the part of each UPE's interest in an Entity that reaches the UPE without having been charged under a Qualified IIR. A UPE counts as holding all of itself.
+$\mathbf{Residual}$ is the part of each UPE's interest in an Entity that reaches the UPE without having been charged under a Qualified IIR. A UPE counts as holding all of itself. A UPE that is an Excluded Entity counts too: it applies no IIR, but Article 2.5.2 looks at the UPE's Ownership Interests whatever the UPE is.
 
 ### Direct Method
 
 $$
-\boxed{\mathbf{Residual}:=\operatorname{diag}(\mathbf{upe})\times g(\mathbf{Y})\times(\mathbf{I}_N-\mathbf{Charged})}
+\boxed{\mathbf{Residual}:=\operatorname{diag}(\mathbf{group\text{-}upe})\times g(\mathbf{Y})\times(\mathbf{I}_N-\mathbf{Charged})}
 $$
 
 Entry by entry, for a UPE $u$ and an Entity $j$,
@@ -61,10 +61,10 @@ The same result follows the unpaid interest in each Entity up the ownership stru
 
 $$
 \begin{aligned}
-\mathbf{U}&:=\operatorname{diag}(\mathbf{upe})\times(\mathbf{1}_{N\times N}-\mathbf{Q})\\
+\mathbf{U}&:=\operatorname{diag}(\mathbf{group\text{-}upe})\times(\mathbf{1}_{N\times N}-\mathbf{Q})\\
 \mathbf{Unpaid}_0&:=\mathbf{I}_N,\quad
 \mathbf{Paid}_0:=\mathbf{0}_{N\times N},\quad
-\mathbf{Basket}_0:=\operatorname{diag}(\mathbf{upe})\\
+\mathbf{Basket}_0:=\operatorname{diag}(\mathbf{group\text{-}upe})\\
 \mathbf{Paid}_{t+1}&:=\mathbf{Paid}_t+(\mathbf{X}\times\mathbf{Unpaid}_t)\odot\mathbf{Q}\\
 \mathbf{Basket}_{t+1}&:=\mathbf{Basket}_t+(\mathbf{X}\times\mathbf{Unpaid}_t)\odot\mathbf{U}\\
 \mathbf{Unpaid}_{t+1}&:=(\mathbf{X}\times\mathbf{Unpaid}_t)\odot(\mathbf{1}_{N\times N}-\mathbf{Q}-\mathbf{U})
@@ -74,7 +74,7 @@ $$
 $$
 \begin{aligned}
 \mathbf{Net\text{-}iir}^{Q}&=\lim_{t\to\infty}\mathbf{Paid}_t\\
-\mathbf{Residual}&=\lim_{t\to\infty}\mathbf{Basket}_t-\operatorname{diag}(\mathbf{upe})\times g(\mathbf{Y})\times\operatorname{diag}(\mathbf{self\text{-}payable}\land\mathbf{qiir})
+\mathbf{Residual}&=\lim_{t\to\infty}\mathbf{Basket}_t-\operatorname{diag}(\mathbf{group\text{-}upe})\times g(\mathbf{Y})\times\operatorname{diag}(\mathbf{self\text{-}payable}\land\mathbf{qiir})
 \end{aligned}
 $$
 
@@ -119,8 +119,6 @@ $\mathbf{Net\text{-}iir}^{Q}$ is obtained by LU decomposition rather than by an 
 
 # Open
 
-- **Excluded Entities on the path.** $\mathbf{X}$ keeps only CEs and JV Group members, so an interest a UPE holds through an Excluded Entity is lost and $\mathbf{r}$ is 0 for the Entity below it. The Entity then escapes the UTPR. This follows from the ownership graph of IIR and has to be settled there.
-- **Non-qualified IIRs in IIR.** IIR treats every payable Parent Entity alike. Whether a charge under a non-qualified IIR offsets the share of a Parent Entity above it is not settled there either.
 - **JV Group members.** $\mathit{total}$ includes the Top-up Tax of JVs and JV Subsidiaries. To be confirmed against Article 6.4.
 - **Flow-through Entities.** The allocation of their Employees and Tangible Assets (Article 2.6.2(b)) is not modelled.
 - **Initial phase of international activity.** Article 9.3 reduces the UTPR Top-up Tax to zero; not modelled.
