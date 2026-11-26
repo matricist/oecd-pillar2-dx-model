@@ -8,6 +8,7 @@
 - The Article 7.4 applicability fraction matrix $\mathbf{R}^{7.4}$.
 - The Entity-level Top-up Tax vector $\mathbf{topup\text{-}tax}$ from [Top-up Tax Calculation](<Top-up Tax Calculation.md>).
 - The direct and indirect Ownership Interest function $f(\mathbf{A})$ from [Ownership Interest.md](<Ownership Interest.md#direct-method>).
+- The cut ownership function $h(\mathbf{A};\mathbf{S})$ from [Ownership Interest.md](<Ownership Interest.md#ownership-with-absorbing-parent-entities>).
 - The current-year IIR payability matrix $\mathbf{Iir\text{-}payable}$ from [Taxing Rights.md](<Taxing Rights.md#iir-payability>).
 - The vector $\mathbf{qiir}\in\{0,1\}^{N\times1}$ of Entities located in a jurisdiction with a Qualified IIR in force, from [Taxing Rights.md](<Taxing Rights.md>).
 
@@ -43,7 +44,7 @@ For a JV or JV Subsidiary subject to the analogous Article 6.4 calculation, low_
 
 ## Domain Validation
 
-- No Entity may hold 100% of its own Profit Ownership Interests, because the treasury-share adjustment would be undefined.
+- $\mathbf{X}_0^{\mathrm{profit}}$ passes the [Ownership Interest validation](<Ownership Interest.md#validation>); in particular no Entity holds 100% of its own Profit Ownership Interests.
 
 # Operation
 
@@ -102,21 +103,6 @@ m(\mathbf{A};\mathbf{u},\mathbf{u})
 }
 $$
 
-### Treasury-Share Removal Function
-
-Define:
-
-$$
-\boxed{
-t(\mathbf{A})
-:=
-\bigl(\mathbf{A}-\operatorname{diag}(\mathbf{A})\bigr)
-\bigl(\mathbf{I}_N-\operatorname{diag}(\mathbf{A})\bigr)^{-1}
-}
-$$
-
-The right multiplication grosses up each non-treasury interest by the reciprocal of one minus the investee's treasury-share ratio.
-
 ### Unit-Diagonal Function
 
 Define:
@@ -130,6 +116,8 @@ g(\mathbf{A})
 $$
 
 Thus, $g$ replaces the diagonal of a square matrix with ones and leaves all off-diagonal entries unchanged.
+
+No treasury-share removal is needed: $f$ and $h$ keep treasury shares on the diagonal and gross up the other holders' interests themselves.
 
 ## Imported IIR Payability
 
@@ -155,40 +143,17 @@ $$
 
 Excluded Entities stay in the graph. They are not Parent Entities and are never payable, but they are Group Entities consolidated in the UPE's financial statements, so an interest a Parent Entity or a UPE holds through one is still its interest. Removing them would cut every chain that runs through them: a UPE that is itself an Excluded Entity would hold nothing, and the Entities below an Excluded Entity would escape the UTPR (Article 2.5.2; Commentary on Article 2.1.3 ¶18). Entities outside the group are left out.
 
-First remove treasury shares from the direct Profit Ownership Interest matrix:
-
-$$
-\boxed{
-\mathbf{X}_0^{\mathrm{profit,treasury}}
-:=
-t(\mathbf{X}_0^{\mathrm{profit}})
-}
-$$
-
-For example, if an Entity holds 20% of its own Profit Ownership Interests and another Entity holds the remaining 80%, $t$ treats the external holder as holding 100% of the outstanding interests.
-
-Apply the member mask after the treasury-share adjustment:
-
-$$
-\mathbf{X}_0^{\mathrm{profit,treasury,member}}
-:=
-m\bigl(
-\mathbf{X}_0^{\mathrm{profit,treasury}};
-\mathbf{member}
-\bigr).
-$$
-
-For the ordinary IIR calculation, abbreviate this matrix as:
+For the ordinary IIR calculation, mask the direct Profit Ownership Interest matrix to the members:
 
 $$
 \boxed{
 \mathbf{X}
 :=
-\mathbf{X}_0^{\mathrm{profit,treasury,member}}
-=
-m\bigl(t(\mathbf{X}_0^{\mathrm{profit}});\mathbf{member}\bigr)
+m\bigl(\mathbf{X}_0^{\mathrm{profit}};\mathbf{member}\bigr)
 }
 $$
+
+Treasury shares stay on the diagonal of $\mathbf{X}$. For example, if an Entity holds 20% of its own Profit Ownership Interests and another Entity holds the remaining 80%, $f$ treats the other holder as holding 100% of the outstanding interests.
 
 The corresponding direct and indirect Profit Ownership Interest matrix is abbreviated as:
 
@@ -202,286 +167,62 @@ $$
 
 These aliases are used throughout the ordinary IIR derivation below. The aliases $\mathbf{X}$ and $\mathbf{Y}$ apply only to the ordinary IIR calculation; Article 7.4 uses separately labelled ownership matrices.
 
-### Iterative Derivation
+### Net Income Inclusion Ratio
 
-The IIR Offset Mechanism can be expressed as an iterative process that propagates unpaid ownership interests through the ownership structure until they reach an IIR-payable Parent Entity.
-
-Initialize:
+Article 2.3.2 reduces a Parent Entity's Allocable Share by the part brought into charge by a lower Parent Entity **under a Qualified IIR**. A charge under an IIR that is not qualified offsets nothing. The Parent Entities payable under a Qualified IIR are therefore the absorbing Parent Entities:
 
 $$
-\mathbf{Iir\text{-}paid}_0:=\mathbf{0}_{N\times N},
-\qquad
-\mathbf{Iir\text{-}unpaid}_0:=\mathbf{I}_N,
-$$
-
-and define:
-
-$$
-\mathbf{Iir\text{-}unpayable}
-:=
-\mathbf{1}_{N\times N}-\mathbf{Iir\text{-}payable}.
-$$
-
-For derivation step $q$, apply:
-
-$$
-\mathbf{Iir\text{-}paid}_{q+1}
-=
-\mathbf{Iir\text{-}paid}_{q}
-+
-\left(
-\mathbf{X}\cdot
-\mathbf{Iir\text{-}unpaid}_{q}
-\right)
-\odot
-\mathbf{Iir\text{-}payable},
+\mathbf{Q}:=\operatorname{diag}(\mathbf{qiir})\times\mathbf{Iir\text{-}payable}
 $$
 
 $$
-\mathbf{Iir\text{-}unpaid}_{q+1}
-=
-\left(
-\mathbf{X}\cdot
-\mathbf{Iir\text{-}unpaid}_{q}
-\right)
-\odot
-\mathbf{Iir\text{-}unpayable}.
+\boxed{
+\begin{aligned}
+\mathbf{H}&:=h(\mathbf{X};\mathbf{Q})\\
+\mathbf{Net\text{-}iir}^{Q}&:=\mathbf{H}\odot\mathbf{Q}\\
+\mathbf{Net\text{-}iir}&:=\mathbf{H}\odot\mathbf{Iir\text{-}payable}
+\end{aligned}
+}
 $$
 
-The limiting result is:
+$(\mathbf{H})_{ij}$ is Entity $i$'s interest in Entity $j$ that does not pass through a Parent Entity payable for $j$ under a Qualified IIR.
 
-$$
-\mathbf{Net\text{-}iir}
-:=
-\lim_{q\to\infty}\mathbf{Iir\text{-}paid}_{q}.
-$$
+- A Parent Entity under a Qualified IIR is offset only by Qualified IIRs below it, and offsets the Parent Entities above it: it absorbs.
+- A Parent Entity under an IIR that is not qualified is also offset only by Qualified IIRs below it, and never offsets anyone: it does not absorb.
+- Where every payable Parent Entity is qualified, $\mathbf{Q}=\mathbf{Iir\text{-}payable}$ and $\mathbf{Net\text{-}iir}=\mathbf{Net\text{-}iir}^{Q}$.
 
-**Net Income Inclusion Ratio** is a modelling term for the portion of the Inclusion Ratio remaining after the IIR Offset Mechanism.
-
-The ratio before the offset mechanism is:
+**Net Income Inclusion Ratio** is a modelling term for the portion of the Inclusion Ratio remaining after the IIR Offset Mechanism. The ratio before the offset mechanism, and the offset, are:
 
 $$
 \mathbf{Gross\text{-}iir}
 :=
 \mathbf{Y}
 \odot
-\mathbf{Iir\text{-}payable}.
-$$
-
-The IIR Offset is:
-
-$$
+\mathbf{Iir\text{-}payable},
+\qquad
 \mathbf{Iir\text{-}offset}
 :=
 \mathbf{Gross\text{-}iir}-\mathbf{Net\text{-}iir}.
 $$
 
-### Direct Method
+#### Iterative Reading
 
-The Direct Method is algebraically equivalent to the iterative method above and is used for numerical implementation.
-
-For a payable Parent Entity $i$ with $(\mathbf{Iir\text{-}payable})_{ij}=1$, component-wise:
+For each potential low-taxed Entity $j$, start one unit of unpaid interest at $j$ and pass it up the ownership structure one level per step. At a Parent Entity with $\mathbf{Q}_{ij}=1$ it is paid; everywhere else it moves on:
 
 $$
-(\mathbf{Net\text{-}iir})_{ij}
-=
-(\mathbf{Y})_{ij}
-(\mathbf{Iir\text{-}payable})_{ij}
--
-\sum_{\substack{k=1\\k\ne i}}^{N}
-(\mathbf{Y})_{ik}
-(\mathbf{Net\text{-}iir})_{kj}.
+\begin{aligned}
+\mathbf{Iir\text{-}paid}_0&:=\mathbf{0}_{N\times N},\qquad
+\mathbf{Iir\text{-}unpaid}_0:=\mathbf{I}_N\\
+\mathbf{Iir\text{-}paid}_{q+1}&:=\mathbf{Iir\text{-}paid}_{q}+\left(\mathbf{X}\cdot\mathbf{Iir\text{-}unpaid}_{q}\right)\odot\mathbf{Q}\\
+\mathbf{Iir\text{-}unpaid}_{q+1}&:=\left(\mathbf{X}\cdot\mathbf{Iir\text{-}unpaid}_{q}\right)\odot(\mathbf{1}_{N\times N}-\mathbf{Q})
+\end{aligned}
 $$
 
-The final term removes the portion of Entity $i$'s indirect interest in Entity $j$ that is brought into charge through another Parent Entity $k$.
+and $\lim_{q\to\infty}\mathbf{Iir\text{-}paid}_q=\mathbf{Net\text{-}iir}^{Q}$. The diagonal of $\mathbf{X}$ returns treasury shares to the unpaid interest of the same Entity, which grosses up its other holders.
 
-Move that term to the left:
+#### Circular Holdings Between Parent Entities
 
-$$
-(\mathbf{Net\text{-}iir})_{ij}
-+
-\sum_{\substack{k=1\\k\ne i}}^{N}
-(\mathbf{Y})_{ik}
-(\mathbf{Net\text{-}iir})_{kj}
-=
-(\mathbf{Y})_{ij}
-(\mathbf{Iir\text{-}payable})_{ij}.
-$$
-
-Without the element-wise payability restriction, the system is:
-
-$$
-g(\mathbf{Y})
-\mathbf{Net\text{-}iir}
-=
-\mathbf{Y}
-\odot
-\mathbf{Iir\text{-}payable}.
-$$
-
-For each potential low-taxed Entity $j$, define:
-
-$$
-\mathcal{S}_j
-:=
-\left\{
-i\mid(\mathbf{Iir\text{-}payable})_{ij}=1
-\right\}.
-$$
-
-Solve only over the payable Parent Entities:
-
-$$
-\boxed{
-(\mathbf{Net\text{-}iir})_{\mathcal{S}_j,j}
-=
-\left[
-g(\mathbf{Y})_{\mathcal{S}_j,\mathcal{S}_j}
-\right]^{-1}
-\mathbf{Y}_{\mathcal{S}_j,j}
-}
-$$
-
-For the complement $\overline{\mathcal{S}}_j$:
-
-$$
-(\mathbf{Net\text{-}iir})_{\overline{\mathcal{S}}_j,j}
-=
-\mathbf{0}.
-$$
-
-#### Equivalence of the Iterative and Direct Methods
-
-Fix a potential low-taxed Entity $j$ and partition the Entity indices into
-
-$$
-\mathcal{S}:=\mathcal{S}_j,
-\qquad
-\mathcal{T}:=\overline{\mathcal{S}}_j.
-$$
-
-This is an index partition, not a change to the ownership graph. Reordering rows and columns conceptually by these two sets gives
-
-$$
-\mathbf{X}
-=
-\begin{bmatrix}
-\mathbf{X}_{\mathcal{S},\mathcal{S}}
-&
-\mathbf{X}_{\mathcal{S},\mathcal{T}}
-\\
-\mathbf{X}_{\mathcal{T},\mathcal{S}}
-&
-\mathbf{X}_{\mathcal{T},\mathcal{T}}
-\end{bmatrix}.
-$$
-
-Under the iterative recurrence, an ownership path is absorbed as soon as it reaches an Entity in $\mathcal{S}$; only paths that remain in $\mathcal{T}$ continue to propagate. Therefore the limiting allocation to the payable Parents is
-
-$$
-\boxed{
-(\mathbf{Net\text{-}iir})_{\mathcal{S},j}
-=
-\mathbf{X}_{\mathcal{S},j}
-+
-\mathbf{X}_{\mathcal{S},\mathcal{T}}
-(\mathbf{I}-\mathbf{X}_{\mathcal{T},\mathcal{T}})^{-1}
-\mathbf{X}_{\mathcal{T},j}
-}
-$$
-
-because
-
-$$
-(\mathbf{I}-\mathbf{X}_{\mathcal{T},\mathcal{T}})^{-1}
-=
-\mathbf{I}
-+
-\mathbf{X}_{\mathcal{T},\mathcal{T}}
-+
-\mathbf{X}_{\mathcal{T},\mathcal{T}}^2
-+\cdots.
-$$
-
-Thus the second term collects every path that first leaves a payable Parent through $\mathcal{T}$, remains within $\mathcal{T}$ for zero or more additional steps, and then reaches Entity $j$.
-
-The same expression follows from eliminating the $\mathcal{T}$ block of the corresponding linear system. In general, for a block system
-
-$$
-\begin{bmatrix}
-\mathbf{A}&\mathbf{B}\\
-\mathbf{C}&\mathbf{D}
-\end{bmatrix}
-\begin{bmatrix}
-\mathbf{x}\\
-\mathbf{y}
-\end{bmatrix}
-=
-\begin{bmatrix}
-\mathbf{p}\\
-\mathbf{q}
-\end{bmatrix},
-$$
-
-if $\mathbf{D}$ is invertible, then
-
-$$
-\mathbf{y}
-=
-\mathbf{D}^{-1}(\mathbf{q}-\mathbf{C}\mathbf{x}),
-$$
-
-and substitution into the first block equation gives
-
-$$
-\left(
-\mathbf{A}-\mathbf{B}\mathbf{D}^{-1}\mathbf{C}
-\right)\mathbf{x}
-=
-\mathbf{p}-\mathbf{B}\mathbf{D}^{-1}\mathbf{q}.
-$$
-
-The matrix
-
-$$
-\boxed{
-\mathbf{A}-\mathbf{B}\mathbf{D}^{-1}\mathbf{C}
-}
-$$
-
-is the Schur complement of $\mathbf{D}$. In the IIR allocation, the $\mathcal{T}$ variables can be eliminated algebraically rather than propagated step by step. Their effect is preserved in the resulting system over $\mathcal{S}$, so the ownership paths through non-payable Entities do not need to be calculated separately. The Direct Method solves this reduced system directly.
-
-Accordingly, the iterative recurrence and the Direct Method are algebraically equivalent: the recurrence gives a constructive path-based characterization of the IIR Offset Mechanism, while the Direct Method solves the same allocation after the non-payable paths have been eliminated algebraically.
-
-The direct method is the implementation method because it solves each constrained allocation system directly.
-
-### IIR Offset Limited to a Qualified IIR
-
-Article 2.3.2 reduces a Parent Entity's Allocable Share only by the part brought into charge by a lower Parent Entity **under a Qualified IIR**. A charge under an IIR that is not qualified offsets nothing. Let
-
-$$
-\mathbf{Q}:=\operatorname{diag}(\mathbf{qiir})\times\mathbf{Iir\text{-}payable}
-$$
-
-and let $\mathbf{Net\text{-}iir}^{Q}$ be the Direct Method above with $\mathcal{S}_j:=\{\,i\mid\mathbf{Q}_{ij}=1\,\}$. Then
-
-$$
-\boxed{
-(\mathbf{Net\text{-}iir})_{ij}
-:=
-\begin{cases}
-(\mathbf{Net\text{-}iir}^{Q})_{ij} & \mathbf{Q}_{ij}=1\\[2pt]
-\left[\mathbf{Y}_{ij}-\sum_{k\ne i}\mathbf{Y}_{ik}(\mathbf{Net\text{-}iir}^{Q})_{kj}\right]^{+} & (\mathbf{Iir\text{-}payable})_{ij}=1,\ \mathbf{qiir}_i=0\\[2pt]
-0 & \text{otherwise}
-\end{cases}
-}
-$$
-
-- A Parent Entity under a Qualified IIR is offset only by Qualified IIRs below it.
-- A Parent Entity under an IIR that is not qualified is also offset only by Qualified IIRs below it, and never offsets anyone.
-- Where every payable Parent Entity is qualified, this is the Direct Method above.
-
-From here on, $\mathbf{Net\text{-}iir}$ denotes this matrix, and $\mathbf{Iir\text{-}offset}:=\mathbf{Gross\text{-}iir}-\mathbf{Net\text{-}iir}$.
+An earlier version computed a non-qualified Parent Entity $i$'s ratio as $\left[\mathbf{Y}_{ij}-\sum_{k\ne i}\mathbf{Y}_{ik}(\mathbf{Net\text{-}iir}^{Q})_{kj}\right]^{+}$. Without circular holdings this equals $(\mathbf{H})_{ij}$. Where $i$ and a qualified Parent Entity $k$ below it hold each other, the sum also subtracts paths that leave $i$ and return to $i$ before reaching $j$, which $\mathbf{Y}_{ij}$ never counted. For example, if $i$ holds 60% of $k$, $k$ holds 50% of $i$, and $i$ holds 100% of $j$, the earlier formula gives 70% and $\mathbf{H}_{ij}=100\%$. $\mathbf{H}$ treats $i$'s indirect holding of itself the same way $f$ does. $\mathbf{H}\ge0$, so no truncation is needed.
 
 ## Investment Entity Special Rule
 
@@ -497,7 +238,7 @@ $$
 
 be given as an input. The scalar $(\mathbf{R}^{7.4})_{ij}$ is the proportion of Entity $i$'s direct Profit Ownership Interest in Entity $j$ that remains subject to Article 7.4: 1 means the entire interest is subject to Article 7.4 and 0 means none of it is. The entry is 0 unless Entity $j$ is an Investment Entity.
 
-The fraction is applied to the direct Profit Ownership Interest matrix before the direct and indirect Ownership Interest function $f$ is evaluated. The resulting Article 7.4 ownership graphs are used only to determine the MNE Group's Allocable Share.
+The fraction is applied to the direct Profit Ownership Interest matrix before the direct and indirect Ownership Interest function $f$ is evaluated. $g$ keeps the treasury shares on the diagonal at their full ratio. The resulting Article 7.4 ownership graphs are used only to determine the MNE Group's Allocable Share.
 
 ### Constituent Entity Investment Entity
 
@@ -516,9 +257,9 @@ $$
 \mathbf{X}^{7.4}
 :=
 m\bigl(
-\mathbf{X}_0^{\mathrm{profit,treasury}}
+\mathbf{X}_0^{\mathrm{profit}}
 \odot
-\mathbf{R}^{7.4};
+g(\mathbf{R}^{7.4});
 \mathbf{mne\text{-}member}
 \bigr)
 }
@@ -575,9 +316,9 @@ $$
 \mathbf{X}^{7.4}
 :=
 m\bigl(
-\mathbf{X}_0^{\mathrm{profit,treasury}}
+\mathbf{X}_0^{\mathrm{profit}}
 \odot
-\mathbf{R}^{7.4};
+g(\mathbf{R}^{7.4});
 \mathbf{jv\text{-}member}
 \bigr)
 }
@@ -726,11 +467,11 @@ Each Entity column therefore uses the ordinary Net Income Inclusion Ratio unless
 
 ### 1. Prepare the Profit Ownership Graph
 
-Remove treasury shares, mask the graph to the relevant member population, and call the imported ownership function to calculate direct and indirect Profit Ownership Interests.
+Mask the graph to the members. Treasury shares stay on the diagonal; $f$ and $h$ handle them.
 
 ### 2. Solve Each IIR-Payable Column
 
-For each potential low-taxed Entity, select the payable Parent Entities and solve only the corresponding principal submatrix of $g(\mathbf{Y})$. Non-payable rows remain zero.
+For each potential low-taxed Entity $j$ with a payable Parent Entity, cut the columns of the Parent Entities with $\mathbf{Q}_{ij}=1$, restrict the graph to $j$ and its direct and indirect owners, and solve column $j$ of $\mathbf{H}$ as in [Ownership Interest](<Ownership Interest.md#implementation>). Columns without a payable Parent Entity are zero.
 
 ### 3. Calculate the Article 7.4 Allocable Share
 

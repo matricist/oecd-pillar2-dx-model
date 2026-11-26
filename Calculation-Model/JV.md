@@ -5,13 +5,13 @@ All inputs are for the same $N$ Entities and the same [effective period](<Owners
 | Symbol | Type | Meaning |
 | --- | --- | --- |
 | $\mathbf{X}_0$ | $[0,1]^{N\times N}$ | [Direct Ownership Interest matrix](<Ownership Interest.md#direct-ownership-matrix>) |
-| $\mathbf{C}_0$ | $\{0,1\}^{N\times N}$ | [Direct Controlling Interest matrix](<Controlling Interest.md#direct-controlling-matrix>) |
+| $\mathbf{C}_0$ | $\{0,1\}^{N\times N}$ | [Direct Controlling Interest matrix](<Ownership Interest.md#direct-controlling-matrix>) |
 | $\mathbf{group\text{-}upe}$ | $\{0,1\}^{N\times1}$ | The group's UPEs |
 | $\mathbf{ce}$ | $\{0,1\}^{N\times1}$ | CEs |
 | $\mathbf{eqt}$ | $\{0,1\}^{N\times1}$ | Entities reported under the equity method |
 | $\mathbf{jv\text{-}excluded}$ | $\{0,1\}^{N\times1}$ | Entities excluded from the Joint Venture definition by Article 10.1.1(a)–(d) |
 
-$f$ is the [Ownership Interest method](<Ownership Interest.md#direct-method>) and $w$ is [Warshall's algorithm](<Controlling Interest.md#warshalls-algorithm>). Comparisons and logical operations are element-wise.
+$f$ is the [Ownership Interest method](<Ownership Interest.md#direct-method>) and $w$ is [Warshall's algorithm](<Ownership Interest.md#warshalls-algorithm>). Comparisons and logical operations are element-wise.
 
 # Validation
 

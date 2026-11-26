@@ -12,7 +12,7 @@ $N$ Entities, indexed $1,\ldots,N$.
 | --- | --- | --- |
 | $\mathbf{name}$ | $\text{String}^{N}$ | Entity name |
 | $\mathbf{X}_0$ | $[0,1]^{N\times N}$ | [Direct Ownership Interest matrix](<../../Calculation-Model/Ownership Interest.md#direct-ownership-matrix>) |
-| $\mathbf{C}_0$ | $\{0,1\}^{N\times N}$ | [Direct Controlling Interest matrix](<../../Calculation-Model/Controlling Interest.md#direct-controlling-matrix>) |
+| $\mathbf{C}_0$ | $\{0,1\}^{N\times N}$ | [Direct Controlling Interest matrix](<../../Calculation-Model/Ownership Interest.md#direct-controlling-matrix>) |
 | $\mathbf{Entt\text{-}jur}$ | $\{0,1\}^{N\times M}$ | Entity-to-jurisdiction matrix |
 | $\mathbf{Entt\text{-}tin}$ | $\{0,1\}^{N\times K}$ | Entity-to-TIN matrix |
 | $\mathbf{group\text{-}upe},\mathbf{ce},\mathbf{ee},\mathbf{pe},\mathbf{ie},\mathbf{stateless},\mathbf{eqt}$ | $\{0,1\}^{N}$ | Classifications used by the Calculation Model |

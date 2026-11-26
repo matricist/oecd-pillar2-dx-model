@@ -5,6 +5,7 @@ All inputs are for the same $N$ Entities and $M$ jurisdictions.
 | Symbol | Type | Meaning |
 | --- | --- | --- |
 | $\mathbf{X},\mathbf{Y}$ | $[0,1]^{N\times N}$ | Direct, and direct and indirect, Profit Ownership Interest matrices of the ordinary IIR calculation, from [IIR](<IIR.md#ownership-graph>) |
+| $\mathbf{H},\mathbf{Net\text{-}iir}^{Q}$ | $[0,1]^{N\times N}$ | Ownership with the Parent Entities payable under a Qualified IIR absorbing, and its payable cells, from [IIR](<IIR.md#net-income-inclusion-ratio>) |
 | $g$ | | Unit-diagonal function, $g(\mathbf{A}):=\mathbf{A}-\operatorname{diag}(\mathbf{A})+\mathbf{I}_N$, from [IIR](<IIR.md#unit-diagonal-function>) |
 | $\mathbf{Iir\text{-}payable}$ | $\{0,1\}^{N\times N}$ | IIR payability, from [Taxing Rights](<Taxing Rights.md#iir-payability>) |
 | $\mathbf{self\text{-}payable},\mathbf{group\text{-}upe},\mathbf{qiir}$ | $\{0,1\}^{N\times1}$ | Parent Entities paying their own Top-up Tax, UPEs (including a UPE that is an Excluded Entity), and Entities in a Qualified IIR jurisdiction, from [Taxing Rights](<Taxing Rights.md>) |
@@ -23,13 +24,7 @@ The Top-up Tax of a low-taxed Entity goes to the UTPR to the extent that no Qual
 
 ## Charge under a Qualified IIR
 
-Only a Qualified IIR counts. Let
-
-$$
-\mathbf{Q}:=\operatorname{diag}(\mathbf{qiir})\times\mathbf{Iir\text{-}payable}
-$$
-
-and let $\mathbf{Net\text{-}iir}^{Q}$ be the [Net Income Inclusion Ratio](<IIR.md#income-inclusion-ratio>) of IIR calculated with $\mathbf{Q}$ in place of $\mathbf{Iir\text{-}payable}$. A Parent Entity that pays its own Top-up Tax under a Qualified IIR is added on the diagonal:
+Only a Qualified IIR counts. With $\mathbf{Q}:=\operatorname{diag}(\mathbf{qiir})\times\mathbf{Iir\text{-}payable}$, $\mathbf{Net\text{-}iir}^{Q}$ is the share of each Entity that each Parent Entity brings into charge under a Qualified IIR, from [IIR](<IIR.md#net-income-inclusion-ratio>). A Parent Entity that pays its own Top-up Tax under a Qualified IIR is added on the diagonal:
 
 $$
 \mathbf{Charged}:=\mathbf{Net\text{-}iir}^{Q}+\operatorname{diag}(\mathbf{self\text{-}payable}\land\mathbf{qiir})
@@ -41,44 +36,17 @@ $(\mathbf{Charged})_{kj}$ is the share of the Top-up Tax of Entity $j$ that Pare
 
 $\mathbf{Residual}$ is the part of each UPE's interest in an Entity that reaches the UPE without having been charged under a Qualified IIR. A UPE counts as holding all of itself. A UPE that is an Excluded Entity counts too: it applies no IIR, but Article 2.5.2 looks at the UPE's Ownership Interests whatever the UPE is.
 
-### Direct Method
-
 $$
-\boxed{\mathbf{Residual}:=\operatorname{diag}(\mathbf{group\text{-}upe})\times g(\mathbf{Y})\times(\mathbf{I}_N-\mathbf{Charged})}
+\boxed{\mathbf{Residual}:=\operatorname{diag}(\mathbf{group\text{-}upe})\times\left(g(\mathbf{H})\odot(\mathbf{1}_{N\times N}-\mathbf{Q})\right)\times\operatorname{diag}\left(\mathbf{1}_N-(\mathbf{self\text{-}payable}\land\mathbf{qiir})\right)}
 $$
 
-Entry by entry, for a UPE $u$ and an Entity $j$,
+$\mathbf{H}$ already leaves out every path through a Parent Entity that pays under a Qualified IIR, so for a UPE $u$ and an Entity $j\ne u$, $(\mathbf{Residual})_{uj}=(\mathbf{H})_{uj}$ is the UPE's interest in $j$ that no Qualified IIR charges.
 
-$$
-(\mathbf{Residual})_{uj}=(g(\mathbf{Y}))_{uj}-\sum_{k}(g(\mathbf{Y}))_{uk}(\mathbf{Charged})_{kj}:
-$$
+- A UPE that itself pays for $j$ under a Qualified IIR has no residual in $j$: the factor $\mathbf{1}_{N\times N}-\mathbf{Q}$.
+- An Entity that pays its own Top-up Tax under a Qualified IIR leaves no residual to anyone: the right factor.
+- Paths through another UPE count, as do paths through an Excluded Entity.
 
-the UPE's interest in Entity $j$, less its interest in each Parent Entity $k$ times the share that $k$ pays.
-
-### Iterative Method
-
-The same result follows the unpaid interest in each Entity up the ownership structure, one level per step. At a Parent Entity that is payable under a Qualified IIR the interest is paid; at a UPE that is not, it falls into the UPE's basket; otherwise it moves on.
-
-$$
-\begin{aligned}
-\mathbf{U}&:=\operatorname{diag}(\mathbf{group\text{-}upe})\times(\mathbf{1}_{N\times N}-\mathbf{Q})\\
-\mathbf{Unpaid}_0&:=\mathbf{I}_N,\quad
-\mathbf{Paid}_0:=\mathbf{0}_{N\times N},\quad
-\mathbf{Basket}_0:=\operatorname{diag}(\mathbf{group\text{-}upe})\\
-\mathbf{Paid}_{t+1}&:=\mathbf{Paid}_t+(\mathbf{X}\times\mathbf{Unpaid}_t)\odot\mathbf{Q}\\
-\mathbf{Basket}_{t+1}&:=\mathbf{Basket}_t+(\mathbf{X}\times\mathbf{Unpaid}_t)\odot\mathbf{U}\\
-\mathbf{Unpaid}_{t+1}&:=(\mathbf{X}\times\mathbf{Unpaid}_t)\odot(\mathbf{1}_{N\times N}-\mathbf{Q}-\mathbf{U})
-\end{aligned}
-$$
-
-$$
-\begin{aligned}
-\mathbf{Net\text{-}iir}^{Q}&=\lim_{t\to\infty}\mathbf{Paid}_t\\
-\mathbf{Residual}&=\lim_{t\to\infty}\mathbf{Basket}_t-\operatorname{diag}(\mathbf{group\text{-}upe})\times g(\mathbf{Y})\times\operatorname{diag}(\mathbf{self\text{-}payable}\land\mathbf{qiir})
-\end{aligned}
-$$
-
-The last term takes out the Top-up Tax that Parent Entities pay on themselves, which the iteration does not see.
+This equals the earlier form $\operatorname{diag}(\mathbf{group\text{-}upe})\times g(\mathbf{Y})\times(\mathbf{I}_N-\mathbf{Charged})$ with two exceptions. In the column of a self-paying Entity with a payable Parent Entity above it, the earlier form went negative; both give the same $\mathbf{utpr\text{-}payable}$. Where a UPE and a qualified Parent Entity below it hold each other, the earlier form also subtracted paths through the UPE itself, as described in [IIR](<IIR.md#circular-holdings-between-parent-entities>).
 
 ## UTPR Top-up Tax
 
@@ -115,7 +83,7 @@ $$
 
 # Implementation
 
-$\mathbf{Net\text{-}iir}^{Q}$ is obtained by LU decomposition rather than by an explicit inverse, as in [IIR](<IIR.md#direct-method>).
+$\mathbf{Residual}$ needs no solve of its own: it is the UPE rows of $\mathbf{H}$, which [IIR](<IIR.md#implementation-notes>) computes column by column.
 
 # Open
 

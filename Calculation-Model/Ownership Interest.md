@@ -1,3 +1,5 @@
+This document defines how direct interests become direct and indirect interests: Ownership Interests over the real numbers, the same with some Parent Entities absorbing what reaches them, and Controlling Interests over the Booleans. Every other document imports its interest matrices from here.
+
 # Direct Ownership Matrix
 
 $\mathbf{X}_0$ is an $N\times N$ square matrix for $N$ Entities, with owning Entities on rows, Entities owned on columns, and Ownership Interest Ratios as entries. Diagonal entries represent treasury shares.
@@ -139,3 +141,94 @@ whose column $j$ reads $\mathbf{L}_{:,j}=\mathbf{e}_j+\sum_k\mathbf{L}_{:,k}(\ma
 **Validation comes free.** $\mathbf{I}_N-\mathbf{X}_0$ is singular exactly when some $\mathbf{I}-(\mathbf{X}_0)_{CC}$ is, so the invertibility condition is checked component by component: a singular local LU identifies the closed set of Entities that no one outside owns.
 
 **Cost.** Dense LU costs $O(N^3)$. Here the cost is $O\bigl(\sum_C|C|^3\bigr)$ for the cyclic components plus propagation, which is linear in the number of edges times the number of ancestors per column. Column $j$ of $\mathbf{L}$ is nonzero only on $j$ and its direct and indirect owners, so $\mathbf{L}$ and $\mathbf{Y}$ stay sparse. Group structures are mostly trees with a few small cycles, so in practice this is close to linear.
+
+# Ownership with Absorbing Parent Entities
+
+The IIR and the UTPR follow an interest in a low-taxed Entity $j$ up the ownership chain until it reaches a Parent Entity that brings it into charge. Such a Parent Entity absorbs the interest: nothing above it reaches $j$ through it. This is the ownership calculation above with the absorbing Parent Entities' incoming edges cut.
+
+## Definition
+
+Let $\mathbf{S}\in\{0,1\}^{N\times N}$ mark absorbing Parent Entities on rows and the Entities they absorb for on columns. Column $j$ of the cut ownership matrix $h(\mathbf{X};\mathbf{S})$ is column $j$ of $f$ applied to $\mathbf{X}$ with the columns of the absorbing Parent Entities of $j$ removed:
+
+$$
+\boxed{
+h(\mathbf{X};\mathbf{S})_{:,j}:=f\bigl(\mathbf{X}\operatorname{diag}(\mathbf{1}_N-\mathbf{S}_{:,j})\bigr)_{:,j}
+}
+$$
+
+Removing column $k$ removes every interest held in $k$, so no path to $j$ passes through $k$. A path may still start at $k$.
+
+- For an absorbing Parent Entity $k$ of $j$, $h_{kj}$ is $k$'s interest in $j$ through Entities that are not absorbing.
+- For any other Entity $i$, $h_{ij}$ is $i$'s interest in $j$ that reaches $i$ without passing through an absorbing Parent Entity.
+- With no absorbing Parent Entities, $h(\mathbf{X};\mathbf{0})=f(\mathbf{X})$.
+
+Treasury shares and circular ownership are handled inside $f$, so $\mathbf{X}$ keeps its diagonal.
+
+## Iterative Reading
+
+Column $j$ of $h$ is the limit of the recurrence of the iterative method run on $\mathbf{X}\operatorname{diag}(\mathbf{1}_N-\mathbf{S}_{:,j})$. Equivalently, start one unit of unpaid interest at $j$ and pass it up one ownership level per step: an absorbing Parent Entity keeps what reaches it, every other Entity passes it on. For the absorbing Parent Entities, what they keep in the limit is $h_{kj}$.
+
+## Absorbing-Chain Form
+
+For a single column $j$, let $\mathcal{S}$ be the absorbing Parent Entities and $\mathcal{T}$ the rest. Then
+
+$$
+h(\mathbf{X};\mathbf{S})_{\mathcal{S},j}=\left[\mathbf{X}_{\mathcal{S},\mathcal{T}}(\mathbf{I}-\mathbf{X}_{\mathcal{T},\mathcal{T}})^{-1}\right]_{:,j},
+$$
+
+the absorption probabilities of an absorbing Markov chain, and for $i\in\mathcal{T}$, $h_{ij}=(l^{\mathcal{T}}_{ij}-\delta_{ij})/l^{\mathcal{T}}_{ii}$ with $\mathbf{L}^{\mathcal{T}}:=(\mathbf{I}-\mathbf{X}_{\mathcal{T},\mathcal{T}})^{-1}$.
+
+## Implementation
+
+Column $j$ of $h$ depends only on $j$ and its direct and indirect owners. For each $j$ with absorbing Parent Entities, restrict the graph to those owners, cut the absorbing columns, and solve column $j$ as in the [implementation](#implementation) above. Cutting can only break cycles, so the SCCs of the cut graph refine those of the full graph.
+
+# Controlling Interest
+
+The direct and indirect Controlling Interest matrix is the same path closure over the Boolean semiring: $\lor$ in place of $+$, $\land$ in place of $\times$.
+
+## Direct Controlling Matrix
+
+$\mathbf{C}_0$ is an $N\times N$ square matrix for $N$ Entities, with controlling Entities on rows, Entities controlled on columns, and Boolean values as entries. All diagonal entries are `False`.
+
+## Control Validation
+
+$$
+\boxed{\mathbf{C}_0\odot\mathbf{C}_0^{\mathsf T}=\mathbf{0}}
+$$
+
+Each column of $\mathbf{C}_0$ contains at most one `True`. There is no circular control.
+
+Let $\mathbf{ce}$, $\mathbf{pe}$, and $\mathbf{group\text{-}upe}$ be $N\times1$ Boolean column vectors identifying CEs, PEs, and the group's UPEs, and let $\mathbf{controllers}:=\mathbf{C}_0^{T}\times\mathbf{1}_N$ count the direct controllers of each Entity.
+
+- **A UPE has no controller:** $\mathbf{controllers}\odot\mathbf{group\text{-}upe}=\mathbf{0}_N$.
+- **Every CE other than a UPE has a controller:** $(\mathbf{controllers})_j=1$ wherever $(\mathbf{ce}\land\neg\mathbf{group\text{-}upe})_j$ is `True`.
+- **A PE that is not a CE is not controlled by a CE:** $\operatorname{diag}(\mathbf{ce})\times\mathbf{C}_0\times\operatorname{diag}(\mathbf{pe}\land\neg\mathbf{ce})=\mathbf{0}$.
+
+## Warshall's Algorithm
+
+Starting from $\mathbf{C}_0$, compute the direct and indirect controlling interest matrix:
+
+$$
+(\mathbf{C}_t)_{ij}
+=
+(\mathbf{C}_{t-1})_{ij}
+\lor
+\left(
+(\mathbf{C}_{t-1})_{it}
+\land
+(\mathbf{C}_{t-1})_{tj}
+\right)
+\qquad (t=1,\ldots,N)
+$$
+
+After $t=N$, the matrix remains unchanged:
+
+$$
+\boxed{\mathbf{C}=w(\mathbf{C}_0):=\lim_{t\to\infty}\mathbf{C}_t}
+$$
+
+$\mathbf{C}$ is the Kleene plus of $\mathbf{C}_0$, the Boolean counterpart of $\mathbf{L}-\mathbf{I}_N=\mathbf{X}_0+\mathbf{X}_0^2+\cdots$. Because control is acyclic and each Entity has at most one controller, no normalization is needed.
+
+## Bitset Implementation
+
+Store each matrix row as a bitset. At step $t$, if Entity $i$ controls Entity $t$, merge row $t$ into row $i$ using bitwise OR. This updates multiple Boolean entries at once and reduces memory usage without changing the Warshall result.

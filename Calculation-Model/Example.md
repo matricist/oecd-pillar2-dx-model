@@ -147,7 +147,7 @@ $$
 
 **Direct Controlling Interest matrix** $\mathbf{C}_0$
 
-The solid arrows of the diagram. Input; see [Controlling Interest](<Controlling Interest.md#direct-controlling-matrix>).
+The solid arrows of the diagram. Input; see [Controlling Interest](<Ownership Interest.md#direct-controlling-matrix>).
 
 $$
 \scriptsize
@@ -175,7 +175,7 @@ $$
 
 **Direct and indirect Controlling Interest matrix** $\mathbf{C}=w(\mathbf{C}_0)$
 
-$w$ is [Warshall's algorithm](<Controlling Interest.md#warshalls-algorithm>). $(\mathbf{C})_{ij}$ is 1 when Entity $i$ controls Entity $j$ directly or through a chain of controlled Entities.
+$w$ is [Warshall's algorithm](<Ownership Interest.md#warshalls-algorithm>). $(\mathbf{C})_{ij}$ is 1 when Entity $i$ controls Entity $j$ directly or through a chain of controlled Entities.
 
 $$
 \scriptsize
