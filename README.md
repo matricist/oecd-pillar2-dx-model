@@ -34,8 +34,8 @@ Three lines give the flavour.
 Direct ownership becomes direct and indirect ownership, with circular ownership and treasury shares resolved:
 
 $$
-\mathbf{E}:=\mathbf{X}_0(\mathbf{I}-\mathbf{X}_0)^{-1},\qquad
-\mathbf{Y}:=(\mathbf{I}+\operatorname{diag}(\mathbf{E}))^{-1}\mathbf{E}
+\mathbf{L}:=(\mathbf{I}-\mathbf{X}_0)^{-1},\qquad
+\mathbf{Y}:=\operatorname{diag}(\mathbf{L})^{-1}(\mathbf{L}-\mathbf{I})
 $$
 
 A JV candidate is an equity-method Entity in which the UPEs hold at least 50%:

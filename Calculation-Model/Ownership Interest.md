@@ -21,7 +21,7 @@ $$
 \end{aligned}
 $$
 
-Given the first three conditions, the last fails only where a set of Entities is wholly owned within itself, such as a 100% circular holding.
+Given the first three conditions, the last fails exactly when some non-empty set of Entities $C$ is wholly owned within itself: $\sum_{i\in C}(\mathbf{X}_0)_{ij}=1$ for every $j\in C$, such as two Entities holding 100% of each other. Wholly-owned chains are fine. Every chain of owners eventually reaches an Entity with a column sum below 1, such as the UPE, which is owned from outside the matrix.
 
 $\mathbf{X}_0$ and $\mathbf{X}_0^{\mathrm{profit}}$ are validated independently. Passing the validation for one does not cure a failure in the other.
 
@@ -55,85 +55,87 @@ where $k\ne i$ excludes self-ownership arising from treasury shares or circular 
 $$
 \boxed{
 \begin{aligned}
-\mathbf{E}&:=\mathbf{X}_0(\mathbf{I}_N-\mathbf{X}_0)^{-1}\\
-\mathbf{Y}&=(\mathbf{I}_N+\operatorname{diag}(\mathbf{E}))^{-1}\mathbf{E}
+\mathbf{L}&:=(\mathbf{I}_N-\mathbf{X}_0)^{-1}\\
+\mathbf{Y}&=\operatorname{diag}(\mathbf{L})^{-1}(\mathbf{L}-\mathbf{I}_N)
 \end{aligned}
 }
 $$
 
+Element by element, $y_{ij}=\dfrac{l_{ij}-\delta_{ij}}{l_{ii}}$. In particular, the self-ownership is $y_{ii}=1-1/l_{ii}$.
+
 ### Derivation
 
-Starting from the recurrence relation,
-
-$$
-\mathbf{X}_{t+1} = (\mathbf{X}_t - \operatorname{diag}(\mathbf{X}_t) + \mathbf{I}_N)\mathbf{X}_0
-$$
-
-taking the limit as $t \to \infty$ gives
+Taking the limit of the recurrence as $t\to\infty$ gives
 
 $$
 \mathbf{Y} = (\mathbf{Y} - \operatorname{diag}(\mathbf{Y}) + \mathbf{I}_N)\mathbf{X}_0
 $$
 
-Rearranging the equation,
+Rearranging, and using that $\mathbf{I}_N-\mathbf{X}_0$ is invertible under the validation conditions,
 
 $$
-\mathbf{Y}(\mathbf{I}_N-\mathbf{X}_0) = (\mathbf{I}_N-\operatorname{diag}(\mathbf{Y}))\mathbf{X}_0
+\mathbf{Y} = (\mathbf{I}_N-\operatorname{diag}(\mathbf{Y}))\mathbf{X}_0\mathbf{L} = (\mathbf{I}_N-\operatorname{diag}(\mathbf{Y}))(\mathbf{L}-\mathbf{I}_N)
 $$
 
-Under the validation conditions, $\mathbf{I}_N-\mathbf{X}_0$ is invertible, giving
+since $\mathbf{X}_0\mathbf{L}=\mathbf{L}-\mathbf{I}_N$. The $(i,j)$-th element is
 
 $$
-\mathbf{Y} = (\mathbf{I}_N-\operatorname{diag}(\mathbf{Y}))\mathbf{X}_0(\mathbf{I}_N-\mathbf{X}_0)^{-1}
+y_{ij}=(1-y_{ii})(l_{ij}-\delta_{ij})
 $$
 
-By the definition of $\mathbf{E}$,
+Setting $j=i$ gives $y_{ii}=(1-y_{ii})(l_{ii}-1)$, so
 
 $$
-\mathbf{Y} = (\mathbf{I}_N-\operatorname{diag}(\mathbf{Y}))\mathbf{E}
+1-y_{ii}=\frac{1}{l_{ii}}
 $$
 
-Since $(\mathbf{I}_N-\operatorname{diag}(\mathbf{Y}))$ is a diagonal matrix, the $(i,j)$-th element of the matrix equation satisfies
+Substituting back, $y_{ij}=(l_{ij}-\delta_{ij})/l_{ii}$, which in matrix form is
 
 $$
-y_{ij}=(1-y_{ii})e_{ij}
+\mathbf{Y}=\operatorname{diag}(\mathbf{L})^{-1}(\mathbf{L}-\mathbf{I}_N)
 $$
 
-For the diagonal elements, setting $j=i$ gives
+$\operatorname{diag}(\mathbf{L})$ is invertible because $\mathbf{L}=\sum_{t\ge0}\mathbf{X}_0^t\ge\mathbf{I}_N$ entrywise, so every $l_{ii}\ge1$.
+
+### Interpretation
+
+$l_{ij}$ sums every ownership path from $i$ to $j$. Each such path splits uniquely into a loop that returns to $i$ and a path that never returns to $i$, so $l_{ij}=l_{ii}\cdot y_{ij}$ for $i\ne j$. Dividing by $l_{ii}$ removes paths that use $i$ as an intermediate holder ($k\ne i$ in the recurrence). Loops at $j$ stay in. Those are $j$'s treasury shares and circular holdings, which raise the interests of $j$'s other holders.
+
+### Example
+
+$P$ holds 90% of $S$, and $S$ holds 10% of itself as treasury shares.
 
 $$
-y_{ii}=\frac{e_{ii}}{1+e_{ii}}
+\mathbf{X}_0=\begin{pmatrix}0&0.9\\0&0.1\end{pmatrix},\quad
+\mathbf{L}=\begin{pmatrix}1&1\\0&10/9\end{pmatrix},\quad
+\mathbf{Y}=\begin{pmatrix}0&1\\0&0.1\end{pmatrix}
 $$
 
-Substituting $y_{ii}$ back into the $y_{ij}$ equation,
-
-$$
-(1+e_{ii})y_{ij} = e_{ij}
-$$
-
-Since $1+e_{ii}$ depends only on the row index $i$, this element-wise relation can be written in matrix form as
-
-$$
-(\mathbf{I}_N+\operatorname{diag}(\mathbf{E}))\mathbf{Y} = \mathbf{E}
-$$
-
-Therefore,
-
-$$
-\mathbf{Y} = (\mathbf{I}_N+\operatorname{diag}(\mathbf{E}))^{-1}\mathbf{E}
-$$
-
-$\mathbf{I}_N+\operatorname{diag}(\mathbf{E})$ is invertible because $e_{ii} \ge 0$ for every $i$, and therefore every diagonal element $1+e_{ii}$ is strictly positive.
+$P$ holds 100% of $S$, which is 90% of the shares held outside $S$ itself. $S$ holds 10% of itself.
 
 ## Implementation
 
-The full linear system can be solved directly using LU. For computational efficiency, this implementation instead decomposes the ownership graph into SCCs and applies LU only to cyclic components.
+$\mathbf{L}$ is never formed as an explicit inverse. It is the unique solution of
 
-1. **Identify cycles:** Represent direct ownership as a directed graph and divide it into SCCs.
-2. **Follow dependencies:** Use DFS to evaluate predecessor components first.
-3. **Resolve circular ownership:** Use local LU solves within cyclic components, including treasury-share self-loops. Components without cycles require only propagation of ownership contributions.
-4. **Normalize:** Divide every entry in row $i$ of $\mathbf{E}$ by $1+e_{ii}$ to obtain row $i$ of $\mathbf{Y}$:
+$$
+\mathbf{L}=\mathbf{I}_N+\mathbf{L}\mathbf{X}_0,
+$$
+
+whose column $j$ reads $\mathbf{L}_{:,j}=\mathbf{e}_j+\sum_k\mathbf{L}_{:,k}(\mathbf{X}_0)_{kj}$. Column $j$ depends only on the columns of $j$'s direct owners, so the columns can be filled from the top of the ownership graph down.
+
+1. **Decompose:** Treat $(\mathbf{X}_0)_{ij}>0$ as an edge $i\to j$ and split the graph into strongly connected components (SCCs). A component is cyclic if it has more than one Entity or a treasury-share self-loop.
+2. **Order:** Sort the components topologically, owners first. Every owner of a component outside it is then already solved.
+3. **Solve each component $C$:** With $P$ the Entities outside $C$,
 
    $$
-   y_{ij}=\frac{e_{ij}}{1+e_{ii}}.
+   \mathbf{L}_{:,C}(\mathbf{I}-(\mathbf{X}_0)_{CC})=\mathbf{I}_{:,C}+\mathbf{L}_{:,P}(\mathbf{X}_0)_{PC}.
    $$
+
+   - Single Entity, no self-loop: $\mathbf{L}_{:,j}=\mathbf{e}_j+\sum_{k}\mathbf{L}_{:,k}(\mathbf{X}_0)_{kj}$. No solve.
+   - Single Entity with treasury shares $x_{jj}$: as above, divided by $1-x_{jj}$.
+   - Cyclic component: one LU factorisation of the $|C|\times|C|$ matrix $\mathbf{I}-(\mathbf{X}_0)_{CC}$, reused for every row.
+4. **Normalize:** $y_{ij}=(l_{ij}-\delta_{ij})/l_{ii}$.
+
+**Validation comes free.** $\mathbf{I}_N-\mathbf{X}_0$ is singular exactly when some $\mathbf{I}-(\mathbf{X}_0)_{CC}$ is, so the invertibility condition is checked component by component: a singular local LU identifies the closed set of Entities that no one outside owns.
+
+**Cost.** Dense LU costs $O(N^3)$. Here the cost is $O\bigl(\sum_C|C|^3\bigr)$ for the cyclic components plus propagation, which is linear in the number of edges times the number of ancestors per column. Column $j$ of $\mathbf{L}$ is nonzero only on $j$ and its direct and indirect owners, so $\mathbf{L}$ and $\mathbf{Y}$ stay sparse. Group structures are mostly trees with a few small cycles, so in practice this is close to linear.
