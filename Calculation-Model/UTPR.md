@@ -4,7 +4,6 @@ All inputs are for the same $N$ Entities and $M$ jurisdictions.
 
 | Symbol | Type | Meaning |
 | --- | --- | --- |
-| $\mathbf{X},\mathbf{Y}$ | $[0,1]^{N\times N}$ | Direct, and direct and indirect, Profit Ownership Interest matrices of the ordinary IIR calculation, from [IIR](<IIR.md#ownership-graph>) |
 | $\mathbf{H},\mathbf{Net\text{-}iir}^{Q}$ | $[0,1]^{N\times N}$ | Ownership with the Parent Entities payable under a Qualified IIR absorbing, and its payable cells, from [IIR](<IIR.md#net-income-inclusion-ratio>) |
 | $g$ | | Unit-diagonal function, $g(\mathbf{A}):=\mathbf{A}-\operatorname{diag}(\mathbf{A})+\mathbf{I}_N$, from [IIR](<IIR.md#unit-diagonal-function>) |
 | $\mathbf{Iir\text{-}payable}$ | $\{0,1\}^{N\times N}$ | IIR payability, from [Taxing Rights](<Taxing Rights.md#iir-payability>) |

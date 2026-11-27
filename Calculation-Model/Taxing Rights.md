@@ -126,14 +126,10 @@ $\mathbf{self\text{-}payable}$ is kept apart from $\mathbf{Iir\text{-}payable}$,
 ## IIR Taxing Rights
 
 $$
-\begin{aligned}
-\mathbf{Parent\text{-}jur}&:=\left[\left(\mathbf{Iir\text{-}payable}\lor\operatorname{diag}(\mathbf{self\text{-}payable})\right)\times\mathbf{Entt\text{-}jur}\right]>0\\
-\mathbf{Iir\text{-}taxing\text{-}rights}&:=\left(\mathbf{Entt\text{-}jur}^{T}\times\mathbf{Parent\text{-}jur}\right)>0\\
-\mathbf{iir\text{-}right\text{-}jur}&:=\left(\mathbf{Iir\text{-}taxing\text{-}rights}\times\mathbf{1}_M\right)>0
-\end{aligned}
+\mathbf{Iir\text{-}taxing\text{-}rights}:=\left[\mathbf{Entt\text{-}jur}^{T}\times\left(\mathbf{Iir\text{-}payable}\lor\operatorname{diag}(\mathbf{self\text{-}payable})\right)\times\mathbf{Entt\text{-}jur}\right]>0
 $$
 
-$(\mathbf{Iir\text{-}taxing\text{-}rights})_{kl}$ is `True` iff a Parent Entity in jurisdiction $k$ is IIR-payable for an Entity in jurisdiction $l$, and $\mathbf{iir\text{-}right\text{-}jur}$ identifies the jurisdictions that collect under an IIR.
+$(\mathbf{Iir\text{-}taxing\text{-}rights})_{kl}$ is `True` iff a Parent Entity in jurisdiction $k$ is IIR-payable for an Entity in jurisdiction $l$.
 
 ## UTPR Taxing Rights
 

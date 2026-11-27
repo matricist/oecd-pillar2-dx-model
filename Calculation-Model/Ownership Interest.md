@@ -91,11 +91,7 @@ $$
 1-y_{ii}=\frac{1}{l_{ii}}
 $$
 
-Substituting back, $y_{ij}=(l_{ij}-\delta_{ij})/l_{ii}$, which in matrix form is
-
-$$
-\mathbf{Y}=\operatorname{diag}(\mathbf{L})^{-1}(\mathbf{L}-\mathbf{I}_N)
-$$
+Substituting back gives $y_{ij}=(l_{ij}-\delta_{ij})/l_{ii}$, the Direct Method.
 
 $\operatorname{diag}(\mathbf{L})$ is invertible because $\mathbf{L}=\sum_{t\ge0}\mathbf{X}_0^t\ge\mathbf{I}_N$ entrywise, so every $l_{ii}\ge1$.
 
@@ -133,10 +129,10 @@ whose column $j$ reads $\mathbf{L}_{:,j}=\mathbf{e}_j+\sum_k\mathbf{L}_{:,k}(\ma
    \mathbf{L}_{:,C}(\mathbf{I}-(\mathbf{X}_0)_{CC})=\mathbf{I}_{:,C}+\mathbf{L}_{:,P}(\mathbf{X}_0)_{PC}.
    $$
 
-   - Single Entity, no self-loop: $\mathbf{L}_{:,j}=\mathbf{e}_j+\sum_{k}\mathbf{L}_{:,k}(\mathbf{X}_0)_{kj}$. No solve.
+   - Single Entity, no self-loop: the column formula above. No solve.
    - Single Entity with treasury shares $x_{jj}$: as above, divided by $1-x_{jj}$.
    - Cyclic component: one LU factorisation of the $|C|\times|C|$ matrix $\mathbf{I}-(\mathbf{X}_0)_{CC}$, reused for every row.
-4. **Normalize:** $y_{ij}=(l_{ij}-\delta_{ij})/l_{ii}$.
+4. **Normalize:** apply the [Direct Method](#direct-method) to $\mathbf{L}$.
 
 **Validation comes free.** $\mathbf{I}_N-\mathbf{X}_0$ is singular exactly when some $\mathbf{I}-(\mathbf{X}_0)_{CC}$ is, so the invertibility condition is checked component by component: a singular local LU identifies the closed set of Entities that no one outside owns.
 
@@ -148,8 +144,6 @@ Row $i$ of $f(\mathbf{A})$ needs one row of $\mathbf{L}=(\mathbf{I}_N-\mathbf{A}
 
 $$
 \mathbf{r}_i=\mathbf{e}_i^{T}+\mathbf{r}_i\mathbf{A},
-\qquad\text{that is,}\qquad
-(\mathbf{r}_i)_j=\delta_{ij}+\sum_k(\mathbf{r}_i)_k(\mathbf{A})_{kj},
 $$
 
 and
@@ -214,7 +208,7 @@ $$
 
 $g(\mathbf{Y})_{\mathcal{S}\mathcal{S}}$ is invertible and the denominator lies in $(0,1]$, because $g(\mathbf{Y})=\operatorname{diag}(\mathbf{L})^{-1}\mathbf{L}$ and every principal submatrix of $\mathbf{L}$ is invertible.
 
-Removing a set of Entities from the graph is the same correction with $\mathcal{S}$ fixed for every column: for $i\ne j$ outside $\mathcal{S}$, $f\bigl(m(\mathbf{X};\mathbf{1}_N-\mathbf{s})\bigr)_{ij}$ is given by the second case.
+Removing a set of Entities from the graph is the same correction with $\mathcal{S}$ fixed for every column: for $i\ne j$ outside $\mathcal{S}$, $f\bigl(\operatorname{diag}(\mathbf{1}_N-\mathbf{s})\,\mathbf{X}\operatorname{diag}(\mathbf{1}_N-\mathbf{s})\bigr)_{ij}$ is given by the second case.
 
 ## Implementation
 
@@ -231,10 +225,10 @@ $\mathbf{C}_0$ is an $N\times N$ square matrix for $N$ Entities, with controllin
 ## Control Validation
 
 $$
-\boxed{\mathbf{C}_0\odot\mathbf{C}_0^{\mathsf T}=\mathbf{0}}
+\boxed{\mathbf{C}_0^{T}\times\mathbf{1}_N\le\mathbf{1}_N}
 $$
 
-Each column of $\mathbf{C}_0$ contains at most one `True`. There is no circular control.
+Each Entity has at most one direct controller, and there is no circular control.
 
 Let $\mathbf{ce}$, $\mathbf{pe}$, and $\mathbf{group\text{-}upe}$ be $N\times1$ Boolean column vectors identifying CEs, PEs, and the group's UPEs, and let $\mathbf{controllers}:=\mathbf{C}_0^{T}\times\mathbf{1}_N$ count the direct controllers of each Entity.
 
@@ -259,10 +253,8 @@ $$
 \qquad (t=1,\ldots,N)
 $$
 
-After $t=N$, the matrix remains unchanged:
-
 $$
-\boxed{\mathbf{C}=w(\mathbf{C}_0):=\lim_{t\to\infty}\mathbf{C}_t}
+\boxed{\mathbf{C}=w(\mathbf{C}_0):=\mathbf{C}_N}
 $$
 
 $\mathbf{C}$ is the Kleene plus of $\mathbf{C}_0$, the Boolean counterpart of $\mathbf{L}-\mathbf{I}_N=\mathbf{X}_0+\mathbf{X}_0^2+\cdots$. Because control is acyclic and each Entity has at most one controller, no normalization is needed.

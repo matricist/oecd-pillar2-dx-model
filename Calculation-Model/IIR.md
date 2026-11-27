@@ -2,11 +2,11 @@
 
 ## Imports
 
-- The Entity indicator vectors $\mathbf{ce}$, $\mathbf{ee}$, $\mathbf{ie}$, and $\mathbf{group\text{-}upe}$.
+- The Entity indicator vectors $\mathbf{ce}$, $\mathbf{ee}$, $\mathbf{ie}$, and $\mathbf{group\text{-}upe}$, before any calculation-specific exclusion; $\mathbf{group\text{-}upe}$ includes a UPE that is an Excluded Entity.
 - The top-level JV and JV Subsidiary vectors $\mathbf{jv}$ and $\mathbf{jvsub}$ from [Subgroups.md](<Subgroups.md#jv-groups>).
 - The direct Profit Ownership Interest matrix $\mathbf{X}_0^{\mathrm{profit}}$ from [Ownership Interest.md](<Ownership Interest.md#direct-ownership-matrix>).
 - The Article 7.4 applicability fraction matrix $\mathbf{R}^{7.4}$.
-- The Entity-level Top-up Tax vector $\mathbf{topup\text{-}tax}$ from [Top-up Tax Calculation](<Top-up Tax Calculation.md>).
+- The Top-up Tax of each Entity, $\mathbf{tt\text{-}entt}$, from [Top-up Tax Calculation](<Top-up Tax Calculation.md>).
 - The direct and indirect Ownership Interest function $f(\mathbf{A})$ from [Ownership Interest.md](<Ownership Interest.md#direct-method>).
 - The cut ownership function $h(\mathbf{A};\mathbf{S})$ from [Ownership Interest.md](<Ownership Interest.md#ownership-with-absorbing-parent-entities>).
 - The current-year IIR payability matrix $\mathbf{Iir\text{-}payable}$ from [Taxing Rights.md](<Taxing Rights.md#iir-payability>).
@@ -45,65 +45,13 @@ For a JV or JV Subsidiary subject to the analogous Article 6.4 calculation, low_
 ## Domain Validation
 
 - $\mathbf{X}_0^{\mathrm{profit}}$ passes the [Ownership Interest validation](<Ownership Interest.md#validation>); in particular no Entity holds 100% of its own Profit Ownership Interests.
+- $\mathbf{ce}\land\mathbf{ee}=\mathbf{0}_N$.
 
 # Operation
 
-## Notation
+$\operatorname{diag}$ retains the diagonal of a square matrix or builds a diagonal matrix from a vector. $\odot$ denotes element-wise multiplication; comparisons and logical operations are element-wise.
 
-Bold uppercase symbols denote matrices, bold lowercase names denote column vectors, and calligraphic symbols denote index sets. Indices, individual entries, and $N$ are scalars.
-
-| Symbol | Type and meaning |
-| --- | --- |
-| $N$ | Number of Entities. |
-| $\mathbf{X}_0^{\mathrm{profit}}\in[0,1]^{N\times N}$ | Direct Profit Ownership Interest matrix. |
-| $\mathbf{Iir\text{-}payable}\in\{0,1\}^{N\times N}$ | Current-year IIR payability matrix; Parent Entities are on rows and potential low-taxed Entities are on columns. |
-| $\mathbf{R}^{7.4}\in[0,1]^{N\times N}$ | Article 7.4 applicability fraction matrix. |
-| $\mathbf{ce},\mathbf{ee},\mathbf{ie},\mathbf{jv},\mathbf{jvsub},\mathbf{group\text{-}upe}\in\{0,1\}^{N\times1}$ | Entity indicator vectors. |
-| $\mathbf{I}_N$ | $N\times N$ identity matrix. |
-| $\mathbf{1}_N,\mathbf{0}_N$ | All-one and all-zero column vectors. |
-| $\mathbf{1}_{N\times N},\mathbf{0}_{N\times N}$ | All-one and all-zero matrices. |
-| $\mathcal{S}_j$ | Indices of Parent Entities that are IIR-payable for Entity $j$. |
-| $i,j,k,q,g$ | Entity indices, derivation step, or JV Group identifier. |
-
-The operator $\operatorname{diag}$ retains only the diagonal entries of a square matrix, or constructs a diagonal matrix from a vector. $\odot$ denotes element-wise multiplication; comparisons and logical operations are element-wise.
-
-The Entity indicator vectors use the same Entity ordering as the matrices:
-
-- $\mathbf{ce}$, $\mathbf{ee}$, and $\mathbf{ie}$ identify CEs, Excluded Entities, and Investment Entities, respectively.
-- $\mathbf{group\text{-}upe}$ identifies the group's UPEs, independently of later calculation exclusions.
-- $\mathbf{jv}$ and $\mathbf{jvsub}$ identify top-level JVs and JV Subsidiaries, respectively.
-
-These indicators describe Entity characteristics before calculation-specific exclusions; CE and EE indicators must not overlap. $\mathbf{X}_0^{\mathrm{profit}}$ has owning Entities on rows and Entities owned on columns.
-
-## Local Matrix Functions
-
-This document uses ordinary mathematical function names rather than qualified Function names.
-
-### Masking Function
-
-For matrix $\mathbf{A}$ and row and column indicator vectors $\mathbf{u}$ and $\mathbf{v}$, define:
-
-$$
-\boxed{
-m(\mathbf{A};\mathbf{u},\mathbf{v})
-:=
-\operatorname{diag}(\mathbf{u})\,
-\mathbf{A}\,
-\operatorname{diag}(\mathbf{v})
-}
-$$
-
-For the symmetric case:
-
-$$
-\boxed{
-m(\mathbf{A};\mathbf{u})
-:=
-m(\mathbf{A};\mathbf{u},\mathbf{u})
-}
-$$
-
-### Unit-Diagonal Function
+## Unit-Diagonal Function
 
 Define:
 
@@ -119,13 +67,7 @@ Thus, $g$ replaces the diagonal of a square matrix with ones and leaves all off-
 
 ## Imported IIR Payability
 
-A non-zero element
-
-$$
-(\mathbf{Iir\text{-}payable})_{ij}=1
-$$
-
-means that Parent Entity $i$ may apply the IIR to potential low-taxed Entity $j$ for the current fiscal year. Parent Entity identification, jurisdictional implementation conditions, and the top-down and split-ownership priority rules are calculated in [Taxing Rights.md](<Taxing Rights.md#iir-payability>).
+$(\mathbf{Iir\text{-}payable})_{ij}=1$ means that Parent Entity $i$ may apply the IIR to potential low-taxed Entity $j$ for the current fiscal year. Parent Entity identification, jurisdictional implementation conditions, and the top-down and split-ownership priority rules are calculated in [Taxing Rights.md](<Taxing Rights.md#iir-payability>).
 
 ## Income Inclusion Ratio
 
@@ -147,7 +89,7 @@ $$
 \boxed{
 \mathbf{X}
 :=
-m\bigl(\mathbf{X}_0^{\mathrm{profit}};\mathbf{member}\bigr)
+\operatorname{diag}(\mathbf{member})\,\mathbf{X}_0^{\mathrm{profit}}\operatorname{diag}(\mathbf{member})
 }
 $$
 
@@ -277,12 +219,9 @@ $$
 \boxed{
 \mathbf{X}^{7.4}
 :=
-m\bigl(
-\mathbf{X}_0^{\mathrm{profit}}
-\odot
-g(\mathbf{R}^{7.4});
-\mathbf{mne\text{-}member}
-\bigr)
+\operatorname{diag}(\mathbf{mne\text{-}member})
+\left(\mathbf{X}_0^{\mathrm{profit}}\odot g(\mathbf{R}^{7.4})\right)
+\operatorname{diag}(\mathbf{mne\text{-}member})
 }
 $$
 
@@ -308,29 +247,13 @@ $$
 }
 $$
 
-For Entity $j$:
-
-$$
-(\mathbf{mne\text{-}allocable\text{-}share}^{ce})_j
-=
-\sum_{i=1}^{N}
-(\mathbf{group\text{-}upe})_i
-(\mathbf{Y}^{7.4})_{ij}.
-$$
-
 The group UPE indicator is used because the UPE remains the reference owner even where it is an EE and cannot itself apply the IIR.
 
 Only the rows of the group UPEs are used, so $\mathbf{Y}^{7.4}$ is not formed in full: each row is a [Row Calculation](<Ownership Interest.md#row-calculation>) with $\mathbf{A}=\mathbf{X}^{7.4}$.
 
 ### JV Subsidiary Investment Entity
 
-For a JV Group, let
-
-$$
-\mathbf{jv\text{-}member}\in\{0,1\}^{N\times1}
-$$
-
-identify its JV and JV Subsidiaries.
+For a JV Group, let $\mathbf{jv\text{-}member}$ identify its JV and JV Subsidiaries.
 
 Define the local Article 7.4 ownership matrices:
 
@@ -338,12 +261,9 @@ $$
 \boxed{
 \mathbf{X}^{7.4}
 :=
-m\bigl(
-\mathbf{X}_0^{\mathrm{profit}}
-\odot
-g(\mathbf{R}^{7.4});
-\mathbf{jv\text{-}member}
-\bigr)
+\operatorname{diag}(\mathbf{jv\text{-}member})
+\left(\mathbf{X}_0^{\mathrm{profit}}\odot g(\mathbf{R}^{7.4})\right)
+\operatorname{diag}(\mathbf{jv\text{-}member})
 }
 $$
 
@@ -456,13 +376,7 @@ Only CE IEs and JV Subsidiary IEs with a positive MNE Group's Allocable Share ar
 
 ## Allocation of Top-up Tax
 
-Let:
-
-$$
-\mathbf{topup\text{-}tax}\in\mathbb{R}_{\ge0}^{N\times1}
-$$
-
-be the Entity-level Top-up Tax determined in [Top-up Tax Calculation](<Top-up Tax Calculation.md>); every entry is finite and non-negative. For this section, the Top-up Tax of an Article 7.4 IE is the amount already determined after applying the MNE Group's Allocable Share.
+For an Article 7.4 IE, $\mathbf{tt\text{-}entt}$ is the amount already determined after applying the MNE Group's Allocable Share.
 
 The final Parent-Entity-by-low-taxed-Entity allocation matrix is:
 
@@ -470,21 +384,13 @@ $$
 \boxed{
 \mathbf{Iir\text{-}topup\text{-}taxes}
 :=
-\left[
-\mathbf{Net\text{-}iir}
-\cdot
-\operatorname{diag}(\mathbf{1}_N-\mathbf{ie\text{-}adjustable})
-+
 \mathbf{Adjusted\text{-}net\text{-}iir}
 \cdot
-\operatorname{diag}(\mathbf{ie\text{-}adjustable})
-\right]
-\cdot
-\operatorname{diag}(\mathbf{topup\text{-}tax})
+\operatorname{diag}(\mathbf{tt\text{-}entt})
 }
 $$
 
-Each Entity column therefore uses the ordinary Net Income Inclusion Ratio unless Article 7.4 applies, in which case it uses the adjusted ratio, before multiplying by that Entity's Top-up Tax. Each non-zero cell supplies top_up_tax_payable for the corresponding IncomeInclusions row.
+$\mathbf{Adjusted\text{-}net\text{-}iir}$ equals $\mathbf{Net\text{-}iir}$ in every column to which Article 7.4 does not apply, so each Entity column uses the right ratio. Each non-zero cell supplies top_up_tax_payable for the corresponding IncomeInclusions row.
 
 # Implementation Notes
 
@@ -502,4 +408,4 @@ Solve one [row](<Ownership Interest.md#row-calculation>) of the MNE Group's Arti
 
 ### 4. Allocate Top-up Tax
 
-Select the ordinary or Article 7.4-adjusted Net Income Inclusion Ratio for each Entity column, then multiply by that Entity's Top-up Tax.
+Multiply each column of the Article 7.4-adjusted Net Income Inclusion Ratio by that Entity's Top-up Tax.

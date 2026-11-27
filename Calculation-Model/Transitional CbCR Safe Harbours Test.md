@@ -16,12 +16,7 @@ All vectors are indexed by the $N_{\mathrm{TCSH}}$ Entities or the $M_{\mathrm{T
 **Tested Jurisdiction aggregation**
 
 $$
-\begin{aligned}
-\mathbf{r}&:=\mathbf{G}_{\mathrm{TCSH}}\times\mathbf{rev}\\
-\mathbf{p}&:=\mathbf{G}_{\mathrm{TCSH}}\times\mathbf{pbt}\\
-\mathbf{t}&:=\mathbf{G}_{\mathrm{TCSH}}\times\mathbf{tax}\\
-\mathbf{s}&:=\mathbf{G}_{\mathrm{TCSH}}\times\mathbf{sbie}
-\end{aligned}
+(\mathbf{r}\;\;\mathbf{p}\;\;\mathbf{t}\;\;\mathbf{s}):=\mathbf{G}_{\mathrm{TCSH}}\times(\mathbf{rev}\;\;\mathbf{pbt}\;\;\mathbf{tax}\;\;\mathbf{sbie})
 $$
 
 **Tests**
