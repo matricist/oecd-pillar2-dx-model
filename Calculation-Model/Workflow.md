@@ -32,3 +32,7 @@ A document index arranged in the workflow order.
 
 1. UTPR Safe Harbour and UPE Safe Harbour — document pending
 2. [UTPR](UTPR.md)
+
+## 6. Next Fiscal Year
+
+1. [Dynamics](Dynamics.md): carry the state to the next Fiscal Year and recalculate earlier years

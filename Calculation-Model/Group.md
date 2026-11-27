@@ -10,10 +10,12 @@ All inputs are for the same $N$ Entities and the same [effective period](<Owners
 | $\mathbf{jv\text{-}id}$ | $\{0,\ldots,N\}^{N\times1}$ | Index of each Entity's top-level JV, 0 outside every JV Group, from [Subgroups](<Subgroups.md#jv-groups>) |
 | $\mathbf{Entt\text{-}jur}$ | $\{0,1\}^{N\times M}$ | Entity-to-jurisdiction matrix of a location state, from [Location](<Location.md#location-state>) |
 | $\mathbf{ce}$ | $\{0,1\}^{N\times1}$ | CEs |
+| $\mathbf{entity\text{-}id}$ | $\text{String}^{N}$ | Identifier of each Entity that stays the same across Fiscal Years |
+| $\mathbf{code}$ | $\text{CountryCode}^{M}$ | ISO code of each jurisdiction |
 | $\mathbf{ie}$ | $\{0,1\}^{N\times1}$ | Investment Entities |
 | $\mathbf{stateless}$ | $\{0,1\}^{N\times1}$ | Stateless Entities of the same location state, from [Location](<Location.md#location-state>); their rows of $\mathbf{Entt\text{-}jur}$ are all `False` |
 
-$\mathbf{idx}:=(1,\ldots,N)^{T}$, and $\mathbf{jur}:=\mathbf{Entt\text{-}jur}\times(1,\ldots,M)^{T}$ is the index of each Entity's jurisdiction, 0 for a Stateless Entity. For a key $\mathbf{k}$, a vector of tuples, and an indicator $\mathbf{u}$, $\operatorname{part}(\mathbf{k};\mathbf{u})\in\{0,1\}^{N\times M'}$ has one column for each of the $M'$ distinct keys among the Entities with $\mathbf{u}=1$, and its $(i,g)$ entry is 1 iff $u_i=1$ and $\mathbf{k}_i$ is the $g$-th key. It is built by sorting or hashing the keys. $\odot$ denotes element-wise multiplication; comparisons and logical operations are element-wise, and Boolean entries are treated as 1 or 0 in arithmetic.
+$\mathbf{idx}:=(1,\ldots,N)^{T}$, and $\mathbf{jur}:=\mathbf{Entt\text{-}jur}\times(1,\ldots,M)^{T}$ is the index of each Entity's jurisdiction, 0 for a Stateless Entity. Keys use identifiers that stay the same across Fiscal Years: $\mathbf{jur\text{-}code}_i$ is $\mathbf{code}_{\mathbf{jur}_i}$, or `none` for a Stateless Entity, and for a vector $\mathbf{v}$ of Entity indices, $\operatorname{id}(\mathbf{v})_i$ is $\mathbf{entity\text{-}id}_{\mathbf{v}_i}$, or `main` where $\mathbf{v}_i=0$. For a key $\mathbf{k}$, a vector of tuples, and an indicator $\mathbf{u}$, $\operatorname{part}(\mathbf{k};\mathbf{u})\in\{0,1\}^{N\times M'}$ has one column for each of the $M'$ distinct keys among the Entities with $\mathbf{u}=1$, and its $(i,g)$ entry is 1 iff $u_i=1$ and $\mathbf{k}_i$ is the $g$-th key. It is built by sorting or hashing the keys. $\odot$ denotes element-wise multiplication; comparisons and logical operations are element-wise, and Boolean entries are treated as 1 or 0 in arithmetic.
 
 # TCSH Group
 
@@ -26,7 +28,8 @@ A Tested Jurisdiction is a jurisdiction, or a JV Group within it:
 $$
 \begin{aligned}
 \mathbf{in\text{-}scope}_{\mathrm{TCSH}}&:=(\mathbf{ce}\lor\mathbf{jvmember})\land\neg\mathbf{ie}\land\neg\mathbf{stateless}\\
-\mathbf{G}_{\mathrm{TCSH}}&:=\operatorname{part}\bigl((\mathbf{jur},\mathbf{jv\text{-}id});\mathbf{in\text{-}scope}_{\mathrm{TCSH}}\bigr)^{T}
+\mathbf{tcsh\text{-}key}&:=\bigl(\mathbf{jur\text{-}code},\operatorname{id}(\mathbf{jv\text{-}id})\bigr)\\
+\mathbf{G}_{\mathrm{TCSH}}&:=\operatorname{part}(\mathbf{tcsh\text{-}key};\mathbf{in\text{-}scope}_{\mathrm{TCSH}})^{T}
 \end{aligned}
 $$
 
@@ -52,12 +55,12 @@ $\mathbf{group\text{-}id}$ is the index of the Entity itself for a Stateless Ent
 
 **Full Calculation Groups**
 
-A Full Calculation Group is identified by its key: jurisdiction, group identifier, and whether its Entities are Investment Entities. A Stateless Entity has jurisdiction 0 and its own index as group identifier, so it forms a group of its own.
+A Full Calculation Group is identified by its key: its jurisdiction, its top Entity, and whether its Entities are Investment Entities. The top Entity is the top-level MOPE, otherwise the top-level JV, otherwise `main` for the main MNE Group; an Entity in both a Minority-Owned Subgroup and a JV Group follows the Minority-Owned Subgroup. A Stateless Entity has jurisdiction `none` and is its own top Entity, so it forms a group of its own.
 
 $$
 \begin{aligned}
 \mathbf{in\text{-}scope}&:=\mathbf{ce}\lor\mathbf{jvmember}\\
-\mathbf{group\text{-}key}&:=(\mathbf{jur},\mathbf{group\text{-}id},\mathbf{ie})\\
+\mathbf{group\text{-}key}&:=\bigl(\mathbf{jur\text{-}code},\operatorname{id}(\mathbf{group\text{-}id}),\mathbf{ie}\bigr)\\
 \mathbf{Entt\text{-}group}&:=\operatorname{part}(\mathbf{group\text{-}key};\mathbf{in\text{-}scope})
 \end{aligned}
 $$
@@ -67,3 +70,5 @@ $\mathbf{Entt\text{-}group}\in\{0,1\}^{N\times M_{Calc}}$ has Entities on rows a
 $$
 \mathbf{Entt\text{-}group}\times\mathbf{1}_{M_{Calc}}=\mathbf{in\text{-}scope}.
 $$
+
+Both keys stay the same from one Fiscal Year to the next as long as the jurisdiction and the top Entity do, which lets [Dynamics](Dynamics.md) carry balances forward.

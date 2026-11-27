@@ -44,4 +44,4 @@ $$
 \end{aligned}
 $$
 
-$\mathbf{applied}$ identifies the Tested Jurisdictions to which the safe harbour applies. A Tested Jurisdiction that existed but did not apply it can never apply it again.
+$\mathbf{applied}$ identifies the Tested Jurisdictions to which the safe harbour applies. A Tested Jurisdiction that existed but did not apply it can never apply it again. $\mathbf{once\text{-}out}_{y-1}$ is carried to year $y$ by [Dynamics](<Dynamics.md#carry-forward>) on $\mathbf{tcsh\text{-}key}$.

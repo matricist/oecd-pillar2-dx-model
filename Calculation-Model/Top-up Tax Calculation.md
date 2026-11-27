@@ -8,10 +8,10 @@ Entity vectors are indexed by the $N$ Entities and group vectors by the $M_{Calc
 | $\mathbf{globe\text{-}income}$ | $\mathbb{R}^{N}$ | GloBE Income or Loss of each Entity |
 | $\mathbf{act}$ | $\mathbb{R}^{N}$ | Adjusted Covered Taxes of each Entity |
 | $\mathbf{sbie}$ | $\mathbb{R}_{\ge0}^{N}$ | Substance-based Income Exclusion of each Entity |
-| $\mathbf{actt\text{-}prior}$ | $\mathbb{R}_{\ge0}^{N}$ | Additional Current Top-up Tax from recalculations of prior Fiscal Years (Article 5.4.1), already allocated to Entities on the income of those years (Article 5.2.5) |
+| $\mathbf{actt\text{-}prior}$ | $\mathbb{R}_{\ge0}^{N}$ | Additional Current Top-up Tax from recalculations of prior Fiscal Years (Article 5.4.1), already allocated to Entities on the income of those years (Article 5.2.5), from [Dynamics](<Dynamics.md#recalculation-of-earlier-fiscal-years>) |
 | $\mathbf{income\text{-}adj},\mathbf{act\text{-}adj}$ | $\mathbb{R}^{M_{Calc}}$ | Adjustments to GloBE Income and to Adjusted Covered Taxes that are determined only for the group as a whole |
 | $\mathbf{qdmtt}$ | $\mathbb{R}_{\ge0}^{M_{Calc}}$ | Qualified Domestic Minimum Top-up Tax payable for the Fiscal Year |
-| $\mathbf{ente\text{-}prior}$ | $\mathbb{R}_{\ge0}^{M_{Calc}}$ | Excess Negative Tax Expense brought forward |
+| $\mathbf{ente\text{-}prior}$ | $\mathbb{R}_{\ge0}^{M_{Calc}}$ | Excess Negative Tax Expense brought forward, from [Dynamics](<Dynamics.md#carry-forward>) |
 | $\mathbf{qsh}$ | $\{0,1\}^{M_{Calc}}$ | The QDMTT Safe Harbour applies |
 | $\mathbf{ente\text{-}elected}$ | $\{0,1\}^{M_{Calc}}$ | The Excess Negative Tax Expense procedure is elected in place of Article 4.1.5 |
 | $r$ | $[0,1]$ | Minimum Rate, 0.15 |

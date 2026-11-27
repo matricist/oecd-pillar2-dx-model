@@ -86,7 +86,7 @@ and every other document uses $\mathbf{Entt\text{-}jur}$ and $\mathbf{stateless}
 
 **One pass.** A Flow-through Entity whose GloBE Income or Loss, Adjusted Covered Taxes and Substance-based Income Exclusion are all zero, because Article 3.5 allocates them to its owners, changes no group amount when it moves: it only leaves its own stateless group for the group of its jurisdiction of creation. If every Flow-through Entity in $\mathbf{s}_0$ is of that kind, $\mathbf{tt\text{-}entt}$ does not depend on the location state, $\mathbf{required}(\mathbf{s}_1)=\mathbf{required}(\mathbf{s}_0)$, and $\mathbf{s}_1$ is the location.
 
-**Group inputs.** The group inputs of Top-up Tax Calculation are given for each Full Calculation Group by its [$\mathbf{group\text{-}key}$](<Group.md#etr-calculation-group>). An Entity that moves takes the inputs of the group it joins.
+**Group inputs.** The group inputs of Top-up Tax Calculation are given for each Full Calculation Group by its $\mathbf{group\text{-}key}$ of [Group](<Group.md#etr-calculation-group>). An Entity that moves takes the inputs of the group it joins.
 
 # Not Covered
 

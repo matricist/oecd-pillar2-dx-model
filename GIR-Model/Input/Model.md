@@ -11,6 +11,7 @@ $N$ Entities, indexed $1,\ldots,N$.
 | Atom | Type | Meaning |
 | --- | --- | --- |
 | $\mathbf{name}$ | $\text{String}^{N}$ | Entity name |
+| $\mathbf{entity\text{-}id}$ | $\text{String}^{N}$ | [Identifier](<../../Calculation-Model/Group.md#inputs>) of each Entity that stays the same across Fiscal Years |
 | $\mathbf{X}_0$ | $[0,1]^{N\times N}$ | [Direct Ownership Interest matrix](<../../Calculation-Model/Ownership Interest.md#direct-ownership-matrix>) |
 | $\mathbf{C}_0$ | $\{0,1\}^{N\times N}$ | [Direct Controlling Interest matrix](<../../Calculation-Model/Ownership Interest.md#direct-controlling-matrix>) |
 | $\mathbf{Entt\text{-}cjur}$ | $\{0,1\}^{N\times M}$ | [Jurisdiction of location, or of creation](<../../Calculation-Model/Location.md#inputs>) for a Flow-through Entity or a PE of paragraph (d); $\mathbf{Entt\text{-}jur}$ and $\mathbf{stateless}$ are derived from it by [Location](<../../Calculation-Model/Location.md#fixed-point>) |
