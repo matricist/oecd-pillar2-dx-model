@@ -1,4 +1,4 @@
-Every Entity is given the jurisdiction where it is located, or for a Flow-through Entity or a Permanent Establishment described in paragraph (d) of its definition, the jurisdiction where it was created. Such an Entity starts stateless. A Flow-through Entity moves to its jurisdiction of creation once it is required to apply an IIR (Article 10.3.2). A Permanent Establishment of paragraph (d) stays stateless (Article 10.3.3).
+Every Entity is given the jurisdiction where it is located, or for a Flow-through Entity or a Permanent Establishment described in paragraph (d) of its definition, the jurisdiction where it was created. Such an Entity starts stateless and moves to its jurisdiction of creation once it is required to apply an IIR (Article 10.3.2).
 
 # Inputs
 
@@ -40,10 +40,10 @@ A Flow-through Entity that is the UPE is located where it was created from the s
 
 # Required to Apply an IIR
 
-A Flow-through Entity is required to apply an IIR when, located in its jurisdiction of creation, it would be payable for an Entity that has Top-up Tax after the QDMTT. Its own payability is tested with every Flow-through Entity at its jurisdiction of creation:
+An Entity is required to apply an IIR when, located in its jurisdiction of creation, it would be payable for an Entity that has Top-up Tax after the QDMTT. Payability is tested with every Flow-through Entity at its jurisdiction of creation:
 
 $$
-\mathbf{Iir\text{-}payable}^{c}:=\text{the }\mathbf{Iir\text{-}payable}\text{ of [Taxing Rights](<Taxing Rights.md#iir-payability>) with }\mathbf{Entt\text{-}jur}(\mathbf{pe\text{-}d})
+\mathbf{Iir\text{-}payable}^{c}:=\text{the }\mathbf{Iir\text{-}payable}\text{ of [Taxing Rights](<Taxing Rights.md#iir-payability>) with }\mathbf{Entt\text{-}jur}(\mathbf{s}_0\land\neg\mathbf{fte})
 $$
 
 $\mathbf{Iir\text{-}payable}^{c}$ does not depend on the location state, so it is calculated once.
@@ -52,7 +52,7 @@ For a location state $\mathbf{s}$, let $\mathbf{tt\text{-}entt}(\mathbf{s})$ be 
 
 $$
 \boxed{
-\mathbf{required}(\mathbf{s}):=\mathbf{fte}\land\mathbf{s}\land\left[\left(\mathbf{Iir\text{-}payable}^{c}\times\mathbf{tt\text{-}entt}(\mathbf{s})\right)>0\right]
+\mathbf{required}(\mathbf{s}):=\mathbf{s}\land\left[\left(\mathbf{Iir\text{-}payable}^{c}\times\mathbf{tt\text{-}entt}(\mathbf{s})\right)>0\right]
 }
 $$
 
@@ -66,7 +66,7 @@ $$
 }
 $$
 
-A Flow-through Entity that has moved stays located, so $\mathbf{s}_k$ only loses entries and the iteration stops after at most $(\mathbf{fte}\land\mathbf{s}_0)^{T}\mathbf{1}_N+1$ evaluations of $\mathbf{tt\text{-}entt}$. The final location is
+An Entity that has moved stays located, so $\mathbf{s}_k$ only loses entries and the iteration stops after at most $\mathbf{s}_0^{T}\mathbf{1}_N+1$ evaluations of $\mathbf{tt\text{-}entt}$. The final location is
 
 $$
 \boxed{
