@@ -91,4 +91,3 @@ $\mathbf{Residual}$ is read from the UPE rows of $\mathbf{H}$, which [IIR](<IIR.
 - **Investment Entities.** The Article 7.4 adjustment of IIR is not yet carried into $\mathbf{Charged}$.
 - **Deemed GloBE Income.** Where Additional Current Top-up Tax arises without Net GloBE Income, Articles 5.4.2 and 5.4.3 give each Entity a deemed GloBE Income for the IIR; not modelled.
 - **Several Fiscal Years.** Ownership, Parent Entity status, and Qualified IIR status change from year to year, so $\mathbf{Net\text{-}iir}$ is a result of one Fiscal Year. How carry-forwards follow a group whose $\mathbf{group\text{-}id}$ changes is not defined.
-- **Changes within a Fiscal Year.** Splitting the year into [effective periods](<Ownership Interest.md#effective-periods>) and aggregating period amounts back into Fiscal-Year groups is not defined.

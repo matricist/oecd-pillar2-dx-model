@@ -10,7 +10,11 @@ $\mathbf{X}_0^{\mathrm{profit}}$ is the corresponding direct Profit Ownership In
 
 ## Effective Periods
 
-The matrices describe a period within the Fiscal Year during which no direct Ownership or Controlling Interest changes. Where one changes, the year is split at the change date and every validation and calculation is repeated for each period.
+The matrices describe a period within the Fiscal Year during which no direct Ownership or Controlling Interest changes. Where one changes, the year is split at the change date and every validation and calculation is repeated for each period. The amounts of each period are calculated for that period alone and are not combined across periods. [Period Changes](#period-changes) updates the calculation from one period to the next.
+
+## Arithmetic
+
+Ownership Interest Ratios and amounts are given as finite decimals, so they are rational numbers, and every result of the Calculation Model is a rational number as well: $\mathbf{Y}$ solves a linear system with rational coefficients. Every document of the Calculation Model calculates exactly, without rounding, and compares exactly with its thresholds, such as $\mathbf{Y}=1$, more than 20%, at least 50% and at most 30%. Rounding applies only when a value is reported, such as a percentage to four decimal places of the ratio in the GloBE Information Return.
 
 # Validation
 
@@ -155,6 +159,18 @@ f(\mathbf{A})_{i,:}=\frac{\mathbf{r}_i-\mathbf{e}_i^{T}}{(\mathbf{r}_i)_i}
 $$
 
 $(\mathbf{r}_i)_j$ depends only on the entries for $j$'s direct owners, so the row is filled from $i$ down through its direct and indirect subsidiaries, in the topological order of the strongly connected components, with a local solve for each cyclic component. Entities that $i$ does not hold are never visited.
+
+## Period Changes
+
+Between two periods usually only a few direct interests change. Let $\mathcal{K}$ be the Entities whose column of $\mathbf{X}_0$ changes, and $\mathbf{D}:=(\mathbf{X}_0'-\mathbf{X}_0)_{:,\mathcal{K}}$ the change. By the Sherman–Morrison–Woodbury identity, the next period's $\mathbf{L}'=(\mathbf{I}_N-\mathbf{X}_0')^{-1}$ is a rank-$|\mathcal{K}|$ update of $\mathbf{L}$:
+
+$$
+\boxed{
+\mathbf{L}'=\mathbf{L}+\mathbf{L}\mathbf{D}\left(\mathbf{I}_{|\mathcal{K}|}-\mathbf{L}_{\mathcal{K},:}\mathbf{D}\right)^{-1}\mathbf{L}_{\mathcal{K},:}
+}
+$$
+
+The $|\mathcal{K}|\times|\mathcal{K}|$ matrix is invertible exactly when $\mathbf{X}_0'$ passes the [validation](#validation). The Direct Method then gives $\mathbf{Y}'$ from $\mathbf{L}'$.
 
 # Ownership with Absorbing Parent Entities
 
