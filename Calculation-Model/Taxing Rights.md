@@ -4,9 +4,9 @@ All inputs are for the same $N$ Entities, the same $M$ jurisdictions, and the sa
 
 | Symbol | Type | Meaning |
 | --- | --- | --- |
-| $\mathbf{Y}$ | $[0,1]^{N\times N}$ | Direct and indirect Ownership Interest matrix, from [JV](<JV.md#calculation>) |
-| $\mathbf{C}$ | $\{0,1\}^{N\times N}$ | Direct and indirect Controlling Interest matrix, from [JV](<JV.md#calculation>) |
-| $\mathbf{jv},\mathbf{jvsub}$ | $\{0,1\}^{N\times1}$ | Top-level JVs and JV Subsidiaries, from [JV](<JV.md#calculation>) |
+| $\mathbf{Y}$ | $[0,1]^{N\times N}$ | Direct and indirect Ownership Interest matrix, from [Ownership Interest](<Ownership Interest.md#model-matrices>) |
+| $\mathbf{C}$ | $\{0,1\}^{N\times N}$ | Direct and indirect Controlling Interest matrix, from [Ownership Interest](<Ownership Interest.md#model-matrices>) |
+| $\mathbf{jv},\mathbf{jvsub}$ | $\{0,1\}^{N\times1}$ | Top-level JVs and JV Subsidiaries, from [Subgroups](<Subgroups.md#jv-groups>) |
 | $\mathbf{X}_0^{\mathrm{profit}}$ | $[0,1]^{N\times N}$ | [Direct Profit Ownership Interest matrix](<Ownership Interest.md#direct-ownership-matrix>) |
 | $\mathbf{group\text{-}upe},\mathbf{ce},\mathbf{ee},\mathbf{pe},\mathbf{ie}$ | $\{0,1\}^{N\times1}$ | The group's UPEs, CEs, Excluded Entities, PEs, and Investment Entities |
 | $\mathbf{Entt\text{-}jur}$ | $\{0,1\}^{N\times M}$ | Entity-to-jurisdiction matrix; the row of a Stateless Entity is all `False` |

@@ -9,13 +9,13 @@ A document index arranged in the workflow order.
 ## 2. Transitional CbCR Safe Harbours Test
 
 1. [Ownership and Controlling Interest](<Ownership Interest.md>)
-2. [JV](<JV.md>)
+2. [JV Groups](<Subgroups.md#jv-groups>)
 3. [TCSH Group](<Group.md#tcsh-group>)
 4. [Transitional CbCR Safe Harbours Test](<Transitional CbCR Safe Harbours Test.md>)
 
 ## 3. Top-up Tax Calculation
 
-1. [Identifying Minority-Owned SubGroups](<MOSG.md>)
+1. [Minority-Owned Subgroups](<Subgroups.md#minority-owned-subgroups>)
 2. [ETR Calculation Group](<Group.md#etr-calculation-group>)
 3. GloBE De Minimis — document pending
 4. [Top-up Tax Calculation](<Top-up Tax Calculation.md>)

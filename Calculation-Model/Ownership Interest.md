@@ -142,6 +142,26 @@ whose column $j$ reads $\mathbf{L}_{:,j}=\mathbf{e}_j+\sum_k\mathbf{L}_{:,k}(\ma
 
 **Cost.** Dense LU costs $O(N^3)$. Here the cost is $O\bigl(\sum_C|C|^3\bigr)$ for the cyclic components plus propagation, which is linear in the number of edges times the number of ancestors per column. Column $j$ of $\mathbf{L}$ is nonzero only on $j$ and its direct and indirect owners, so $\mathbf{L}$ and $\mathbf{Y}$ stay sparse. Group structures are mostly trees with a few small cycles, so in practice this is close to linear.
 
+## Row Calculation
+
+Row $i$ of $f(\mathbf{A})$ needs one row of $\mathbf{L}=(\mathbf{I}_N-\mathbf{A})^{-1}$. The row $\mathbf{r}_i:=\mathbf{e}_i^{T}\mathbf{L}$ is the solution of
+
+$$
+\mathbf{r}_i=\mathbf{e}_i^{T}+\mathbf{r}_i\mathbf{A},
+\qquad\text{that is,}\qquad
+(\mathbf{r}_i)_j=\delta_{ij}+\sum_k(\mathbf{r}_i)_k(\mathbf{A})_{kj},
+$$
+
+and
+
+$$
+\boxed{
+f(\mathbf{A})_{i,:}=\frac{\mathbf{r}_i-\mathbf{e}_i^{T}}{(\mathbf{r}_i)_i}
+}
+$$
+
+$(\mathbf{r}_i)_j$ depends only on the entries for $j$'s direct owners, so the row is filled from $i$ down through its direct and indirect subsidiaries, in the topological order of the strongly connected components, with a local solve for each cyclic component. Entities that $i$ does not hold are never visited.
+
 # Ownership with Absorbing Parent Entities
 
 The IIR and the UTPR follow an interest in a low-taxed Entity $j$ up the ownership chain until it reaches a Parent Entity that brings it into charge. Such a Parent Entity absorbs the interest: nothing above it reaches $j$ through it. This is the ownership calculation above with the absorbing Parent Entities' incoming edges cut.
@@ -250,3 +270,16 @@ $\mathbf{C}$ is the Kleene plus of $\mathbf{C}_0$, the Boolean counterpart of $\
 ## Bitset Implementation
 
 Store each matrix row as a bitset. At step $t$, if Entity $i$ controls Entity $t$, merge row $t$ into row $i$ using bitwise OR. This updates multiple Boolean entries at once and reduces memory usage without changing the Warshall result.
+
+# Model Matrices
+
+The model evaluates $f$ and $w$ once on the group's direct matrices:
+
+$$
+\boxed{
+\mathbf{Y}:=f(\mathbf{X}_0),\qquad
+\mathbf{C}:=w(\mathbf{C}_0)
+}
+$$
+
+These are the direct and indirect Ownership and Controlling Interest matrices imported by the other documents. Documents that need another graph, such as the Profit Ownership Interests of the members, evaluate $f$ on it themselves.

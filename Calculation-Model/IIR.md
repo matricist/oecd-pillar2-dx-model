@@ -3,7 +3,7 @@
 ## Imports
 
 - The Entity indicator vectors $\mathbf{ce}$, $\mathbf{ee}$, $\mathbf{ie}$, and $\mathbf{group\text{-}upe}$.
-- The top-level JV and JV Subsidiary vectors $\mathbf{jv}$ and $\mathbf{jvsub}$ from [JV.md](<JV.md#calculation>).
+- The top-level JV and JV Subsidiary vectors $\mathbf{jv}$ and $\mathbf{jvsub}$ from [Subgroups.md](<Subgroups.md#jv-groups>).
 - The direct Profit Ownership Interest matrix $\mathbf{X}_0^{\mathrm{profit}}$ from [Ownership Interest.md](<Ownership Interest.md#direct-ownership-matrix>).
 - The Article 7.4 applicability fraction matrix $\mathbf{R}^{7.4}$.
 - The Entity-level Top-up Tax vector $\mathbf{topup\text{-}tax}$ from [Top-up Tax Calculation](<Top-up Tax Calculation.md>).
@@ -320,7 +320,7 @@ $$
 
 The group UPE indicator is used because the UPE remains the reference owner even where it is an EE and cannot itself apply the IIR.
 
-Only the rows of the group UPEs are used, so $\mathbf{Y}^{7.4}$ is not formed in full. See [Row Calculation](#row-calculation).
+Only the rows of the group UPEs are used, so $\mathbf{Y}^{7.4}$ is not formed in full: each row is a [Row Calculation](<Ownership Interest.md#row-calculation>) with $\mathbf{A}=\mathbf{X}^{7.4}$.
 
 ### JV Subsidiary Investment Entity
 
@@ -369,29 +369,7 @@ $$
 \text{for }(\mathbf{jvsub})_j=1.
 $$
 
-This calculation is performed separately for each JV Group. Only the JV's row of $\mathbf{Y}^{7.4}$ is used.
-
-### Row Calculation
-
-Row $i$ of $f(\mathbf{A})$ needs one row of $\mathbf{L}=(\mathbf{I}_N-\mathbf{A})^{-1}$. The row $\mathbf{r}_i:=\mathbf{e}_i^{T}\mathbf{L}$ is the solution of
-
-$$
-\mathbf{r}_i=\mathbf{e}_i^{T}+\mathbf{r}_i\mathbf{A},
-\qquad\text{that is,}\qquad
-(\mathbf{r}_i)_j=\delta_{ij}+\sum_k(\mathbf{r}_i)_k(\mathbf{A})_{kj},
-$$
-
-and
-
-$$
-\boxed{
-f(\mathbf{A})_{i,:}=\frac{\mathbf{r}_i-\mathbf{e}_i^{T}}{(\mathbf{r}_i)_i}
-}
-$$
-
-$(\mathbf{r}_i)_j$ depends only on the entries for $j$'s direct owners, so the row is filled from $i$ down through its direct and indirect subsidiaries, in the topological order of the strongly connected components, with a local solve for each cyclic component. Entities that $i$ does not hold are never visited.
-
-For Article 7.4, $\mathbf{A}=\mathbf{X}^{7.4}$, and $i$ runs over the group UPEs for a CE Investment Entity and over the JV for a JV Subsidiary Investment Entity.
+This calculation is performed separately for each JV Group. Only the JV's row of $\mathbf{Y}^{7.4}$ is used, computed by [Row Calculation](<Ownership Interest.md#row-calculation>).
 
 ### UPE and JV Investment Entities
 
@@ -520,7 +498,7 @@ Group the potential low-taxed Entities by their set $\mathcal{S}_j$. For each gr
 
 ### 3. Calculate the Article 7.4 Allocable Share
 
-Solve one [row](#row-calculation) of the MNE Group's Article 7.4 graph for each group UPE, and one row of each JV Group's Article 7.4 graph for its JV. Combine those results only for IEs to which the Article 7.4 adjustment applies.
+Solve one [row](<Ownership Interest.md#row-calculation>) of the MNE Group's Article 7.4 graph for each group UPE, and one row of each JV Group's Article 7.4 graph for its JV. Combine those results only for IEs to which the Article 7.4 adjustment applies.
 
 ### 4. Allocate Top-up Tax
 

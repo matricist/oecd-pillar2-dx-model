@@ -4,22 +4,16 @@ All inputs are for the same $N$ Entities and the same [effective period](<Owners
 
 | Symbol | Type | Meaning |
 | --- | --- | --- |
-| $\mathbf{J}$ | $\{0,1\}^{N\times N}$ | JV Groups, from [JV](<JV.md#calculation>) |
-| $\mathbf{Mosg}$ | $\{0,1\}^{N\times N}$ | Minority-Owned Subgroups, from [MOSG](<MOSG.md#calculation>) |
-| $\mathbf{smoce}$ | $\{0,1\}^{N\times1}$ | Single MOCEs, from [MOSG](<MOSG.md#calculation>) |
-| $\mathbf{jvmember}$ | $\{0,1\}^{N\times1}$ | JV Group members, from [MOSG](<MOSG.md#calculation>) |
+| $\mathbf{Mosg}$ | $\{0,1\}^{N\times N}$ | Minority-Owned Subgroups, from [Subgroups](<Subgroups.md#minority-owned-subgroups>) |
+| $\mathbf{smoce}$ | $\{0,1\}^{N\times1}$ | Single MOCEs, from [Subgroups](<Subgroups.md#minority-owned-subgroups>) |
+| $\mathbf{jvmember}$ | $\{0,1\}^{N\times1}$ | JV Group members, from [Subgroups](<Subgroups.md#jv-groups>) |
+| $\mathbf{jv\text{-}id}$ | $\{0,\ldots,N\}^{N\times1}$ | Index of each Entity's top-level JV, 0 outside every JV Group, from [Subgroups](<Subgroups.md#jv-groups>) |
 | $\mathbf{Entt\text{-}jur}$ | $\{0,1\}^{N\times M}$ | Entity-to-jurisdiction matrix, from [Taxing Rights](<Taxing Rights.md#iir-payability>) |
 | $\mathbf{ce}$ | $\{0,1\}^{N\times1}$ | CEs |
 | $\mathbf{ie}$ | $\{0,1\}^{N\times1}$ | Investment Entities |
 | $\mathbf{stateless}$ | $\{0,1\}^{N\times1}$ | Stateless Entities; their rows of $\mathbf{Entt\text{-}jur}$ are all `False` |
 
 $\mathbf{idx}:=(1,\ldots,N)^{T}$. For a vector $\mathbf{v}$, $\operatorname{eq}(\mathbf{v}):=(\mathbf{v}\times\mathbf{1}_N^{T}=\mathbf{1}_N\times\mathbf{v}^{T})$ is the $N\times N$ Boolean matrix whose $(i,j)$ entry is `True` iff $v_i=v_j$. $\odot$ denotes element-wise multiplication; comparisons and logical operations are element-wise, and Boolean entries are treated as 1 or 0 in arithmetic.
-
-$\mathbf{jv\text{-}id}$ is the index of each Entity's top-level JV, and 0 for an Entity outside every JV Group:
-
-$$
-\mathbf{jv\text{-}id}:=\mathbf{J}^{T}\times\mathbf{idx}
-$$
 
 # TCSH Group
 
@@ -53,7 +47,7 @@ $$
 \end{aligned}
 $$
 
-$\mathbf{group\text{-}id}$ is the index of the Entity itself for a Stateless Entity, otherwise of its top-level MOPE, otherwise of its top-level JV, and 0 otherwise. A Single MOCE is its own top-level MOPE unless it is an Investment Entity.
+$\mathbf{group\text{-}id}$ is the index of the Entity itself for a Stateless Entity, otherwise of its top-level MOPE, otherwise of its top-level JV, and 0 otherwise. A Single MOCE is its own top-level MOPE unless it is an Investment Entity: Article 5.6.2 does not apply to a MOCE that is an Investment Entity, so it keeps the identifier of the main MNE Group or of its JV Group and, through $\operatorname{eq}(\mathbf{ie})$ below, joins the Investment Entities of its jurisdiction.
 
 **Full Calculation Groups**
 

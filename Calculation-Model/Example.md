@@ -14,10 +14,10 @@ Each section applies one document and links to it; the symbols are defined there
 | PE | Permanent Establishment: a branch treated as a separate Entity | Input |
 | Investment Entity | A fund or similar Entity, calculated separately | Input |
 | Stateless Entity | An Entity located in no jurisdiction | Input |
-| JV, JV Subsidiary | An equity-method Entity held at least 50% by the UPE, and the Entities it controls | [JV](JV.md) |
-| MOCE | Minority-Owned Constituent Entity: held 30% or less by the UPE | [MOSG](MOSG.md) |
-| MOPE, MOS | The top MOCE of a Minority-Owned Subgroup, and the MOCEs it controls | [MOSG](MOSG.md) |
-| Single MOCE | A MOCE outside every Minority-Owned Subgroup | [MOSG](MOSG.md) |
+| JV, JV Subsidiary | An equity-method Entity held at least 50% by the UPE, and the Entities it controls | [Subgroups](<Subgroups.md#jv-groups>) |
+| MOCE | Minority-Owned Constituent Entity: held 30% or less by the UPE | [Subgroups](<Subgroups.md#minority-owned-subgroups>) |
+| MOPE, MOS | The top MOCE of a Minority-Owned Subgroup, and the MOCEs it controls | [Subgroups](<Subgroups.md#minority-owned-subgroups>) |
+| Single MOCE | A MOCE outside every Minority-Owned Subgroup | [Subgroups](<Subgroups.md#minority-owned-subgroups>) |
 | IPE | Intermediate Parent Entity: a CE that owns another CE | [Taxing Rights](<Taxing Rights.md#identification-of-parent-entities>) |
 | POPE | Partially-Owned Parent Entity: a parent more than 20% owned outside the group | [Taxing Rights](<Taxing Rights.md#identification-of-parent-entities>) |
 | IIR | Income Inclusion Rule: a Parent Entity pays the Top-up Tax of the Entities it owns | [Taxing Rights](<Taxing Rights.md#iir-payability>) |
@@ -205,8 +205,8 @@ $$
 
 One row per Entity. *Given* is input; every other column is derived from the matrices above.
 
-- **$\mathbf{upe\text{-}ownership}$** is the share held by the UPE, directly and indirectly: row 1 of $\mathbf{Y}$. See [JV](JV.md#calculation).
-- **JV / MOCE** is the result of [JV](JV.md#calculation) and [MOSG](MOSG.md#calculation).
+- **$\mathbf{upe\text{-}ownership}$** is the share held by the UPE, directly and indirectly: row 1 of $\mathbf{Y}$. See [Subgroups](<Subgroups.md#jv-groups>).
+- **JV / MOCE** is the result of [Subgroups](<Subgroups.md>).
 - **Parent** is the kind of Parent Entity, from [Taxing Rights](<Taxing Rights.md#identification-of-parent-entities>).
 - **$\mathbf{group\text{-}id}$**, **TCSH Group**, and **ETR Calculation Group** come from [Group](Group.md). Entities with the same group number are aggregated together: once for the safe harbour test and once for the effective tax rate.
 
