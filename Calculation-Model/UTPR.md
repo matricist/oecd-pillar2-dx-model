@@ -46,8 +46,6 @@ $\mathbf{H}$ already leaves out every path through a Parent Entity that pays und
 - An Entity that pays its own Top-up Tax under a Qualified IIR leaves no residual to anyone: the right factor.
 - Paths through another UPE count, as do paths through an Excluded Entity.
 
-This equals the earlier form $\operatorname{diag}(\mathbf{group\text{-}upe})\times g(\mathbf{Y})\times(\mathbf{I}_N-\mathbf{Charged})$ with two exceptions. In the column of a self-paying Entity with a payable Parent Entity above it, the earlier form went negative; both give the same $\mathbf{utpr\text{-}payable}$. Where a UPE and a qualified Parent Entity below it hold each other, the earlier form also subtracted paths through the UPE itself, as described in [IIR](<IIR.md#circular-holdings-between-parent-entities>).
-
 ## UTPR Top-up Tax
 
 $$
@@ -83,7 +81,7 @@ $$
 
 # Implementation
 
-$\mathbf{Residual}$ needs no solve of its own: it is the UPE rows of $\mathbf{H}$, which [IIR](<IIR.md#implementation-notes>) computes column by column.
+$\mathbf{Residual}$ is read from the UPE rows of $\mathbf{H}$, which [IIR](<IIR.md#implementation-notes>) calculates from $\mathbf{Y}$.
 
 # Open
 

@@ -117,8 +117,6 @@ $$
 
 Thus, $g$ replaces the diagonal of a square matrix with ones and leaves all off-diagonal entries unchanged.
 
-No treasury-share removal is needed: $f$ and $h$ keep treasury shares on the diagonal and gross up the other holders' interests themselves.
-
 ## Imported IIR Payability
 
 A non-zero element
@@ -220,9 +218,30 @@ $$
 
 and $\lim_{q\to\infty}\mathbf{Iir\text{-}paid}_q=\mathbf{Net\text{-}iir}^{Q}$. The diagonal of $\mathbf{X}$ returns treasury shares to the unpaid interest of the same Entity, which grosses up its other holders.
 
+#### Calculation from Y
+
+$\mathbf{H}$ follows from $\mathbf{Y}$ by the [correction form](<Ownership Interest.md#correction-form>). For Entity $j$, let $\mathcal{S}_j$ be the Parent Entities with $(\mathbf{Q})_{kj}=1$ and $\mathbf{N}_j:=g(\mathbf{Y})_{\mathcal{S}_j\mathcal{S}_j}^{-1}\mathbf{Y}_{\mathcal{S}_j,:}$. Then
+
+$$
+\boxed{
+\begin{aligned}
+(\mathbf{Net\text{-}iir}^{Q})_{kj}&=(\mathbf{N}_j)_{kj}, && k\in\mathcal{S}_j,\\
+(\mathbf{H})_{pj}&=\frac{(\mathbf{Y})_{pj}-\sum_{k\in\mathcal{S}_j}(\mathbf{Y})_{pk}(\mathbf{Net\text{-}iir}^{Q})_{kj}}{1-\sum_{k\in\mathcal{S}_j}(\mathbf{Y})_{pk}(\mathbf{N}_j)_{kp}}, && p\notin\mathcal{S}_j,\ p\ne j.
+\end{aligned}
+}
+$$
+
+The numerator is $p$'s Allocable Share less the part brought into charge by a Parent Entity in $\mathcal{S}_j$ below it. The denominator is 1 unless $p$ and a Parent Entity in $\mathcal{S}_j$ hold each other.
+
 #### Circular Holdings Between Parent Entities
 
-An earlier version computed a non-qualified Parent Entity $i$'s ratio as $\left[\mathbf{Y}_{ij}-\sum_{k\ne i}\mathbf{Y}_{ik}(\mathbf{Net\text{-}iir}^{Q})_{kj}\right]^{+}$. Without circular holdings this equals $(\mathbf{H})_{ij}$. Where $i$ and a qualified Parent Entity $k$ below it hold each other, the sum also subtracts paths that leave $i$ and return to $i$ before reaching $j$, which $\mathbf{Y}_{ij}$ never counted. For example, if $i$ holds 60% of $k$, $k$ holds 50% of $i$, and $i$ holds 100% of $j$, the earlier formula gives 70% and $\mathbf{H}_{ij}=100\%$. $\mathbf{H}$ treats $i$'s indirect holding of itself the same way $f$ does. $\mathbf{H}\ge0$, so no truncation is needed.
+Where $p$ and a Parent Entity $k\in\mathcal{S}_j$ below it hold each other, part of what $k$ brings into charge reaches $k$ through $p$ itself. That part is $p$'s interest in itself, and the denominator grosses $p$'s remaining interest up by it.
+
+For example, $p$ holds 60% of $k$, $k$ holds 50% of $p$, $p$ holds 100% of $j$, and $k$ pays under a Qualified IIR. $k$ holds 50% of $j$ through $p$, and $p$'s share of it through $k$ is $0.6\times0.5=30\%$. Every such path runs $p\to k\to p\to j$: it is $p$'s 30% interest in itself, not an interest in $j$ held by $k$ apart from $p$. So
+
+$$
+(\mathbf{H})_{pj}=\frac{1-0.6\times0.5}{1-0.6\times0.5}=100\%.
+$$
 
 ## Investment Entity Special Rule
 
@@ -469,9 +488,9 @@ Each Entity column therefore uses the ordinary Net Income Inclusion Ratio unless
 
 Mask the graph to the members. Treasury shares stay on the diagonal; $f$ and $h$ handle them.
 
-### 2. Solve Each IIR-Payable Column
+### 2. Correct $\mathbf{Y}$ for Each IIR-Payable Column
 
-For each potential low-taxed Entity $j$ with a payable Parent Entity, cut the columns of the Parent Entities with $\mathbf{Q}_{ij}=1$, restrict the graph to $j$ and its direct and indirect owners, and solve column $j$ of $\mathbf{H}$ as in [Ownership Interest](<Ownership Interest.md#implementation>). Columns without a payable Parent Entity are zero.
+Group the potential low-taxed Entities by their set $\mathcal{S}_j$. For each group, factorize $g(\mathbf{Y})_{\mathcal{S}_j\mathcal{S}_j}$ once and read $\mathbf{Net\text{-}iir}^{Q}$ and $\mathbf{H}$ from $\mathbf{Y}$ as [above](#calculation-from-y). Columns without a Parent Entity payable under a Qualified IIR equal $\mathbf{Y}$.
 
 ### 3. Calculate the Article 7.4 Allocable Share
 

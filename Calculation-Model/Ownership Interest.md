@@ -168,19 +168,37 @@ Treasury shares and circular ownership are handled inside $f$, so $\mathbf{X}$ k
 
 Column $j$ of $h$ is the limit of the recurrence of the iterative method run on $\mathbf{X}\operatorname{diag}(\mathbf{1}_N-\mathbf{S}_{:,j})$. Equivalently, start one unit of unpaid interest at $j$ and pass it up one ownership level per step: an absorbing Parent Entity keeps what reaches it, every other Entity passes it on. For the absorbing Parent Entities, what they keep in the limit is $h_{kj}$.
 
-## Absorbing-Chain Form
+## Correction Form
 
-For a single column $j$, let $\mathcal{S}$ be the absorbing Parent Entities and $\mathcal{T}$ the rest. Then
+$h$ needs no second solve of the ownership graph. For one column $j$, let $\mathcal{S}$ be its absorbing Parent Entities, $\mathbf{Y}:=f(\mathbf{X})$, and
 
 $$
-h(\mathbf{X};\mathbf{S})_{\mathcal{S},j}=\left[\mathbf{X}_{\mathcal{S},\mathcal{T}}(\mathbf{I}-\mathbf{X}_{\mathcal{T},\mathcal{T}})^{-1}\right]_{:,j},
+\mathbf{N}_{\mathcal{S}}:=g(\mathbf{Y})_{\mathcal{S}\mathcal{S}}^{-1}\,\mathbf{Y}_{\mathcal{S},:}
 $$
 
-the absorption probabilities of an absorbing Markov chain, and for $i\in\mathcal{T}$, $h_{ij}=(l^{\mathcal{T}}_{ij}-\delta_{ij})/l^{\mathcal{T}}_{ii}$ with $\mathbf{L}^{\mathcal{T}}:=(\mathbf{I}-\mathbf{X}_{\mathcal{T},\mathcal{T}})^{-1}$.
+with $g(\mathbf{A}):=\mathbf{A}-\operatorname{diag}(\mathbf{A})+\mathbf{I}_N$. Then
+
+$$
+\boxed{
+h(\mathbf{X};\mathbf{S})_{ij}=
+\begin{cases}
+(\mathbf{N}_{\mathcal{S}})_{ij}, & i\in\mathcal{S},\\[6pt]
+\dfrac{y_{ij}-\mathbf{Y}_{i\mathcal{S}}(\mathbf{N}_{\mathcal{S}})_{:,j}}{1-\mathbf{Y}_{i\mathcal{S}}(\mathbf{N}_{\mathcal{S}})_{:,i}}, & i\notin\mathcal{S},\ i\ne j.
+\end{cases}
+}
+$$
+
+- $(\mathbf{N}_{\mathcal{S}})_{kj}$ is $k$'s interest in $j$ that does not pass through another absorbing Parent Entity: the absorption probabilities of an absorbing Markov chain.
+- The numerator is $i$'s interest in $j$ less the part that passes through an absorbing Parent Entity. Each such path is split at the last absorbing Parent Entity on it.
+- $\mathbf{Y}_{i\mathcal{S}}(\mathbf{N}_{\mathcal{S}})_{:,i}$ in the denominator is $i$'s interest in itself that passes through an absorbing Parent Entity. Cutting removes it, so it grosses up $i$'s remaining interests the same way treasury shares gross up the other holders. Without such a circular holding the denominator is 1.
+
+$g(\mathbf{Y})_{\mathcal{S}\mathcal{S}}$ is invertible and the denominator lies in $(0,1]$, because $g(\mathbf{Y})=\operatorname{diag}(\mathbf{L})^{-1}\mathbf{L}$ and every principal submatrix of $\mathbf{L}$ is invertible.
+
+Removing a set of Entities from the graph is the same correction with $\mathcal{S}$ fixed for every column: for $i\ne j$ outside $\mathcal{S}$, $f\bigl(m(\mathbf{X};\mathbf{1}_N-\mathbf{s})\bigr)_{ij}$ is given by the second case.
 
 ## Implementation
 
-Column $j$ of $h$ depends only on $j$ and its direct and indirect owners. For each $j$ with absorbing Parent Entities, restrict the graph to those owners, cut the absorbing columns, and solve column $j$ as in the [implementation](#implementation) above. Cutting can only break cycles, so the SCCs of the cut graph refine those of the full graph.
+Compute $\mathbf{Y}$ once. Group the columns by their absorbing set $\mathcal{S}$. For each group, factorize the $|\mathcal{S}|\times|\mathcal{S}|$ matrix $g(\mathbf{Y})_{\mathcal{S}\mathcal{S}}$ once and compute $\mathbf{N}_{\mathcal{S}}$ for the columns of the group and the rows that need a denominator. Each remaining cell then costs $|\mathcal{S}|$ multiplications.
 
 # Controlling Interest
 
