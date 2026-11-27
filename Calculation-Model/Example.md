@@ -175,7 +175,7 @@ $$
 
 **Direct and indirect Controlling Interest matrix** $\mathbf{C}=w(\mathbf{C}_0)$
 
-$w$ is [Warshall's algorithm](<Ownership Interest.md#warshalls-algorithm>). $(\mathbf{C})_{ij}$ is 1 when Entity $i$ controls Entity $j$ directly or through a chain of controlled Entities.
+$w$ is the [closure of Controlling Interests](<Ownership Interest.md#closure>). $(\mathbf{C})_{ij}$ is 1 when Entity $i$ controls Entity $j$ directly or through a chain of controlled Entities.
 
 $$
 \scriptsize

@@ -1,6 +1,6 @@
 # Inputs
 
-Entity vectors are indexed by the $N$ Entities and group vectors by the $M_{Calc}$ Full Calculation Groups of [ETR Calculation Group](<Group.md#etr-calculation-group>). A group input belongs to the group's jurisdiction (or Stateless Entity), $\mathbf{group\text{-}id}$ and $\mathbf{ie}$, so it follows an Entity that [moves](<Location.md#fixed-point>).
+Entity vectors are indexed by the $N$ Entities and group vectors by the $M_{Calc}$ Full Calculation Groups of [ETR Calculation Group](<Group.md#etr-calculation-group>). A group input belongs to the group's $\mathbf{group\text{-}key}$, so it follows an Entity that [moves](<Location.md#fixed-point>).
 
 | Symbol | Type | Meaning |
 | --- | --- | --- |

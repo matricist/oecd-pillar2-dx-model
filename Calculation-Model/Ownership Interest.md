@@ -252,32 +252,15 @@ Let $\mathbf{ce}$, $\mathbf{pe}$, and $\mathbf{group\text{-}upe}$ be $N\times1$ 
 - **Every CE other than a UPE has a controller:** $(\mathbf{controllers})_j=1$ wherever $(\mathbf{ce}\land\neg\mathbf{group\text{-}upe})_j$ is `True`.
 - **A PE that is not a CE is not controlled by a CE:** $\operatorname{diag}(\mathbf{ce})\times\mathbf{C}_0\times\operatorname{diag}(\mathbf{pe}\land\neg\mathbf{ce})=\mathbf{0}$.
 
-## Warshall's Algorithm
+## Closure
 
-Starting from $\mathbf{C}_0$, compute the direct and indirect controlling interest matrix:
-
-$$
-(\mathbf{C}_t)_{ij}
-=
-(\mathbf{C}_{t-1})_{ij}
-\lor
-\left(
-(\mathbf{C}_{t-1})_{it}
-\land
-(\mathbf{C}_{t-1})_{tj}
-\right)
-\qquad (t=1,\ldots,N)
-$$
+Each Entity has at most one controller and control is acyclic, so between two Entities there is at most one chain of control. The Boolean closure therefore equals the same sum over the integers, and it is the Leontief inverse of $\mathbf{C}_0$:
 
 $$
-\boxed{\mathbf{C}=w(\mathbf{C}_0):=\mathbf{C}_N}
+\boxed{\mathbf{C}=w(\mathbf{C}_0):=(\mathbf{I}_N-\mathbf{C}_0)^{-1}-\mathbf{I}_N=\mathbf{C}_0+\mathbf{C}_0^{2}+\cdots}
 $$
 
-$\mathbf{C}$ is the Kleene plus of $\mathbf{C}_0$, the Boolean counterpart of $\mathbf{L}-\mathbf{I}_N=\mathbf{X}_0+\mathbf{X}_0^2+\cdots$. Because control is acyclic and each Entity has at most one controller, no normalization is needed.
-
-## Bitset Implementation
-
-Store each matrix row as a bitset. At step $t$, if Entity $i$ controls Entity $t$, merge row $t$ into row $i$ using bitwise OR. This updates multiple Boolean entries at once and reduces memory usage without changing the Warshall result.
+Every entry is 0 or 1, and the sum is finite because $\mathbf{C}_0$ has no cycle. $\mathbf{C}$ is computed like $\mathbf{L}$ in the [implementation](#implementation) above: the control graph has no cyclic component, so every column is filled by propagation alone, and no normalization is needed.
 
 # Model Matrices
 
