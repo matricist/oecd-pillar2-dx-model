@@ -40,10 +40,10 @@ A Flow-through Entity that is the UPE is located where it was created from the s
 
 # Required to Apply an IIR
 
-An Entity is required to apply an IIR when, located in its jurisdiction of creation, it would be payable for an Entity that has Top-up Tax after the QDMTT. Payability is tested with every Flow-through Entity at its jurisdiction of creation:
+An Entity is required to apply an IIR when, located in its jurisdiction of creation, it would be payable for an Entity that has Top-up Tax after the QDMTT. Payability is tested with every Flow-through Entity at its jurisdiction of creation: $\mathbf{Iir\text{-}payable}^{c}$ is the $\mathbf{Iir\text{-}payable}$ of [Taxing Rights](<Taxing Rights.md#iir-payability>) evaluated with
 
 $$
-\mathbf{Iir\text{-}payable}^{c}:=\text{the }\mathbf{Iir\text{-}payable}\text{ of [Taxing Rights](<Taxing Rights.md#iir-payability>) with }\mathbf{Entt\text{-}jur}(\mathbf{s}_0\land\neg\mathbf{fte})
+\mathbf{Entt\text{-}jur}(\mathbf{s}_0\land\neg\mathbf{fte}).
 $$
 
 $\mathbf{Iir\text{-}payable}^{c}$ does not depend on the location state, so it is calculated once.
