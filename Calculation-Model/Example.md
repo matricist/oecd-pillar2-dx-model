@@ -13,7 +13,7 @@ Each section applies one document and links to it; the symbols are defined there
 | Excluded Entity | An Entity outside the rules, such as a pension fund | Input |
 | PE | Permanent Establishment: a branch treated as a separate Entity | Input |
 | Investment Entity | A fund or similar Entity, calculated separately | Input |
-| Stateless Entity | An Entity located in no jurisdiction | Input |
+| Stateless Entity | A Flow-through Entity that is not the UPE and is not required to apply an IIR, or a PE described in paragraph (d) | [Location](Location.md) |
 | JV, JV Subsidiary | An equity-method Entity held at least 50% by the UPE, and the Entities it controls | [Subgroups](<Subgroups.md#jv-groups>) |
 | MOCE | Minority-Owned Constituent Entity: held 30% or less by the UPE | [Subgroups](<Subgroups.md#minority-owned-subgroups>) |
 | MOPE, MOS | The top MOCE of a Minority-Owned Subgroup, and the MOCEs it controls | [Subgroups](<Subgroups.md#minority-owned-subgroups>) |
@@ -219,7 +219,7 @@ One row per Entity. *Given* is input; every other column is derived from the mat
 | 5 | C | XR | CE | 1 | – | IPE | 0 | 4 | 4 |
 | 6 | PE | XQ | CE, PE | 1 | – | – | 0 | 3 | 3 |
 | 7 | IE1 | XL | CE, Investment Entity | 1 | – | – | 0 | – | 5 |
-| 8 | ST | – | CE, Stateless | 1 | – | – | 8 | – | 6 |
+| 8 | ST | – | CE, Flow-through Entity, Stateless | 1 | – | – | 8 | – | 6 |
 | 9 | JV | XL | Equity method | 0.5 | JV | – | 9 | 5 | 7 |
 | 10 | JS1 | XL | – | 0.5 | JV Subsidiary | – | 9 | 5 | 7 |
 | 11 | JS2 | XL | – | 0.15 | JV Subsidiary, Single MOCE | – | 11 | 5 | 8 |

@@ -1,6 +1,6 @@
 # Inputs
 
-Entity vectors are indexed by the $N$ Entities and group vectors by the $M_{Calc}$ Full Calculation Groups of [ETR Calculation Group](<Group.md#etr-calculation-group>).
+Entity vectors are indexed by the $N$ Entities and group vectors by the $M_{Calc}$ Full Calculation Groups of [ETR Calculation Group](<Group.md#etr-calculation-group>). A group input belongs to the group's jurisdiction (or Stateless Entity), $\mathbf{group\text{-}id}$ and $\mathbf{ie}$, so it follows an Entity that [moves](<Location.md#fixed-point>).
 
 | Symbol | Type | Meaning |
 | --- | --- | --- |
@@ -33,42 +33,46 @@ $$
 
 $\mathbf{income}$ is the Net GloBE Income or Loss of each group, $\mathbf{tax}$ its Adjusted Covered Taxes, and $\mathbf{expected}$ its Expected Adjusted Covered Taxes Amount.
 
-**Effective Tax Rate and Top-up Tax Percentage** (Articles 5.1.1, 5.2.1)
+**Shortfall** (Articles 4.1.5, 5.1.1, 5.2.1)
 
-The Effective Tax Rate exists only where there is Net GloBE Income. Negative Adjusted Covered Taxes do not enter it; they become Excess Negative Tax Expense. A balance brought forward reduces positive Adjusted Covered Taxes, but not below zero.
+A balance of Excess Negative Tax Expense brought forward reduces positive Adjusted Covered Taxes, but not below zero. Where there is Net GloBE Income, negative Adjusted Covered Taxes count as zero. The resulting numerator falls short of the expected amount by $\mathbf{shortfall}$:
 
 $$
 \begin{aligned}
 \mathbf{ente\text{-}used}&:=\mathbf{positive}\odot\min\left(\mathbf{ente\text{-}prior},[\mathbf{tax}]^{+}\right)\\
-\mathbf{etr}&:=\mathbf{positive}\odot\left([\mathbf{tax}]^{+}-\mathbf{ente\text{-}used}\right)\odot\left([\mathbf{income}]^{+}\right)^{\dagger}\\
-\mathbf{tt\text{-}percent}&:=\mathbf{positive}\odot[r-\mathbf{etr}]^{+}
+\mathbf{numerator}&:=\mathbf{positive}\odot\left([\mathbf{tax}]^{+}-\mathbf{ente\text{-}used}\right)+\neg\mathbf{positive}\odot\mathbf{tax}\\
+\mathbf{shortfall}&:=\left[\mathbf{expected}-\mathbf{numerator}\right]^{+}
 \end{aligned}
 $$
 
-$\mathbf{etr}$ is meaningful only where $\mathbf{positive}$ is `True`; elsewhere it is 0 and $\mathbf{tt\text{-}percent}$ is 0.
+The shortfall becomes Top-up Tax, Additional Current Top-up Tax, or Excess Negative Tax Expense:
 
-**Excess Profit** (Article 5.2.2)
+| | Net GloBE Income | No Net GloBE Income |
+| --- | --- | --- |
+| $\mathbf{tax}\ge0$ | Top-up Tax on Excess Profit | No shortfall |
+| $\mathbf{tax}<0$ | Top-up Tax on Excess Profit, with $[-\mathbf{tax}]^{+}$ carried forward | Additional Current Top-up Tax under Article 4.1.5, or carried forward where elected |
 
-$$
-\mathbf{excess\text{-}profit}:=\left[\mathbf{income}-\mathbf{Entt\text{-}group}^{T}\times\mathbf{sbie}\right]^{+}
-$$
+Without Net GloBE Income, $\mathbf{expected}\le0$, so a shortfall implies $\mathbf{tax}<\mathbf{expected}\le0$.
 
-**Article 4.1.5**
-
-A group without Net GloBE Income whose Adjusted Covered Taxes are below zero and below the expected amount owes the difference as Additional Current Top-up Tax, unless it elects to carry the difference forward as Excess Negative Tax Expense.
+**Effective Tax Rate, Top-up Tax Percentage and Excess Profit** (Articles 5.1.1, 5.2.1, 5.2.2)
 
 $$
 \begin{aligned}
-\mathbf{art\text{-}4.1.5}&:=\neg\mathbf{positive}\land(\mathbf{tax}<0)\land(\mathbf{tax}<\mathbf{expected})\\
-\mathbf{actt\text{-}4.1.5}&:=(\mathbf{art\text{-}4.1.5}\land\neg\mathbf{ente\text{-}elected})\odot(\mathbf{expected}-\mathbf{tax})
+\mathbf{etr}&:=\mathbf{positive}\odot\mathbf{numerator}\odot\mathbf{income}^{\dagger}\\
+\mathbf{tt\text{-}percent}&:=\mathbf{positive}\odot\mathbf{shortfall}\odot\mathbf{income}^{\dagger}\\
+\mathbf{excess\text{-}profit}&:=\left[\mathbf{income}-\mathbf{Entt\text{-}group}^{T}\times\mathbf{sbie}\right]^{+}
 \end{aligned}
 $$
 
-**Excess Negative Tax Expense carried forward**
+$\mathbf{tt\text{-}percent}=[r-\mathbf{etr}]^{+}$ wherever $\mathbf{positive}$ is `True`; elsewhere both are 0.
+
+**Article 4.1.5 and Excess Negative Tax Expense**
 
 $$
 \begin{aligned}
-\mathbf{ente\text{-}generated}&:=\mathbf{positive}\odot[-\mathbf{tax}]^{+}+(\mathbf{art\text{-}4.1.5}\land\mathbf{ente\text{-}elected})\odot(\mathbf{expected}-\mathbf{tax})\\
+\mathbf{art\text{-}4.1.5}&:=\neg\mathbf{positive}\land(\mathbf{shortfall}>0)\\
+\mathbf{actt\text{-}4.1.5}&:=(\mathbf{art\text{-}4.1.5}\land\neg\mathbf{ente\text{-}elected})\odot\mathbf{shortfall}\\
+\mathbf{ente\text{-}generated}&:=\mathbf{positive}\odot[-\mathbf{tax}]^{+}+(\mathbf{art\text{-}4.1.5}\land\mathbf{ente\text{-}elected})\odot\mathbf{shortfall}\\
 \mathbf{ente\text{-}next}&:=\mathbf{ente\text{-}prior}-\mathbf{ente\text{-}used}+\mathbf{ente\text{-}generated}
 \end{aligned}
 $$
@@ -97,7 +101,7 @@ $$
 \begin{aligned}
 \boldsymbol{\theta}&:=\mathbf{tt\text{-}group}\odot\mathbf{gross}^{\dagger}\\
 \mathbf{key}&:=[\mathbf{globe\text{-}income}]^{+}\\
-\mathbf{key\text{-}4.1.5}&:=\left[(\mathbf{act}<0)\land(\mathbf{act}<r\cdot\mathbf{globe\text{-}income})\right]\odot(r\cdot\mathbf{globe\text{-}income}-\mathbf{act})\\
+\mathbf{key\text{-}4.1.5}&:=(\mathbf{act}<0)\odot\left[r\cdot\mathbf{globe\text{-}income}-\mathbf{act}\right]^{+}\\
 \mathbf{A}(\mathbf{k})&:=\operatorname{diag}(\mathbf{k})\times\mathbf{Entt\text{-}group}\times\operatorname{diag}\left(\mathbf{Entt\text{-}group}^{T}\times\mathbf{k}\right)^{\dagger}
 \end{aligned}
 $$
@@ -122,7 +126,7 @@ $$
 
 provided that a group with $\mathbf{actt\text{-}4.1.5}>0$ has at least one Entity with $\mathbf{key\text{-}4.1.5}>0$. A group with $\mathbf{regular}>0$ always has an Entity with GloBE Income.
 
-$\mathbf{tt\text{-}entt}$ is the Top-up Tax of each Entity used in [IIR](IIR.md).
+$\mathbf{tt\text{-}entt}$ is the Top-up Tax of each Entity. It decides which Flow-through Entities are [required to apply an IIR](<Location.md#required-to-apply-an-iir>), and with the final location it is the Top-up Tax used in [IIR](IIR.md).
 
 # Not Covered
 

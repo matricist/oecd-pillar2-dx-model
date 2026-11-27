@@ -9,9 +9,10 @@ A document index arranged in the workflow order.
 ## 2. Transitional CbCR Safe Harbours Test
 
 1. [Ownership and Controlling Interest](<Ownership Interest.md>)
-2. [JV Groups](<Subgroups.md#jv-groups>)
-3. [TCSH Group](<Group.md#tcsh-group>)
-4. [Transitional CbCR Safe Harbours Test](<Transitional CbCR Safe Harbours Test.md>)
+2. [Initial Location](<Location.md#location-state>)
+3. [JV Groups](<Subgroups.md#jv-groups>)
+4. [TCSH Group](<Group.md#tcsh-group>)
+5. [Transitional CbCR Safe Harbours Test](<Transitional CbCR Safe Harbours Test.md>)
 
 ## 3. Top-up Tax Calculation
 
@@ -23,8 +24,9 @@ A document index arranged in the workflow order.
 ## 4. Applying IIR
 
 1. Side by Side Safe harbour — document pending
-2. [Taxing Rights](<Taxing Rights.md>)
-3. [IIR](IIR.md)
+2. [Location of Flow-through Entities](<Location.md#fixed-point>): repeat 3.2 to 3.4 until no Flow-through Entity required to apply an IIR is still stateless
+3. [Taxing Rights](<Taxing Rights.md>)
+4. [IIR](IIR.md)
 
 ## 5. Applying UTPR
 

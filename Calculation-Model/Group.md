@@ -8,14 +8,16 @@ All inputs are for the same $N$ Entities and the same [effective period](<Owners
 | $\mathbf{smoce}$ | $\{0,1\}^{N\times1}$ | Single MOCEs, from [Subgroups](<Subgroups.md#minority-owned-subgroups>) |
 | $\mathbf{jvmember}$ | $\{0,1\}^{N\times1}$ | JV Group members, from [Subgroups](<Subgroups.md#jv-groups>) |
 | $\mathbf{jv\text{-}id}$ | $\{0,\ldots,N\}^{N\times1}$ | Index of each Entity's top-level JV, 0 outside every JV Group, from [Subgroups](<Subgroups.md#jv-groups>) |
-| $\mathbf{Entt\text{-}jur}$ | $\{0,1\}^{N\times M}$ | Entity-to-jurisdiction matrix, from [Taxing Rights](<Taxing Rights.md#iir-payability>) |
+| $\mathbf{Entt\text{-}jur}$ | $\{0,1\}^{N\times M}$ | Entity-to-jurisdiction matrix of a location state, from [Location](<Location.md#location-state>) |
 | $\mathbf{ce}$ | $\{0,1\}^{N\times1}$ | CEs |
 | $\mathbf{ie}$ | $\{0,1\}^{N\times1}$ | Investment Entities |
-| $\mathbf{stateless}$ | $\{0,1\}^{N\times1}$ | Stateless Entities; their rows of $\mathbf{Entt\text{-}jur}$ are all `False` |
+| $\mathbf{stateless}$ | $\{0,1\}^{N\times1}$ | Stateless Entities of the same location state, from [Location](<Location.md#location-state>); their rows of $\mathbf{Entt\text{-}jur}$ are all `False` |
 
 $\mathbf{idx}:=(1,\ldots,N)^{T}$. For a vector $\mathbf{v}$, $\operatorname{eq}(\mathbf{v}):=(\mathbf{v}\times\mathbf{1}_N^{T}=\mathbf{1}_N\times\mathbf{v}^{T})$ is the $N\times N$ Boolean matrix whose $(i,j)$ entry is `True` iff $v_i=v_j$. $\odot$ denotes element-wise multiplication; comparisons and logical operations are element-wise, and Boolean entries are treated as 1 or 0 in arithmetic.
 
 # TCSH Group
+
+The TCSH Group uses the initial location state $\mathbf{s}_0$ of [Location](<Location.md#location-state>). The ETR Calculation Group is built for each location state that Location evaluates, and finally for $\mathbf{stateless}$.
 
 Investment Entities and Stateless Entities are out of scope. Only JV Groups are distinguished within a jurisdiction.
 

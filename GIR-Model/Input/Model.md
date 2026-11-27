@@ -13,10 +13,10 @@ $N$ Entities, indexed $1,\ldots,N$.
 | $\mathbf{name}$ | $\text{String}^{N}$ | Entity name |
 | $\mathbf{X}_0$ | $[0,1]^{N\times N}$ | [Direct Ownership Interest matrix](<../../Calculation-Model/Ownership Interest.md#direct-ownership-matrix>) |
 | $\mathbf{C}_0$ | $\{0,1\}^{N\times N}$ | [Direct Controlling Interest matrix](<../../Calculation-Model/Ownership Interest.md#direct-controlling-matrix>) |
-| $\mathbf{Entt\text{-}jur}$ | $\{0,1\}^{N\times M}$ | Entity-to-jurisdiction matrix |
+| $\mathbf{Entt\text{-}cjur}$ | $\{0,1\}^{N\times M}$ | [Jurisdiction of location, or of creation](<../../Calculation-Model/Location.md#inputs>) for a Flow-through Entity or a PE of paragraph (d); $\mathbf{Entt\text{-}jur}$ and $\mathbf{stateless}$ are derived from it by [Location](<../../Calculation-Model/Location.md#fixed-point>) |
 | $\mathbf{Entt\text{-}tin}$ | $\{0,1\}^{N\times K}$ | Entity-to-TIN matrix |
-| $\mathbf{group\text{-}upe},\mathbf{ce},\mathbf{ee},\mathbf{pe},\mathbf{ie},\mathbf{stateless},\mathbf{eqt}$ | $\{0,1\}^{N}$ | Classifications used by the Calculation Model |
-| $\mathbf{fte\text{-}tt},\mathbf{reverse\text{-}hybrid},\mathbf{hybrid},\mathbf{insurance\text{-}ie},\mathbf{securitisation},\mathbf{nmce},\mathbf{non\text{-}group}$ | $\{0,1\}^{N}$ | Classifications reported only in the return |
+| $\mathbf{group\text{-}upe},\mathbf{ce},\mathbf{ee},\mathbf{pe},\mathbf{pe\text{-}d},\mathbf{ie},\mathbf{eqt},\mathbf{fte\text{-}tt},\mathbf{reverse\text{-}hybrid}$ | $\{0,1\}^{N}$ | Classifications used by the Calculation Model |
+| $\mathbf{hybrid},\mathbf{insurance\text{-}ie},\mathbf{securitisation},\mathbf{nmce},\mathbf{non\text{-}group}$ | $\{0,1\}^{N}$ | Classifications reported only in the return |
 | $\mathbf{Art\text{-}10.3.5}$ | $\{0,1\}^{N\times M}$ | The jurisdiction whose IIR a Parent Entity located elsewhere must apply under Article 10.3.5; $\mathbf{art\text{-}10.3.5}:=(\mathbf{Art\text{-}10.3.5}\times\mathbf{1}_M)>0$ |
 | $\mathbf{ee\text{-}type}$ | $\text{Enum}^{N}$ | Kind of Excluded Entity, where $\mathbf{ee}$ |
 | $\mathbf{ee\text{-}change}$ | $\{0,1\}^{N}$ | Change of Excluded Entity status, where $\mathbf{ee}$ |
@@ -224,7 +224,7 @@ With $\mathbf{listed}:=\mathbf{group\text{-}upe}\lor\mathbf{ce}\lor\mathbf{jvmem
 | --- | --- |
 | $\mathbf{Entt\text{-}tin}^{T}\times\mathbf{1}_N=\mathbf{1}_K$ | A TIN belongs to one Entity. |
 | $\mathbf{Entt\text{-}tin}\times\mathbf{1}_K\ge\mathbf{listed}$ | The return requires a TIN for every reported Entity. |
-| $\mathbf{Entt\text{-}jur}\times\mathbf{1}_M=\neg\mathbf{stateless}$ | An Entity has one jurisdiction unless it is stateless. |
+| $\mathbf{Entt\text{-}cjur}\times\mathbf{1}_M\le\mathbf{1}_N$ and $\mathbf{Entt\text{-}cjur}\times\mathbf{1}_M\ge\neg\mathbf{pe\text{-}d}$ | An Entity has one jurisdiction; only a PE of paragraph (d) may have none. |
 | $\mathbf{rec\text{-}jur}\times\mathbf{1}_M\ge\mathbf{1}_{M+1}$ | The return requires a recipient for every section. |
 | $\mathbf{From}\times\mathbf{1}_N=\mathbf{To}\times\mathbf{1}_N=\mathbf{1}$ and $\mathbf{From}\odot\mathbf{To}=\mathbf{0}$ | A transfer has one source and one other destination. |
 | $\mathbf{G}^{T}\times\mathbf{actt\text{-}prior}=\mathbf{T}_{\text{recalc}}^{T}\times(\text{recalculated}-\text{previous Top-up Tax})$ | The Additional Current Top-up Tax of a group is that of its recalculations. |

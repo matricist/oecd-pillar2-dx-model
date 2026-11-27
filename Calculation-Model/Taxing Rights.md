@@ -9,7 +9,7 @@ All inputs are for the same $N$ Entities, the same $M$ jurisdictions, and the sa
 | $\mathbf{jv},\mathbf{jvsub}$ | $\{0,1\}^{N\times1}$ | Top-level JVs and JV Subsidiaries, from [Subgroups](<Subgroups.md#jv-groups>) |
 | $\mathbf{X}_0^{\mathrm{profit}}$ | $[0,1]^{N\times N}$ | [Direct Profit Ownership Interest matrix](<Ownership Interest.md#direct-ownership-matrix>) |
 | $\mathbf{group\text{-}upe},\mathbf{ce},\mathbf{ee},\mathbf{pe},\mathbf{ie}$ | $\{0,1\}^{N\times1}$ | The group's UPEs, CEs, Excluded Entities, PEs, and Investment Entities |
-| $\mathbf{Entt\text{-}jur}$ | $\{0,1\}^{N\times M}$ | Entity-to-jurisdiction matrix; the row of a Stateless Entity is all `False` |
+| $\mathbf{Entt\text{-}jur}$ | $\{0,1\}^{N\times M}$ | Entity-to-jurisdiction matrix, from [Location](<Location.md#fixed-point>); the row of a Stateless Entity is all `False`. [Location](<Location.md#required-to-apply-an-iir>) also evaluates this document once with every Flow-through Entity at its jurisdiction of creation |
 | $\mathbf{iir\text{-}impl}$ | $\{0,1\}^{M\times1}$ | The jurisdiction has implemented an IIR |
 | $\mathbf{qiir\text{-}impl}$ | $\{0,1\}^{M\times1}$ | Its IIR has qualified status |
 | $\mathbf{dom\text{-}iir\text{-}impl}$ | $\{0,1\}^{M\times1}$ | Its IIR also applies to low-taxed Entities in the jurisdiction itself |
