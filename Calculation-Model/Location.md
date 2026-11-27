@@ -52,21 +52,29 @@ For a location state $\mathbf{s}$, let $\mathbf{tt\text{-}entt}(\mathbf{s})$ be 
 
 $$
 \boxed{
-\mathbf{required}(\mathbf{s}):=\mathbf{s}\land\left[\left(\mathbf{Iir\text{-}payable}^{c}\times\mathbf{tt\text{-}entt}(\mathbf{s})\right)>0\right]
+\mathbf{required}(\mathbf{s}):=\left(\mathbf{Iir\text{-}payable}^{c}\times\mathbf{tt\text{-}entt}(\mathbf{s})\right)>0
 }
 $$
 
 # Fixed Point
 
+Article 10.3.2 makes an Entity of $\mathbf{s}_0$ stateless exactly when it is not required to apply an IIR. The location is the state that satisfies this:
+
 $$
 \boxed{
-\mathbf{s}_{k+1}:=\mathbf{s}_k\land\neg\mathbf{required}(\mathbf{s}_k),
-\qquad
-\mathbf{stateless}:=\mathbf{s}_K\ \text{ where }\ \mathbf{s}_{K+1}=\mathbf{s}_K
+\mathbf{stateless}=\mathbf{s}_0\land\neg\mathbf{required}(\mathbf{stateless})
 }
 $$
 
-An Entity that has moved stays located, so $\mathbf{s}_k$ only loses entries and the iteration stops after at most $\mathbf{s}_0^{T}\mathbf{1}_N+1$ evaluations of $\mathbf{tt\text{-}entt}$. The final location is
+It is found by iterating from $\mathbf{s}_0$:
+
+$$
+\mathbf{s}_{k+1}:=\mathbf{s}_0\land\neg\mathbf{required}(\mathbf{s}_k),
+\qquad
+\mathbf{stateless}:=\mathbf{s}_K\ \text{ where }\ \mathbf{s}_{K+1}=\mathbf{s}_K.
+$$
+
+The final location is
 
 $$
 \boxed{
@@ -76,10 +84,11 @@ $$
 
 and every other document uses $\mathbf{Entt\text{-}jur}$ and $\mathbf{stateless}$ from here.
 
-**One pass.** A Flow-through Entity whose GloBE Income or Loss, Adjusted Covered Taxes and Substance-based Income Exclusion are all zero, because Article 3.5 allocates them to its owners, changes no group amount when it moves: it only leaves its own stateless group for the group of its jurisdiction of creation. If every Flow-through Entity in $\mathbf{s}_0$ is of that kind, $\mathbf{tt\text{-}entt}(\mathbf{s}_1)=\mathbf{tt\text{-}entt}(\mathbf{s}_0)$ and $K\le1$.
+**One pass.** A Flow-through Entity whose GloBE Income or Loss, Adjusted Covered Taxes and Substance-based Income Exclusion are all zero, because Article 3.5 allocates them to its owners, changes no group amount when it moves: it only leaves its own stateless group for the group of its jurisdiction of creation. If every Flow-through Entity in $\mathbf{s}_0$ is of that kind, $\mathbf{tt\text{-}entt}$ does not depend on the location state, $\mathbf{required}(\mathbf{s}_1)=\mathbf{required}(\mathbf{s}_0)$, and $\mathbf{s}_1$ is the location.
 
 **Group inputs.** The group inputs of Top-up Tax Calculation are given for each Full Calculation Group by its jurisdiction (or Stateless Entity), $\mathbf{group\text{-}id}$ and $\mathbf{ie}$. An Entity that moves takes the inputs of the group it joins.
 
 # Not Covered
 
+- A Flow-through Entity with GloBE Income or Loss, Adjusted Covered Taxes or Substance-based Income Exclusion of its own, where moving it changes whether it is required to apply an IIR, so that the iteration does not reach a state satisfying Article 10.3.2.
 - How a Flow-through Entity that moves affects the [Transitional CbCR Safe Harbour](<Transitional CbCR Safe Harbours Test.md>); the TCSH Group uses $\mathbf{s}_0$.

@@ -24,7 +24,7 @@ A document index arranged in the workflow order.
 ## 4. Applying IIR
 
 1. Side by Side Safe harbour — document pending
-2. [Location of Flow-through Entities](<Location.md#fixed-point>): repeat 3.2 to 3.4 until no Flow-through Entity required to apply an IIR is still stateless
+2. [Location of Flow-through Entities](<Location.md#fixed-point>): repeat 3.2 to 3.4 until the location state no longer changes
 3. [Taxing Rights](<Taxing Rights.md>)
 4. [IIR](IIR.md)
 
