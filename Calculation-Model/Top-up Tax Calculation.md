@@ -8,10 +8,10 @@ Entity vectors are indexed by the $N$ Entities and group vectors by the $M_{Calc
 | $\mathbf{globe\text{-}income}$ | $\mathbb{R}^{N}$ | GloBE Income or Loss of each Entity |
 | $\mathbf{act}$ | $\mathbb{R}^{N}$ | Adjusted Covered Taxes of each Entity |
 | $\mathbf{sbie}$ | $\mathbb{R}_{\ge0}^{N}$ | Substance-based Income Exclusion of each Entity |
-| $\mathbf{actt\text{-}prior}$ | $\mathbb{R}_{\ge0}^{N}$ | Additional Current Top-up Tax from recalculations of prior Fiscal Years (Article 5.4.1), already allocated to Entities on the income of those years (Article 5.2.5), from [Dynamics](<Dynamics.md#recalculation-of-earlier-fiscal-years>) |
+| $\mathbf{actt\text{-}prior}$ | $\mathbb{R}_{\ge0}^{N}$ | Additional Current Top-up Tax from recalculations of prior Fiscal Years (Article 5.4.1), already allocated to Entities on the income of those years (Article 5.2.5), from [Recalculation](#recalculation-of-earlier-fiscal-years) |
 | $\mathbf{income\text{-}adj},\mathbf{act\text{-}adj}$ | $\mathbb{R}^{M_{Calc}}$ | Adjustments to GloBE Income and to Adjusted Covered Taxes that are determined only for the group as a whole |
 | $\mathbf{qdmtt}$ | $\mathbb{R}_{\ge0}^{M_{Calc}}$ | Qualified Domestic Minimum Top-up Tax payable for the Fiscal Year |
-| $\mathbf{ente\text{-}prior}$ | $\mathbb{R}_{\ge0}^{M_{Calc}}$ | Excess Negative Tax Expense brought forward, from [Dynamics](<Dynamics.md#carry-forward>) |
+| $\mathbf{ente\text{-}prior}$ | $\mathbb{R}_{\ge0}^{M_{Calc}}$ | Excess Negative Tax Expense brought forward, read for $\mathbf{group\text{-}key}$ as in [Continuity Across Fiscal Years](<Group.md#continuity-across-fiscal-years>) |
 | $\mathbf{qsh}$ | $\{0,1\}^{M_{Calc}}$ | The QDMTT Safe Harbour applies |
 | $\mathbf{ente\text{-}elected}$ | $\{0,1\}^{M_{Calc}}$ | The Excess Negative Tax Expense procedure is elected in place of Article 4.1.5 |
 | $r$ | $[0,1]$ | Minimum Rate, 0.15 |
@@ -39,7 +39,7 @@ A balance of Excess Negative Tax Expense brought forward reduces positive Adjust
 
 $$
 \begin{aligned}
-\mathbf{ente\text{-}used}&:=\mathbf{positive}\odot\min\left(\mathbf{ente\text{-}prior},[\mathbf{tax}]^{+}\right)\\
+\mathbf{ente\text{-}left}&:=\left[\mathbf{ente\text{-}prior}-\mathbf{positive}\odot[\mathbf{tax}]^{+}\right]^{+},\qquad\mathbf{ente\text{-}used}:=\mathbf{ente\text{-}prior}-\mathbf{ente\text{-}left}\\
 \mathbf{numerator}&:=\mathbf{positive}\odot\left([\mathbf{tax}]^{+}-\mathbf{ente\text{-}used}\right)+\neg\mathbf{positive}\odot\mathbf{tax}\\
 \mathbf{shortfall}&:=\left[\mathbf{expected}-\mathbf{numerator}\right]^{+}
 \end{aligned}
@@ -73,9 +73,11 @@ $$
 \mathbf{art\text{-}4.1.5}&:=\neg\mathbf{positive}\land(\mathbf{shortfall}>0)\\
 \mathbf{actt\text{-}4.1.5}&:=(\mathbf{art\text{-}4.1.5}\land\neg\mathbf{ente\text{-}elected})\odot\mathbf{shortfall}\\
 \mathbf{ente\text{-}generated}&:=\mathbf{positive}\odot[-\mathbf{tax}]^{+}+(\mathbf{art\text{-}4.1.5}\land\mathbf{ente\text{-}elected})\odot\mathbf{shortfall}\\
-\mathbf{ente\text{-}next}&:=\mathbf{ente\text{-}prior}-\mathbf{ente\text{-}used}+\mathbf{ente\text{-}generated}
+\mathbf{ente\text{-}next}&:=\mathbf{ente\text{-}left}+\mathbf{ente\text{-}generated}
 \end{aligned}
 $$
+
+$\mathbf{ente\text{-}next}$ is written for $\mathbf{group\text{-}key}$ as in [Continuity Across Fiscal Years](<Group.md#continuity-across-fiscal-years>). From one Fiscal Year to the next the balance follows Lindley's recursion $b'=[b-a]^{+}+g$, which is linear in the max-plus algebra. Unrolled, the balance left after a year is the largest of zero and, for each earlier starting year, the amounts generated since then less those absorbed since then, with the opening balance counted from the first year.
 
 **Jurisdictional Top-up Tax** (Article 5.2.3)
 
@@ -128,9 +130,24 @@ provided that a group with $\mathbf{actt\text{-}4.1.5}>0$ has at least one Entit
 
 $\mathbf{tt\text{-}entt}$ is the Top-up Tax of each Entity. It decides which Flow-through Entities are [required to apply an IIR](<Location.md#required-to-apply-an-iir>), and with the final location it is the Top-up Tax used in [IIR](IIR.md).
 
+# Recalculation of Earlier Fiscal Years
+
+Where a Fiscal Year $\tau$ is recalculated in year $t$ (Articles 4.6.1 and 5.4.1), the whole calculation of $\tau$ is run again with the corrected input. Let $\mathbf{tt\text{-}entt}_\tau^{\mathrm{re}}$ and $\mathbf{tt\text{-}group}_\tau^{\mathrm{re}}$ be its results and $\mathbf{tt\text{-}entt}_\tau$, $\mathbf{tt\text{-}group}_\tau$ those filed. The increase of each group is Additional Current Top-up Tax of year $t$, already allocated to the Entities of year $\tau$:
+
+$$
+\boxed{
+\mathbf{actt\text{-}prior}_t:=\sum_{\tau}\left(\mathbf{tt\text{-}entt}_\tau^{\mathrm{re}}-\mathbf{tt\text{-}entt}_\tau\right)\odot\left(\mathbf{Entt\text{-}group}_\tau\times\left[\mathbf{tt\text{-}group}_\tau^{\mathrm{re}}>\mathbf{tt\text{-}group}_\tau\right]\right)
+}
+$$
+
+The sum runs over the years recalculated in $t$, and each Entity of year $\tau$ is placed in year $t$ by $\mathbf{entity\text{-}id}$.
+
 # Not Covered
 
 - Top-up Tax under Article 7.6.2(c).
 - The calculation of Additional Current Top-up Tax from its causes (Articles 5.4.1, 7.3.5, 7.3.7); it is an input here.
 - The De Minimis Exclusion (Article 5.5).
 - Whether Excess Negative Tax Expense is tracked for a group under the QDMTT Safe Harbour.
+- A recalculation that lowers a group's Top-up Tax.
+- The deferred tax asset of the GloBE Loss Election (Article 4.5), which would follow the same recursion as the Excess Negative Tax Expense.
+- The recapture of deferred tax liabilities by year of origin (Article 4.4.4), which would add a balance for each year of origin, aged each year by a shift matrix, and the five-year elections.

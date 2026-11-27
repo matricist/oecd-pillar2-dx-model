@@ -44,4 +44,4 @@ $$
 \end{aligned}
 $$
 
-$\mathbf{applied}$ identifies the Tested Jurisdictions to which the safe harbour applies. A Tested Jurisdiction that existed but did not apply it can never apply it again. $\mathbf{once\text{-}out}_{y-1}$ is carried to year $y$ by [Dynamics](<Dynamics.md#carry-forward>) on $\mathbf{tcsh\text{-}key}$.
+$\mathbf{applied}$ identifies the Tested Jurisdictions to which the safe harbour applies. A Tested Jurisdiction that existed but did not apply it can never apply it again. Unrolled, $\mathbf{once\text{-}out}_{y}$ is the running OR of $\mathbf{existed}\land\neg\mathbf{applied}$ over all years up to $y$. It is kept for $\mathbf{tcsh\text{-}key}$ as in [Continuity Across Fiscal Years](<Group.md#continuity-across-fiscal-years>), so a Tested Jurisdiction that first appears starts with `False`.

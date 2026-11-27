@@ -2,6 +2,22 @@
 
 A document index arranged in the workflow order.
 
+The documents below calculate one Fiscal Year $t$, the map
+
+$$
+(\mathbf{x}_{t+1},\ \mathbf{out}_t):=F(\mathbf{x}_t,\ \mathbf{in}_t)
+$$
+
+from the state $\mathbf{x}_t$ carried in and the year's input $\mathbf{in}_t$ (ownership, control, amounts, legislation) to the state carried out and the year's results $\mathbf{out}_t$ (Top-up Tax, IIR and UTPR allocation, return). Within $t$, the [effective periods](<Ownership Interest.md#effective-periods>) are calculated each for itself; the state changes only from one Fiscal Year to the next.
+
+| State | Kept for | In | Out |
+| --- | --- | --- | --- |
+| Excess Negative Tax Expense | $\mathbf{group\text{-}key}$ | $\mathbf{ente\text{-}prior}$ | $\mathbf{ente\text{-}next}$ of [Top-up Tax Calculation](<Top-up Tax Calculation.md>) |
+| Tested Jurisdiction excluded from the TCSH | $\mathbf{tcsh\text{-}key}$ | $\mathbf{once\text{-}out}_{y-1}$ | $\mathbf{once\text{-}out}_{y}$ of [TCSH](<Transitional CbCR Safe Harbours Test.md>) |
+| Filed Top-up Tax of each Entity | $\mathbf{entity\text{-}id}$ | [Recalculation](<Top-up Tax Calculation.md#recalculation-of-earlier-fiscal-years>) | $\mathbf{tt\text{-}entt}$ |
+
+Group balances are kept for their keys as in [Continuity Across Fiscal Years](<Group.md#continuity-across-fiscal-years>).
+
 ## 1. Foundations
 
 - [Example](Example.md)
@@ -32,7 +48,3 @@ A document index arranged in the workflow order.
 
 1. UTPR Safe Harbour and UPE Safe Harbour — document pending
 2. [UTPR](UTPR.md)
-
-## 6. Next Fiscal Year
-
-1. [Dynamics](Dynamics.md): carry the state to the next Fiscal Year and recalculate earlier years

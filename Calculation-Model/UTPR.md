@@ -90,4 +90,4 @@ $\mathbf{Residual}$ is read from the UPE rows of $\mathbf{H}$, which [IIR](<IIR.
 - **UTPR Safe Harbours.** Not modelled.
 - **Investment Entities.** The Article 7.4 adjustment of IIR is not yet carried into $\mathbf{Charged}$.
 - **Deemed GloBE Income.** Where Additional Current Top-up Tax arises without Net GloBE Income, Articles 5.4.2 and 5.4.3 give each Entity a deemed GloBE Income for the IIR; not modelled.
-- **Several Fiscal Years.** Ownership, Parent Entity status, and Qualified IIR status change from year to year, so $\mathbf{Net\text{-}iir}$ is a result of one Fiscal Year. Carry-forwards move between Fiscal Years by [Dynamics](Dynamics.md).
+- **Several Fiscal Years.** Ownership, Parent Entity status, and Qualified IIR status change from year to year, so $\mathbf{Net\text{-}iir}$ is a result of one Fiscal Year. Carry-forwards move between Fiscal Years as in [Continuity Across Fiscal Years](<Group.md#continuity-across-fiscal-years>).

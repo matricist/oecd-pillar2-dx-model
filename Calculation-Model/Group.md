@@ -71,4 +71,25 @@ $$
 \mathbf{Entt\text{-}group}\times\mathbf{1}_{M_{Calc}}=\mathbf{in\text{-}scope}.
 $$
 
-Both keys stay the same from one Fiscal Year to the next as long as the jurisdiction and the top Entity do, which lets [Dynamics](Dynamics.md) carry balances forward.
+# Continuity Across Fiscal Years
+
+Both keys stay the same from one Fiscal Year to the next as long as the jurisdiction and the top Entity do. A balance that belongs to a group is therefore kept for its key, not for the group of a particular year.
+
+Let $\mathcal{U}$ be the set of keys that have appeared in any Fiscal Year, and for year $t$ let $\mathbf{E}_t\in\{0,1\}^{M_t\times|\mathcal{U}|}$ have $(\mathbf{E}_t)_{gk}=1$ iff group $g$ of year $t$ has key $k$. A group balance is kept as a vector $\mathbf{b}$ over $\mathcal{U}$ and is read and written by
+
+$$
+\boxed{
+\mathbf{opening}_t:=\mathbf{E}_t\times\mathbf{b},
+\qquad
+\mathbf{b}:=\mathbf{E}_t^{T}\times\mathbf{closing}_t
+}
+$$
+
+The write sets every key absent in year $t$ to zero. This applies to $\mathbf{group\text{-}key}$ for the Excess Negative Tax Expense of [Top-up Tax Calculation](<Top-up Tax Calculation.md>) and to $\mathbf{tcsh\text{-}key}$ for [TCSH](<Transitional CbCR Safe Harbours Test.md>).
+
+**Limits**
+
+- **Group that ends.** A key absent in year $t+1$ passes nothing on; its balance lapses.
+- **Group that splits.** The part that keeps the top Entity keeps the whole balance; the other parts start at zero.
+- **Top Entity that changes.** A group whose top Entity changes has a new key and starts at zero, even if its members are the same.
+- **Articles 6.2 and 6.3.** Whether these results match the treatment of Entities joining or leaving the group, and of transfers of assets and liabilities, is not decided here.
